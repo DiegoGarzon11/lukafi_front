@@ -7,7 +7,7 @@ import {Loader} from '@/assets/icons/Svg';
 import {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Link} from 'react-router-dom';
-import {ResponseSignIn} from '@/interfaces/Wallet';
+import {ApiResponse} from '@/interfaces/Wallet';
 import {ArrowBack} from '@/assets/icons/Svg';
 
 export default function SignIn() {
@@ -17,7 +17,7 @@ export default function SignIn() {
 	const [loader, setLoader] = useState(false);
 	const [toast, showToast] = useState(false);
 	const [isOpen, setIsOpen] = useState(false);
-	const [statusCode, setStatusCode] = useState<ResponseSignIn | undefined>(null);
+	const [statusCode, setStatusCode] = useState<ApiResponse | undefined>(null);
 	const [data, setData] = useState({
 		password: '',
 		email: '',
