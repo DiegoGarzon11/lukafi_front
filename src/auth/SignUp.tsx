@@ -3,7 +3,7 @@ import { EyeClose, EyeOpen } from '@/assets/icons/Svg';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { ResponseSignIn } from '@/interfaces/Wallet';
+import { ApiResponse} from '@/interfaces/Wallet';
 import { COUNTRIES } from '@/tools/countries';
 import { Toast } from '@/tools/Toast';
 import { ArrowBack } from '@/assets/icons/Svg';
@@ -22,8 +22,7 @@ export default function SignUp() {
 	const days = Array.from({ length: 31 }, (_, i) => i + 1);
 	const [showPassword, setShowPassword] = useState(false);
 	const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
-	const [toast, showToast] = useState(false);
-	const [statusCode, setStatusCode] = useState<ResponseSignIn | undefined>(null);
+	const [statusCode, setStatusCode] = useState<ApiResponse | undefined>(null);
 	const [loader, setLoader] = useState(false);
 
 	const [date, setDate] = useState({
@@ -62,7 +61,7 @@ export default function SignUp() {
 	};
 
 	async function handleSubmit(event) {
-		showToast(false);
+		
 		setLoader(true);
 		const fecha = `${date.day}/${date.month}/${date.year}`;
 		const values = {
@@ -83,7 +82,7 @@ export default function SignUp() {
 		} catch (error) {
 			console.log(error);
 		} finally {
-			showToast(true);
+			
 			setLoader(false);
 		}
 	}
