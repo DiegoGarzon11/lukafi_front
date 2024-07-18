@@ -1,17 +1,17 @@
-import {UserDefault, UserSignIn} from '@/apis/UserService';
-import {EyeClose, EyeOpen} from '@/assets/icons/Svg';
-import {Button} from '@/components/ui/button';
-import {Input} from '@/components/ui/input';
-import {Toast} from '@/tools/Toast';
-import {Loader} from '@/assets/icons/Svg';
-import {useState} from 'react';
-import {useTranslation} from 'react-i18next';
-import {Link} from 'react-router-dom';
-import {ApiResponse} from '@/interfaces/Wallet';
-import {ArrowBack} from '@/assets/icons/Svg';
+import { UserDefault, UserSignIn } from '@/apis/UserService';
+import { EyeClose, EyeOpen } from '@/assets/icons/Svg';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Toast } from '@/tools/Toast';
+import { Loader } from '@/assets/icons/Svg';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
+import { ApiResponse } from '@/interfaces/Wallet';
+import { ArrowBack } from '@/assets/icons/Svg';
 
 export default function SignIn() {
-	const {t, i18n} = useTranslation();
+	const { t, i18n } = useTranslation();
 	i18n.changeLanguage();
 
 	const [loader, setLoader] = useState(false);
@@ -24,7 +24,7 @@ export default function SignIn() {
 	});
 
 	function handleChange(e) {
-		const {name, value} = e.target;
+		const { name, value } = e.target;
 		setData((prevData) => ({
 			...prevData,
 			[name]: value,
@@ -49,9 +49,7 @@ export default function SignIn() {
 				const userDefault = await UserDefault();
 				localStorage.setItem('userMain', JSON.stringify(userDefault?.userInfo));
 
-				setTimeout(() => {
-					return (window.location.href = '/dashboard');
-				}, 1000);
+				return (window.location.href = '/dashboard');
 			}
 			console.warn('user not found');
 		} catch (error) {
@@ -85,11 +83,20 @@ export default function SignIn() {
 						<p className='text-xl text-gray-400'> {t('form.field.signUp')}</p>
 					</Link>
 				</header>
-				<form className='mt-10 grid gap-8 p-8 bg-slate-900 rounded-md' onSubmit={handleSubmit}>
+				<form
+					className='mt-10 grid gap-8 p-8 bg-slate-900 rounded-md'
+					onSubmit={handleSubmit}>
 					<h1 className='text-3xl mb-6'>{t('form.field.signIn')}</h1>
 					<div>
 						<label htmlFor=''>{t('form.field.email')}</label>
-						<Input type='text' placeholder={t('form.field.email')} onChange={handleChange} value={data.email} name='email' required />
+						<Input
+							type='text'
+							placeholder={t('form.field.email')}
+							onChange={handleChange}
+							value={data.email}
+							name='email'
+							required
+						/>
 					</div>
 					<div className='relative'>
 						<label htmlFor=''>{t('form.field.password')}</label>
@@ -101,21 +108,27 @@ export default function SignIn() {
 							name='password'
 							required
 						/>
-						<div className='absolute right-2 top-7' onClick={handleClick}>
+						<div
+							className='absolute right-2 top-7'
+							onClick={handleClick}>
 							{icon}
 						</div>
 					</div>
 					<div className='flex justify-center w-full items-center '>
-						{loader ? (
+						{statusCode?.status === 200 || loader ? (
 							<Loader />
 						) : (
-							<Button className='w-full' type='submit'>
+							<Button
+								className='w-full'
+								type='submit'>
 								{t('form.field.signIn')}
 							</Button>
 						)}
 					</div>
 
-					<Link to='' className=''>
+					<Link
+						to=''
+						className=''>
 						{t('form.password.forgotten')}
 					</Link>
 				</form>

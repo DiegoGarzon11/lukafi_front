@@ -289,15 +289,30 @@ export const ArrowBack = () => (
 	</svg>
 );
 
-export const Trash = () => (
+export const Trash = ({ className }) => (
 	<svg
 		xmlns='http://www.w3.org/2000/svg'
-		width='30'
-		height='30'
+		className={className}
 		viewBox='0 0 256 256'>
 		<path
 			fill='red'
 			d='M216 48h-40v-8a24 24 0 0 0-24-24h-48a24 24 0 0 0-24 24v8H40a8 8 0 0 0 0 16h8v144a16 16 0 0 0 16 16h128a16 16 0 0 0 16-16V64h8a8 8 0 0 0 0-16M96 40a8 8 0 0 1 8-8h48a8 8 0 0 1 8 8v8H96Zm96 168H64V64h128Zm-80-104v64a8 8 0 0 1-16 0v-64a8 8 0 0 1 16 0m48 0v64a8 8 0 0 1-16 0v-64a8 8 0 0 1 16 0'
 		/>
+	</svg>
+);
+export const Edit = ({ className }) => (
+	<svg
+		className={className}
+		xmlns='http://www.w3.org/2000/svg'
+		viewBox='0 0 24 24'>
+		<g
+			fill='none'
+			stroke='currentColor'
+			stroke-linecap='round'
+			stroke-linejoin='round'
+			stroke-width='2'>
+			<path d='M7 7H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2v-1' />
+			<path d='M20.385 6.585a2.1 2.1 0 0 0-2.97-2.97L9 12v3h3zM16 5l3 3' />
+		</g>
 	</svg>
 );

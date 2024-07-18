@@ -41,4 +41,3 @@ export const CreateWallet = async (data) => {
 	}
 	console.log('datos no enviados');
 };
-

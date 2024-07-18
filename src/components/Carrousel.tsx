@@ -112,7 +112,7 @@ export const Carrusel = () => {
 			FixedIncomes: fixedIncomes,
 			month: date.getMonth(),
 			year: date.getFullYear(),
-			user_id: user?.User_Id,
+			user_id: user?.User_id,
 		};
 
 		const response = await CreateWallet(params);
@@ -270,7 +270,7 @@ export const Carrusel = () => {
 															<button
 																className='hover:bg-slate-800 p-2 rounded-md'
 																onClick={() => deleteValue(e.id, 'incomes')}>
-																<Trash />
+																<Trash className={'w-7'} />
 															</button>
 														</TableCell>
 													</TableRow>
@@ -346,7 +346,7 @@ export const Carrusel = () => {
 															<button
 																className='hover:bg-slate-800 p-2 rounded-md'
 																onClick={() => deleteValue(e.id, 'expenses')}>
-																<Trash />
+																<Trash className={'w-7'} />
 															</button>
 														</TableCell>
 													</TableRow>
