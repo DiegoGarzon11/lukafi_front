@@ -7,6 +7,7 @@ import { Loader } from '@/assets/icons/Svg';
 import { useRef, useState } from 'react';
 import { Send, Trash, Warning } from '@/assets/icons/Svg';
 import { Toast } from '@/tools/Toast';
+import { ApiResponse } from '@/interfaces/Wallet';
 export const Carrusel = () => {
 	const btnNext = useRef(null);
 	const [salario, setSalario] = useState('');
@@ -17,10 +18,10 @@ export const Carrusel = () => {
 	const [fixedIncomes, setFixedIncomes] = useState([]);
 	const [nameFixedIncomes, setnameFixedIncomes] = useState('');
 	const [valueFixedIncomes, setvalueFixedIncomes] = useState('');
-	const [apiResponse, setApiResponse] = useState(null);
+	const [apiResponse, setApiResponse] = useState<ApiResponse |undefined>(null);
 	const inputFixedExpenses = useRef(null);
 	const inputFixedIncomes = useRef(null);
-	const [visibility, setVisibility] = useState(false);
+	const [visibility, setVisibilityToast] = useState(false);
 	const [loader, setLoader] = useState(false);
 	const user = JSON.parse(localStorage.getItem('userMain'));
 
@@ -118,9 +119,9 @@ export const Carrusel = () => {
 		const response = await CreateWallet(params);
 		if (response) {
 			setLoader(false);
-			setVisibility(true);
+			setVisibilityToast(true);
 			setTimeout(() => {
-				setVisibility(false);
+				setVisibilityToast(false);
 			}, 1000);
 			setApiResponse(response);
 		} else {

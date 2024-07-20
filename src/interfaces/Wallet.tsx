@@ -18,12 +18,14 @@ export interface ApiResponse {
 }
 
 export interface Debt {
-	id: string;
-	person: string;
-	value: string;
-	reason: string;
-	date: string;
-	debtType : number
+	Debt_id: string;
+	Person: string;
+	Value: string;
+	Reason: string;
+	CreatedOn: string;
+	DebtType: number;
+	ModifyOn: string;
+	Wallet_id: string;
 }
 
 export interface Wallet extends ApiResponse {

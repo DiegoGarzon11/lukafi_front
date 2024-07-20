@@ -14,6 +14,7 @@ export function Toast({ visibility, severity, message }: { visibility: boolean; 
 	useEffect(() => {
 		if (visibility) {
 			btn.current.click();
+		
 		}
 	}, [visibility]);
 
@@ -24,7 +25,7 @@ export function Toast({ visibility, severity, message }: { visibility: boolean; 
 			variant='outline'
 			onClick={() => {
 				toast({
-					duration: 1500,
+					duration: 1000,
 					description: message,
 					variant: severityToVariant[severity],
 				});

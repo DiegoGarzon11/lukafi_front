@@ -1,7 +1,7 @@
 import {BrowserRouter} from 'react-router-dom';
 import Header from '@/layout/Header';
 import RoutesManager from './routes';
-import './App.css';
+import '@/styles/App.css';
 import {useEffect, useState} from 'react';
 
 function App() {

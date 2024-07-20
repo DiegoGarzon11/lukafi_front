@@ -1,45 +1,45 @@
 import { GetWalletUser } from '@/apis/WalletService';
-import { GetDebts, NewDebt } from '@/apis/DebtService';
+import { DeleteDebt, GetDebts, NewDebt } from '@/apis/DebtService';
 import { Edit, Expense, Income, Trash } from '@/assets/icons/Svg';
 import { Carrusel } from '@/components/Carrousel';
 import { Chart } from '@/components/Chart';
-// import LineChartUsageExampleWithClickEvent from '@/components/Chart';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
-import { Wallet, Debt } from '@/interfaces/Wallet';
-
+import { Wallet, Debt, ApiResponse } from '@/interfaces/Wallet';
+import { Loader } from '@/assets/icons/Svg';
 import { useEffect, useState } from 'react';
-
+import '@/styles/Dashboard.css';
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-
-// import Chip from '@mui/material/Chip';
+import { Toast } from '@/tools/Toast';
+import { TooltipComponent } from '@/components/Tooltip';
 
 export const Dashboard = () => {
 	const [userId, setUserId] = useState<Wallet | undefined>(undefined);
-	const [debt, setDebt] = useState<Array<Debt> | undefined>([]);
+	const [debts, setDebts] = useState<Array<Debt> | undefined>([]);
 	const [debtType, setDebtType] = useState(null);
 	const [value, setValue] = useState('');
 	const [person, setPerson] = useState('');
 	const [reason, setReason] = useState('');
+	const [loader, setLoader] = useState(false);
+	const [responseDebt, setresponseDebt] = useState<ApiResponse | undefined>(null);
+	const [visibilytToast, setVisibilityToast] = useState(false);
 	const user = JSON.parse(localStorage.getItem('userMain'));
 	useEffect(() => {
 		GetWalletUser(user?.User_id).then((r) => {
 			setUserId(r);
-			setDebt(JSON.parse(r?.wallet?.Debts));
 		});
 	}, []);
 
 	async function getDebts() {
 		const params = {
 			Wallet_id: userId?.wallet?.Wallet_id,
-			User_id: userId?.wallet?.User_id,
 		};
 
 		const response = await GetDebts(params);
 
-		setDebt(JSON.parse(response?.Debts));
+		setDebts(response?.response);
 	}
 
 	const handleValues = (e, type) => {
@@ -60,6 +60,8 @@ export const Dashboard = () => {
 	};
 
 	const submitDebt = async () => {
+		setLoader(true);
+
 		const params = {
 			User_id: userId?.wallet?.User_id,
 			Wallet_id: userId?.wallet?.Wallet_id,
@@ -68,14 +70,40 @@ export const Dashboard = () => {
 			reason,
 			debtType,
 		};
-		console.log(params);
 
 		const response = await NewDebt(params);
 
-		console.log(response);
+		if (response) {
+			setresponseDebt(response);
+			setVisibilityToast(true);
+			setValue('');
+			setPerson('');
+			setReason('');
+			setDebtType(null);
+			setLoader(false);
+		}
+
+		setTimeout(() => {
+			setVisibilityToast(false);
+			setresponseDebt(null);
+		}, 1000);
 	};
-	const deleteDebt = (e) => {
-		console.log(e);
+	const deleteDebt = async (e) => {
+		const params = {
+			Debt_id: e?.Debt_id,
+			Wallet_id: e?.Wallet_id,
+		};
+		const responseDeleteDebt = await DeleteDebt(params);
+		if (responseDeleteDebt) {
+			setresponseDebt(responseDeleteDebt);
+			getDebts();
+			setVisibilityToast(true);
+		}
+
+		setTimeout(() => {
+			setVisibilityToast(false);
+			setresponseDebt(null);
+		}, 1000);
 	};
 
 	return (
@@ -188,12 +216,12 @@ export const Dashboard = () => {
 										<button
 											disabled={debtType === null || person === '' || reason === '' || value === '' || value === '0'}
 											onClick={submitDebt}
-											className={` py-2 rounded-md text-white ${
+											className={` py-2 rounded-md text-white flex justify-center ${
 												debtType === null || person === '' || reason === '' || value === '' || value === '0'
 													? 'bg-gray-200 '
 													: ' bg-slate-800'
 											}`}>
-											Confirmar
+											{loader ? <Loader /> : 'Confirmar'}
 										</button>
 									</DialogContent>
 								</Dialog>
@@ -245,46 +273,53 @@ export const Dashboard = () => {
 										<DialogHeader>
 											<DialogTitle>Tus deudas</DialogTitle>
 										</DialogHeader>
-										{debt !== null ? (
+										{debts !== null ? (
 											<Table className=''>
 												<TableCaption>A list of your recent invoices.</TableCaption>
 												<TableHeader>
-													<TableRow className=' text-base'>
-														<TableHead>Fecha</TableHead>
-														<TableHead>Persona</TableHead>
-														<TableHead>Razón</TableHead>
-														<TableHead>Valor</TableHead>
-														<TableHead>estado</TableHead>
-														<TableHead></TableHead>
+													<TableRow className=' text-base pt-4 '>
+														<TableHead className='w-40'>Fecha</TableHead>
+														<TableHead className='w-40'>Persona</TableHead>
+														<TableHead className='w-40'>Razón</TableHead>
+														<TableHead className='w-40'>Valor</TableHead>
+														<TableHead className='w-40'>estado</TableHead>
+														<TableHead className='w-40' />
 													</TableRow>
 												</TableHeader>
 
-												<TableBody>
-													{debt.map((d) => (
-														<TableRow key={d.id}>
-															<TableCell className='font-medium flex gap-10 items-center'>
-																<p>{new Date(d?.date).toLocaleDateString()}</p>
+												<TableBody className=' h-[500px] overflow-auto  overflow-x-hidden   scrollbar-custom'>
+													{debts.map((d) => (
+														<TableRow key={d?.Debt_id}>
+															<TableCell className='font-medium flex gap-10 items-center w-40'>
+																<p>{new Date(JSON.parse(d?.CreatedOn)).toLocaleDateString()}</p>
 															</TableCell>
-															<TableCell className='font-medium'>
-																<p>{d?.person}</p>
+															<TableCell className='font-medium w-40'>
+																{d?.Person.length >= 10 ? (
+																	<TooltipComponent
+																		message={`${d?.Person.slice(0, 10)}...`}
+																		content={d?.Person}
+																	/>
+																) : (
+																	<p>{d?.Person}</p>
+																)}
 															</TableCell>
-															<TableCell className='font-medium'>
-																<p>{d?.reason}</p>
+															<TableCell className='font-medium w-40'>
+																<p>{d?.Reason}</p>
 															</TableCell>
-															<TableCell className='font-medium'>
-																<p>{d?.value}</p>
+															<TableCell className='font-medium w-40'>
+																<p>{d?.Value}</p>
 															</TableCell>
-															<TableCell className='font-medium'>
+															<TableCell className='font-medium w-40'>
 																<p
-																	className={` rounded-md px-2 py-1 text-center ${
-																		d?.debtType === 0 ? 'text-red-500' : 'text-green-500'
+																	className={` rounded-md px-2 py-1 text-start ${
+																		d?.DebtType == 0 ? 'text-red-500' : 'text-green-500'
 																	}`}>
-																	{d?.debtType === 0 ? 'Debes' : 'Te deben'}
+																	{d?.DebtType == 0 ? 'Debes' : 'Te deben'}
 																</p>
 															</TableCell>
-															<TableCell className='font-medium flex '>
+															<TableCell className='font-medium flex  w-40'>
 																<Button
-																	onClick={()=>deleteDebt(d)}
+																	onClick={() => deleteDebt(d)}
 																	variant='ghost'
 																	className='w-full'>
 																	<Trash className={'w-6'} />
@@ -315,6 +350,13 @@ export const Dashboard = () => {
 						<div className='shadow-sm  h-full w-full rounded-xl  bg-slate-800'></div>
 					</section>
 				</div>
+			)}
+			{visibilytToast && (
+				<Toast
+					visibility={visibilytToast}
+					severity={responseDebt?.success == true ? 'success' : 'error'}
+					message={responseDebt?.message}
+				/>
 			)}
 		</main>
 	);
