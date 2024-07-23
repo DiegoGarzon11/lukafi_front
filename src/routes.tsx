@@ -1,9 +1,9 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import SignUp from './auth/SignUp';
-import SignIn from './auth/SignIn';
+
 import { Home } from './pages/Home';
 import { Dashboard } from './pages/Dashboard';
 import { PageNotFound } from './pages/Page404';
+import Auth from './auth/Auth';
 
 const isAuthenticated = localStorage.token;
 const RoutesManager = () => (
@@ -12,13 +12,10 @@ const RoutesManager = () => (
 			path='/'
 			element={isAuthenticated ? <Navigate to='/dashboard' /> : <Home />}
 		/>
+		
 		<Route
-			path='signUp'
-			element={isAuthenticated ? <Navigate to='/dashboard' /> : <SignUp />}
-		/>
-		<Route
-			path='signIn'
-			element={isAuthenticated ? <Navigate to='/dashboard' /> : <SignIn />}
+			path='auth'
+			element={isAuthenticated ? <Navigate to='/dashboard' /> : <Auth />}
 		/>
 		<Route
 			path='dashboard'

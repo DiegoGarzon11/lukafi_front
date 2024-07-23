@@ -54,7 +54,7 @@ export default function Header() {
 
 	return (
 		<>
-			<header className='  dark:bg-slate-950 dark:text-white z-10  flex w-full justify-center gap-5  px-10'>
+			<header className='  dark:bg-slate-950 dark:text-white z-50 absolute  flex w-full justify-center gap-5  px-10'>
 				<div
 					className={` ${
 						localStorage?.token ? 'w-[95%] mt-2' : 'w-[95%] md:w-2/3'
@@ -66,7 +66,7 @@ export default function Header() {
 					<div className='flex items-center gap-5'>
 						{!localStorage.token && (
 							<div>
-								<Link to='/signIn'>
+								<Link to='/auth'>
 									<Button variant='black_outline'>{t('header.signIn')}</Button>
 								</Link>
 							</div>

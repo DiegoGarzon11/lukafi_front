@@ -3,14 +3,12 @@ import { EyeClose, EyeOpen } from '@/assets/icons/Svg';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { ApiResponse} from '@/interfaces/Wallet';
+import { ApiResponse } from '@/interfaces/Wallet';
 import { COUNTRIES } from '@/tools/countries';
 import { Toast } from '@/tools/Toast';
-import { ArrowBack } from '@/assets/icons/Svg';
 import { Loader } from '@/assets/icons/Svg';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 
 export default function SignUp() {
 	const { t, i18n } = useTranslation();
@@ -24,7 +22,7 @@ export default function SignUp() {
 	const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
 	const [statusCode, setStatusCode] = useState<ApiResponse | undefined>(null);
 	const [loader, setLoader] = useState(false);
-
+	const [visibilytToast, setVisibilityToast] = useState(false);
 	const [date, setDate] = useState({
 		year: '',
 		month: '',
@@ -61,8 +59,8 @@ export default function SignUp() {
 	};
 
 	async function handleSubmit(event) {
-		
 		setLoader(true);
+
 		const fecha = `${date.day}/${date.month}/${date.year}`;
 		const values = {
 			...data,
@@ -74,6 +72,7 @@ export default function SignUp() {
 			const infoRegister = await UserRegister(values);
 			setStatusCode(infoRegister);
 			if (infoRegister?.status === 201) {
+				setVisibilityToast(true);
 				setLoader(true);
 				setTimeout(() => {
 					return (window.location.href = '/signIn');
@@ -82,39 +81,29 @@ export default function SignUp() {
 		} catch (error) {
 			console.log(error);
 		} finally {
-			
+			setVisibilityToast(false);
 			setLoader(false);
 		}
 	}
 
 	return (
-		<div className='flex justify-center px-6 relative top-24 mb-24'>
-			{handleSubmit ? (
+		<>
+			{visibilytToast ? (
 				<Toast
-					visibility={true}
+					visibility={visibilytToast}
 					message={statusCode?.status === 409 ? 'Usuario ya existente' : 'Registro exitoso'}
 					severity={statusCode?.status === 409 ? 'warning' : 'success'}
 				/>
 			) : (
 				''
 			)}
-			<section className='w-full md:w-1/3'>
-				<header className='flex items-center justify-between px-8 '>
-					<Link to='/'>
-						<ArrowBack />
-					</Link>
 
-					<Link
-						to='/signIn'
-						className='text-xl text-gray-400'>
-						{t('form.field.signIn')}
-					</Link>
-				</header>
-				<form
-					className='grid gap-8 my-10 p-8 bg-slate-900 rounded-md '
-					onSubmit={handleSubmit}>
-					<h1 className='text-3xl mb-6'>{t('form.field.signUp')}</h1>
-					<div>
+			<form
+				className='mt-10 grid gap-8 px-5 p-8 bg-slate-900 rounded-2xl  '
+				onSubmit={handleSubmit}>
+				<h1 className='text-3xl mb-6'>{t('form.field.signUp')}</h1>
+				<div className='flex gap-5'>
+					<div className='w-full'>
 						<label htmlFor=''>{t('form.field.name')}*</label>
 						<Input
 							type='text'
@@ -124,7 +113,7 @@ export default function SignUp() {
 							name='name'
 						/>
 					</div>
-					<div>
+					<div className='w-full'>
 						<label htmlFor=''>{t('form.field.lastName')}*</label>
 						<Input
 							type='text'
@@ -134,153 +123,163 @@ export default function SignUp() {
 							name='lastName'
 						/>
 					</div>
-					<div>
-						<label htmlFor=''>{t('form.field.email')}*</label>
-						<Input
-							type='email'
-							placeholder={t('form.field.email')}
-							onChange={handleChange}
-							value={data.email}
-							name='email'
-						/>
-					</div>
-					<div className='flex flex-col w-full'>
-						<label htmlFor=''>{t('form.field.nacionality')}*</label>
+				</div>
+
+				<div>
+					<label htmlFor=''>{t('form.field.email')}*</label>
+					<Input
+						autoComplete='email'
+						type='email'
+						placeholder={t('form.field.email')}
+						onChange={handleChange}
+						value={data.email}
+						name='email'
+					/>
+				</div>
+				<div className='flex flex-col w-full'>
+					<label htmlFor=''>{t('form.field.nacionality')}*</label>
+					<Select
+						onValueChange={(value) => handeleNacionality(value)}
+						value={data.nacionality}>
+						<SelectTrigger className='w-full'>
+							<SelectValue placeholder={t('form.field.nacionality')} />
+						</SelectTrigger>
+						<SelectContent>
+							<SelectGroup>
+								<SelectLabel>{t('form.label.countries')}</SelectLabel>
+								{COUNTRIES.map((e) => (
+									<SelectItem
+										className='cursor-pointer'
+										key={e.id}
+										value={e.name}>
+										{e.name}
+									</SelectItem>
+								))}
+							</SelectGroup>
+						</SelectContent>
+					</Select>
+				</div>
+				<div className='flex flex-col'>
+					<label htmlFor=''>{t('form.field.bth')}</label>
+					<div className='flex gap-8'>
 						<Select
-							onValueChange={(value) => handeleNacionality(value)}
-							value={data.nacionality}>
+							onValueChange={(value) => handleDateChange(value, 'year')}
+							value={date.year}>
 							<SelectTrigger className='w-full'>
-								<SelectValue placeholder={t('form.field.nacionality')} />
+								<SelectValue placeholder={t('form.field.year')} />
 							</SelectTrigger>
 							<SelectContent>
 								<SelectGroup>
-									<SelectLabel>{t('form.label.countries')}</SelectLabel>
-									{COUNTRIES.map((e) => (
+									<SelectLabel>{t('form.field.year')}</SelectLabel>
+									{years.map((e, i) => (
 										<SelectItem
-											className='cursor-pointer'
-											key={e.id}
-											value={e.name}>
-											{e.name}
+											key={i}
+											value={e.toString()}>
+											{e}
+										</SelectItem>
+									))}
+								</SelectGroup>
+							</SelectContent>
+						</Select>
+
+						<Select
+							onValueChange={(value) => handleDateChange(value, 'month')}
+							value={date.month}>
+							<SelectTrigger className='w-full'>
+								<SelectValue placeholder={t('form.field.month')} />
+							</SelectTrigger>
+							<SelectContent>
+								<SelectGroup>
+									<SelectLabel>{t('form.field.month')}</SelectLabel>
+									{months.map((e, i) => (
+										<SelectItem
+											key={i}
+											value={e.toString()}>
+											{e}
+										</SelectItem>
+									))}
+								</SelectGroup>
+							</SelectContent>
+						</Select>
+						<Select
+							onValueChange={(value) => handleDateChange(value, 'day')}
+							value={date.day}>
+							<SelectTrigger className='w-full'>
+								<SelectValue placeholder={t('form.field.day')} />
+							</SelectTrigger>
+							<SelectContent>
+								<SelectGroup>
+									<SelectLabel>{t('form.field.day')}</SelectLabel>
+									{days.map((e, i) => (
+										<SelectItem
+											key={i}
+											value={e.toString()}>
+											{e}
 										</SelectItem>
 									))}
 								</SelectGroup>
 							</SelectContent>
 						</Select>
 					</div>
-					<div className='flex flex-col'>
-						<label htmlFor=''>{t('form.field.bth')}</label>
-						<div className='flex gap-8'>
-							<Select
-								onValueChange={(value) => handleDateChange(value, 'year')}
-								value={date.year}>
-								<SelectTrigger className='w-full'>
-									<SelectValue placeholder={t('form.field.year')} />
-								</SelectTrigger>
-								<SelectContent>
-									<SelectGroup>
-										<SelectLabel>{t('form.field.year')}</SelectLabel>
-										{years.map((e, i) => (
-											<SelectItem
-												key={i}
-												value={e.toString()}>
-												{e}
-											</SelectItem>
-										))}
-									</SelectGroup>
-								</SelectContent>
-							</Select>
+				</div>
 
-							<Select
-								onValueChange={(value) => handleDateChange(value, 'month')}
-								value={date.month}>
-								<SelectTrigger className='w-full'>
-									<SelectValue placeholder={t('form.field.month')} />
-								</SelectTrigger>
-								<SelectContent>
-									<SelectGroup>
-										<SelectLabel>{t('form.field.month')}</SelectLabel>
-										{months.map((e, i) => (
-											<SelectItem
-												key={i}
-												value={e.toString()}>
-												{e}
-											</SelectItem>
-										))}
-									</SelectGroup>
-								</SelectContent>
-							</Select>
-							<Select
-								onValueChange={(value) => handleDateChange(value, 'day')}
-								value={date.day}>
-								<SelectTrigger className='w-full'>
-									<SelectValue placeholder={t('form.field.day')} />
-								</SelectTrigger>
-								<SelectContent>
-									<SelectGroup>
-										<SelectLabel>{t('form.field.day')}</SelectLabel>
-										{days.map((e, i) => (
-											<SelectItem
-												key={i}
-												value={e.toString()}>
-												{e}
-											</SelectItem>
-										))}
-									</SelectGroup>
-								</SelectContent>
-							</Select>
-						</div>
-					</div>
-					<div className='relative'>
+				<div className='flex justify-between flex-col lg:flex-row gap-5'>
+					<div className='relative w-full'>
 						<label htmlFor=''>{t('form.field.password')}*</label>
 						<Input
+							autoComplete='new-password'
 							type={showPassword ? 'text' : 'password'}
 							placeholder={t('form.field.password')}
 							onChange={handleChange}
 							value={data.password}
 							name='password'
 						/>
-						<div
+						<button
 							className='absolute right-2 top-7'
-							onClick={() => setShowPassword((prev) => !prev)}>
+							onClick={(e) => {
+								e.preventDefault(), setShowPassword((prev) => !prev);
+							}}>
 							{showPassword ? <EyeOpen /> : <EyeClose />}
-						</div>
+						</button>
 					</div>
-					<div className='relative'>
+					<div className='relative w-full'>
 						<label htmlFor=''>{t('form.field.confirmPassword')}*</label>
 						<Input
+							autoComplete='new-password'
 							type={showPasswordConfirm ? 'text' : 'password'}
 							onChange={handleChange}
 							value={data.confirmPassword}
 							name='confirmPassword'
 						/>
-						<div
+						<button
 							className='absolute right-2 top-7'
-							onClick={() => setShowPasswordConfirm((prev) => !prev)}>
+							onClick={(e) => {
+								e.preventDefault(), setShowPasswordConfirm((prev) => !prev);
+							}}>
 							{showPasswordConfirm ? <EyeOpen /> : <EyeClose />}
-						</div>
+						</button>
 					</div>
+				</div>
 
+				<Button
+					type='submit'
+					disabled={
+						data.name == '' ||
+						data.lastName == '' ||
+						date == null ||
+						data.password == '' ||
+						data.confirmPassword == '' ||
+						data.password != data.confirmPassword
+					}>
 					{loader || statusCode?.status === 201 ? (
 						<div className='flex justify-center'>
 							<Loader />
 						</div>
 					) : (
-						<Button
-							disabled={
-								data.name == '' ||
-								data.lastName == '' ||
-								date == null ||
-								data.password == '' ||
-								data.confirmPassword == '' ||
-								data.password != data.confirmPassword
-									? true
-									: false
-							}>
-							{t('form.field.signUp')}
-						</Button>
+						t('form.field.signUp')
 					)}
-				</form>
-			</section>
-		</div>
+				</Button>
+			</form>
+		</>
 	);
 }
