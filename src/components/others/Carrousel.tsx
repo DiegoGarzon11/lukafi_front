@@ -1,0 +1,183 @@
+import { CreateWallet } from '@/apis/WalletService';
+import { Card, CardContent } from '@/components/ui/card';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import { Input } from '@/components/ui/input';
+import { Loader } from '@/assets/icons/Svg';
+import { useRef, useState } from 'react';
+import { Warning } from '@/assets/icons/Svg';
+import { Toast } from '@/tools/Toast';
+import { ApiResponse } from '@/interfaces/Wallet';
+export const Carrusel = () => {
+	const btnNext = useRef(null);
+	const [salario, setSalario] = useState('');
+	const [ahorro, setAhorro] = useState('');
+	const [apiResponse, setApiResponse] = useState<ApiResponse | undefined>(null);
+	const [visibility, setVisibilityToast] = useState(false);
+	const [loader, setLoader] = useState(false);
+	const user = JSON.parse(localStorage.getItem('userMain'));
+
+	const handleValuesMoney = (e, item: string) => {
+		let value = e.target.value.replace(/[^0-9.]/g, '');
+		if (value === '') {
+			value = '0';
+		}
+		if (!isNaN(value)) {
+			const floatValue = parseFloat(value);
+			if (item === 'salario') {
+				const formattedValue = floatValue.toLocaleString();
+				setSalario(formattedValue);
+			} else if (item === 'ahorro') {
+				const formattedValue = floatValue.toLocaleString();
+				setAhorro(formattedValue);
+			}
+		}
+	};
+
+	async function submitInfoWallet() {
+		setLoader(true);
+
+		const params = {
+			salary: salario.replace(/,/g, ''),
+			saving: ahorro.replace(/,/g, ''),
+			user_id: user?.User_id,
+		};
+
+		const response = await CreateWallet(params);
+		if (response) {
+			setLoader(false);
+			setVisibilityToast(true);
+			setTimeout(() => {
+				setVisibilityToast(false);
+			}, 1000);
+			setApiResponse(response);
+		} else {
+			window.location.href = '/dashboard';
+		}
+	}
+
+	return (
+		<section className='flex justify-center items-center h-screen '>
+			<Carousel className=' max-w-3xl  flex justify-center items-center '>
+				<CarouselContent>
+					<CarouselItem className='flex justify-center'>
+						<div className='p-1 flex items-center justify-center w-[580px] h-[600px]'>
+							<Card className='h-full w-full'>
+								<CardContent className='flex h-full  items-center justify-center gap-32 p-6 flex-col  text-center text-wrap'>
+									<h1 className='text-4xl'>
+										Bienvenido <span className='capitalize text-green-500'>{user.FullName}</span>
+									</h1>
+
+									<div className='flex flex-col gap-10'>
+										<p className='text-2xl'>Una correcta billetera requiere la siguiente información</p>
+										<p className='text-lg'>No te preocupes esta información solo esta a tu alcancé</p>
+									</div>
+								</CardContent>
+							</Card>
+						</div>
+					</CarouselItem>
+
+					<CarouselItem className='flex justify-center'>
+						<div className='p-1 flex items-center justify-center w-[580px] h-[600px]'>
+							<Card className='h-full w-full'>
+								<CardContent className='flex h-full w-full items-center justify-center p-6 gap-8 flex-col'>
+									<p className='mb-10 text-2xl'>
+										Salario y Ahorro <span className='text-red-500'>*</span>
+									</p>
+									<div className='w-full'>
+										<p className='mb-2'>
+											¿Cual es tu salario mensual promedio? <span className='text-red-500'>*</span>
+										</p>
+										<div className=' flex  justify-center items-center gap-2'>
+											<Input
+												type='text'
+												className='appearance-none'
+												value={salario}
+												onChange={(e) => handleValuesMoney(e, 'salario')}
+											/>
+											<div className='flex-grow flex flex-col justify-center'>
+												<select
+													name=''
+													id=''>
+													<option value='cop'>COP</option>
+													<option value='usd'>USD</option>
+												</select>
+											</div>
+										</div>
+									</div>
+
+									<div className='w-full'>
+										<p className='mb-2'>
+											¿Cual es la cantidad que esperas ahorrar mensualmente? <span className='text-red-500'>*</span>
+										</p>
+										<div className='flex  justify-center items-center gap-2'>
+											<Input
+												type='text'
+												className='appearance-none'
+												value={ahorro}
+												onChange={(e) => handleValuesMoney(e, 'ahorro')}
+											/>
+											<select
+												name=''
+												id=''>
+												<option value='cop'>COP</option>
+												<option value='usd'>USD</option>
+											</select>
+										</div>
+									</div>
+								</CardContent>
+							</Card>
+						</div>
+					</CarouselItem>
+
+					<CarouselItem className='flex justify-center'>
+						<div className='p-1 flex items-center justify-b w-[580px] h-[600px]'>
+							<Card className='h-full w-full'>
+								{salario === '' || salario === '0' || ahorro === '0' || ahorro === '' ? (
+									<div className='flex justify-center items-center h-full flex-col'>
+										<Warning />
+										<p className='text-2xl w-5/6 text-center'>
+											Los campos de salario y ahorro son <span className='text-red-500'>obligatorios</span>
+										</p>
+									</div>
+								) : (
+									<CardContent className='flex-grow flex h-full w-full items-center justify-center p-6 gap-8 flex-col'>
+										<p className='text-3xl mb-20 '>Tu billetera luce asi</p>
+
+										<div className='flex flex-col justify-center items-start gap-10'>
+											<div className='flex gap-10 justify-center  items-center '>
+												<p className='font-medium text-lg'>
+													Tu salario es: <span className='font-normal text-lg mx-2'>{salario}</span>
+												</p>
+
+												<p className='font-medium text-lg '>
+													Tu ahorro es: <span className='font-normal text-lg mx-2'>{ahorro}</span>
+												</p>
+											</div>
+										</div>
+										<button
+											disabled={loader}
+											onClick={submitInfoWallet}
+											className='bg-neutral-200 w-full py-2 rounded-lg text-black font-normal hover:bg-blue-400 hover:text-white text-center flex justify-center disabled:bg-white'>
+											{loader ? <Loader /> : 'Confirmar'}
+										</button>
+										{apiResponse?.status === 409 ? (
+											<Toast
+												message={apiResponse?.message}
+												severity='error'
+												visibility={visibility}
+											/>
+										) : (
+											''
+										)}
+									</CardContent>
+								)}
+							</Card>
+						</div>
+					</CarouselItem>
+				</CarouselContent>
+				<CarouselPrevious />
+				<CarouselNext ref={btnNext} />
+			</Carousel>
+		</section>
+	);
+};

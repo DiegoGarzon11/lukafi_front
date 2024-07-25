@@ -22,9 +22,9 @@ export interface Debt {
 	Person: string;
 	Value: string;
 	Reason: string;
-	CreatedOn: string;
+	CreatedIn: string;
 	DebtType: number;
-	ModifyOn: string;
+	ModifyIn: string;
 	Wallet_id: string;
 }
 

@@ -7,7 +7,7 @@ export const UserRegister = async (data) => {
 	formData.append('Age', data.age);
 	formData.append('Nacionality', data.nacionality);
 	formData.append('Password', data.password);
-	formData.append('isNewUser', data.isNewUser);
+
 
 	try {
 		const response = await fetch(`${API_HTTP}/user/signUp`, {

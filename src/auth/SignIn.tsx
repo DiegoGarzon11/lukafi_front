@@ -121,7 +121,7 @@ export default function SignIn() {
 				</div>
 				<div className='flex justify-center w-full items-center '>
 					<Button
-						disabled={!data.email || !data.password}
+						disabled={!data.email || !data.password || loader}
 						className='w-full disabled:bg-slate-200    font-semibold bg-slate-700 text-white text-lg flex justify-center items-center'
 						type='submit'>
 						{loader || statusCode?.status === 200 ? <Loader /> : t('form.field.signIn')}
