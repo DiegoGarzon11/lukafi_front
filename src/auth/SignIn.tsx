@@ -77,11 +77,15 @@ export default function SignIn() {
 			)}
 
 			<form
-				className='mt-10 grid gap-8 p-8 shadow-md  shadow-slate-300 dark:shadow-slate-900  rounded-2xl  '
+				className='mt-10 grid gap-8 p-8 shadow-sm shadow-slate-300 dark:shadow-slate-800/60   rounded-2xl  '
 				onSubmit={handleSubmit}>
 				<h1 className='text-3xl mb-6'>{t('form.field.signIn')}</h1>
 				<div>
-					<label htmlFor=''>{t('form.field.email')}</label>
+					<label
+						htmlFor=''
+						className='text-lg'>
+						{t('form.field.email')}
+					</label>
 					<Input
 						className='bg-white  text-black'
 						autoComplete='email'
@@ -94,9 +98,13 @@ export default function SignIn() {
 					/>
 				</div>
 				<div className='relative'>
-					<label htmlFor=''>{t('form.field.password')}</label>
+					<label
+						htmlFor=''
+						className='text-lg'>
+						{t('form.field.password')}
+					</label>
 					<Input
-						className='bg-white'
+						className='bg-white text-black'
 						autoComplete='current-password'
 						type={isOpen ? 'text' : 'password'}
 						placeholder={t('form.field.password')}
@@ -114,7 +122,7 @@ export default function SignIn() {
 				<div className='flex justify-center w-full items-center '>
 					<Button
 						disabled={!data.email || !data.password}
-						className='w-full'
+						className='w-full disabled:bg-slate-200    font-semibold bg-slate-700 text-white text-lg flex justify-center items-center'
 						type='submit'>
 						{loader || statusCode?.status === 200 ? <Loader /> : t('form.field.signIn')}
 					</Button>
@@ -122,7 +130,7 @@ export default function SignIn() {
 
 				<Link
 					to=''
-					className=''>
+					className='text-lg'>
 					{t('form.password.forgotten')}
 				</Link>
 			</form>

@@ -27,22 +27,22 @@ export default function Auth() {
 					<div className='flex  w-full items-end z-10  md:mb-10  '>
 						<Link to='/'>
 							<button className='p-1 bg-slate-200 dark:bg-slate-600 rounded-full mx-5 md:mx-20 flex items-center gap-1 px-3  '>
-								<ArrowBack /> <span>{t('form.btn.back')}</span>
+								<ArrowBack /> <span className='text-lg'>{t('form.btn.back')}</span>
 							</button>
 						</Link>
 
 						<div className='  flex items-center justify-end mx-5 md:mx-20 '>
 							<button
 								className={`${
-									view ? 'dark:bg-slate-600 bg-slate-200' : ''
-								} text-black dark:text-white text-xl border border-slate-200 rounded-tl-2xl p-3 md:w-40 `}
+									view ? ' bg-slate-300/70 text-white font-bold  dark:bg-slate-600/80' : 'text-white'
+								}  text-xl border border-slate-200 rounded-tl-2xl p-3 md:w-40 `}
 								onClick={changeAuth}>
 								{t('form.field.signIn')}
 							</button>
 							<button
 								className={`${
-									view ? '' : 'dark:bg-slate-600 bg-slate-200 '
-								}text-black dark:text-white text-xl border border-slate-200 rounded-tr-2xl p-3 md:w-40`}
+									view ? 'text-white' : 'bg-slate-300/70 text-white font-bold  dark:bg-slate-600/80 '
+								} text-xl border border-slate-200 rounded-tr-2xl p-3 md:w-40`}
 								onClick={changeAuth}>
 								{t('form.field.signUp')}
 							</button>

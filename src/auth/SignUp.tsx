@@ -99,12 +99,16 @@ export default function SignUp() {
 			)}
 
 			<form
-				className='mt-10 grid gap-8 px-5 p-8 shadow-md shadow-slate-300 dark:shadow-slate-900 rounded-2xl  '
+				className='mt-10 grid gap-8 px-5 p-8 shadow-sm shadow-slate-300 dark:shadow-slate-800/60 rounded-2xl  '
 				onSubmit={handleSubmit}>
 				<h1 className='text-3xl mb-6'>{t('form.field.signUp')}</h1>
 				<div className='flex gap-5'>
 					<div className='w-full'>
-						<label htmlFor=''>{t('form.field.name')}*</label>
+						<label
+							htmlFor=''
+							className='text-lg'>
+							{t('form.field.name')}*
+						</label>
 						<Input
 							type='text'
 							placeholder={t('form.field.name')}
@@ -114,7 +118,11 @@ export default function SignUp() {
 						/>
 					</div>
 					<div className='w-full'>
-						<label htmlFor=''>{t('form.field.lastName')}*</label>
+						<label
+							htmlFor=''
+							className='text-lg'>
+							{t('form.field.lastName')}*
+						</label>
 						<Input
 							type='text'
 							placeholder={t('form.field.lastName')}
@@ -126,7 +134,11 @@ export default function SignUp() {
 				</div>
 
 				<div>
-					<label htmlFor=''>{t('form.field.email')}*</label>
+					<label
+						htmlFor=''
+						className='text-lg'>
+						{t('form.field.email')}*
+					</label>
 					<Input
 						autoComplete='email'
 						type='email'
@@ -137,7 +149,11 @@ export default function SignUp() {
 					/>
 				</div>
 				<div className='flex flex-col w-full'>
-					<label htmlFor=''>{t('form.field.nacionality')}*</label>
+					<label
+						htmlFor=''
+						className='text-lg'>
+						{t('form.field.nacionality')}*
+					</label>
 					<Select
 						onValueChange={(value) => handeleNacionality(value)}
 						value={data.nacionality}>
@@ -160,7 +176,11 @@ export default function SignUp() {
 					</Select>
 				</div>
 				<div className='flex flex-col'>
-					<label htmlFor=''>{t('form.field.bth')}</label>
+					<label
+						htmlFor=''
+						className='text-lg'>
+						{t('form.field.bth')}
+					</label>
 					<div className='flex gap-8'>
 						<Select
 							onValueChange={(value) => handleDateChange(value, 'year')}
@@ -170,7 +190,7 @@ export default function SignUp() {
 							</SelectTrigger>
 							<SelectContent>
 								<SelectGroup>
-									<SelectLabel>{t('form.field.year')}</SelectLabel>
+									<SelectLabel className='text-lg '>{t('form.field.year')}</SelectLabel>
 									{years.map((e, i) => (
 										<SelectItem
 											key={i}
@@ -190,7 +210,7 @@ export default function SignUp() {
 							</SelectTrigger>
 							<SelectContent>
 								<SelectGroup>
-									<SelectLabel>{t('form.field.month')}</SelectLabel>
+									<SelectLabel className='text-lg'>{t('form.field.month')}</SelectLabel>
 									{months.map((e, i) => (
 										<SelectItem
 											key={i}
@@ -209,7 +229,7 @@ export default function SignUp() {
 							</SelectTrigger>
 							<SelectContent>
 								<SelectGroup>
-									<SelectLabel>{t('form.field.day')}</SelectLabel>
+									<SelectLabel className='text-lg'>{t('form.field.day')}</SelectLabel>
 									{days.map((e, i) => (
 										<SelectItem
 											key={i}
@@ -225,7 +245,11 @@ export default function SignUp() {
 
 				<div className='flex justify-between flex-col lg:flex-row gap-5'>
 					<div className='relative w-full'>
-						<label htmlFor=''>{t('form.field.password')}*</label>
+						<label
+							htmlFor=''
+							className='text-lg'>
+							{t('form.field.password')}*
+						</label>
 						<Input
 							autoComplete='new-password'
 							type={showPassword ? 'text' : 'password'}
@@ -239,11 +263,15 @@ export default function SignUp() {
 							onClick={(e) => {
 								e.preventDefault(), setShowPassword((prev) => !prev);
 							}}>
-							{showPassword ? <EyeOpen className='text-slate-700' /> : <EyeClose className='text-slate-700'/>}
+							{showPassword ? <EyeOpen className='text-slate-700' /> : <EyeClose className='text-slate-700' />}
 						</button>
 					</div>
 					<div className='relative w-full'>
-						<label htmlFor=''>{t('form.field.confirmPassword')}*</label>
+						<label
+							htmlFor=''
+							className='text-lg'>
+							{t('form.field.confirmPassword')}*
+						</label>
 						<Input
 							autoComplete='new-password'
 							type={showPasswordConfirm ? 'text' : 'password'}
@@ -256,28 +284,23 @@ export default function SignUp() {
 							onClick={(e) => {
 								e.preventDefault(), setShowPasswordConfirm((prev) => !prev);
 							}}>
-							{showPasswordConfirm ? <EyeOpen className='text-slate-700'/> : <EyeClose className='text-slate-700'/>}
+							{showPasswordConfirm ? <EyeOpen className='text-slate-700' /> : <EyeClose className='text-slate-700' />}
 						</button>
 					</div>
 				</div>
 
 				<Button
 					type='submit'
+					className='text-lg text-white bg-slate-500 flex justify-center items-center '
 					disabled={
-						data.name == '' ||
+						data.name == '' &&
 						data.lastName == '' ||
 						date == null ||
 						data.password == '' ||
 						data.confirmPassword == '' ||
 						data.password != data.confirmPassword
 					}>
-					{loader || statusCode?.status === 201 ? (
-						<div className='flex justify-center'>
-							<Loader />
-						</div>
-					) : (
-						t('form.field.signUp')
-					)}
+					{loader || statusCode?.status === 201 ? <Loader /> : t('form.field.signUp')}
 				</Button>
 			</form>
 		</>
