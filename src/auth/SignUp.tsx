@@ -293,7 +293,7 @@ export default function SignUp() {
 					type='submit'
 					className='text-lg text-white bg-slate-500 flex justify-center items-center '
 					disabled={
-						data.name == '' &&
+						data.name == '' ||
 						data.lastName == '' ||
 						date == null ||
 						data.password == '' ||
