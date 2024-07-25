@@ -166,11 +166,12 @@ export const Click = () => {
 	);
 };
 
-export const EyeClose = () => (
+export const EyeClose = ({className}) => (
 	<svg
 		xmlns='http://www.w3.org/2000/svg'
 		width='25'
 		height='25'
+		className={className}
 		viewBox='0 0 16 16'>
 		<g fill='currentColor'>
 			<path d='m10.79 12.912l-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7 7 0 0 0 2.79-.588M5.21 3.088A7 7 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474z' />
@@ -179,11 +180,12 @@ export const EyeClose = () => (
 	</svg>
 );
 
-export const EyeOpen = () => (
+export const EyeOpen = ({className}) => (
 	<svg
 		xmlns='http://www.w3.org/2000/svg'
 		width='30'
 		height='30'
+		className={className}
 		viewBox='0 0 24 24'>
 		<path
 			fill='currentColor'
@@ -283,7 +285,7 @@ export const ArrowBack = () => (
 		height='30'
 		viewBox='0 0 24 24'>
 		<path
-			fill='#ffffff'
+			fill='currentColor'
 			d='m7.825 13l4.9 4.9q.3.3.288.7t-.313.7q-.3.275-.7.288t-.7-.288l-6.6-6.6q-.15-.15-.213-.325T4.426 12t.063-.375t.212-.325l6.6-6.6q.275-.275.688-.275t.712.275q.3.3.3.713t-.3.712L7.825 11H19q.425 0 .713.288T20 12t-.288.713T19 13z'
 		/>
 	</svg>

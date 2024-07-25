@@ -62,7 +62,7 @@ export default function SignIn() {
 		}
 	}
 
-	const icon = isOpen ? <EyeOpen /> : <EyeClose />;
+	const icon = isOpen ? <EyeOpen className='text-slate-700' /> : <EyeClose className='text-slate-700' />;
 
 	return (
 		<>
@@ -77,12 +77,13 @@ export default function SignIn() {
 			)}
 
 			<form
-				className='mt-10 grid gap-8 p-8 bg-slate-900 rounded-2xl '
+				className='mt-10 grid gap-8 p-8 shadow-md  shadow-slate-300 dark:shadow-slate-900  rounded-2xl  '
 				onSubmit={handleSubmit}>
 				<h1 className='text-3xl mb-6'>{t('form.field.signIn')}</h1>
 				<div>
 					<label htmlFor=''>{t('form.field.email')}</label>
 					<Input
+						className='bg-white  text-black'
 						autoComplete='email'
 						type='text'
 						placeholder={t('form.field.email')}
@@ -95,6 +96,7 @@ export default function SignIn() {
 				<div className='relative'>
 					<label htmlFor=''>{t('form.field.password')}</label>
 					<Input
+						className='bg-white'
 						autoComplete='current-password'
 						type={isOpen ? 'text' : 'password'}
 						placeholder={t('form.field.password')}
@@ -111,6 +113,7 @@ export default function SignIn() {
 				</div>
 				<div className='flex justify-center w-full items-center '>
 					<Button
+						disabled={!data.email || !data.password}
 						className='w-full'
 						type='submit'>
 						{loader || statusCode?.status === 200 ? <Loader /> : t('form.field.signIn')}

@@ -99,7 +99,7 @@ export default function SignUp() {
 			)}
 
 			<form
-				className='mt-10 grid gap-8 px-5 p-8 bg-slate-900 rounded-2xl  '
+				className='mt-10 grid gap-8 px-5 p-8 shadow-md shadow-slate-300 dark:shadow-slate-900 rounded-2xl  '
 				onSubmit={handleSubmit}>
 				<h1 className='text-3xl mb-6'>{t('form.field.signUp')}</h1>
 				<div className='flex gap-5'>
@@ -239,7 +239,7 @@ export default function SignUp() {
 							onClick={(e) => {
 								e.preventDefault(), setShowPassword((prev) => !prev);
 							}}>
-							{showPassword ? <EyeOpen /> : <EyeClose />}
+							{showPassword ? <EyeOpen className='text-slate-700' /> : <EyeClose className='text-slate-700'/>}
 						</button>
 					</div>
 					<div className='relative w-full'>
@@ -256,7 +256,7 @@ export default function SignUp() {
 							onClick={(e) => {
 								e.preventDefault(), setShowPasswordConfirm((prev) => !prev);
 							}}>
-							{showPasswordConfirm ? <EyeOpen /> : <EyeClose />}
+							{showPasswordConfirm ? <EyeOpen className='text-slate-700'/> : <EyeClose className='text-slate-700'/>}
 						</button>
 					</div>
 				</div>
