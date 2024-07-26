@@ -6,12 +6,12 @@ import { Loader } from '@/assets/icons/Svg';
 import { useRef, useState } from 'react';
 import { Warning } from '@/assets/icons/Svg';
 import { Toast } from '@/tools/Toast';
-import { ApiResponse } from '@/interfaces/Wallet';
+import { ResponseWallet } from '@/interfaces/Wallet';
 export const Carrusel = () => {
 	const btnNext = useRef(null);
 	const [salario, setSalario] = useState('');
 	const [ahorro, setAhorro] = useState('');
-	const [apiResponse, setApiResponse] = useState<ApiResponse | undefined>(null);
+	const [apiResponse, setApiResponse] = useState<ResponseWallet | undefined>(null);
 	const [visibility, setVisibilityToast] = useState(false);
 	const [loader, setLoader] = useState(false);
 	const user = JSON.parse(localStorage.getItem('userMain'));
@@ -64,7 +64,7 @@ export const Carrusel = () => {
 							<Card className='h-full w-full'>
 								<CardContent className='flex h-full  items-center justify-center gap-32 p-6 flex-col  text-center text-wrap'>
 									<h1 className='text-4xl'>
-										Bienvenido <span className='capitalize text-green-500'>{user.FullName}</span>
+										Bienvenido <span className='capitalize text-green-500'>{user?.full_name}</span>
 									</h1>
 
 									<div className='flex flex-col gap-10'>
