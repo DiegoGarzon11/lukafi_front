@@ -32,6 +32,9 @@ export const AddDebt = ({ apiData }) => {
 			setPerson(e.target.value);
 		} else if (type === 'reason') {
 			setReason(e.target.value);
+		}else if(type === 'isFixed'){
+			console.log(e.target.value);
+			
 		}
 	};
 
@@ -136,14 +139,14 @@ export const AddDebt = ({ apiData }) => {
 						onChange={(e) => handleValues(e, 'reason')}
 					/>
 				</div>
-				<button
+				<Button
 					disabled={debtType === null || person === '' || reason === '' || value === '' || value === '0'}
 					onClick={submitDebt}
 					className={` py-2 rounded-md text-white flex justify-center ${
 						debtType === null || person === '' || reason === '' || value === '' || value === '0' ? 'bg-gray-200 ' : ' bg-slate-800'
 					}`}>
 					{loader ? <Loader /> : 'Confirmar'}
-				</button>
+				</Button>
 			</DialogContent>
 			{visibilytToast && (
 				<Toast

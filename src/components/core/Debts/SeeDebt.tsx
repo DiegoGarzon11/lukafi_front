@@ -15,7 +15,7 @@ export const SeeDebt = ({ apiData }) => {
 
 	async function getDebts() {
 		const params = {
-			Wallet_id: apiData?.wallet?.Wallet_id,
+			Wallet_id: apiData?.Wallet_id,
 		};
 		const response = await GetDebts(params);
 

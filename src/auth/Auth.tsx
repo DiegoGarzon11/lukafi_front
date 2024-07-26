@@ -49,7 +49,7 @@ export default function Auth() {
 						</div>
 					</div>
 					<p
-						style={{ textShadow: ' 1px px 2px black' }}
+						style={{ textShadow: ' 1px 8px 2px black' }}
 						className={` hidden absolute lg:block     text-white md:text-2xl lg:text-4xl text-pretty textc  tracking-wider leading-none z-10  bottom-20 w-3/12  font-semibold    ${
 							view ? 'translate-x-1/4   ' : 'left-24  '
 						}  `}>

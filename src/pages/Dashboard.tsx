@@ -2,7 +2,7 @@ import { GetWalletUser } from '@/apis/WalletService';
 import { Chart } from '@/components/core/Chart';
 import { AddDebt } from '@/components/core/Debts/AddDebt';
 import { SeeDebt } from '@/components/core/Debts/SeeDebt';
-// import { AddExpense } from '@/components/core/Expenses/AddExpense';
+import { AddExpense } from '@/components/core/Expenses/AddExpense';
 import { Carrusel } from '@/components/others/Carrousel';
 import { Wallet } from '@/interfaces/Wallet';
 import '@/styles/Dashboard.css';
@@ -47,12 +47,12 @@ export const Dashboard = () => {
 					</section>
 					<section className=' flex flex-col row-span-10 gap-5  '>
 						<div className=' shadow-sm  h-full w-full rounded-xl bg-slate-800 flex flex-col  gap-3 p-5 '>
-							{/* <AddExpense apiData={userData}/> */}
-							<AddDebt apiData={userData} />
+							<AddExpense apiData={userData?.wallet} />
+							<AddDebt apiData={userData?.wallet} />
 						</div>
 
 						<div className='shadow-sm  h-full w-full rounded-xl  bg-slate-800 flex flex-col justify gap-3 p-5 '>
-							<SeeDebt apiData={userData} />
+							<SeeDebt apiData={userData?.wallet} />
 						</div>
 					</section>
 					<section className=' shadow-sm col-span-3 row-span-6 h-full rounded-xl  bg-slate-800 p-5'>
