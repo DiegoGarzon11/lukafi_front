@@ -18,6 +18,8 @@ export const PageNotFound = () => {
 				<div
 					onMouseEnter={handleMouseEnter}
 					onMouseLeave={handleMouseLeave}
+					onTouchStart={handleMouseEnter}
+					onTouchEnd={handleMouseLeave}
 					className='relative group  cursor-pointer'>
 					<span className='absolute font-semibold text-[400px] -left-32 -top-28   dark:text-white group-hover:scale-105 transition-all  '>
 						4<span className='invisible'>0</span>4
