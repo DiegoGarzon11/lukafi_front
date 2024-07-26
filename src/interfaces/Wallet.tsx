@@ -1,34 +1,21 @@
-export interface wallet {
-	Debts: string;
-	Expenses: string;
-	FixedCosts: string;
-	FixedIncomes: string;
-	Incomes: string;
-	Month: string;
-	Salary: string;
-	Saving: string;
-	User_id: string;
-	Wallet_id: string;
-	Year: string;
+import { ApiResponse } from './Api';
+export interface ResponseWallet extends ApiResponse {
+	wallet: {
+		debt_id: string;
+		expense_id: string;
+		salary: number;
+		saving: number;
+		user_id: string;
+		wallet_id: string;
+	};
 }
-export interface ApiResponse {
-	success: boolean;
-	message: string;
-	status: number;
-}
-
-export interface Debt {
-	Debt_id: string;
-	Person: string;
-	Value: string;
-	Reason: string;
-	CreatedIn: string;
-	DebtType: number;
-	ModifyIn: string;
-	Wallet_id: string;
-}
-
-export interface Wallet extends ApiResponse {
-	wallet: wallet;
-	debts: Debt[];
+export interface Debt extends ApiResponse {
+	created_in: string;
+	debt_type: number;
+	debt_id: string;
+	modify_in: null;
+	person: string;
+	reason: string;
+	value: number;
+	wallet_id: string;
 }

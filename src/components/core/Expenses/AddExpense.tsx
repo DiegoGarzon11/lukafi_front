@@ -51,11 +51,11 @@ export const AddExpense = ({ apiData }) => {
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
-				<Button className='w-full py-6  bg-slate-700 text-white'>Agregar ingreso</Button>
+				<Button className='w-full py-6  bg-slate-700 text-white'>Agregar gasto</Button>
 			</DialogTrigger>
 			<DialogContent className='sm:max-w-[425px] '>
 				<DialogHeader>
-					<DialogTitle>Nueva ingreso</DialogTitle>
+					<DialogTitle>Nueva gasto</DialogTitle>
 					<DialogDescription>Completa los campos segun el gasto corresponda</DialogDescription>
 				</DialogHeader>
 

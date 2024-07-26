@@ -4,16 +4,18 @@ import { AddDebt } from '@/components/core/Debts/AddDebt';
 import { SeeDebt } from '@/components/core/Debts/SeeDebt';
 import { AddExpense } from '@/components/core/Expenses/AddExpense';
 import { Carrusel } from '@/components/others/Carrousel';
-import { Wallet } from '@/interfaces/Wallet';
+import { ResponseWallet } from '@/interfaces/Wallet';
 import '@/styles/Dashboard.css';
 import { useEffect, useState } from 'react';
 
 export const Dashboard = () => {
-	const [userData, setDataUser] = useState<Wallet | undefined>(undefined);
+	const [userData, setDataUser] = useState<ResponseWallet | undefined>(undefined);
 	const user = JSON.parse(localStorage.getItem('userMain'));
 	useEffect(() => {
-		GetWalletUser(user?.User_id).then((r) => {
+		GetWalletUser(user?.user_id).then((r) => {
 			setDataUser(r);
+		
+			
 		});
 	}, []);
 
@@ -29,19 +31,19 @@ export const Dashboard = () => {
 						<article className='w-full shadow-sm border-none  bg-slate-800 rounded-xl  p-3'>
 							<div>
 								<p>Tu salario:</p>
-								<p className='text-green-500'>{parseInt(userData?.wallet?.Salary).toLocaleString()}</p>
+								<p className='text-green-500'>{userData?.wallet.salary.toLocaleString()}</p>
 							</div>
 						</article>
 						<article className='w-full shadow-sm border-none  bg-slate-800 rounded-xl  p-3'>
 							<div>
 								<p>Ahorrado:</p>
-								<p className='text-green-500'>{parseInt(userData?.wallet?.Salary).toLocaleString()}</p>
+								<p className='text-green-500'>{userData?.wallet.saving.toLocaleString()}</p>
 							</div>
 						</article>
 						<article className='w-full shadow-sm border-none  bg-slate-800 rounded-xl  p-3'>
 							<div>
 								<p>Meta ahorras</p>
-								<p className='text-green-500'>{parseInt(userData?.wallet?.Saving).toLocaleString()}</p>
+								<p className='text-green-500'>{userData?.wallet.saving.toLocaleString()}</p>
 							</div>
 						</article>
 					</section>

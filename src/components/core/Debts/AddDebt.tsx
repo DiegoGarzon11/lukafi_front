@@ -3,7 +3,7 @@ import { Expense, Income, Loader } from '@/assets/icons/Svg';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
-import { ApiResponse } from '@/interfaces/Wallet';
+import { ApiResponse } from '@/interfaces/Api';
 import { Toast } from '@/tools/Toast';
 import { useState } from 'react';
 
@@ -32,18 +32,15 @@ export const AddDebt = ({ apiData }) => {
 			setPerson(e.target.value);
 		} else if (type === 'reason') {
 			setReason(e.target.value);
-		}else if(type === 'isFixed'){
-			console.log(e.target.value);
-			
-		}
+		} 
 	};
 
 	const submitDebt = async () => {
 		setLoader(true);
 
 		const params = {
-			User_id: apiData?.wallet?.User_id,
-			Wallet_id: apiData?.wallet?.Wallet_id,
+			user_id: apiData?.user_id,
+			wallet_id: apiData?.wallet_id,
 			person,
 			value: value.replace(/,/g, ''),
 			reason,

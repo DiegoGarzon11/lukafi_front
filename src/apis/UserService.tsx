@@ -1,16 +1,15 @@
 import { API_HTTP } from '@/tools/router';
 export const UserRegister = async (data) => {
 	const formData = new URLSearchParams();
-	formData.append('Name', data.name);
-	formData.append('LastName', data.lastName);
-	formData.append('Email', data.email);
-	formData.append('Age', data.age);
-	formData.append('Nacionality', data.nacionality);
-	formData.append('Password', data.password);
-
+	formData.append('name', data.name);
+	formData.append('last_name', data.lastName);
+	formData.append('email', data.email);
+	formData.append('age', data.age);
+	formData.append('nacionality', data.nacionality);
+	formData.append('password', data.password);
 
 	try {
-		const response = await fetch(`${API_HTTP}/user/signUp`, {
+		const response = await fetch(`${API_HTTP}/user/sign-up`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded',
@@ -19,17 +18,17 @@ export const UserRegister = async (data) => {
 		});
 		return await response.json();
 	} catch (error) {
-		console.log(error);
+		console.error(error);
 	}
 };
 export const UserSignIn = async (data) => {
 	const dataForm = new URLSearchParams();
 
-	dataForm.append('Email', data.email);
-	dataForm.append('Password', data.password);
+	dataForm.append('email', data.email);
+	dataForm.append('password', data.password);
 
 	try {
-		const response = await fetch(`${API_HTTP}/user/signIn`, {
+		const response = await fetch(`${API_HTTP}/user/sign-in`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded',
@@ -38,14 +37,14 @@ export const UserSignIn = async (data) => {
 		});
 		return await response.json();
 	} catch (error) {
-		console.log(error);
+		console.error(error);
 	}
 };
 export const UserDefault = async () => {
 	const token = localStorage.token;
 	if (token) {
 		try {
-			const response = await fetch(`${API_HTTP}/user/defaultUser`, {
+			const response = await fetch(`${API_HTTP}/user/default-user`, {
 				method: 'GET',
 				headers: {
 					Authorization: token,
@@ -53,9 +52,7 @@ export const UserDefault = async () => {
 			});
 			return await response.json();
 		} catch (error) {
-			console.log(error);
+			console.error(error);
 		}
-	} else {
-		return console.log('user not found');
-	}
+	} 
 };

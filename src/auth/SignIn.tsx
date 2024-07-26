@@ -7,7 +7,7 @@ import { Loader } from '@/assets/icons/Svg';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { ApiResponse } from '@/interfaces/Wallet';
+import { ApiResponse } from '@/interfaces/Api';
 
 export default function SignIn() {
 	const { t, i18n } = useTranslation();
@@ -40,17 +40,20 @@ export default function SignIn() {
 		event.preventDefault();
 		setLoader(true);
 		setVisibilityToast(false);
+		
+		
 		try {
 			const dataUserSignIn = await UserSignIn(data);
 			setStatusCode(dataUserSignIn);
 			setVisibilityToast(true);
 
-			console.log(statusCode);
-
+		
 			if (dataUserSignIn.token) {
 				localStorage.setItem('token', dataUserSignIn?.token);
 				const userDefault = await UserDefault();
-				localStorage.setItem('userMain', JSON.stringify(userDefault?.userInfo));
+			
+				
+				localStorage.setItem('userMain', JSON.stringify(userDefault?.users));
 				return (window.location.href = '/dashboard');
 			}
 			console.warn('user not found');
@@ -79,7 +82,7 @@ export default function SignIn() {
 			<form
 				className='mt-10 grid gap-8 p-8 shadow-sm shadow-slate-300 dark:shadow-slate-800/60   rounded-2xl  '
 				onSubmit={handleSubmit}>
-				<h1 className='text-3xl mb-6'>{t('form.field.signIn')}</h1>
+				<h1 className='text-4xl mb-6 font-semibold'>{t('form.field.signIn')}</h1>
 				<div>
 					<label
 						htmlFor=''

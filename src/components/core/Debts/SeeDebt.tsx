@@ -4,28 +4,28 @@ import { TooltipComponent } from '@/components/others/Tooltip';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { ApiResponse, Debt } from '@/interfaces/Wallet';
+import { ResponseWallet, Debt } from '@/interfaces/Wallet';
 import { Toast } from '@/tools/Toast';
 import { useState } from 'react';
 
 export const SeeDebt = ({ apiData }) => {
 	const [visibilytToast, setVisibilityToast] = useState(false);
 	const [debts, setDebts] = useState<Array<Debt> | undefined>([]);
-	const [responseDebt, setresponseDebt] = useState<ApiResponse | undefined>(null);
+	const [responseDebt, setresponseDebt] = useState<ResponseWallet | undefined>(null);
 
 	async function getDebts() {
 		const params = {
-			Wallet_id: apiData?.Wallet_id,
+			wallet_id: apiData?.wallet_id,
 		};
 		const response = await GetDebts(params);
 
-		setDebts(response?.response);
+		setDebts(response?.debts);
 	}
 
 	const deleteDebt = async (e) => {
 		const params = {
-			Debt_id: e?.Debt_id,
-			Wallet_id: e?.Wallet_id,
+			debt_id: e?.debt_id,
+			wallet_id: e?.wallet_id,
 		};
 		const responseDeleteDebt = await DeleteDebt(params);
 		if (responseDeleteDebt) {
@@ -68,30 +68,30 @@ export const SeeDebt = ({ apiData }) => {
 						</TableHeader>
 
 						<TableBody className=' h-[500px] overflow-auto  overflow-x-hidden   scrollbar-custom'>
-							{debts.map((d) => (
-								<TableRow key={d?.Debt_id}>
+							{debts?.map((d) => (
+								<TableRow key={d?.debt_id}>
 									<TableCell className='font-medium flex gap-10 items-center w-40'>
-										<p>{new Date(JSON.parse(d?.CreatedIn)).toLocaleDateString()}</p>
+										<p>{new Date(JSON.parse(d?.created_in)).toLocaleDateString()}</p>
 									</TableCell>
 									<TableCell className='font-medium w-40'>
-										{d?.Person.length >= 10 ? (
+										{d?.person.length >= 10 ? (
 											<TooltipComponent
-												message={`${d?.Person.slice(0, 10)}...`}
-												content={d?.Person}
+												message={`${d?.person.slice(0, 10)}...`}
+												content={d?.person}
 											/>
 										) : (
-											<p>{d?.Person}</p>
+											<p>{d?.person}</p>
 										)}
 									</TableCell>
 									<TableCell className='font-medium w-40'>
-										<p>{d?.Reason}</p>
+										<p>{d?.reason}</p>
 									</TableCell>
 									<TableCell className='font-medium w-40'>
-										<p>{parseInt(d?.Value).toLocaleString()}</p>
+										<p>{d?.value.toLocaleString()}</p>
 									</TableCell>
 									<TableCell className='font-medium w-40'>
-										<p className={` rounded-md px-2 py-1 text-start ${d?.DebtType == 0 ? 'text-red-500' : 'text-green-500'}`}>
-											{d?.DebtType == 0 ? 'Debes' : 'Te deben'}
+										<p className={` rounded-md px-2 py-1 text-start ${d?.debt_type == 0 ? 'text-red-500' : 'text-green-500'}`}>
+											{d?.debt_type == 0 ? 'Debes' : 'Te deben'}
 										</p>
 									</TableCell>
 									<TableCell className='font-medium flex  w-40'>

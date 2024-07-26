@@ -3,30 +3,26 @@ import { API_HTTP } from '@/tools/router';
 export const GetWalletUser = async (user_id: string) => {
 	if (user_id) {
 		try {
-			const response = await fetch(`${API_HTTP}/wallet/getWallet/${user_id}`, {
+			const response = await fetch(`${API_HTTP}/wallet/get-wallet/${user_id}`, {
 				method: 'GET',
 			});
 
 			return await response.json();
 		} catch (error) {
-			console.log(error);
+			console.error(error);
 		}
 	} else {
-		console.log('Wallet not found');
+		console.warn('Wallet not found');
 	}
 };
 export const CreateWallet = async (data) => {
 	if (data) {
 		const formData = new URLSearchParams();
-		formData.append('Salary', data.salary);
-		formData.append('Saving', data.saving);
-		formData.append('FixedCosts', JSON.stringify(data.FixedCosts));
-		formData.append('FixedIncomes', JSON.stringify(data.FixedIncomes));
-		formData.append('Month', data.month);
-		formData.append('Year', data.year);
+		formData.append('salary', data.salary);
+		formData.append('saving', data.saving);
 		formData.append('User_id', data.user_id);
 		try {
-			const response = await fetch(`${API_HTTP}/wallet/newWallet`, {
+			const response = await fetch(`${API_HTTP}/wallet/new-wallet`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/x-www-form-urlencoded',
@@ -35,9 +31,9 @@ export const CreateWallet = async (data) => {
 			});
 			return await response.json();
 		} catch (error) {
-			console.log(error);
+			console.error(error);
 		}
 		return;
 	}
-	console.log('datos no enviados');
+	console.warn('datos no enviados');
 };

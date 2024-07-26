@@ -3,7 +3,7 @@ import { EyeClose, EyeOpen } from '@/assets/icons/Svg';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { ApiResponse } from '@/interfaces/Wallet';
+import { ResponseWallet } from '@/interfaces/Wallet';
 import { COUNTRIES } from '@/tools/countries';
 import { Toast } from '@/tools/Toast';
 import { Loader } from '@/assets/icons/Svg';
@@ -20,7 +20,7 @@ export default function SignUp() {
 	const days = Array.from({ length: 31 }, (_, i) => i + 1);
 	const [showPassword, setShowPassword] = useState(false);
 	const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
-	const [statusCode, setStatusCode] = useState<ApiResponse | undefined>(null);
+	const [statusCode, setStatusCode] = useState<ResponseWallet | undefined>(null);
 	const [loader, setLoader] = useState(false);
 	const [visibilytToast, setVisibilityToast] = useState(false);
 	const [date, setDate] = useState({
@@ -75,11 +75,11 @@ export default function SignUp() {
 				setVisibilityToast(true);
 				setLoader(true);
 				setTimeout(() => {
-					return (window.location.href = '/signIn');
+					return (window.location.href = '/auth');
 				}, 1000);
 			}
 		} catch (error) {
-			console.log(error);
+			console.error(error);
 		} finally {
 			setVisibilityToast(false);
 			setLoader(false);
@@ -101,7 +101,7 @@ export default function SignUp() {
 			<form
 				className='mt-10 grid gap-8 px-5 p-8 shadow-sm shadow-slate-300 dark:shadow-slate-800/60 rounded-2xl  '
 				onSubmit={handleSubmit}>
-				<h1 className='text-3xl mb-6'>{t('form.field.signUp')}</h1>
+				<h1 className='text-4xl mb-6 font-semibold' >{t('form.field.signUp')}</h1>
 				<div className='flex gap-5'>
 					<div className='w-full'>
 						<label

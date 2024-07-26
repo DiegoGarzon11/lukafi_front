@@ -18,7 +18,7 @@ export default function Auth() {
 			<img
 				className={` absolute    transition-transform ease-in-out ${
 					view ? 'translate-x-full ease-in-out' : ''
-				} hidden  lg:block md:h-full     opacity-80  dark:opacity-35 aspect-square lg:p-4 rounded-3xl md:w-2/4  lg:object-fill `}
+				} hidden  lg:block md:h-full     opacity-80  dark:opacity-35 aspect-square lg:p-3 rounded-3xl md:w-2/4  lg:object-fill `}
 				src='/images/init.webp'
 				alt=''
 			/>
@@ -33,6 +33,7 @@ export default function Auth() {
 
 						<div className='  flex items-center justify-end mx-5 md:mx-20 '>
 							<button
+								disabled={view}
 								className={`${
 									view ? ' bg-slate-300/70 text-white font-bold  dark:bg-slate-600/80' : 'text-white'
 								}  text-xl border border-slate-200 rounded-tl-2xl p-3 md:w-40 `}
@@ -40,6 +41,7 @@ export default function Auth() {
 								{t('form.field.signIn')}
 							</button>
 							<button
+								disabled={!view}
 								className={`${
 									view ? 'text-white' : 'bg-slate-300/70 text-white font-bold  dark:bg-slate-600/80 '
 								} text-xl border border-slate-200 rounded-tr-2xl p-3 md:w-40`}
@@ -57,7 +59,7 @@ export default function Auth() {
 					</p>
 				</div>
 
-				<div className={` flex justify-center items-start lg:items-center w-full h-full ${view ? '-order-1' : ''}  `}>
+				<div className={` flex justify-center items-start lg:items-center w-full h-full   ${view ? '-order-1' : ''}  `}>
 					<section className='w-5/6   '>{view ? <SignIn /> : <SignUp />}</section>
 				</div>
 			</div>
