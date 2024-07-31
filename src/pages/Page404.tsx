@@ -14,26 +14,29 @@ export const PageNotFound = () => {
 
 	return (
 		<main className='flex flex-col items-center justify-center bg-slate-300 dark:bg-slate-950 h-screen'>
-			<div className='md:flex justify-between items-center w-3/4 '>
+			<div className='flex flex-col xl:flex-row relative justify-between items-center w-3/4 '>
 				<div
 					onMouseEnter={handleMouseEnter}
 					onMouseLeave={handleMouseLeave}
 					onTouchStart={handleMouseEnter}
 					onTouchEnd={handleMouseLeave}
-					className='md:relative group text-center cursor-pointer'>
-					<span className='md:absolute font-semibold md:text-[400px] text-[150px]  md:-left-32 md:-top-28 dark:text-white group-hover:scale-105 transition-all'>
-						4<span className='invisible'>0</span>4
+					className='relative group text-center cursor-pointer'>
+					<span className='flex items-center  font-semibold text-[170px] gap-20 md:gap-40 md:text-[300px] dark:text-white group-hover:scale-105 transition-all'>
+						4
+						<span className='absolute md:left-40 md:top-32 left-20 top-16 inline-block'>
+							<img
+								src='/images/img_not_found.webp'
+								alt='Imagen no encontrada'
+								className='md:w-64 md:h-64 w-40 h-40 row-span-2 scale-100 transform transition-transform duration-500 hover:rotate-3 z-20 group-hover:scale-110'
+							/>
+						</span>
+						4
 					</span>
-					<img
-						src='/images/img_not_found.webp'
-						alt='Imagen no encontrada'
-						className='md:ml-14 md:mt-3 md:w-[400px] md:relative md:left-0 md:top-0 absolute left-40 top-52 w-[150px] row-span-2 pt-10 scale-100 transform transition-transform duration-500 hover:rotate-3 z-20 group-hover:scale-110'
-					/>
 				</div>
 
-				<div className='flex flex-col md:items-end items-center'>
+				<div className='flex flex-col xl:items-end items-center'>
 					<p className='text-end font-semibold dark:text-white text-9xl'>Oops!</p>
-					<p className='dark:text-white text-2xl text-balance my-10 text-center md:text-end'>
+					<p className='dark:text-white text-2xl text-balance my-10 text-center xl:text-end'>
 						Parece que te desviaste mientras intentabas ahorrar. Volvamos y cuidemos mejor tu dinero.
 					</p>
 					<Link to='/auth'>
