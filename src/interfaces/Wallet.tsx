@@ -19,3 +19,13 @@ export interface Debt extends ApiResponse {
 	value: number;
 	wallet_id: string;
 }
+export interface Expenses extends ApiResponse {
+	created_in: string;
+	dead_line: string;
+	expense_id: string;
+	is_fixed: boolean;
+	name: string;
+	paid_in: string | null;
+	value: number;
+	wallet_id: string;
+}

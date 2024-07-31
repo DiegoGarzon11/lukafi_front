@@ -26,3 +26,34 @@ export const NewExpense = async (data) => {
 		console.error(error);
 	}
 };
+
+export const GetExpenses = async (data) => {
+	if (data) {
+		try {
+			const response = await fetch(`${API_HTTP + MAIN_ROUTE}get-expenses/${data.wallet_id}`, {
+				method: 'GET',
+			});
+
+			return await response.json();
+		} catch (error) {
+			console.error(error);
+		}
+		return;
+	}
+	console.warn('datos no enviados');
+};
+export const GetFixedExpenses = async (data) => {
+	if (data) {
+		try {
+			const response = await fetch(`${API_HTTP + MAIN_ROUTE}get-fixed-expenses/${data}`, {
+				method: 'GET',
+			});
+
+			return await response.json();
+		} catch (error) {
+			console.error(error);
+		}
+		return;
+	}
+	console.warn('datos no enviados');
+};

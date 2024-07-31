@@ -68,7 +68,7 @@ export const AddDebt = ({ apiData }) => {
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
-				<Button className='w-full py-6  bg-slate-700 text-white'>Agregar deuda</Button>
+				<Button className='w-full py-6  bg-slate-950/50 text-white'>Agregar deuda</Button>
 			</DialogTrigger>
 			<DialogContent className='sm:max-w-[425px] '>
 				<DialogHeader>

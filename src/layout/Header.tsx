@@ -1,9 +1,9 @@
-import {Col, Usa, Moon, Sun} from '@/assets/icons/Svg';
-import {useTranslation} from 'react-i18next';
-import {useEffect, useState} from 'react';
-import {Link, Outlet} from 'react-router-dom';
-import {Button} from '@/components/ui/button';
-import {SheetSide} from '@/components/ui/sheetSide';
+import { Col, Usa, Moon, Sun } from '@/assets/icons/Svg';
+import { useTranslation } from 'react-i18next';
+import { useEffect, useState } from 'react';
+import { Link, Outlet } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SheetSide } from '@/components/ui/sheetSide';
 
 export default function Header() {
 	const [isOpen, setIsOpen] = useState(false);
@@ -12,7 +12,7 @@ export default function Header() {
 		return savedTheme || 'light';
 	});
 
-	const {t, i18n} = useTranslation();
+	const { t, i18n } = useTranslation();
 	const onChangeLanguage = (e) => {
 		i18n.changeLanguage(e);
 		if (e === 'es') {
@@ -54,11 +54,8 @@ export default function Header() {
 
 	return (
 		<>
-			<header className='  dark:bg-slate-950 dark:text-white z-50 absolute  flex w-full justify-center gap-5  px-10'>
-				<div
-					className={` ${
-						localStorage?.token ? 'w-[95%] mt-2' : 'w-[95%] md:w-2/3'
-					} fixed flex justify-between shadow-sm shadow-slate-700 rounded-full p-3 z-10 bg-gradient-to-b dark:from-slate-900 dark:to-slate-950 bg-white`}>
+			<header className='  dark:bg-slate-950 dark:text-white z-50 absolute  flex w-full justify-center gap-5  '>
+				<div className=' w-[98%] fixed flex justify-between shadow-sm shadow-slate-700 rounded-full p-3 z-10 bg-gradient-to-b dark:from-slate-900 dark:to-slate-950 bg-white'>
 					<div className='flex justify-start gap-3 items-center'>
 						<p className='text-lg pl-5'>Lukafi</p>
 					</div>
@@ -72,7 +69,9 @@ export default function Header() {
 							</div>
 						)}
 
-						<button onClick={() => setIsOpen(!isOpen)} className=''>
+						<button
+							onClick={() => setIsOpen(!isOpen)}
+							className=''>
 							{localStorage.lang == 'en' ? <Usa /> : <Col />}
 						</button>
 						{isOpen && (
@@ -103,11 +102,15 @@ export default function Header() {
 							</div>
 						)}
 						{theme === 'dark' ? (
-							<button className='dark:bg-transparent dark:hover:bg-transparent p-0' onClick={handleTheme}>
+							<button
+								className='dark:bg-transparent dark:hover:bg-transparent p-0'
+								onClick={handleTheme}>
 								<Moon />
 							</button>
 						) : (
-							<button className='bg-transparent hover:bg-transparent p-0' onClick={handleTheme}>
+							<button
+								className='bg-transparent hover:bg-transparent p-0'
+								onClick={handleTheme}>
 								<Sun />
 							</button>
 						)}

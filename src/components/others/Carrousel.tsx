@@ -39,7 +39,7 @@ export const Carrusel = () => {
 		const params = {
 			salary: salario.replace(/,/g, ''),
 			saving: ahorro.replace(/,/g, ''),
-			user_id: user?.User_id,
+			user_id: user?.user_id,
 		};
 
 		const response = await CreateWallet(params);

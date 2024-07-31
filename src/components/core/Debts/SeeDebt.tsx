@@ -43,8 +43,8 @@ export const SeeDebt = ({ apiData }) => {
 			<DialogTrigger asChild>
 				<Button
 					onClick={() => getDebts()}
-					className='w-full py-6  bg-slate-700 text-white'>
-					Ver tus deudas
+					className='w-full py-6  bg-slate-950/50 text-white'>
+					 Tus deudas
 				</Button>
 			</DialogTrigger>
 			<DialogContent
@@ -67,7 +67,7 @@ export const SeeDebt = ({ apiData }) => {
 							</TableRow>
 						</TableHeader>
 
-						<TableBody className=' h-[500px] overflow-auto  overflow-x-hidden   scrollbar-custom'>
+						<TableBody className=' h-[400px] overflow-auto  overflow-x-hidden   scrollbar-custom'>
 							{debts?.map((d) => (
 								<TableRow key={d?.debt_id}>
 									<TableCell className='font-medium flex gap-10 items-center w-40'>

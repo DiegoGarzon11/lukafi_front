@@ -20,7 +20,7 @@ export const CreateWallet = async (data) => {
 		const formData = new URLSearchParams();
 		formData.append('salary', data.salary);
 		formData.append('saving', data.saving);
-		formData.append('User_id', data.user_id);
+		formData.append('user_id', data.user_id);
 		try {
 			const response = await fetch(`${API_HTTP}/wallet/new-wallet`, {
 				method: 'POST',

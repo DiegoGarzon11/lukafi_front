@@ -30,28 +30,34 @@ export const AddExpense = ({ apiData }) => {
 		} else if (type === 'name') {
 			setName(e.target.value);
 		} else if (type === 'isFixed') {
+			console.log('fixed-----', e);
+
 			setIsFixed(e);
 		}
 	};
 
 	const submitExpense = async () => {
+		const sendIsFixed  = isFixed === 'true'
+		
 		const params = {
-			Wallet_id: apiData.Wallet_id,
-			User_id: apiData.User_id,
+			wallet_id: apiData.wallet_id,
+			user_id: apiData.user_id,
 			name,
 			value: parseInt(value.replace(/,/g, '')),
 			deadLine: new Date(deadLine).toISOString(),
-			isFixed: Boolean(isFixed),
+			isFixed: sendIsFixed,
 		};
-		 await NewExpense(params);
 		
+		
+		await NewExpense(params);
+
 		// setResponseApiNewExpense(response);
 	};
 
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
-				<Button className='w-full py-6  bg-slate-700 text-white'>Agregar gasto</Button>
+				<Button  className='w-full py-6  bg-slate-950/50 text-white'>Agregar gasto</Button>
 			</DialogTrigger>
 			<DialogContent className='sm:max-w-[425px] '>
 				<DialogHeader>
@@ -106,14 +112,14 @@ export const AddExpense = ({ apiData }) => {
 						<div className='flex items-center space-x-2'>
 							<RadioGroupItem
 								value='true'
-								id='1'
+								id='true'
 							/>
 							<Label htmlFor='r1'>Si</Label>
 						</div>
 						<div className='flex items-center space-x-2'>
 							<RadioGroupItem
 								value='false'
-								id='0'
+								id='false'
 							/>
 							<Label htmlFor='r2'>No</Label>
 						</div>
