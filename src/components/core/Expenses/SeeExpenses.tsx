@@ -77,7 +77,7 @@ export const SeeExpenses = ({ apiData }) => {
 									<TableCell className='font-medium w-40'>
 										{e?.is_fixed ? (
 											<p className={`${e.paid_in == null}`}>
-												{e.paid_in == null ? 'No ha sido pagada' : new Date(JSON.parse(e?.paid_in)).toLocaleDateString()}
+												{e.paid_in == null ? 'No ha sido pagada' : (e?.paid_in)}
 											</p>
 										) : (
 											<p>No es gasto fijo</p>

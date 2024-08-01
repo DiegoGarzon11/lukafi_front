@@ -1,43 +1,34 @@
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { GetDailyExpenses } from '@/apis/ExpenseService';
+import { useEffect, useState } from 'react';
+import { GetWalletUser } from '@/apis/WalletService';
 
-const data = [
-	{
-		name: 'Jan',
-		ingreso: 5000000,
-		ahorro: 2000000,
-		gasto: 100000,
-	},
-	{
-		name: 'Feb',
-		ingreso: 5000000,
-		ahorro: 100000,
-		gasto: 4000000,
-	},
-	{
-		name: 'Mar',
-		ingreso: 5000000,
-		ahorro: 5000000,
-		gasto: 400,
-	},
-	{
-		name: 'Abril',
-		ingreso: 5000000,
-		ahorro: 2000000,
-		gasto: 800000,
-	},
-];
-
-const CustomTooltip = ({payload}) => {
+const CustomTooltip = ({ payload }) => {
 	return (
 		<div className='custom-tooltip'>
-			<p className='payload'>{payload[0]?.value}</p>
-
-			<p className='desc'>Anything you want can be displayed here.</p>
+			<p className='payload'>
+				en el dia {payload[0]?.payload?.date} gastaste {Number(payload[0]?.payload?.total_value).toLocaleString()}
+			</p>
 		</div>
 	);
 };
 
 export const Chart = () => {
+	const userInfo = JSON.parse(localStorage.userMain);
+	const [expensesPaid, setExpensesPaid] = useState();
+
+	useEffect(() => {
+		GetWalletUser(userInfo?.user_id).then((result) => {
+			GetDailyExpenses(result?.wallet?.wallet_id).then((expenses) => {
+				console.log(expenses);
+
+				setExpensesPaid(expenses?.expenses);
+			});
+		});
+	}, []);
+
+	console.log(expensesPaid);
+
 	return (
 		<ResponsiveContainer
 			width='100%'
@@ -45,35 +36,23 @@ export const Chart = () => {
 			<LineChart
 				width={500}
 				height={300}
-				data={data}
+				data={expensesPaid}
 				margin={{
 					top: 5,
 					right: 30,
 					left: 20,
 					bottom: 5,
 				}}>
-				<CartesianGrid strokeDasharray='3 3 3' />
-				<XAxis dataKey='name' />
+				<CartesianGrid strokeDasharray=' 3 3' />
+				<XAxis dataKey='date' />
 				<YAxis />
 				<Tooltip content={CustomTooltip} />
 				<Legend />
 				<Line
-					type='monotone'
-					dataKey='ingreso'
-					stroke='#36C2CE'
-					strokeWidth={1}
-				/>
-				<Line
-					type='monotone'
-					dataKey='ahorro'
-					stroke='#06D001'
-					strokeWidth={1}
-				/>
-				<Line
-					type='monotone'
-					dataKey='gasto'
-					stroke='#FF0000'
-					strokeWidth={1}
+					activeDot={{ r: 8 }}
+					type='natural'
+					dataKey='total_value'
+					stroke='red'
 				/>
 			</LineChart>
 		</ResponsiveContainer>
