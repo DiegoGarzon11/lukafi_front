@@ -48,7 +48,6 @@ export const AddExpense = ({ apiData }) => {
 			isFixed: sendIsFixed,
 		};
 
-		console.log(params);
 
 		await NewExpense(params);
 

@@ -21,17 +21,17 @@ export const PageNotFound = () => {
 					onTouchStart={handleMouseEnter}
 					onTouchEnd={handleMouseLeave}
 					className='relative group text-center cursor-pointer'>
-					<span className='flex items-center  font-semibold text-[170px] gap-20 md:gap-40 md:text-[300px] dark:text-white group-hover:scale-105 transition-all'>
-						4
+					<p className='flex items-center  font-semibold text-[170px] gap-20 md:gap-40 md:text-[300px] dark:text-white group-hover:scale-105 transition-all'>
+						<span className='mr-6 md:mr-8'>4</span>
 						<span className='absolute md:left-40 md:top-32 left-20 top-16 inline-block'>
 							<img
 								src='/images/img_not_found.webp'
 								alt='Imagen no encontrada'
-								className='md:w-64 md:h-64 w-40 h-40 row-span-2 scale-100 transform transition-transform duration-500 hover:rotate-3 z-20 group-hover:scale-110'
+								className=' md:h-64 w-full h-40 row-span-2 scale-100 transform transition-transform duration-500 hover:rotate-3 z-20 group-hover:scale-110 m'
 							/>
 						</span>
-						4
-					</span>
+						<span className=' ml-8 md:ml-14'>4</span>
+					</p>
 				</div>
 
 				<div className='flex flex-col xl:items-end items-center'>
