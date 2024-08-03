@@ -1,14 +1,15 @@
-import { DeleteDebt, GetDebts } from '@/apis/DebtService';
-import { Edit, Trash } from '@/assets/icons/Svg';
-import { TooltipComponent } from '@/components/others/Tooltip';
-import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { ResponseWallet, Debt } from '@/interfaces/Wallet';
-import { Toast } from '@/tools/Toast';
-import { useState } from 'react';
+import {DeleteDebt, GetDebts} from '@/apis/DebtService';
+import {Edit} from '@/assets/icons/Svg';
+import {Trash} from 'lucide-react';
+import {TooltipComponent} from '@/components/others/Tooltip';
+import {Button} from '@/components/ui/button';
+import {Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger} from '@/components/ui/dialog';
+import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table';
+import {ResponseWallet, Debt} from '@/interfaces/Wallet';
+import {Toast} from '@/tools/Toast';
+import {useState} from 'react';
 
-export const SeeDebt = ({ apiData }) => {
+export const SeeDebt = ({apiData}) => {
 	const [visibilytToast, setVisibilityToast] = useState(false);
 	const [debts, setDebts] = useState<Array<Debt> | undefined>([]);
 	const [responseDebt, setresponseDebt] = useState<ResponseWallet | undefined>(null);
@@ -41,15 +42,11 @@ export const SeeDebt = ({ apiData }) => {
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
-				<Button
-					onClick={() => getDebts()}
-					className='w-full py-6  bg-slate-950/50 text-white'>
-					 Tus deudas
+				<Button onClick={() => getDebts()} className='w-full py-6  bg-slate-950/50 text-white'>
+					Tus deudas
 				</Button>
 			</DialogTrigger>
-			<DialogContent
-				className='w-auto'
-				aria-describedby={undefined}>
+			<DialogContent className='w-auto' aria-describedby={undefined}>
 				<DialogHeader>
 					<DialogTitle>Tus deudas</DialogTitle>
 				</DialogHeader>
@@ -75,10 +72,7 @@ export const SeeDebt = ({ apiData }) => {
 									</TableCell>
 									<TableCell className='font-medium w-40'>
 										{d?.person.length >= 10 ? (
-											<TooltipComponent
-												message={`${d?.person.slice(0, 10)}...`}
-												content={d?.person}
-											/>
+											<TooltipComponent message={`${d?.person.slice(0, 10)}...`} content={d?.person} />
 										) : (
 											<p>{d?.person}</p>
 										)}
@@ -95,15 +89,10 @@ export const SeeDebt = ({ apiData }) => {
 										</p>
 									</TableCell>
 									<TableCell className='font-medium flex  w-40'>
-										<Button
-											onClick={() => deleteDebt(d)}
-											variant='ghost'
-											className='w-full'>
+										<Button onClick={() => deleteDebt(d)} variant='ghost' className='w-full'>
 											<Trash className={'w-6'} />
 										</Button>
-										<Button
-											variant='ghost'
-											className='w-full'>
+										<Button variant='ghost' className='w-full'>
 											<Edit className={'w-6'} />
 										</Button>
 									</TableCell>

@@ -23,11 +23,11 @@ export const PageNotFound = () => {
 					className='relative group text-center cursor-pointer'>
 					<span className='flex items-center  font-semibold text-[170px] gap-20 md:gap-40 md:text-[300px] dark:text-white group-hover:scale-105 transition-all'>
 						4
-						<span className='absolute md:left-40 md:top-32 left-20 top-16 inline-block'>
+						<span className='absolute md:left-40 md:top-32 left-[80px] top-[70px] inline-block'>
 							<img
 								src='/images/img_not_found.webp'
 								alt='Imagen no encontrada'
-								className='md:w-64 md:h-64 w-40 h-40 row-span-2 scale-100 transform transition-transform duration-500 hover:rotate-3 z-20 group-hover:scale-110'
+								className='md:w-64 md:h-64 w-36 h-36 row-span-2 scale-100 transform transition-transform duration-500 hover:rotate-3 z-20 group-hover:scale-110'
 							/>
 						</span>
 						4
@@ -35,7 +35,7 @@ export const PageNotFound = () => {
 				</div>
 
 				<div className='flex flex-col xl:items-end items-center'>
-					<p className='text-end font-semibold dark:text-white text-9xl'>Oops!</p>
+					<p className='text-end font-semibold dark:text-white md:text-9xl text-7xl'>Oops!</p>
 					<p className='dark:text-white text-2xl text-balance my-10 text-center xl:text-end'>
 						Parece que te desviaste mientras intentabas ahorrar. Volvamos y cuidemos mejor tu dinero.
 					</p>

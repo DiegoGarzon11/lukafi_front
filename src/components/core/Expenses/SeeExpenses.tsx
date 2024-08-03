@@ -1,14 +1,15 @@
-import { GetExpenses } from '@/apis/ExpenseService';
+import {GetExpenses} from '@/apis/ExpenseService';
 // import { Edit, Trash } from '@/assets/icons/Svg';
-import { TooltipComponent } from '@/components/others/Tooltip';
-import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Expenses } from '@/interfaces/Wallet';
+// import { Trash } from 'lucide-react';
+import {TooltipComponent} from '@/components/others/Tooltip';
+import {Button} from '@/components/ui/button';
+import {Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger} from '@/components/ui/dialog';
+import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table';
+import {Expenses} from '@/interfaces/Wallet';
 // import { Toast } from '@/tools/Toast';
-import { useState } from 'react';
+import {useState} from 'react';
 
-export const SeeExpenses = ({ apiData }) => {
+export const SeeExpenses = ({apiData}) => {
 	// const [visibilytToast, setVisibilityToast] = useState(false);
 	const [expenses, setExpenses] = useState<Array<Expenses> | undefined>([]);
 	// const [responseDebt, setresponseDebt] = useState<ResponseWallet | undefined>(null);
@@ -25,15 +26,11 @@ export const SeeExpenses = ({ apiData }) => {
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
-				<Button
-					onClick={() => getExpenses()}
-					className='w-full py-6 bg-slate-950/50 text-white'>
+				<Button onClick={() => getExpenses()} className='w-full py-6 bg-slate-950/50 text-white'>
 					Tus gastos
 				</Button>
 			</DialogTrigger>
-			<DialogContent
-				className='w-auto'
-				aria-describedby={undefined}>
+			<DialogContent className='w-auto' aria-describedby={undefined}>
 				<DialogHeader>
 					<DialogTitle>Tus gastos</DialogTitle>
 				</DialogHeader>
@@ -59,10 +56,7 @@ export const SeeExpenses = ({ apiData }) => {
 									</TableCell>
 									<TableCell className='font-medium w-40'>
 										{e?.name.length >= 10 ? (
-											<TooltipComponent
-												message={`${e?.name.slice(0, 10)}...`}
-												content={e?.name}
-											/>
+											<TooltipComponent message={`${e?.name.slice(0, 10)}...`} content={e?.name} />
 										) : (
 											<p>{e?.name}</p>
 										)}
@@ -76,9 +70,7 @@ export const SeeExpenses = ({ apiData }) => {
 									</TableCell>
 									<TableCell className='font-medium w-40'>
 										{e?.is_fixed ? (
-											<p className={`${e.paid_in == null}`}>
-												{e.paid_in == null ? 'No ha sido pagada' : (e?.paid_in)}
-											</p>
+											<p className={`${e.paid_in == null}`}>{e.paid_in == null ? 'No ha sido pagada' : e?.paid_in}</p>
 										) : (
 											<p>No es gasto fijo</p>
 										)}
