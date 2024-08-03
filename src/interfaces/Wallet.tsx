@@ -27,5 +27,7 @@ export interface Expenses extends ApiResponse {
 	name: string;
 	paid_in: string | null;
 	value: number;
+	is_paid: boolean;
 	wallet_id: string;
+	total_value : number
 }

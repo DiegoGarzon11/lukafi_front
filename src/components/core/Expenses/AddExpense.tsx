@@ -5,9 +5,10 @@ import {Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Dia
 import {Input} from '@/components/ui/input';
 import {Label} from '@/components/ui/label';
 import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
+import {BadgePlus} from 'lucide-react';
 import {useState} from 'react';
 
-export const AddExpense = ({apiData}) => {
+export const AddExpense = ({apiData, sendData}) => {
 	const [deadLine, setDeadLine] = useState(null);
 	const [name, setName] = useState('');
 	const [value, setValue] = useState('');
@@ -48,17 +49,20 @@ export const AddExpense = ({apiData}) => {
 			isFixed: sendIsFixed,
 		};
 
-		console.log(params);
-
-		await NewExpense(params);
-		window.location.reload();
-		// setResponseApiNewExpense(response);
+		const response = await NewExpense(params);
+		if (response && sendIsFixed) {
+			sendData('expenseFixed');
+		} else {
+			sendData('expense');
+		}
 	};
 
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
-				<Button className='w-full py-6  bg-slate-950/50 text-white'>Agregar gasto</Button>
+				<Button variant='ghost' className='w-full py-6  bg-slate-900/50 text-white flex items-center gap-3'>
+					Agregar gasto <BadgePlus />
+				</Button>
 			</DialogTrigger>
 			<DialogContent className='sm:max-w-[425px] '>
 				<DialogHeader>

@@ -1,38 +1,106 @@
-import {GetFixedExpenses} from '@/apis/ExpenseService';
+import {DeleteDebt, GetDebts} from '@/apis/DebtService';
+import {GetDailyExpenses, GetExpenses, GetFixedExpenses, PayFixedExpense} from '@/apis/ExpenseService';
 import {GetWalletUser} from '@/apis/WalletService';
-import {Update} from '@/assets/icons/Svg';
-import {Chart} from '@/components/core/Chart';
+import {Edit, Trash} from '@/assets/icons/Svg';
+import {Chart, ChartDonut} from '@/components/core/Charts';
 import {AddDebt} from '@/components/core/Debts/AddDebt';
-import {SeeDebt} from '@/components/core/Debts/SeeDebt';
 import {AddExpense} from '@/components/core/Expenses/AddExpense';
-import {SeeExpenses} from '@/components/core/Expenses/SeeExpenses';
 import {Carrusel} from '@/components/others/Carrousel';
+import {TooltipComponent} from '@/components/others/Tooltip';
+import {Button} from '@/components/ui/button';
 import {Table, TableBody, TableCell, TableRow} from '@/components/ui/table';
-import {Expenses, ResponseWallet} from '@/interfaces/Wallet';
+import {Debt, Expenses, ResponseWallet} from '@/interfaces/Wallet';
 import '@/styles/Dashboard.css';
+import {Toast} from '@/tools/Toast';
+import {Dialog, DialogContent, DialogTrigger, DialogTitle, DialogHeader, DialogDescription} from '@/components/ui/dialog';
 import {useEffect, useState} from 'react';
+import {ArrowUp, Eye} from 'lucide-react';
 
 export const Dashboard = () => {
 	const [userData, setDataUser] = useState<ResponseWallet | undefined>(undefined);
 	const [fixedExpenses, setFixedExpenses] = useState<Array<Expenses> | undefined>(undefined);
-	const [animateFixed, setAnimateFixed] = useState(false);
+	const [debts, setDebts] = useState<Array<Debt> | undefined>([]);
+	const [responseDebt, setresponseDebt] = useState<ResponseWallet | undefined>(null);
+	const [expenses, setExpenses] = useState<Array<Expenses> | undefined>([]);
+	const [visibilytToast, setVisibilityToast] = useState(false);
+	const [restExpenses, setRestExpenses] = useState<Expenses | undefined>();
+	const [trigger, setTrigger] = useState(0);
 	const user = JSON.parse(localStorage.getItem('userMain'));
-	const showFixedExpenses = async () => {
-		setAnimateFixed(true);
-		await GetFixedExpenses(userData?.wallet?.wallet_id).then((e) => {
-			setFixedExpenses(e?.expenses);
-			setAnimateFixed(false);
-		});
+
+	const getDebts = async (walletId) => {
+		const debts = await GetDebts(walletId);
+		setDebts(debts?.debts);
 	};
+
+	const getExpenses = async (walletId) => {
+		const expenses = await GetExpenses(walletId);
+		setExpenses(expenses?.expenses);
+	};
+
 	useEffect(() => {
-		GetWalletUser(user?.user_id).then((r) => {
-			setDataUser(r);
-			GetFixedExpenses(r?.wallet?.wallet_id).then((e) => {
-				setFixedExpenses(e?.expenses);
+		const fetchData = async () => {
+			const dataUser = await GetWalletUser(user?.user_id);
+			setDataUser(dataUser);
+			const dailyExpenses = await GetDailyExpenses(dataUser?.wallet?.wallet_id);
+			const allToRest = dailyExpenses.expenses.reduce((a, c) => {
+				return a + c.value;
 			});
-		});
+			setRestExpenses(allToRest);
+		};
+
+		fetchData();
 	}, []);
 
+	const recibeResponseChild = async (e: string) => {
+		if (e === 'debt') return getDebts(userData.wallet);
+		if (e === 'expense') return setTrigger((prev) => prev + 1);
+
+		getExpenses(userData.wallet); //getAllExpenses
+		const responseFixedExpenses = await GetFixedExpenses(userData.wallet.wallet_id); //getFixedExpenses
+
+		setFixedExpenses(responseFixedExpenses?.expenses);
+	};
+
+	useEffect(() => {
+		if (userData?.wallet?.wallet_id) {
+			const fetchExpensesAndDebts = async () => {
+				const fixedExpenses = await GetFixedExpenses(userData.wallet.wallet_id);
+				setFixedExpenses(fixedExpenses?.expenses);
+				getDebts(userData.wallet);
+				getExpenses(userData.wallet);
+			};
+
+			fetchExpensesAndDebts();
+		}
+	}, [userData, trigger]);
+
+	const deleteDebt = async (e) => {
+		const params = {
+			debt_id: e?.debt_id,
+			wallet_id: e?.wallet_id,
+		};
+		const responseDeleteDebt = await DeleteDebt(params);
+		if (responseDeleteDebt) {
+			setresponseDebt(responseDeleteDebt);
+			getDebts(params);
+			getExpenses(params);
+			setVisibilityToast(true);
+		}
+
+		setTimeout(() => {
+			setVisibilityToast(false);
+		}, 1000);
+	};
+	const payExpense = async (expense) => {
+		const params = {
+			wallet_id: expense.wallet_id,
+			expense_id: expense.expense_id,
+		};
+		const response = await PayFixedExpense(params);
+		setTrigger((prev) => prev + 1);
+		getExpenses(userData.wallet);
+		console.log(response);
+	};
 	return (
 		<main>
 			{userData && userData?.status === 404 ? (
@@ -40,82 +108,294 @@ export const Dashboard = () => {
 					<Carrusel />
 				</div>
 			) : (
-				<div className='md:grid grid-cols-5 grid-rows-10 h-screen pt-20 p-3 gap-3 bg-slate-950'>
-					<section className='flex gap-10  col-span-3 row-span-2 '>
-						<article className='w-full shadow-sm border-none bg-slate-900 rounded-xl p-3'>
+				<div className='flex flex-col md:grid md:grid-cols-3   h-full pt-20 p-5  gap-5 bg-slate-950  '>
+					<section className='flex w-full  gap-3 col-span-3 '>
+						<AddExpense sendData={(e) => recibeResponseChild(e)} apiData={userData?.wallet} />
+						<AddDebt sendData={(e) => recibeResponseChild(e)} apiData={userData?.wallet} />
+						<a
+							className='w-full h-full bg-slate-900 text-white opacity-70 rounded-md flex justify-center items-center '
+							href='#seeExpenses'>
+							<Button variant='link' className='flex items-center gap-3'>
+								Ver deudas <Eye />
+							</Button>
+						</a>
+
+						<a
+							className='w-full h-full bg-slate-900 text-white opacity-70 rounded-md flex justify-center items-center '
+							href='#seeDebt'>
+							<Button variant='link' className='flex items-center gap-3'>
+								Ver gastos <Eye />
+							</Button>
+						</a>
+					</section>
+					<section className='flex   md:col-span-3 md:row-span-8 flex-wrap md:flex-nowrap  gap-8  '>
+						<article className=' w-[48%] md:w-full h-24  md:h-full shadow-sm border-none  bg-slate-900 rounded-xl  p-3'>
 							<div>
-								<p>Tu salario:</p>
-								<p className='text-green-500'>{userData?.wallet.salary.toLocaleString()}</p>
+								<p>Tu salario mensual actualmente:</p>
+								<p className='text-green-500'>{userData?.wallet?.salary.toLocaleString()}</p>
 							</div>
 						</article>
-						<article className='w-full shadow-sm border-none bg-slate-900 rounded-xl p-3'>
+						<article className=' w-[48%] md:w-full h-24 md:h-full shadow-sm border-none  bg-slate-900 rounded-xl  p-3'>
 							<div>
-								<p>Ahorrado:</p>
-								<p className='text-green-500'>{userData?.wallet.saving.toLocaleString()}</p>
+								<p className='text-lg font-semibold'>Tus ahorros actualmente:</p>
+								<p className='font-semibold my-3'>
+									Antes:
+									<span className='text-green-500 ml-3'>{userData?.wallet?.salary.toLocaleString()}</span>
+								</p>
+								<p className='font-semibold'>
+									Ahora:
+									<span
+										className={`${
+											(userData?.wallet.salary - restExpenses?.total_value).toLocaleString() >
+											userData?.wallet?.saving.toLocaleString()
+												? 'text-green-500'
+												: 'text-red-500'
+										}  ml-3`}>
+										{(userData?.wallet?.salary - restExpenses?.total_value).toLocaleString()}
+									</span>
+								</p>
+								<p className='flex text-lg items-center gap-3 mt-3'>
+									<ArrowUp
+										color={`${
+											(userData?.wallet.salary - restExpenses?.total_value).toLocaleString() >
+											userData?.wallet?.saving.toLocaleString()
+												? 'green'
+												: 'red'
+										}`}
+									/>
+									{(userData?.wallet.salary - restExpenses?.total_value).toLocaleString() >
+									userData?.wallet?.saving.toLocaleString()
+										? 'Te encuentras en tu rango de ahorro'
+										: 'Perdiste la meta este mes, el otro mes sera el bueno'}
+								</p>
 							</div>
 						</article>
-						<article className='w-full shadow-sm border-none bg-slate-900 rounded-xl p-3'>
+						<article className='w-full h-24  md:h-full shadow-sm border-none  bg-slate-900 rounded-xl  p-3'>
 							<div>
-								<p>Meta ahorras</p>
-								<p className='text-green-500'>{userData?.wallet.saving.toLocaleString()}</p>
+								<p>Tu meta de ahorro mensual actual</p>
+								<p className='text-green-500'>{userData?.wallet?.saving.toLocaleString()}</p>
 							</div>
 						</article>
 					</section>
-					<div className=' flex flex-col row-span-10 col-span-2 gap-5'>
-						<div className='shadow-sm h-4/5 w-full rounded-xl bg-slate-900 flex flex-col justify gap-3 p-5'>
-							<div className='flex gap-10 items-center'>
-								<h5 className='text-2xl'>Gastos fijos</h5>
-								<button className={`${animateFixed ? 'animate-spin' : ''}`} onClick={showFixedExpenses}>
-									<Update />
-								</button>
+
+					<section className=' shadow-sm md:col-span-3 md:row-span-6  rounded-xl    flex justify-around gap-5'>
+						<div className='w-5/6 bg-slate-900/50  shadow-sm rounded-xl p-5 flex justify-around '>
+							<div className='flex flex-col w-full h-full'>
+								<div className='flex items-center justify-between'>
+									<p className='text-lg'>
+										Obervar <span className='font-semibold'>gastos por categoria</span>
+									</p>
+									<div className='flex gap-5 justify-end'>
+										<Button className=''>Dia</Button>
+										<Button disabled className=''>
+											Mes
+										</Button>
+										<Button disabled className=''>
+											Año
+										</Button>
+									</div>
+								</div>
+
+								<ChartDonut />
 							</div>
+						</div>
+						<div className='w-full bg-slate-900  shadow-sm rounded-xl p-5'>
+							<div className='flex justify-between items-center mb-10'>
+								<p className=''>Dashboard</p>
+								<div className='flex gap-5'>
+									<Button className=''>Dia</Button>
+									<Button disabled className=''>
+										Mes
+									</Button>
+									<Button disabled className=''>
+										Año
+									</Button>
+								</div>
+							</div>
+							<Chart trigger={trigger} />
+						</div>
+					</section>
+					<section id='seeExpenses' className=' shadow-sm md:col-span-3 md:row-span-2    '>
+						<div className='  w-full  flex  justify-between gap-5 order-3 '>
+							<div className='bg-slate-900 p-5 w-2/5 rounded-xl'>
+								<div className='flex gap- items-center'>
+									<h5 className='text-2xl'>Todos tus gastos </h5>
+								</div>
 
-							<div className='w-full'>
-								<section className='w-full '>
-									<article className='flex text-lg font-semibold py-4 text-slate-500 border-b border-slate-500 mb-3'>
-										<p className='w-40 text-center ubnder¿'>nombre</p>
-										<p className='w-40 text-center'>valor</p>
-										<p className='w-40 text-center'>fecha limite</p>
-									</article>
-								</section>
+								<div className='w-full'>
+									<section className='w-full '>
+										<article className=' flex text-base font-semibold py-4 text-slate-500 border-b border-slate-500 mb-3'>
+											<p className='w-full text-start '>Fecha</p>
+											<p className='w-full text-start'>Nombre</p>
+											<p className='w-full text-start'>Valor</p>
+										</article>
+									</section>
 
-								<div className='w-full h-52 overflow-auto overflow-x-hidden scrollbar-custom'>
-									<Table className='w-full'>
-										<TableBody>
-											{fixedExpenses?.map((f) => (
-												<TableRow key={f.expense_id}>
-													<TableCell className='text-lg text-center w-40'>{f.name}</TableCell>
-													<TableCell className='text-lg text-center w-40'>{f.value.toLocaleString()}</TableCell>
-													<TableCell className='w-40 text-lg text-center'>
-														{f.dead_line ? new Date(f.dead_line).toLocaleDateString() : ''}
-													</TableCell>
-												</TableRow>
-											))}
-										</TableBody>
-									</Table>
+									<div className='w-full h-52 overflow-auto overflow-x-hidden scrollbar-custom'>
+										<Table className='w-full'>
+											<TableBody className='  overflow-auto  overflow-x-hidden   scrollbar-custom'>
+												{expenses?.map((e) => (
+													<TableRow key={e?.expense_id}>
+														<TableCell className='font-medium  w-full'>
+															<p>{new Date(e?.created_in).toLocaleDateString()}</p>
+														</TableCell>
+														<TableCell className='font-medium w-full'>
+															{e?.name.length >= 10 ? (
+																<TooltipComponent message={`${e?.name.slice(0, 10)}...`} content={e?.name} />
+															) : (
+																<p>{e?.name}</p>
+															)}
+														</TableCell>
+
+														<TableCell className='font-medium w-full'>
+															<p>{e?.value.toLocaleString()}</p>
+														</TableCell>
+													</TableRow>
+												))}
+											</TableBody>
+										</Table>
+									</div>
+								</div>
+							</div>
+							<div className='bg-slate-900 p-5 w-2/3 rounded-xl'>
+								<div className='flex gap- items-center'>
+									<h5 className='text-2xl'>Tus gastos fijos mensuales</h5>
+								</div>
+
+								<div className='w-full'>
+									<section className='w-full '>
+										<article className=' flex text-base font-semibold py-4 text-slate-500 border-b border-slate-500 mb-3'>
+											<p className='w-full text-start'>Nombre</p>
+											<p className='w-full text-start'>Valor</p>
+											<p className='w-full text-start'>Pagar Cada</p>
+											<p className='w-full text-start'> </p>
+											<p className='w-full text-start'> </p>
+										</article>
+									</section>
+
+									<div className='w-full h-52 overflow-auto overflow-x-hidden scrollbar-custom'>
+										<Table className='w-full'>
+											<TableBody>
+												{fixedExpenses?.map((f) => (
+													<TableRow key={f.expense_id}>
+														<TableCell className='font-medium w-full'>{f.name}</TableCell>
+														<TableCell className='font-medium w-full'>{f.value.toLocaleString()}</TableCell>
+														<TableCell className='font-medium w-full '>
+															<span className='font-bold'>{new Date(f.dead_line).getDay() + 1} </span> de cada mes
+														</TableCell>
+														<TableCell className='font-medium w-full '>
+															<Dialog>
+																<DialogTrigger
+																	className={`${
+																		f.is_paid ? 'bg-transparent text-blue-500' : '  bg-green-600'
+																	} rounded-md p-1 w-full`}>
+																	{f.is_paid ? 'Ya esta pago este mes' : 'Pagar'}
+																</DialogTrigger>
+																<DialogContent className='w-[400px] h-32'>
+																	<DialogHeader>
+																		<DialogTitle>
+																			¿Confirmas el <span className='underline'>pago</span> del gasto mensual
+																			<span className='text-blue-500 font-semibold'> {f.name}</span>?
+																		</DialogTitle>
+																		<DialogDescription className='flex justify-end items-end gap-5 h-full '>
+																			<Button>Cancelar</Button>
+																			<Button onClick={() => payExpense(f)}>Confirmar</Button>
+																		</DialogDescription>
+																	</DialogHeader>
+																</DialogContent>
+															</Dialog>
+														</TableCell>
+
+														<TableCell className='font-medium flex  w-full'>
+															<Button variant='ghost' className='w-full'>
+																<Trash className={'w-6'} />
+															</Button>
+															<Button variant='ghost' className='w-full'>
+																<Edit className={'w-6'} />
+															</Button>
+														</TableCell>
+													</TableRow>
+												))}
+											</TableBody>
+										</Table>
+									</div>
 								</div>
 							</div>
 						</div>
-						<section className='shadow-sm h-2/6 w-full rounded-xl bg-slate-900 flex flex-col gap-6 p-5'>
-							<article className='flex gap-3 '>
-								<AddExpense apiData={userData?.wallet} />
-								<AddDebt apiData={userData?.wallet} />
-							</article>
-							<span className=' '>Mas informaciòn sobre:</span>
-							<article className='flex gap-3'>
-								<SeeExpenses apiData={userData?.wallet} />
-								<SeeDebt apiData={userData?.wallet} />
-							</article>
-						</section>
-					</div>
-					<section className='shadow-sm col-span-3 row-span-6 h-full rounded-xl bg-slate-900 p-5'>
-						<Chart />
 					</section>
-					<section className='col-span-3 row-span-2 flex justify-between gap-5'>
-						<div className='shadow-sm h-full w-full rounded-xl bg-slate-900'></div>
-						<div className='shadow-sm h-full w-full rounded-xl bg-slate-900'></div>
+					<section id='seeDebt' className=' shadow-sm md:col-span-3 h-full row-span-9'>
+						<div className='  w-full  flex  justify-between gap-5 order-3'>
+							<div className='bg-slate-900 p-5 w-full rounded-xl'>
+								<div className='flex gap- items-center'>
+									<h5 className='text-2xl'>Todas tus deudas</h5>
+								</div>
+
+								<div className='w-full'>
+									<section className='w-full  '>
+										<article className=' flex text-base font-semibold py-4 text-slate-500 border-b border-slate-500 mb-3'>
+											<p className='w-full text-start pl-2'>Fecha</p>
+											<p className='w-full text-start pl-2'>Persona</p>
+											<p className='w-full text-start pl-2'>Razon</p>
+											<p className='w-full text-start pl-2'>Valor</p>
+											<p className='w-full text-start pl-2'>Estado</p>
+											<p className='w-full text-start pl-2' />
+										</article>
+									</section>
+
+									<div className='w-full h-60 overflow-auto overflow-x-hidden scrollbar-custom'>
+										<Table className=''>
+											<TableBody className='  overflow-auto  overflow-x-hidden   scrollbar-custom'>
+												{debts?.map((d) => (
+													<TableRow key={d?.debt_id}>
+														<TableCell className='font-medium  w-full'>
+															<p>{new Date(d?.created_in).toLocaleDateString()}</p>
+														</TableCell>
+														<TableCell className='font-medium w-full'>
+															{d?.person.length >= 10 ? (
+																<TooltipComponent message={`${d?.person.slice(0, 10)}...`} content={d?.person} />
+															) : (
+																<p>{d?.person}</p>
+															)}
+														</TableCell>
+														<TableCell className='font-medium w-full'>
+															<p>{d?.reason}</p>
+														</TableCell>
+														<TableCell className='font-medium w-full'>
+															<p>{d?.value.toLocaleString()}</p>
+														</TableCell>
+														<TableCell className='font-medium w-full'>
+															<p
+																className={` rounded-md px-2 py-1 text-start ${
+																	d?.debt_type == 0 ? 'text-red-500' : 'text-green-500'
+																}`}>
+																{d?.debt_type == 0 ? 'Debes' : 'Te deben'}
+															</p>
+														</TableCell>
+														<TableCell className='font-medium flex  w-full'>
+															<Button onClick={() => deleteDebt(d)} variant='ghost' className='w-full'>
+																<Trash className={'w-6'} />
+															</Button>
+															<Button variant='ghost' className='w-full'>
+																<Edit className={'w-6'} />
+															</Button>
+														</TableCell>
+													</TableRow>
+												))}
+											</TableBody>
+										</Table>
+									</div>
+								</div>
+							</div>
+						</div>
 					</section>
 				</div>
+			)}
+			{visibilytToast && (
+				<Toast
+					visibility={visibilytToast}
+					severity={responseDebt?.success == true ? 'success' : 'error'}
+					message={responseDebt?.message}
+				/>
 			)}
 		</main>
 	);
