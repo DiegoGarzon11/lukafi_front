@@ -5,9 +5,10 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Input } from '@/components/ui/input';
 import { ApiResponse } from '@/interfaces/Api';
 import { Toast } from '@/tools/Toast';
+import { BadgePlus } from 'lucide-react';
 import { useState } from 'react';
 
-export const AddDebt = ({ apiData }) => {
+export const AddDebt = ({ apiData, sendData }) => {
 	const [person, setPerson] = useState('');
 	const [value, setValue] = useState('');
 	const [reason, setReason] = useState('');
@@ -32,7 +33,7 @@ export const AddDebt = ({ apiData }) => {
 			setPerson(e.target.value);
 		} else if (type === 'reason') {
 			setReason(e.target.value);
-		} 
+		}
 	};
 
 	const submitDebt = async () => {
@@ -50,6 +51,8 @@ export const AddDebt = ({ apiData }) => {
 		const response = await NewDebt(params);
 
 		if (response) {
+			sendData('debt');
+
 			setResponseDebt(response);
 			setVisibilityToast(true);
 			setValue('');
@@ -68,7 +71,11 @@ export const AddDebt = ({ apiData }) => {
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
-				<Button className='w-full py-6  bg-slate-950/50 text-white'>Agregar deuda</Button>
+				<Button
+					variant='ghost'
+					className='w-full py-6  bg-slate-900/50 text-white flex items-center gap-3'>
+					Agregar deuda <BadgePlus/>
+				</Button>
 			</DialogTrigger>
 			<DialogContent className='sm:max-w-[425px] '>
 				<DialogHeader>

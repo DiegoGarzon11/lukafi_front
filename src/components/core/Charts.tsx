@@ -13,17 +13,18 @@ const CustomTooltip = ({ payload }) => {
 	);
 };
 
-export const Chart = () => {
+export const Chart = ({ trigger }) => {
 	const userInfo = JSON.parse(localStorage.userMain);
 	const [expensesPaid, setExpensesPaid] = useState();
 
 	useEffect(() => {
-		GetWalletUser(userInfo?.user_id).then((result) => {
-			GetDailyExpenses(result?.wallet?.wallet_id).then((expenses) => {
-				setExpensesPaid(expenses?.expenses);
-			});
-		});
-	}, []);
+		const getDailyFixed = async () => {
+			const wallet = await GetWalletUser(userInfo?.user_id);
+			const dailyExpenses = await GetDailyExpenses(wallet?.wallet?.wallet_id);
+			setExpensesPaid(dailyExpenses?.expenses);
+		};
+		getDailyFixed();
+	}, [trigger]);
 
 	return (
 		<ResponsiveContainer height={330}>
@@ -137,7 +138,7 @@ const showName = (props) => {
 export const ChartDonut = () => {
 	return (
 		<ResponsiveContainer
-			width='80%'
+			width='100%'
 			height='100%'>
 			<PieChart
 				width={600}

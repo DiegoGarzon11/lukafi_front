@@ -59,6 +59,23 @@ export const GetFixedExpenses = async (data) => {
 	}
 	console.warn('datos no enviados');
 };
+export const PayFixedExpense = async (data) => {
+	if (data) {
+		try {
+			const response = await fetch(`${API_HTTP + MAIN_ROUTE}pay-expense/${data.wallet_id}/${data.expense_id}`, {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			});
+			return await response.json();
+		} catch (error) {
+			console.error(error);
+		}
+		return;
+	}
+	console.warn('datos no enviados');
+};
 export const GetDailyExpenses = async (data) => {
 	if (data) {
 		try {
