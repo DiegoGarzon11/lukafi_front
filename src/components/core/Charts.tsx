@@ -138,8 +138,7 @@ const showName = (props) => {
 export const ChartDonut = () => {
 	return (
 		<ResponsiveContainer
-			width='100%'
-			height='100%'>
+		height={330}>
 			<PieChart
 				width={600}
 				height={400}>

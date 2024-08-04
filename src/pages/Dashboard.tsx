@@ -109,7 +109,7 @@ export const Dashboard = () => {
 				</div>
 			) : (
 				<div className='flex flex-col md:grid md:grid-cols-3   h-full pt-20 p-5  gap-5 bg-slate-950  '>
-					<section className='flex w-full  gap-3 col-span-3 '>
+					<section className='md:flex grid grid-cols-2 md:flex-nowrap w-full  gap-3 md:col-span-3  '>
 						<AddExpense
 							sendData={(e) => recibeResponseChild(e)}
 							apiData={userData?.wallet}
@@ -118,34 +118,35 @@ export const Dashboard = () => {
 							sendData={(e) => recibeResponseChild(e)}
 							apiData={userData?.wallet}
 						/>
-						<a
-							className='w-full h-full bg-slate-900 text-white opacity-70 rounded-md flex justify-center items-center '
+							<a
+							className='w-full h-full bg-slate-900/50 text-white rounded-md flex justify-center items-center '
 							href='#seeExpenses'>
 							<Button
-								variant='link'
-								className='flex items-center gap-3'>
+								variant='ghost'
+								className='flex items-center gap-3 h-full w-full'>
+								Ver gastos <Eye />
+							</Button>
+						</a>
+						<a
+							className='w-full h-full bg-slate-900/50 text-white rounded-md flex justify-center items-center '
+							href='#seeDebt'>
+							<Button
+								variant='ghost'
+								className='flex items-center gap-3 h-full w-full'>
 								Ver deudas <Eye />
 							</Button>
 						</a>
 
-						<a
-							className='w-full h-full bg-slate-900 text-white opacity-70 rounded-md flex justify-center items-center '
-							href='#seeDebt'>
-							<Button
-								variant='link'
-								className='flex items-center gap-3'>
-								Ver gastos <Eye />
-							</Button>
-						</a>
+					
 					</section>
-					<section className='flex   md:col-span-3 md:row-span-8 flex-wrap md:flex-nowrap  gap-8  '>
-						<article className=' w-[48%] md:w-full h-24  md:h-full shadow-sm border-none  bg-slate-900 rounded-xl  p-3'>
+					<section className='flex md:col-span-3 md:row-span-8 flex-wrap md:flex-nowrap  gap-8  '>
+						<article className=' w-full h-full  shadow-sm border-none  bg-slate-900 rounded-xl  p-3'>
 							<div>
 								<p>Tu salario mensual actualmente:</p>
 								<p className='text-green-500'>{userData?.wallet?.salary.toLocaleString()}</p>
 							</div>
 						</article>
-						<article className=' w-[48%] md:w-full h-24 md:h-full shadow-sm border-none  bg-slate-900 rounded-xl  p-3'>
+						<article className=' w-full h-full  shadow-sm border-none  bg-slate-900 rounded-xl  p-3'>
 							<div>
 								<p className='text-lg font-semibold'>Tus ahorros actualmente:</p>
 								<p className='font-semibold my-3'>
@@ -177,7 +178,7 @@ export const Dashboard = () => {
 								</p>
 							</div>
 						</article>
-						<article className='w-full h-24  md:h-full shadow-sm border-none  bg-slate-900 rounded-xl  p-3'>
+						<article className='w-full  md:h-full shadow-sm border-none  bg-slate-900 rounded-xl  p-3'>
 							<div>
 								<p>Tu meta de ahorro mensual actual</p>
 								<p className='text-green-500'>{userData?.wallet?.saving.toLocaleString()}</p>
@@ -185,8 +186,8 @@ export const Dashboard = () => {
 						</article>
 					</section>
 
-					<section className=' shadow-sm md:col-span-3 md:row-span-6  rounded-xl    flex justify-around gap-5'>
-						<div className='w-5/6 bg-slate-900/50  shadow-sm rounded-xl p-5 flex justify-around '>
+					<section className=' shadow-sm md:col-span-3 md:row-span-6  rounded-xl    flex flex-col md:flex-row justify-around gap-5'>
+						<div className='md:w-5/6 w-full bg-slate-900/50  shadow-sm rounded-xl p-5 flex justify-around '>
 							<div className='flex flex-col w-full h-full'>
 								<div className='flex items-center justify-between'>
 									<p className='text-lg'>
@@ -232,9 +233,9 @@ export const Dashboard = () => {
 					</section>
 					<section
 						id='seeExpenses'
-						className=' shadow-sm md:col-span-3 md:row-span-2    '>
-						<div className='  w-full  flex  justify-between gap-5 order-3 '>
-							<div className='bg-slate-900 p-5 w-2/5 rounded-xl'>
+						className=' shadow-sm md:col-span-3 md:row-span-2     '>
+						<div className='  w-full  flex flex-col md:flex-row justify-between gap-5 order-3 '>
+							<div className='bg-slate-900 p-5 w-full md:w-2/5 rounded-xl'>
 								<div className='flex gap- items-center'>
 									<h5 className='text-2xl'>Todos tus gastos </h5>
 								</div>
@@ -277,7 +278,7 @@ export const Dashboard = () => {
 									</div>
 								</div>
 							</div>
-							<div className='bg-slate-900 p-5 w-2/3 rounded-xl'>
+							<div className='bg-slate-900 p-5 w-full md:w-2/3 rounded-xl'>
 								<div className='flex gap- items-center'>
 									<h5 className='text-2xl'>Tus gastos fijos mensuales</h5>
 								</div>
@@ -289,7 +290,7 @@ export const Dashboard = () => {
 											<p className='w-full text-start'>Valor</p>
 											<p className='w-full text-start'>Pagar Cada</p>
 											<p className='w-full text-start'> </p>
-											<p className='w-full text-start'> </p>
+											<p className='w-full text-start hidden md:block'> </p>
 										</article>
 									</section>
 
@@ -326,7 +327,7 @@ export const Dashboard = () => {
 															</Dialog>
 														</TableCell>
 
-														<TableCell className='font-medium flex  w-full'>
+														<TableCell className='font-medium   w-full hidden md:flex'>
 															<Button
 																variant='ghost'
 																className='w-full'>
@@ -359,7 +360,7 @@ export const Dashboard = () => {
 								<div className='w-full'>
 									<section className='w-full  '>
 										<article className=' flex text-base font-semibold py-4 text-slate-500 border-b border-slate-500 mb-3'>
-											<p className='w-full text-start pl-2'>Fecha</p>
+											<p className='w-full hidden md:block text-start pl-2'>Fecha</p>
 											<p className='w-full text-start pl-2'>Persona</p>
 											<p className='w-full text-start pl-2'>Razon</p>
 											<p className='w-full text-start pl-2'>Valor</p>
@@ -373,7 +374,7 @@ export const Dashboard = () => {
 											<TableBody className='  overflow-auto  overflow-x-hidden   scrollbar-custom'>
 												{debts?.map((d) => (
 													<TableRow key={d?.debt_id}>
-														<TableCell className='font-medium  w-full'>
+														<TableCell className='font-medium  w-full hidden md:block'>
 															<p>{new Date(d?.created_in).toLocaleDateString()}</p>
 														</TableCell>
 														<TableCell className='font-medium w-full'>
