@@ -73,7 +73,7 @@ export const AddDebt = ({ apiData, sendData }) => {
 			<DialogTrigger asChild>
 				<Button
 					variant='ghost'
-					className='w-full py-6  bg-slate-900/50 text-white flex items-center gap-3'>
+					className='w-full py-6  bg-slate-900 text-white flex items-center gap-3'>
 					Agregar deuda <BadgePlus/>
 				</Button>
 			</DialogTrigger>

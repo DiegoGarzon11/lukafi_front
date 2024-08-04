@@ -108,7 +108,7 @@ export const Dashboard = () => {
 					<Carrusel />
 				</div>
 			) : (
-				<div className='flex flex-col md:grid md:grid-cols-3   h-full pt-20 p-5  gap-5 bg-slate-950  '>
+				<div className='flex flex-col md:grid md:grid-cols-3   h-full pt-20 p-5  gap-5 bg-slate-900/30  '>
 					<section className='md:flex grid grid-cols-2 md:flex-nowrap w-full  gap-3 md:col-span-3  '>
 						<AddExpense
 							sendData={(e) => recibeResponseChild(e)}
@@ -118,8 +118,8 @@ export const Dashboard = () => {
 							sendData={(e) => recibeResponseChild(e)}
 							apiData={userData?.wallet}
 						/>
-							<a
-							className='w-full h-full bg-slate-900/50 text-white rounded-md flex justify-center items-center '
+						<a
+							className='w-full h-full bg-slate-900 text-white rounded-md flex justify-center items-center '
 							href='#seeDebt'>
 							<Button
 								variant='ghost'
@@ -128,7 +128,7 @@ export const Dashboard = () => {
 							</Button>
 						</a>
 						<a
-							className='w-full h-full bg-slate-900/50 text-white rounded-md flex justify-center items-center '
+							className='w-full h-full bg-slate-900 text-white rounded-md flex justify-center items-center '
 							href='#seeExpenses'>
 							<Button
 								variant='ghost'
@@ -136,8 +136,6 @@ export const Dashboard = () => {
 								Ver deudas <Eye />
 							</Button>
 						</a>
-
-					
 					</section>
 					<section className='flex md:col-span-3 md:row-span-8 flex-wrap md:flex-nowrap  gap-8  '>
 						<article className=' w-full h-full  shadow-sm border-none  bg-slate-900 rounded-xl  p-3'>
@@ -187,10 +185,10 @@ export const Dashboard = () => {
 					</section>
 
 					<section className=' shadow-sm md:col-span-3 md:row-span-6  rounded-xl    flex flex-col md:flex-row justify-around gap-5'>
-						<div className='md:w-5/6 w-full bg-slate-900/50  shadow-sm rounded-xl p-5 flex justify-around '>
+						<div className='md:w-5/6 w-full bg-slate-900  shadow-sm rounded-xl  flex justify-around '>
 							<div className='flex flex-col w-full h-full'>
-								<div className='flex items-center justify-between'>
-									<p className='text-lg'>
+								<div className='flex flex-col md:flex-row items-center justify-between px-5 py-3 gap-2'>
+									<p className='text-lg '>
 										Obervar <span className='font-semibold'>gastos por categoria</span>
 									</p>
 									<div className='flex gap-5 justify-end'>
@@ -211,9 +209,11 @@ export const Dashboard = () => {
 								<ChartDonut />
 							</div>
 						</div>
-						<div className='w-full bg-slate-900  shadow-sm rounded-xl p-5'>
-							<div className='flex justify-between items-center mb-10'>
-								<p className=''>Dashboard</p>
+						<div className='w-full bg-slate-900  shadow-sm rounded-xl '>
+							<div className='flex flex-col md:flex-row justify-between items-center mb-10 px-5 pt-3 gap-3'>
+								<p className='text-lg'>
+									Obersevar <span className='font-semibold'>balance de gastos</span>
+								</p>
 								<div className='flex gap-5'>
 									<Button className=''>Dia</Button>
 									<Button
@@ -257,17 +257,26 @@ export const Dashboard = () => {
 														<TableCell className='font-medium  w-full'>
 															<p>{new Date(e?.created_in).toLocaleDateString()}</p>
 														</TableCell>
-														<TableCell className='font-medium w-full'>
-															{e?.name.length >= 10 ? (
+														<TableCell className='font-medium w-full hidden md:block'>
+															{e?.name.length >= 20 ? (
 																<TooltipComponent
-																	message={`${e?.name.slice(0, 10)}...`}
+																	message={`${e?.name.slice(0, 20)}...`}
 																	content={e?.name}
 																/>
 															) : (
 																<p>{e?.name}</p>
 															)}
 														</TableCell>
-
+														<TableCell className='font-medium w-full block md:hidden'>
+															{e?.name.length >= 8 ? (
+																<TooltipComponent
+																	message={`${e?.name.slice(0, 8)}...`}
+																	content={e?.name}
+																/>
+															) : (
+																<p>{e?.name}</p>
+															)}
+														</TableCell>
 														<TableCell className='font-medium w-full'>
 															<p>{e?.value.toLocaleString()}</p>
 														</TableCell>
@@ -289,8 +298,8 @@ export const Dashboard = () => {
 											<p className='w-full text-start'>Nombre</p>
 											<p className='w-full text-start'>Valor</p>
 											<p className='w-full text-start'>Pagar Cada</p>
-											<p className='w-full text-start'> </p>
-											<p className='w-full text-start'> </p>
+											<p className='w-full text-start '> </p>
+											<p className='w-full text-start hidden md:block'> </p>
 										</article>
 									</section>
 
@@ -327,7 +336,7 @@ export const Dashboard = () => {
 															</Dialog>
 														</TableCell>
 
-														<TableCell className='font-medium flex  w-full'>
+														<TableCell className='font-medium   w-full hidden md:flex'>
 															<Button
 																variant='ghost'
 																className='w-full'>
@@ -360,24 +369,24 @@ export const Dashboard = () => {
 								<div className='w-full'>
 									<section className='w-full  '>
 										<article className=' flex text-base font-semibold py-4 text-slate-500 border-b border-slate-500 mb-3'>
-											<p className='w-full hidden md:block text-start pl-2'>Fecha</p>
-											<p className='w-full text-start pl-2'>Persona</p>
-											<p className='w-full text-start pl-2'>Razon</p>
-											<p className='w-full text-start pl-2'>Valor</p>
-											<p className='w-full text-start pl-2'>Estado</p>
-											<p className='w-full text-start pl-2' />
+											<p className='md:w-full hidden md:block text-start pl-2'>Fecha</p>
+											<p className='md:w-full w-20 text-start pl-2'>Persona</p>
+											<p className='md:w-full w-20 text-start pl-2'>Razon</p>
+											<p className='md:w-full w-20 text-start pl-2'>Valor</p>
+											<p className='md:w-full w-20 text-start pl-2'>Estado</p>
+											<p className='md:w-full  text-start pl-2' />
 										</article>
 									</section>
 
 									<div className='w-full h-60 overflow-auto overflow-x-hidden scrollbar-custom'>
-										<Table className=''>
-											<TableBody className='  overflow-auto  overflow-x-hidden   scrollbar-custom'>
+										<Table className='w-full'>
+											<TableBody className=' w-full overflow-auto  overflow-x-hidden   scrollbar-custom'>
 												{debts?.map((d) => (
 													<TableRow key={d?.debt_id}>
-														<TableCell className='font-medium  w-full md:hidden block'>
+														<TableCell className='font-medium  md:w-full w-20 hidden md:block'>
 															<p>{new Date(d?.created_in).toLocaleDateString()}</p>
 														</TableCell>
-														<TableCell className='font-medium w-full'>
+														<TableCell className='font-medium md:w-full w-20 hidden md:block'>
 															{d?.person.length >= 10 ? (
 																<TooltipComponent
 																	message={`${d?.person.slice(0, 10)}...`}
@@ -387,13 +396,43 @@ export const Dashboard = () => {
 																<p>{d?.person}</p>
 															)}
 														</TableCell>
-														<TableCell className='font-medium w-full'>
-															<p>{d?.reason}</p>
+
+														<TableCell className='font-medium md:w-full w-16 block md:hidden align-middle'>
+															{d?.person.length >= 10 ? (
+																<TooltipComponent
+																	message={`${d?.person.slice(0, 10)}...`}
+																	content={d?.person}
+																/>
+															) : (
+																<p>{d?.person}</p>
+															)}
 														</TableCell>
-														<TableCell className='font-medium w-full'>
+
+														<TableCell className='font-medium md:w-full hidden md:block align-middle'>
+															{d?.reason.length >= 20 ? (
+																<TooltipComponent
+																	message={`${d?.reason.slice(0, 20)}`}
+																	content={d?.reason}
+																/>
+															) : (
+																<p>{d?.reason}</p>
+															)}
+														</TableCell>
+
+														<TableCell className='font-medium md:w-full block md:hidden w-20 align-middle'>
+															{d?.reason.length >= 10 ? (
+																<TooltipComponent
+																	message={`${d?.reason.slice(0, 8)}...`}
+																	content={d?.reason}
+																/>
+															) : (
+																<p>{d?.reason}</p>
+															)}
+														</TableCell>
+														<TableCell className='font-medium md:w-full w-20 align-middle'>
 															<p>{d?.value.toLocaleString()}</p>
 														</TableCell>
-														<TableCell className='font-medium w-full'>
+														<TableCell className='font-medium md:w-full w-20'>
 															<p
 																className={` rounded-md px-2 py-1 text-start ${
 																	d?.debt_type == 0 ? 'text-red-500' : 'text-green-500'
@@ -401,16 +440,16 @@ export const Dashboard = () => {
 																{d?.debt_type == 0 ? 'Debes' : 'Te deben'}
 															</p>
 														</TableCell>
-														<TableCell className='font-medium flex  w-full'>
+														<TableCell className='font-medium  w-20 hidden md:flex md:w-full'>
 															<Button
 																onClick={() => deleteDebt(d)}
 																variant='ghost'
-																className='w-full'>
+																className='w-full  '>
 																<Trash className={'w-6'} />
 															</Button>
 															<Button
 																variant='ghost'
-																className='w-full'>
+																className='w-full '>
 																<Edit className={'w-6'} />
 															</Button>
 														</TableCell>
