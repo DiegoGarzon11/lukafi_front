@@ -1,7 +1,8 @@
 import {useTranslation} from 'react-i18next';
 import {Button} from '@/components/ui/button';
 import {Card} from '@/components/others/Card';
-import {Click} from '@/assets/icons/Svg';
+// import {Click} from '@/assets/icons/Svg';
+import {MousePointerClick} from 'lucide-react';
 import {Link} from 'react-router-dom';
 
 export const Home = () => {
@@ -20,7 +21,7 @@ export const Home = () => {
 							<Button className='w-full'>
 								{t('home.button1')}
 								<span className='absolute right-24 '>
-									<Click />
+									<MousePointerClick />
 								</span>
 							</Button>
 						</div>

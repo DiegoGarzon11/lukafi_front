@@ -1,9 +1,9 @@
-import { Col, Usa, Moon, Sun } from '@/assets/icons/Svg';
-import { useTranslation } from 'react-i18next';
-import { useEffect, useState } from 'react';
-import { Link, Outlet } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { SheetSide } from '@/components/ui/sheetSide';
+import {Col, Usa, Moon, Sun} from '@/assets/icons/Svg';
+import {useTranslation} from 'react-i18next';
+import {useEffect, useState} from 'react';
+import {Link, Outlet} from 'react-router-dom';
+import {Button} from '@/components/ui/button';
+import {SheetSide} from '@/components/ui/sheetSide';
 
 export default function Header() {
 	const [isOpen, setIsOpen] = useState(false);
@@ -12,7 +12,7 @@ export default function Header() {
 		return savedTheme || 'light';
 	});
 
-	const { t, i18n } = useTranslation();
+	const {t, i18n} = useTranslation();
 	const onChangeLanguage = (e) => {
 		i18n.changeLanguage(e);
 		if (e === 'es') {
@@ -69,9 +69,7 @@ export default function Header() {
 							</div>
 						)}
 
-						<button
-							onClick={() => setIsOpen(!isOpen)}
-							className=''>
+						<button onClick={() => setIsOpen(!isOpen)} className=''>
 							{localStorage.lang == 'en' ? <Usa /> : <Col />}
 						</button>
 						{isOpen && (
@@ -102,15 +100,11 @@ export default function Header() {
 							</div>
 						)}
 						{theme === 'dark' ? (
-							<button
-								className='dark:bg-transparent dark:hover:bg-transparent p-0'
-								onClick={handleTheme}>
+							<button className='dark:bg-transparent dark:hover:bg-transparent p-0' onClick={handleTheme}>
 								<Moon />
 							</button>
 						) : (
-							<button
-								className='bg-transparent hover:bg-transparent p-0'
-								onClick={handleTheme}>
+							<button className='bg-transparent hover:bg-transparent p-0' onClick={handleTheme}>
 								<Sun />
 							</button>
 						)}

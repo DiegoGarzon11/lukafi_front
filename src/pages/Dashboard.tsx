@@ -120,7 +120,7 @@ export const Dashboard = () => {
 						/>
 							<a
 							className='w-full h-full bg-slate-900/50 text-white rounded-md flex justify-center items-center '
-							href='#seeExpenses'>
+							href='#seeDebt'>
 							<Button
 								variant='ghost'
 								className='flex items-center gap-3 h-full w-full'>
@@ -129,7 +129,7 @@ export const Dashboard = () => {
 						</a>
 						<a
 							className='w-full h-full bg-slate-900/50 text-white rounded-md flex justify-center items-center '
-							href='#seeDebt'>
+							href='#seeExpenses'>
 							<Button
 								variant='ghost'
 								className='flex items-center gap-3 h-full w-full'>
@@ -290,7 +290,7 @@ export const Dashboard = () => {
 											<p className='w-full text-start'>Valor</p>
 											<p className='w-full text-start'>Pagar Cada</p>
 											<p className='w-full text-start'> </p>
-											<p className='w-full text-start hidden md:block'> </p>
+											<p className='w-full text-start'> </p>
 										</article>
 									</section>
 
@@ -327,7 +327,7 @@ export const Dashboard = () => {
 															</Dialog>
 														</TableCell>
 
-														<TableCell className='font-medium   w-full hidden md:flex'>
+														<TableCell className='font-medium flex  w-full'>
 															<Button
 																variant='ghost'
 																className='w-full'>
@@ -374,7 +374,7 @@ export const Dashboard = () => {
 											<TableBody className='  overflow-auto  overflow-x-hidden   scrollbar-custom'>
 												{debts?.map((d) => (
 													<TableRow key={d?.debt_id}>
-														<TableCell className='font-medium  w-full hidden md:block'>
+														<TableCell className='font-medium  w-full md:hidden block'>
 															<p>{new Date(d?.created_in).toLocaleDateString()}</p>
 														</TableCell>
 														<TableCell className='font-medium w-full'>
