@@ -1,16 +1,16 @@
-import { UserDefault, UserSignIn } from '@/apis/UserService';
-import { EyeClose, EyeOpen } from '@/assets/icons/Svg';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Toast } from '@/tools/Toast';
-import { Loader } from '@/assets/icons/Svg';
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
-import { ApiResponse } from '@/interfaces/Api';
+import {UserDefault, UserSignIn} from '@/apis/UserService';
+import {EyeClose, EyeOpen} from '@/assets/icons/Svg';
+import {Button} from '@/components/ui/button';
+import {Input} from '@/components/ui/input';
+import {Toast} from '@/tools/Toast';
+import {Loader} from '@/assets/icons/Svg';
+import {useState} from 'react';
+import {useTranslation} from 'react-i18next';
+import {Link} from 'react-router-dom';
+import {ApiResponse} from '@/interfaces/Api';
 
 export default function SignIn() {
-	const { t, i18n } = useTranslation();
+	const {t, i18n} = useTranslation();
 	i18n.changeLanguage();
 
 	const [loader, setLoader] = useState(false);
@@ -25,7 +25,7 @@ export default function SignIn() {
 	});
 
 	function handleChange(e) {
-		const { name, value } = e.target;
+		const {name, value} = e.target;
 		setData((prevData) => ({
 			...prevData,
 			[name]: value,
@@ -40,19 +40,16 @@ export default function SignIn() {
 		event.preventDefault();
 		setLoader(true);
 		setVisibilityToast(false);
-		
-		
+
 		try {
 			const dataUserSignIn = await UserSignIn(data);
 			setStatusCode(dataUserSignIn);
 			setVisibilityToast(true);
 
-		
 			if (dataUserSignIn.token) {
 				localStorage.setItem('token', dataUserSignIn?.token);
 				const userDefault = await UserDefault();
-			
-				
+
 				localStorage.setItem('userMain', JSON.stringify(userDefault?.users));
 				return (window.location.href = '/dashboard');
 			}
@@ -79,14 +76,10 @@ export default function SignIn() {
 				''
 			)}
 
-			<form
-				className='mt-10 grid gap-8 p-8 shadow-sm shadow-slate-300 dark:shadow-slate-800/60   rounded-2xl  '
-				onSubmit={handleSubmit}>
+			<form className='mt-10 grid gap-8 p-8 shadow-sm shadow-slate-300 dark:shadow-slate-800/60 rounded-2xl' onSubmit={handleSubmit}>
 				<h1 className='text-4xl mb-6 font-semibold'>{t('form.field.signIn')}</h1>
 				<div>
-					<label
-						htmlFor=''
-						className='text-lg'>
+					<label htmlFor='' className='text-lg'>
 						{t('form.field.email')}
 					</label>
 					<Input
@@ -101,9 +94,7 @@ export default function SignIn() {
 					/>
 				</div>
 				<div className='relative'>
-					<label
-						htmlFor=''
-						className='text-lg'>
+					<label htmlFor='' className='text-lg'>
 						{t('form.field.password')}
 					</label>
 					<Input
@@ -116,24 +107,20 @@ export default function SignIn() {
 						name='password'
 						required
 					/>
-					<div
-						className='absolute right-2 top-7'
-						onClick={handleClick}>
+					<div className='absolute right-2 top-8' onClick={handleClick}>
 						{icon}
 					</div>
 				</div>
 				<div className='flex justify-center w-full items-center '>
 					<Button
 						disabled={!data.email || !data.password || loader}
-						className='w-full disabled:bg-slate-200    font-semibold bg-slate-700 text-white text-lg flex justify-center items-center'
+						className='w-full disabled:bg-slate-200 font-semibold bg-slate-700 text-white text-lg flex justify-center items-center'
 						type='submit'>
 						{loader || statusCode?.status === 200 ? <Loader /> : t('form.field.signIn')}
 					</Button>
 				</div>
 
-				<Link
-					to=''
-					className='text-lg'>
+				<Link to='' className='text-lg'>
 					{t('form.password.forgotten')}
 				</Link>
 			</form>
