@@ -26,8 +26,8 @@ export default function Auth() {
 				<div className='mt-20  w-full  flex  items-center  flex-col md:flex-row    '>
 					<div className='flex flex-col md:flex-row  w-full items-end z-10  md:mb-10   '>
 						<Link to='/'>
-							<button className='p-1 bg-slate-200 dark:bg-slate-900 rounded-full mx-5 md:mx-20 flex items-center gap-1 px-3 mb-3 md:mb-0   '>
-								<ArrowLeft /> <span className='text-lg'>{t('form.btn.back')}</span>
+							<button className='p-1 bg-slate-200 dark:bg-slate-900 rounded-full mx-5 md:mx-20 flex items-center gap-1 px-5 mb-3 md:mb-0   '>
+								<ArrowLeft /> <span className='text-lg '>{t('form.btn.back')}</span>
 							</button>
 						</Link>
 
