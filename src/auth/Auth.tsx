@@ -1,12 +1,12 @@
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import SignUp from './SignUp';
 import SignIn from './SignIn';
-import { ArrowBack } from '@/assets/icons/Svg';
-import { useTranslation } from 'react-i18next';
-import { useState } from 'react';
+import {ArrowLeft} from 'lucide-react';
+import {useTranslation} from 'react-i18next';
+import {useState} from 'react';
 
 export default function Auth() {
-	const { t, i18n } = useTranslation();
+	const {t, i18n} = useTranslation();
 	i18n.changeLanguage();
 	const [view, setView] = useState(true);
 	const changeAuth = () => {
@@ -16,9 +16,9 @@ export default function Auth() {
 	return (
 		<>
 			<img
-				className={` absolute    transition-transform ease-in-out ${
+				className={`absolute transition-transform ease-in-out ${
 					view ? 'translate-x-full ease-in-out' : ''
-				} hidden  lg:block md:h-full     opacity-80  dark:opacity-35 aspect-square lg:p-3 rounded-3xl md:w-2/4  lg:object-fill `}
+				} hidden lg:block md:h-full opacity-80 dark:opacity-35 aspect-square lg:p-3 rounded-3xl md:w-2/4 lg:object-fill`}
 				src='/images/init.webp'
 				alt=''
 			/>
@@ -27,7 +27,7 @@ export default function Auth() {
 					<div className='flex flex-col md:flex-row  w-full items-end z-10  md:mb-10   '>
 						<Link to='/'>
 							<button className='p-1 bg-slate-200 dark:bg-slate-900 rounded-full mx-5 md:mx-20 flex items-center gap-1 px-3 mb-3 md:mb-0   '>
-								<ArrowBack /> <span className='text-lg'>{t('form.btn.back')}</span>
+								<ArrowLeft /> <span className='text-lg'>{t('form.btn.back')}</span>
 							</button>
 						</Link>
 
@@ -51,9 +51,9 @@ export default function Auth() {
 						</div>
 					</div>
 					<p
-						style={{ textShadow: ' 1px 8px 2px black' }}
-						className={` hidden absolute lg:block     text-white md:text-2xl lg:text-4xl text-pretty textc  tracking-wider leading-none z-10  bottom-20 w-3/12  font-semibold    ${
-							view ? 'translate-x-1/4   ' : 'left-24  '
+						style={{textShadow: '1px 8px 2px black'}}
+						className={`hidden absolute lg:block text-white md:text-2xl lg:text-4xl text-pretty tracking-wider leading-none z-10 bottom-20 w-3/12  font-semibold ${
+							view ? 'translate-x-1/4' : 'left-24'
 						}  `}>
 						Bienvenido/a a <span className='text-green-500'>Lukafi</span>, tu compañero/a en el camino hacia la libertad financiera.
 					</p>
