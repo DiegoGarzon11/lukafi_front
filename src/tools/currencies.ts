@@ -1,10 +1,10 @@
 export const CURRENCIES = [
 	{
-		symbol: 'USD',
-		name: 'Dolar americano',
+		symbol: 'usd',
+		name: 'dolar americano',
 	},
 	{
-		symbol: 'COP',
-		name: 'Peso colombiano',
+		symbol: 'cop',
+		name: 'peso colombiano',
 	},
 ];

@@ -1,20 +1,20 @@
-import {CreateWallet} from '@/apis/WalletService';
-import {Card, CardContent} from '@/components/ui/card';
-import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious} from '@/components/ui/carousel';
-import {Input} from '@/components/ui/input';
-import {Loader} from '@/assets/icons/Svg';
-import {useRef, useState} from 'react';
-import {Warning} from '@/assets/icons/Svg';
-import {Toast} from '@/tools/Toast';
-import {ResponseWallet} from '@/interfaces/Wallet';
-import {CURRENCIES} from '@/tools/currencies';
+import { CreateWallet } from '@/apis/WalletService';
+import { Card, CardContent } from '@/components/ui/card';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import { Input } from '@/components/ui/input';
+import { Loader } from '@/assets/icons/Svg';
+import { useRef, useState } from 'react';
+import { Toast } from '@/tools/Toast';
+import { ResponseWallet } from '@/interfaces/Wallet';
+import { CURRENCIES } from '@/tools/currencies';
+import { TriangleAlert } from 'lucide-react';
 
 export const Carrusel = () => {
 	const btnNext = useRef(null);
 	const btnBack = useRef(null);
 	const [salario, setSalario] = useState('0');
 	const [ahorro, setAhorro] = useState('0');
-	const [currency, setCurrency] = useState('');
+	const [currency, setCurrency] = useState('cop');
 	const [apiResponse, setApiResponse] = useState<ResponseWallet | undefined>(null);
 	const [visibility, setVisibilityToast] = useState(false);
 	const [loader, setLoader] = useState(false);
@@ -47,6 +47,14 @@ export const Carrusel = () => {
 	function handleBackCarousel(e) {
 		e.preventDefault();
 		btnBack.current.click();
+
+		const params = {
+			salary: salario.replace(/,/g, ''),
+			saving: ahorro.replace(/,/g, ''),
+			currency: currency,
+			user_id: user?.user_id,
+		};
+		console.log(params);
 	}
 
 	async function submitInfoWallet() {
@@ -60,6 +68,7 @@ export const Carrusel = () => {
 		};
 
 		const response = await CreateWallet(params);
+
 		if (response) {
 			setLoader(false);
 			setVisibilityToast(true);
@@ -67,19 +76,18 @@ export const Carrusel = () => {
 				setVisibilityToast(false);
 			}, 1000);
 			setApiResponse(response);
-		} else {
 			window.location.href = '/dashboard';
 		}
 	}
 
 	return (
 		<section className='flex justify-center items-center h-screen '>
-			<Carousel className=' max-w-3xl  flex justify-center items-center '>
+			<Carousel className=' md:max-w-3xl max-w-sm md:h-full  flex justify-center items-center mt-16 '>
 				<CarouselContent>
 					<CarouselItem className='flex justify-center'>
-						<div className='p-1 flex items-center justify-center w-[580px] h-[600px]'>
-							<Card className='h-full w-full'>
-								<CardContent className='flex h-full  items-center justify-center gap-32 p-6 flex-col  text-center text-wrap'>
+						<div className='p-1 flex items-center justify-center '>
+							<Card className='h-full w-full '>
+								<CardContent className='flex h-full  items-center justify-center gap-10 md:gap-32 p-6 flex-col  text-center text-wrap'>
 									<h1 className='text-4xl'>
 										Bienvenido <span className='capitalize text-green-500'>{user?.full_name}</span>
 									</h1>
@@ -113,17 +121,24 @@ export const Carrusel = () => {
 												<h2>Selecciona tipo de moneda:</h2>
 												<div className='flex justify-around mt-3 mb-6'>
 													{CURRENCIES.map((c) => (
-														<div key={c.symbol} className='flex'>
-															<label htmlFor={c.symbol} className='pl-2 flex gap-3'>
+														<div
+															key={c.symbol}
+															className='flex'>
+															<label
+																htmlFor={c.symbol}
+																className='pl-2 flex gap-3'>
 																<input
-																	defaultChecked={c.symbol === 'COP'}
+																	defaultChecked={c.symbol === 'cop'}
 																	id={c.symbol}
 																	onChange={(e) => handleValuesMoney(e, 'currency')}
 																	type='radio'
 																	value={c.symbol}
 																	name='typeCurrency'
 																/>
-																{c.name} ({c.symbol})
+																<div>
+																	<span className='capitalize'>{c.name}</span>
+																	<span className='uppercase'>({c.symbol})</span>
+																</div>
 															</label>
 														</div>
 													))}
@@ -183,13 +198,13 @@ export const Carrusel = () => {
 							<Card className='h-full w-full'>
 								{salario === '' || salario === '0' || ahorro === '0' || ahorro === '' ? (
 									<div className='flex justify-center items-center h-full flex-col'>
-										<Warning />
+										<TriangleAlert className='text-yellow-500 ' />
 										<p className='text-2xl w-5/6 text-center'>
 											Los campos de salario y ahorro son <span className='text-red-500'>obligatorios</span>
 										</p>
 										<button
 											onClick={(e) => handleBackCarousel(e)}
-											className=' hover:bg-slate-200 ring-1 ring-black dark:bg-slate-800 w-full h-8 mt-6 rounded-md dark:hover:bg-slate-900'>
+											className=' hover:bg-slate-200 ring-1 ring-black dark:bg-slate-800 w-5/6 h-8 mt-6 rounded-md dark:hover:bg-slate-900'>
 											Volver
 										</button>
 									</div>
@@ -198,18 +213,26 @@ export const Carrusel = () => {
 										<p className='text-3xl mb-20 '>Tu billetera luce asi</p>
 
 										<div className='flex flex-col justify-center items-start gap-10'>
-											<div className='flex gap-10 justify-center  items-center '>
-												<p className='font-medium text-lg'>
-													Tu salario es: <span className='font-normal text-lg mx-2'>{salario}</span>
+											<div className='flex flex-col gap-10 justify-center  items-center '>
+												<p className='font-medium text-lg flex flex-col md:flex-row'>
+													Tu salario es: <span className='font-normal text-lg mx-2 text-green-500'>{salario}</span>
 												</p>
 
-												<p className='font-medium text-lg '>
-													Tu ahorro es: <span className='font-normal text-lg mx-2'>{ahorro}</span>
+												<p className='font-medium text-lg flex flex-col md:flex-row '>
+													Tu ahorro es: <span className='font-normal text-lg mx-2 text-green-500'>{ahorro}</span>
 												</p>
-												<p className='font-medium text-lg '>
-													Tu tipo de moneda es:{' '}
-													<span className='font-normal text-lg mx-2'>
-														{currency === 'COP' ? `peso colombiano (${currency})` : `Dolar americao (${currency})`}
+												<p className='font-medium text-lg  flex flex-col md:flex-row'>
+													Tu tipo de moneda es:
+													<span className='font-normal text-lg mx-2 text-green-500'>
+														{currency === 'cop' ? (
+															<>
+																<span className='capitalize'>peso colombiano </span> <span className='uppercase '>({currency})</span>
+															</>
+														) : (
+															<>
+																<span className='capitalize'>Dolar Americano </span> <span className='uppercase'>({currency})</span>
+															</>
+														)}
 													</span>
 												</p>
 											</div>
@@ -224,13 +247,17 @@ export const Carrusel = () => {
 											<button
 												disabled={loader}
 												onClick={submitInfoWallet}
-												className='hover:bg-slate-200 ring-1 ring-black dark:bg-slate-800 h-8 w-full mt-6 rounded-md dark:hover:bg-slate-900'>
+												className='hover:bg-slate-200 ring-1 ring-black dark:bg-slate-800 h-8 w-full mt-6 rounded-md dark:hover:bg-slate-900 flex justify-center'>
 												{loader ? <Loader /> : 'Crear billetera'}
 											</button>
 										</div>
 
-										{apiResponse?.status === 409 ? (
-											<Toast message={apiResponse?.message} severity='error' visibility={visibility} />
+										{visibility ? (
+											<Toast
+												message={apiResponse?.message}
+												severity={apiResponse.status === 201 ? 'success' : 'error'}
+												visibility={visibility}
+											/>
 										) : (
 											''
 										)}
@@ -240,8 +267,14 @@ export const Carrusel = () => {
 						</div>
 					</CarouselItem>
 				</CarouselContent>
-				<CarouselPrevious ref={btnBack} />
-				<CarouselNext ref={btnNext} />
+				<CarouselPrevious
+					className='hidden md:flex'
+					ref={btnBack}
+				/>
+				<CarouselNext
+					className='hidden md:flex'
+					ref={btnNext}
+				/>
 			</Carousel>
 		</section>
 	);

@@ -107,7 +107,7 @@ export default function SignIn() {
 						name='password'
 						required
 					/>
-					<div className='absolute right-2 top-8' onClick={handleClick}>
+					<div className='absolute right-2 top-8 cursor-pointer' onClick={handleClick}>
 						{icon}
 					</div>
 				</div>

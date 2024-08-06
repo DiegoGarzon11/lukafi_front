@@ -35,7 +35,7 @@ export default function Auth() {
 							<button
 								disabled={view}
 								className={`${
-									view ? 'text-white font-bold  dark:bg-slate-900' : 'text-white'
+									view ? 'dark:text-white font-bold bg-slate-200 text-black dark:bg-slate-900' : 'text-black dark:text-white'
 								}  text-xl border rounded-l-full p-3 md:w-40  shadow shadow-slate-900`}
 								onClick={changeAuth}>
 								{t('form.field.signIn')}
@@ -43,7 +43,7 @@ export default function Auth() {
 							<button
 								disabled={!view}
 								className={`${
-									view ? 'text-white' : 'dark:bg-slate-900 text-white font-bold  '
+									view ? 'text-black dark:text-white' : 'dark:bg-slate-900 dark:text-white bg-slate-200 font-bold  '
 								} text-xl border border-slate-900 rounded-r-full p-3 md:w-40`}
 								onClick={changeAuth}>
 								{t('form.field.signUp')}
