@@ -24,27 +24,27 @@ export default function Auth() {
 			/>
 			<div className='grid grid-cols-1   lg:grid-cols-2 h-dvh justify-center lg:items-start '>
 				<div className='mt-20  w-full  flex  items-center  flex-col md:flex-row    '>
-					<div className='flex  w-full items-end z-10  md:mb-10  '>
+					<div className='flex flex-col md:flex-row  w-full items-end z-10  md:mb-10   '>
 						<Link to='/'>
-							<button className='p-1 bg-slate-200 dark:bg-slate-600 rounded-full mx-5 md:mx-20 flex items-center gap-1 px-3  '>
+							<button className='p-1 bg-slate-200 dark:bg-slate-900 rounded-full mx-5 md:mx-20 flex items-center gap-1 px-3 mb-3 md:mb-0   '>
 								<ArrowBack /> <span className='text-lg'>{t('form.btn.back')}</span>
 							</button>
 						</Link>
 
-						<div className='  flex items-center justify-end mx-5 md:mx-20 '>
+						<div className='  flex items-center justify-end mx-5 md:mx-20  '>
 							<button
 								disabled={view}
 								className={`${
-									view ? ' bg-slate-300/70 text-white font-bold  dark:bg-slate-600/80' : 'text-white'
-								}  text-xl border border-slate-200 rounded-tl-2xl p-3 md:w-40 `}
+									view ? 'text-white font-bold  dark:bg-slate-900' : 'text-white'
+								}  text-xl border rounded-l-full p-3 md:w-40  shadow shadow-slate-900`}
 								onClick={changeAuth}>
 								{t('form.field.signIn')}
 							</button>
 							<button
 								disabled={!view}
 								className={`${
-									view ? 'text-white' : 'bg-slate-300/70 text-white font-bold  dark:bg-slate-600/80 '
-								} text-xl border border-slate-200 rounded-tr-2xl p-3 md:w-40`}
+									view ? 'text-white' : 'dark:bg-slate-900 text-white font-bold  '
+								} text-xl border border-slate-900 rounded-r-full p-3 md:w-40`}
 								onClick={changeAuth}>
 								{t('form.field.signUp')}
 							</button>
@@ -59,8 +59,8 @@ export default function Auth() {
 					</p>
 				</div>
 
-				<div className={` flex justify-center items-start lg:items-center w-full h-full   ${view ? '-order-1' : ''}  `}>
-					<section className='w-5/6   '>{view ? <SignIn /> : <SignUp />}</section>
+				<div className={` flex justify-center items-start lg:items-center w-full h-full   ${view ? 'md:-order-1' : ''}  `}>
+					<section className='w-11/12   '>{view ? <SignIn /> : <SignUp />}</section>
 				</div>
 			</div>
 		</>

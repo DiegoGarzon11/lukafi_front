@@ -14,7 +14,7 @@ import '@/styles/Dashboard.css';
 import { Toast } from '@/tools/Toast';
 import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogHeader, DialogDescription } from '@/components/ui/dialog';
 import { useEffect, useState } from 'react';
-import { ArrowUp, Eye } from 'lucide-react';
+import { ArrowDown, ArrowUp, Eye } from 'lucide-react';
 
 export const Dashboard = () => {
 	const [userData, setDataUser] = useState<ResponseWallet | undefined>(undefined);
@@ -23,7 +23,7 @@ export const Dashboard = () => {
 	const [responseDebt, setresponseDebt] = useState<ResponseWallet | undefined>(null);
 	const [expenses, setExpenses] = useState<Array<Expenses> | undefined>([]);
 	const [visibilytToast, setVisibilityToast] = useState(false);
-	const [restExpenses, setRestExpenses] = useState<Expenses | undefined>();
+	const [restExpenses, setRestExpenses] = useState<Expenses | number>(0);
 	const [trigger, setTrigger] = useState(0);
 	const user = JSON.parse(localStorage.getItem('userMain'));
 
@@ -40,23 +40,24 @@ export const Dashboard = () => {
 	useEffect(() => {
 		const fetchData = async () => {
 			const dataUser = await GetWalletUser(user?.user_id);
-			setDataUser(dataUser);
 			const dailyExpenses = await GetDailyExpenses(dataUser?.wallet?.wallet_id);
-			const allToRest = dailyExpenses.expenses.reduce((a, c) => {
-				return a + c.value;
-			});
+			setDataUser(dataUser);
+			const allToRest: number = dailyExpenses.expenses.reduce((a: number, c: Expenses) => {
+				return a + c.total_value;
+			}, 0);
+
 			setRestExpenses(allToRest);
 		};
 
 		fetchData();
-	}, []);
+	}, [trigger]);
 
 	const recibeResponseChild = async (e: string) => {
 		if (e === 'debt') return getDebts(userData.wallet);
 		if (e === 'expense') return setTrigger((prev) => prev + 1);
 
-		getExpenses(userData.wallet); //getAllExpenses
-		const responseFixedExpenses = await GetFixedExpenses(userData.wallet.wallet_id); //getFixedExpenses
+		getExpenses(userData.wallet);
+		const responseFixedExpenses = await GetFixedExpenses(userData.wallet.wallet_id);
 
 		setFixedExpenses(responseFixedExpenses?.expenses);
 	};
@@ -101,6 +102,7 @@ export const Dashboard = () => {
 		getExpenses(userData.wallet);
 		console.log(response);
 	};
+
 	return (
 		<main>
 			{userData && userData?.status === 404 ? (
@@ -108,8 +110,8 @@ export const Dashboard = () => {
 					<Carrusel />
 				</div>
 			) : (
-				<div className='flex flex-col md:grid md:grid-cols-3   h-full pt-20 p-5  gap-5 bg-slate-900/30  '>
-					<section className='md:flex grid grid-cols-2 md:flex-nowrap w-full  gap-3 md:col-span-3  '>
+				<div className='flex flex-col md:grid md:grid-cols-3 h-full pt-20 p-5 gap-5 bg-slate-900/30  '>
+					<section className='md:flex grid grid-cols-2 md:flex-nowrap w-full gap-3 md:col-span-3  '>
 						<AddExpense
 							sendData={(e) => recibeResponseChild(e)}
 							apiData={userData?.wallet}
@@ -153,26 +155,16 @@ export const Dashboard = () => {
 								</p>
 								<p className='font-semibold'>
 									Ahora:
-									<span
-										className={`${
-											(userData?.wallet.salary - restExpenses?.total_value).toLocaleString() > userData?.wallet?.saving.toLocaleString()
-												? 'text-green-500'
-												: 'text-red-500'
-										}  ml-3`}>
-										{(userData?.wallet?.salary - restExpenses?.total_value).toLocaleString()}
+									<span className={`${Number(restExpenses) < userData?.wallet?.saving ? 'text-green-500' : 'text-red-500'}  ml-3`}>
+										{(userData?.wallet?.salary - Number(restExpenses)).toLocaleString()}
 									</span>
 								</p>
 								<p className='flex text-lg items-center gap-3 mt-3'>
-									<ArrowUp
-										color={`${
-											(userData?.wallet.salary - restExpenses?.total_value).toLocaleString() > userData?.wallet?.saving.toLocaleString()
-												? 'green'
-												: 'red'
-										}`}
-									/>
-									{(userData?.wallet.salary - restExpenses?.total_value).toLocaleString() > userData?.wallet?.saving.toLocaleString()
-										? 'Te encuentras en tu rango de ahorro'
-										: 'Perdiste la meta este mes, el otro mes sera el bueno'}
+									{Number(restExpenses) < userData?.wallet?.saving ? <ArrowUp color='green' /> : <ArrowDown color='red' />}
+
+									{Number(restExpenses) - userData?.wallet?.salary < userData?.wallet?.saving
+										? 'Perdiste la meta este mes, el otro mes sera el bueno'
+										: 'Te encuentras en tu rango de ahorro'}
 								</p>
 							</div>
 						</article>
@@ -319,7 +311,7 @@ export const Dashboard = () => {
 																	className={`${
 																		f.is_paid ? 'bg-transparent text-blue-500' : '  bg-green-600'
 																	} rounded-md p-1 w-full`}>
-																	{f.is_paid ? 'Ya esta pago este mes' : 'Pagar'}
+																	{f.is_paid ? 'Ya esta pago' : 'Pagar'}
 																</DialogTrigger>
 																<DialogContent className='w-[400px] h-32'>
 																	<DialogHeader>
