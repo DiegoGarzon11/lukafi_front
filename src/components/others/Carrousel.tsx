@@ -68,7 +68,11 @@ export const Carrusel = () => {
 				setVisibilityToast(false);
 			}, 1000);
 			setApiResponse(response);
-			window.location.href = '/dashboard';
+			if (response.status === 201) {
+				setTimeout(() => {
+					window.location.href = '/dashboard';
+				}, 1000);
+			}
 		}
 	}
 
