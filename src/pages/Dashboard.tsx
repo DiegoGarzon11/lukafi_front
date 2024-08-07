@@ -110,8 +110,8 @@ export const Dashboard = () => {
 					<Carrusel />
 				</div>
 			) : (
-				<div className='flex flex-col md:grid md:grid-cols-3 h-full pt-20 p-5 gap-5 bg-slate-900/30  '>
-					<section className='md:flex grid grid-cols-2 md:flex-nowrap w-full gap-3 md:col-span-3  '>
+				<div className='flex flex-col md:grid md:grid-cols-3 h-full pt-20 p-5 gap-5 dark:bg-slate-900/30 bg-slate-200  '>
+					<section className='md:flex grid grid-cols-2 grid-rows-2 md:flex-nowrap w-full gap-3 md:col-span-3  '>
 						<AddExpense
 							sendData={(e) => recibeResponseChild(e)}
 							apiData={userData?.wallet}
@@ -121,7 +121,7 @@ export const Dashboard = () => {
 							apiData={userData?.wallet}
 						/>
 						<a
-							className='w-full h-full bg-slate-900 text-white rounded-md flex justify-center items-center '
+							className='w-full h-full dark:bg-slate-900 bg-white text-black  dark:text-white rounded-md flex justify-center items-center '
 							href='#seeDebt'>
 							<Button
 								variant='ghost'
@@ -130,7 +130,7 @@ export const Dashboard = () => {
 							</Button>
 						</a>
 						<a
-							className='w-full h-full bg-slate-900 text-white rounded-md flex justify-center items-center '
+							className='w-full h-full dark:bg-slate-900 bg-white text-black  dark:text-white rounded-md flex justify-center items-center '
 							href='#seeExpenses'>
 							<Button
 								variant='ghost'
@@ -140,13 +140,13 @@ export const Dashboard = () => {
 						</a>
 					</section>
 					<section className='flex md:col-span-3 md:row-span-8 flex-wrap md:flex-nowrap  gap-8  '>
-						<article className=' w-full h-full  shadow-sm border-none  bg-slate-900 rounded-xl  p-3'>
+						<article className=' w-full h-full  shadow-sm border-none dark:bg-slate-900 bg-white text-black  dark:text-white rounded-xl  p-3'>
 							<div>
 								<p>Tu salario mensual actualmente:</p>
 								<p className='text-green-500'>{userData?.wallet?.salary.toLocaleString()}</p>
 							</div>
 						</article>
-						<article className=' w-full h-full  shadow-sm border-none  bg-slate-900 rounded-xl  p-3'>
+						<article className=' w-full h-full  shadow-sm border-none dark:bg-slate-900 bg-white text-black  dark:text-white rounded-xl  p-3'>
 							<div>
 								<p className='text-lg font-semibold'>Tus ahorros actualmente:</p>
 								<p className='font-semibold my-3'>
@@ -168,7 +168,7 @@ export const Dashboard = () => {
 								</p>
 							</div>
 						</article>
-						<article className='w-full  md:h-full shadow-sm border-none  bg-slate-900 rounded-xl  p-3'>
+						<article className='w-full  md:h-full shadow-sm border-none  dark:bg-slate-900 bg-white text-black  dark:text-white rounded-xl  p-3'>
 							<div>
 								<p>Tu meta de ahorro mensual actual</p>
 								<p className='text-green-500'>{userData?.wallet?.saving.toLocaleString()}</p>
@@ -178,7 +178,7 @@ export const Dashboard = () => {
 
 					<section className=' shadow-sm md:col-span-3 md:row-span-6  rounded-xl    flex flex-col md:flex-row justify-around gap-5'>
 						<div className='md:w-5/6 w-full bg-slate-900  shadow-sm rounded-xl  flex justify-around '>
-							<div className='flex flex-col w-full h-full'>
+							<div className='flex flex-col dark:bg-slate-900 bg-white w-full h-full'>
 								<div className='flex flex-col md:flex-row items-center justify-between px-5 py-3 gap-2'>
 									<p className='text-lg '>
 										Obervar <span className='font-semibold'>gastos por categoria</span>
@@ -201,7 +201,7 @@ export const Dashboard = () => {
 								<ChartDonut />
 							</div>
 						</div>
-						<div className='w-full bg-slate-900  shadow-sm rounded-xl '>
+						<div className='w-full bg-white dark:bg-slate-900  shadow-sm rounded-xl '>
 							<div className='flex flex-col md:flex-row justify-between items-center mb-10 px-5 pt-3 gap-3'>
 								<p className='text-lg'>
 									Obersevar <span className='font-semibold'>balance de gastos</span>
@@ -225,9 +225,9 @@ export const Dashboard = () => {
 					</section>
 					<section
 						id='seeExpenses'
-						className=' shadow-sm md:col-span-3 md:row-span-2     '>
-						<div className='  w-full  flex flex-col md:flex-row justify-between gap-5 order-3 '>
-							<div className='bg-slate-900 p-5 w-full md:w-2/5 rounded-xl'>
+						className=' shadow-sm  md:col-span-3 md:row-span-2     '>
+						<div className=' w-full  flex flex-col md:flex-row justify-between gap-5 order-3 '>
+							<div className='dark:bg-slate-900 bg-white p-5 w-full md:w-2/5 rounded-xl'>
 								<div className='flex gap- items-center'>
 									<h5 className='text-2xl'>Todos tus gastos </h5>
 								</div>
@@ -279,7 +279,7 @@ export const Dashboard = () => {
 									</div>
 								</div>
 							</div>
-							<div className='bg-slate-900 p-5 w-full md:w-2/3 rounded-xl'>
+							<div className='dark:bg-slate-900 bg-white p-5 w-full md:w-2/3 rounded-xl'>
 								<div className='flex gap- items-center'>
 									<h5 className='text-2xl'>Tus gastos fijos mensuales</h5>
 								</div>
@@ -353,7 +353,7 @@ export const Dashboard = () => {
 						id='seeDebt'
 						className=' shadow-sm md:col-span-3 h-full row-span-9'>
 						<div className='  w-full  flex  justify-between gap-5 order-3'>
-							<div className='bg-slate-900 p-5 w-full rounded-xl'>
+							<div className='dark:bg-slate-900 bg-white p-5 w-full rounded-xl'>
 								<div className='flex gap- items-center'>
 									<h5 className='text-2xl'>Todas tus deudas</h5>
 								</div>

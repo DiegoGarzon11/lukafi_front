@@ -18,6 +18,7 @@ export const GetWalletUser = async (user_id: string) => {
 export const CreateWallet = async (data) => {
 	if (data) {
 		const formData = new URLSearchParams();
+		formData.append('currency_type', data.currency_type);
 		formData.append('salary', data.salary);
 		formData.append('saving', data.saving);
 		formData.append('user_id', data.user_id);

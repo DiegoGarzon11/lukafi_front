@@ -47,23 +47,15 @@ export const Carrusel = () => {
 	function handleBackCarousel(e) {
 		e.preventDefault();
 		btnBack.current.click();
-
-		const params = {
-			salary: salario.replace(/,/g, ''),
-			saving: ahorro.replace(/,/g, ''),
-			currency: currency,
-			user_id: user?.user_id,
-		};
-		console.log(params);
 	}
 
 	async function submitInfoWallet() {
 		setLoader(true);
 
 		const params = {
+			currency_type: currency,
 			salary: salario.replace(/,/g, ''),
 			saving: ahorro.replace(/,/g, ''),
-			currency: currency,
 			user_id: user?.user_id,
 		};
 

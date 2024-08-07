@@ -60,7 +60,7 @@ export const AddExpense = ({apiData, sendData}) => {
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
-				<Button variant='ghost' className='w-full py-6  bg-slate-900 text-white flex items-center gap-3'>
+				<Button variant='ghost' className='w-full py-6  dark:bg-slate-900 bg-white text-black  dark:text-white flex items-center gap-3'>
 					Agregar gasto <BadgePlus />
 				</Button>
 			</DialogTrigger>
