@@ -45,6 +45,7 @@ export const Dashboard = () => {
 			const allToRest: number = dailyExpenses.expenses.reduce((a: number, c: Expenses) => {
 				return a + c.total_value;
 			}, 0);
+			console.log(userData?.wallet?.salary - allToRest);
 
 			setRestExpenses(allToRest);
 		};
@@ -155,23 +156,32 @@ export const Dashboard = () => {
 								</p>
 								<p className='font-semibold'>
 									Ahora:
-									<span className={`${Number(restExpenses) < userData?.wallet?.saving ? 'text-green-500' : 'text-red-500'}  ml-3`}>
-										{(userData?.wallet?.salary - Number(restExpenses)).toLocaleString()}
+									<span
+										className={`${
+											Number(userData?.wallet?.salary) - Number(restExpenses) >= Number(userData?.wallet?.saving)
+												? 'text-green-500'
+												: 'text-red-500'
+										}  ml-3`}>
+										{(Number(userData?.wallet?.salary) - Number(restExpenses)).toLocaleString()}
 									</span>
 								</p>
 								<p className='flex text-lg items-center gap-3 mt-3'>
-									{Number(restExpenses) < userData?.wallet?.saving ? <ArrowUp color='green' /> : <ArrowDown color='red' />}
+									{Number(userData?.wallet?.salary) - Number(restExpenses) >= Number(userData?.wallet?.saving) ? (
+										<ArrowUp color='green' />
+									) : (
+										<ArrowDown color='red' />
+									)}
 
-									{Number(restExpenses) - userData?.wallet?.salary < userData?.wallet?.saving
-										? 'Perdiste la meta este mes, el otro mes sera el bueno'
-										: 'Te encuentras en tu rango de ahorro'}
+									{Number(userData?.wallet?.salary) - Number(restExpenses) >= Number(userData?.wallet?.saving)
+										? 'Te encuentras en tu rango de ahorro'
+										: 'Sobre pasaste tu meta de ahorro'}
 								</p>
 							</div>
 						</article>
 						<article className='w-full  md:h-full shadow-sm border-none  dark:bg-slate-900 bg-white text-black  dark:text-white rounded-xl  p-3'>
 							<div>
 								<p>Tu meta de ahorro mensual actual</p>
-								<p className='text-green-500'>{userData?.wallet?.saving.toLocaleString()}</p>
+								<p className='text-green-500'>{Number(userData?.wallet?.saving).toLocaleString()}</p>
 							</div>
 						</article>
 					</section>
