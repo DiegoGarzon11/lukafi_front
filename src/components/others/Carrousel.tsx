@@ -1,13 +1,13 @@
-import { CreateWallet } from '@/apis/WalletService';
-import { Card, CardContent } from '@/components/ui/card';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
-import { Input } from '@/components/ui/input';
-import { Loader } from '@/assets/icons/Svg';
-import { useRef, useState } from 'react';
-import { Toast } from '@/tools/Toast';
-import { ResponseWallet } from '@/interfaces/Wallet';
-import { CURRENCIES } from '@/tools/currencies';
-import { TriangleAlert } from 'lucide-react';
+import {CreateWallet} from '@/apis/WalletService';
+import {Card, CardContent} from '@/components/ui/card';
+import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious} from '@/components/ui/carousel';
+import {Input} from '@/components/ui/input';
+import {Loader} from '@/assets/icons/Svg';
+import {useRef, useState} from 'react';
+import {Toast} from '@/tools/Toast';
+import {ResponseWallet} from '@/interfaces/Wallet';
+import {CURRENCIES} from '@/tools/currencies';
+import {TriangleAlert} from 'lucide-react';
 
 export const Carrusel = () => {
 	const btnNext = useRef(null);
@@ -17,11 +17,13 @@ export const Carrusel = () => {
 	const [currency, setCurrency] = useState('cop');
 	const [apiResponse, setApiResponse] = useState<ResponseWallet | undefined>(null);
 	const [visibility, setVisibilityToast] = useState(false);
+	const [isMajor, setIsMajor] = useState(false);
 	const [loader, setLoader] = useState(false);
 	const user = JSON.parse(localStorage.getItem('userMain'));
 
 	function handleValuesMoney(e, item: string) {
 		let value = e.target.value.replace(/[^0-9.]/g, '');
+
 		if (value === '') {
 			value = '0';
 		}
@@ -32,6 +34,10 @@ export const Carrusel = () => {
 				setSalario(formattedValue);
 			} else if (item === 'ahorro') {
 				const formattedValue = floatValue.toLocaleString();
+				const salaryValidate = parseInt(salario.replace(/[^0-9.]/g, ''));
+
+				salaryValidate <= value ? setIsMajor(true) : setIsMajor(false);
+
 				setAhorro(formattedValue);
 			} else if (item === 'currency') {
 				setCurrency(e.target.value);
@@ -80,9 +86,9 @@ export const Carrusel = () => {
 		<section className='flex justify-center items-center h-screen '>
 			<Carousel className=' md:max-w-3xl max-w-sm md:h-full  flex justify-center items-center mt-16 '>
 				<CarouselContent>
-					<CarouselItem className='flex justify-center'>
+					<CarouselItem className='flex  justify-center'>
 						<div className='p-1 flex items-center justify-center '>
-							<Card className='h-full w-full '>
+							<Card className='h-full  w-full '>
 								<CardContent className='flex h-full  items-center justify-center gap-10 md:gap-32 p-6 flex-col  text-center text-wrap'>
 									<h1 className='text-4xl'>
 										Bienvenido <span className='capitalize text-green-500'>{user?.full_name}</span>
@@ -117,12 +123,8 @@ export const Carrusel = () => {
 												<h2>Selecciona tipo de moneda:</h2>
 												<div className='flex justify-around mt-3 mb-6'>
 													{CURRENCIES.map((c) => (
-														<div
-															key={c.symbol}
-															className='flex'>
-															<label
-																htmlFor={c.symbol}
-																className='pl-2 flex gap-3'>
+														<div key={c.symbol} className='flex'>
+															<label htmlFor={c.symbol} className='pl-2 flex gap-3'>
 																<input
 																	defaultChecked={c.symbol === 'cop'}
 																	id={c.symbol}
@@ -166,18 +168,26 @@ export const Carrusel = () => {
 														onChange={(e) => handleValuesMoney(e, 'ahorro')}
 													/>
 												</div>
+												{isMajor ? (
+													<div className='flex items-center mt-2 gap-2'>
+														<TriangleAlert className='text-yellow-600' />
+														<p className=''>Lo que esperas ahorrar no puede ser mayor o igual a tus ingresos</p>
+													</div>
+												) : (
+													''
+												)}
 
 												<div className='flex items-center gap-3'>
 													<button
 														onClick={(e) => handleBackCarousel(e)}
-														className=' hover:bg-slate-200 ring-1 ring-black dark:bg-slate-800 w-full h-8 mt-6 rounded-md dark:hover:bg-slate-900'>
+														className='hover:bg-slate-200 ring-1 ring-black dark:bg-slate-800 w-full h-8 mt-6 rounded-md dark:hover:bg-slate-900'>
 														Atras
 													</button>
 
 													<button
 														onClick={(e) => handleNextCarousel(e)}
-														disabled={salario === '0' || ahorro === '0'}
-														className=' hover:bg-slate-200 ring-1 ring-black dark:bg-slate-800 w-full h-8 mt-6 rounded-md dark:hover:bg-slate-900'>
+														disabled={salario === '0' || ahorro === '0' || isMajor}
+														className='hover:bg-slate-200 ring-1 ring-black dark:bg-slate-800 w-full h-8 mt-6 rounded-md dark:hover:bg-slate-900'>
 														Confirmar
 													</button>
 												</div>
@@ -192,11 +202,15 @@ export const Carrusel = () => {
 					<CarouselItem className='flex justify-center'>
 						<div className='p-1 flex items-center justify-b w-[580px] h-[600px]'>
 							<Card className='h-full w-full'>
-								{salario === '' || salario === '0' || ahorro === '0' || ahorro === '' ? (
+								{salario === '' || salario === '0' || ahorro === '0' || ahorro === '' || isMajor ? (
 									<div className='flex justify-center items-center h-full flex-col'>
 										<TriangleAlert className='text-yellow-500 ' />
 										<p className='text-2xl w-5/6 text-center'>
-											Los campos de salario y ahorro son <span className='text-red-500'>obligatorios</span>
+											Los campos de salario y ahorro son <span className='text-red-500'>obligatorios </span>
+										</p>
+										<p className='text-2xl w-5/6 text-center mt-3'>
+											lo que esperas ahorrar
+											<span className='text-yellow-600'> no puede ser mayor o igual a tus ingresos</span>
 										</p>
 										<button
 											onClick={(e) => handleBackCarousel(e)}
@@ -222,11 +236,13 @@ export const Carrusel = () => {
 													<span className='font-normal text-lg mx-2 text-green-500'>
 														{currency === 'cop' ? (
 															<>
-																<span className='capitalize'>peso colombiano </span> <span className='uppercase '>({currency})</span>
+																<span className='capitalize'>peso colombiano </span>{' '}
+																<span className='uppercase '>({currency})</span>
 															</>
 														) : (
 															<>
-																<span className='capitalize'>Dolar Americano </span> <span className='uppercase'>({currency})</span>
+																<span className='capitalize'>Dolar Americano </span>{' '}
+																<span className='uppercase'>({currency})</span>
 															</>
 														)}
 													</span>
@@ -263,14 +279,8 @@ export const Carrusel = () => {
 						</div>
 					</CarouselItem>
 				</CarouselContent>
-				<CarouselPrevious
-					className='hidden md:flex'
-					ref={btnBack}
-				/>
-				<CarouselNext
-					className='hidden md:flex'
-					ref={btnNext}
-				/>
+				<CarouselPrevious className='hidden md:flex' ref={btnBack} />
+				<CarouselNext className='hidden md:flex' ref={btnNext} />
 			</Carousel>
 		</section>
 	);

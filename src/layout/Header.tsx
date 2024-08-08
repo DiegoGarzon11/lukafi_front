@@ -64,7 +64,9 @@ export default function Header() {
 						{!localStorage.token && (
 							<div>
 								<Link to='/auth'>
-									<Button variant='black_outline'>{t('header.signIn')}</Button>
+									<Button variant='black_outline'>
+										{t('header.signIn')} / {t('form.field.signUp')}
+									</Button>
 								</Link>
 							</div>
 						)}
