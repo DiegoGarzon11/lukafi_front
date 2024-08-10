@@ -3,7 +3,7 @@ import {EyeClose, EyeOpen} from '@/assets/icons/Svg';
 import {Button} from '@/components/ui/button';
 import {Input} from '@/components/ui/input';
 import {Toast} from '@/tools/Toast';
-import {Loader} from '@/assets/icons/Svg';
+import {LoaderApi} from '@/assets/icons/Svg';
 import {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Link} from 'react-router-dom';
@@ -116,7 +116,7 @@ export default function SignIn() {
 						disabled={!data.email || !data.password || loader}
 						className='w-full disabled:bg-slate-200 font-semibold bg-slate-700 text-white text-lg flex justify-center items-center'
 						type='submit'>
-						{loader || statusCode?.status === 200 ? <Loader /> : t('form.field.signIn')}
+						{loader || statusCode?.status === 200 ? <LoaderApi /> : t('form.field.signIn')}
 					</Button>
 				</div>
 

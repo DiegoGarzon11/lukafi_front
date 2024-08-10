@@ -2,7 +2,7 @@ import {CreateWallet} from '@/apis/WalletService';
 import {Card, CardContent} from '@/components/ui/card';
 import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious} from '@/components/ui/carousel';
 import {Input} from '@/components/ui/input';
-import {Loader} from '@/assets/icons/Svg';
+import {LoaderApi} from '@/assets/icons/Svg';
 import {useRef, useState} from 'react';
 import {Toast} from '@/tools/Toast';
 import {ResponseWallet} from '@/interfaces/Wallet';
@@ -260,7 +260,7 @@ export const Carrusel = () => {
 												disabled={loader}
 												onClick={submitInfoWallet}
 												className='hover:bg-slate-200 ring-1 ring-black dark:bg-slate-800 h-8 w-full mt-6 rounded-md dark:hover:bg-slate-900 flex justify-center'>
-												{loader ? <Loader /> : 'Crear billetera'}
+												{loader ? <LoaderApi /> : 'Crear billetera'}
 											</button>
 										</div>
 

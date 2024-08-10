@@ -1,21 +1,21 @@
-import {DeleteDebt, GetDebts} from '@/apis/DebtService';
-import {GetDailyExpenses, GetExpenses, GetFixedExpenses, PayFixedExpense} from '@/apis/ExpenseService';
-import {GetWalletUser} from '@/apis/WalletService';
-import {Edit, Trash} from '@/assets/icons/Svg';
-import {Chart, ChartDonut} from '@/components/core/Charts';
-import {AddDebt} from '@/components/core/Debts/AddDebt';
-import {AddExpense} from '@/components/core/Expenses/AddExpense';
-import {Carrusel} from '@/components/others/Carrousel';
-import {TooltipComponent} from '@/components/others/Tooltip';
-import {Button} from '@/components/ui/button';
-import {Table, TableBody, TableCell, TableRow} from '@/components/ui/table';
-import {Debt, Expenses, ResponseWallet} from '@/interfaces/Wallet';
+import { DeleteDebt, GetDebts } from '@/apis/DebtService';
+import { GetDailyExpenses, GetExpenses, GetFixedExpenses, PayFixedExpense } from '@/apis/ExpenseService';
+import { GetWalletUser } from '@/apis/WalletService';
+import { Edit, Trash } from '@/assets/icons/Svg';
+import { Chart, ChartDonut } from '@/components/core/Charts';
+import { AddDebt } from '@/components/core/Debts/AddDebt';
+import { AddExpense } from '@/components/core/Expenses/AddExpense';
+import { Carrusel } from '@/components/others/Carrousel';
+import { TooltipComponent } from '@/components/others/Tooltip';
+import { Button } from '@/components/ui/button';
+import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
+import { Debt, Expenses, ResponseWallet } from '@/interfaces/Wallet';
 import '@/styles/Dashboard.css';
-import {Toast} from '@/tools/Toast';
-import {Dialog, DialogContent, DialogTrigger, DialogTitle, DialogHeader, DialogDescription} from '@/components/ui/dialog';
-import {useEffect, useState} from 'react';
-import {ArrowDown, ArrowUp, Eye} from 'lucide-react';
-
+import { Toast } from '@/tools/Toast';
+import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogHeader, DialogDescription } from '@/components/ui/dialog';
+import { useEffect, useState } from 'react';
+import { ArrowDown, ArrowUp, Eye } from 'lucide-react';
+import { LoaderComponent } from '@/components/others/Loader';
 export const Dashboard = () => {
 	const [userData, setDataUser] = useState<ResponseWallet | undefined>(undefined);
 	const [fixedExpenses, setFixedExpenses] = useState<Array<Expenses> | undefined>(undefined);
@@ -25,6 +25,7 @@ export const Dashboard = () => {
 	const [visibilytToast, setVisibilityToast] = useState(false);
 	const [restExpenses, setRestExpenses] = useState<Expenses | number>(0);
 	const [trigger, setTrigger] = useState(0);
+	const [loader, setLoader] = useState(true);
 	const user = JSON.parse(localStorage.getItem('userMain'));
 
 	const getDebts = async (walletId) => {
@@ -38,14 +39,15 @@ export const Dashboard = () => {
 	};
 
 	useEffect(() => {
+		setLoader(true);
 		const fetchData = async () => {
 			const dataUser = await GetWalletUser(user?.user_id);
 			const dailyExpenses = await GetDailyExpenses(dataUser?.wallet?.wallet_id);
 			setDataUser(dataUser);
+			setLoader(false);
 			const allToRest: number = dailyExpenses.expenses.reduce((a: number, c: Expenses) => {
 				return a + c.total_value;
 			}, 0);
-			console.log(userData?.wallet?.salary - allToRest);
 
 			setRestExpenses(allToRest);
 		};
@@ -104,6 +106,13 @@ export const Dashboard = () => {
 		console.log(response);
 	};
 
+	if (true) {
+		return (
+			<div className='h-screen flex justify-center pt-20 flex-col items-center gap-3 '>
+				<LoaderComponent />
+			</div>
+		);
+	}
 	return (
 		<main>
 			{userData && userData?.status === 404 ? (
@@ -113,19 +122,29 @@ export const Dashboard = () => {
 			) : (
 				<div className='flex flex-col md:grid md:grid-cols-3 h-full pt-20 p-5 gap-5 dark:bg-slate-900/30 bg-slate-200  '>
 					<section className='md:flex grid grid-cols-2 grid-rows-2 md:flex-nowrap w-full gap-3 md:col-span-3  '>
-						<AddExpense sendData={(e) => recibeResponseChild(e)} apiData={userData?.wallet} />
-						<AddDebt sendData={(e) => recibeResponseChild(e)} apiData={userData?.wallet} />
+						<AddExpense
+							sendData={(e) => recibeResponseChild(e)}
+							apiData={userData?.wallet}
+						/>
+						<AddDebt
+							sendData={(e) => recibeResponseChild(e)}
+							apiData={userData?.wallet}
+						/>
 						<a
 							className='w-full h-full dark:bg-slate-900 bg-white text-black  dark:text-white rounded-md flex justify-center items-center '
 							href='#seeDebt'>
-							<Button variant='ghost' className='flex items-center gap-3 h-full w-full'>
+							<Button
+								variant='ghost'
+								className='flex items-center gap-3 h-full w-full'>
 								Ver gastos <Eye />
 							</Button>
 						</a>
 						<a
 							className='w-full h-full dark:bg-slate-900 bg-white text-black  dark:text-white rounded-md flex justify-center items-center '
 							href='#seeExpenses'>
-							<Button variant='ghost' className='flex items-center gap-3 h-full w-full'>
+							<Button
+								variant='ghost'
+								className='flex items-center gap-3 h-full w-full'>
 								Ver deudas <Eye />
 							</Button>
 						</a>
@@ -185,10 +204,14 @@ export const Dashboard = () => {
 									</p>
 									<div className='flex gap-5 justify-end'>
 										<Button className=''>Dia</Button>
-										<Button disabled className=''>
+										<Button
+											disabled
+											className=''>
 											Mes
 										</Button>
-										<Button disabled className=''>
+										<Button
+											disabled
+											className=''>
 											Año
 										</Button>
 									</div>
@@ -204,10 +227,14 @@ export const Dashboard = () => {
 								</p>
 								<div className='flex gap-5'>
 									<Button className=''>Dia</Button>
-									<Button disabled className=''>
+									<Button
+										disabled
+										className=''>
 										Mes
 									</Button>
-									<Button disabled className=''>
+									<Button
+										disabled
+										className=''>
 										Año
 									</Button>
 								</div>
@@ -215,7 +242,9 @@ export const Dashboard = () => {
 							<Chart trigger={trigger} />
 						</div>
 					</section>
-					<section id='seeExpenses' className=' shadow-sm  md:col-span-3 md:row-span-2     '>
+					<section
+						id='seeExpenses'
+						className=' shadow-sm  md:col-span-3 md:row-span-2     '>
 						<div className=' w-full  flex flex-col md:flex-row justify-between gap-5 order-3 '>
 							<div className='dark:bg-slate-900 bg-white p-5 w-full md:w-2/5 rounded-xl'>
 								<div className='flex gap- items-center'>
@@ -241,14 +270,20 @@ export const Dashboard = () => {
 														</TableCell>
 														<TableCell className='font-medium w-full hidden md:block'>
 															{e?.name.length >= 20 ? (
-																<TooltipComponent message={`${e?.name.slice(0, 20)}...`} content={e?.name} />
+																<TooltipComponent
+																	message={`${e?.name.slice(0, 20)}...`}
+																	content={e?.name}
+																/>
 															) : (
 																<p>{e?.name}</p>
 															)}
 														</TableCell>
 														<TableCell className='font-medium w-full block md:hidden'>
 															{e?.name.length >= 8 ? (
-																<TooltipComponent message={`${e?.name.slice(0, 8)}...`} content={e?.name} />
+																<TooltipComponent
+																	message={`${e?.name.slice(0, 8)}...`}
+																	content={e?.name}
+																/>
 															) : (
 																<p>{e?.name}</p>
 															)}
@@ -313,10 +348,14 @@ export const Dashboard = () => {
 														</TableCell>
 
 														<TableCell className='font-medium   w-full hidden md:flex'>
-															<Button variant='ghost' className='w-full'>
+															<Button
+																variant='ghost'
+																className='w-full'>
 																<Trash className={'w-6'} />
 															</Button>
-															<Button variant='ghost' className='w-full'>
+															<Button
+																variant='ghost'
+																className='w-full'>
 																<Edit className={'w-6'} />
 															</Button>
 														</TableCell>
@@ -329,7 +368,9 @@ export const Dashboard = () => {
 							</div>
 						</div>
 					</section>
-					<section id='seeDebt' className=' shadow-sm md:col-span-3 h-full row-span-9'>
+					<section
+						id='seeDebt'
+						className=' shadow-sm md:col-span-3 h-full row-span-9'>
 						<div className='  w-full  flex  justify-between gap-5 order-3'>
 							<div className='dark:bg-slate-900 bg-white p-5 w-full rounded-xl'>
 								<div className='flex gap- items-center'>
@@ -358,7 +399,10 @@ export const Dashboard = () => {
 														</TableCell>
 														<TableCell className='font-medium md:w-full w-20 hidden md:block'>
 															{d?.person.length >= 10 ? (
-																<TooltipComponent message={`${d?.person.slice(0, 10)}...`} content={d?.person} />
+																<TooltipComponent
+																	message={`${d?.person.slice(0, 10)}...`}
+																	content={d?.person}
+																/>
 															) : (
 																<p>{d?.person}</p>
 															)}
@@ -366,7 +410,10 @@ export const Dashboard = () => {
 
 														<TableCell className='font-medium md:w-full w-16 block md:hidden align-middle'>
 															{d?.person.length >= 10 ? (
-																<TooltipComponent message={`${d?.person.slice(0, 10)}...`} content={d?.person} />
+																<TooltipComponent
+																	message={`${d?.person.slice(0, 10)}...`}
+																	content={d?.person}
+																/>
 															) : (
 																<p>{d?.person}</p>
 															)}
@@ -374,7 +421,10 @@ export const Dashboard = () => {
 
 														<TableCell className='font-medium md:w-full hidden md:block align-middle'>
 															{d?.reason.length >= 20 ? (
-																<TooltipComponent message={`${d?.reason.slice(0, 20)}`} content={d?.reason} />
+																<TooltipComponent
+																	message={`${d?.reason.slice(0, 20)}`}
+																	content={d?.reason}
+																/>
 															) : (
 																<p>{d?.reason}</p>
 															)}
@@ -382,7 +432,10 @@ export const Dashboard = () => {
 
 														<TableCell className='font-medium md:w-full block md:hidden w-20 align-middle'>
 															{d?.reason.length >= 10 ? (
-																<TooltipComponent message={`${d?.reason.slice(0, 8)}...`} content={d?.reason} />
+																<TooltipComponent
+																	message={`${d?.reason.slice(0, 8)}...`}
+																	content={d?.reason}
+																/>
 															) : (
 																<p>{d?.reason}</p>
 															)}
@@ -399,10 +452,15 @@ export const Dashboard = () => {
 															</p>
 														</TableCell>
 														<TableCell className='font-medium  w-20 hidden md:flex md:w-full'>
-															<Button onClick={() => deleteDebt(d)} variant='ghost' className='w-full  '>
+															<Button
+																onClick={() => deleteDebt(d)}
+																variant='ghost'
+																className='w-full  '>
 																<Trash className={'w-6'} />
 															</Button>
-															<Button variant='ghost' className='w-full '>
+															<Button
+																variant='ghost'
+																className='w-full '>
 																<Edit className={'w-6'} />
 															</Button>
 														</TableCell>

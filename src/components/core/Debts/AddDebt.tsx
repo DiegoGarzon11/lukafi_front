@@ -1,5 +1,5 @@
 import { NewDebt } from '@/apis/DebtService';
-import { Expense, Income, Loader } from '@/assets/icons/Svg';
+import { Expense, Income, LoaderApi } from '@/assets/icons/Svg';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
@@ -149,7 +149,7 @@ export const AddDebt = ({ apiData, sendData }) => {
 					className={` py-2 rounded-md text-white flex justify-center ${
 						debtType === null || person === '' || reason === '' || value === '' || value === '0' ? 'bg-gray-200 ' : ' bg-slate-800'
 					}`}>
-					{loader ? <Loader /> : 'Confirmar'}
+					{loader ? <LoaderApi /> : 'Confirmar'}
 				</Button>
 			</DialogContent>
 			{visibilytToast && (

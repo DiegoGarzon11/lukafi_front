@@ -6,7 +6,7 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrig
 import { ResponseWallet } from '@/interfaces/Wallet';
 import { COUNTRIES } from '@/tools/countries';
 import { Toast } from '@/tools/Toast';
-import { Loader } from '@/assets/icons/Svg';
+import { LoaderApi } from '@/assets/icons/Svg';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -299,7 +299,7 @@ export default function SignUp() {
 						data.confirmPassword == '' ||
 						data.password != data.confirmPassword
 					}>
-					{loader || statusCode?.status === 201 ? <Loader /> : t('form.field.signUp')}
+					{loader || statusCode?.status === 201 ? <LoaderApi /> : t('form.field.signUp')}
 				</Button>
 			</form>
 		</>
