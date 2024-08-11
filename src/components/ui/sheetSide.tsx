@@ -37,6 +37,7 @@ export function SheetSide() {
 						</div>
 						<Button
 							className='w-full gap-4 justify-start py-6 bg-trasparent hover:bg-white dark:hover:bg-slate-800 text-black dark:text-white'
+							disabled
 							onClick={() => {
 								closeSession();
 							}}>
@@ -44,6 +45,7 @@ export function SheetSide() {
 						</Button>
 						<Button
 							className='w-full gap-4 justify-start py-6 bg-trasparent hover:bg-white dark:hover:bg-slate-800 text-black dark:text-white'
+							disabled
 							onClick={() => {
 								closeSession();
 							}}>
@@ -52,6 +54,7 @@ export function SheetSide() {
 
 						<Button
 							className='w-full gap-4 justify-start py-6 bg-transparent hover:bg-white dark:hover:bg-slate-800 text-black dark:text-white'
+							disabled
 							onClick={() => {
 								closeSession();
 							}}>
@@ -61,6 +64,7 @@ export function SheetSide() {
 
 						<Button
 							className='absolute gap-2 bottom-0 w-full py-6 bg-transparent hover:bg-white dark:hover:bg-slate-800 text-black dark:text-white'
+							disabled
 							onClick={() => {
 								closeSession();
 							}}>
