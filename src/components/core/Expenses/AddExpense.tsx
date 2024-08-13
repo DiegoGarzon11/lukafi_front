@@ -1,19 +1,24 @@
 import { NewExpense } from '@/apis/ExpenseService';
+import { LoaderApi } from '@/assets/icons/Svg';
 import { Button } from '@/components/ui/button';
 import { DatePicker } from '@/components/ui/datapicker';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { ApiResponse } from '@/interfaces/Api';
+import { Toast } from '@/tools/Toast';
 import { BadgePlus } from 'lucide-react';
 import { useState } from 'react';
 
 export const AddExpense = ({ apiData, sendData }) => {
 	const [deadLine, setDeadLine] = useState(null);
 	const [name, setName] = useState('');
-	const [value, setValue] = useState('');
-	const [isFixed, setIsFixed] = useState('0');
-	// const [responseApiNewExpense, setResponseApiNewExpense] = useState('');
+	const [value, setValue] = useState('0');
+	const [isFixed, setIsFixed] = useState('false');
+	const [responseApiNewExpense, setResponseApiNewExpense] = useState<ApiResponse | undefined>(undefined);
+	const [visibilytToast, setVisibilityToast] = useState(false);
+	const [loader, setLoader] = useState(false);
 
 	const handleDate = (e) => {
 		setDeadLine(e);
@@ -36,6 +41,7 @@ export const AddExpense = ({ apiData, sendData }) => {
 	};
 
 	const submitExpense = async () => {
+		setLoader(true);
 		const sendIsFixed: boolean = isFixed === 'true';
 
 		const params = {
@@ -50,13 +56,25 @@ export const AddExpense = ({ apiData, sendData }) => {
 		};
 
 		const response = await NewExpense(params);
+
+		if (!response) {
+			return;
+		}
+
+		setResponseApiNewExpense(response);
+		setVisibilityToast(true);
+		setLoader(false);
 		setValue('0');
 		setName('');
-		if (response && sendIsFixed) {
+		if (sendIsFixed) {
 			sendData('expenseFixed');
 		} else {
 			sendData('expense');
 		}
+		setTimeout(() => {
+			setVisibilityToast(false);
+			setResponseApiNewExpense(null);
+		}, 1000);
 	};
 
 	return (
@@ -136,11 +154,19 @@ export const AddExpense = ({ apiData, sendData }) => {
 					</RadioGroup>
 				</div>
 				<Button
+					disabled={name === '' || value === '0' || (isFixed && deadLine === null)}
 					onClick={submitExpense}
 					className={` py-2 rounded-md text-slate-300 flex justify-center`}>
-					{'Confirmar'}
+					{loader ? <LoaderApi /> : 'Confirmar'}
 				</Button>
 			</DialogContent>
+			{visibilytToast && (
+				<Toast
+					visibility={visibilytToast}
+					severity={responseApiNewExpense?.success == true ? 'success' : 'error'}
+					message={responseApiNewExpense?.message}
+				/>
+			)}
 		</Dialog>
 	);
 };
