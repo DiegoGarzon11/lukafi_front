@@ -6,7 +6,7 @@ export const Card = ({title, info, img}) => {
 	const {t, i18n} = useTranslation();
 	i18n.changeLanguage();
 	return (
-		<div className='border border-black border-b-4  rounded-xl p-4 dark:bg-slate-900 '>
+		<div className='border border-black border-b-4  rounded-xl p-4 dark:bg-zinc-900 '>
 			<div className='flex  justify-between '>
 				<div className='flex flex-col  gap-2 w-8/12'>
 					<p className='font-bold'>{title}</p>

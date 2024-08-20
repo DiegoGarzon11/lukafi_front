@@ -1,13 +1,13 @@
-import {CreateWallet} from '@/apis/WalletService';
-import {Card, CardContent} from '@/components/ui/card';
-import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious} from '@/components/ui/carousel';
-import {Input} from '@/components/ui/input';
-import {LoaderApi} from '@/assets/icons/Svg';
-import {useRef, useState} from 'react';
-import {Toast} from '@/tools/Toast';
-import {ResponseWallet} from '@/interfaces/Wallet';
-import {CURRENCIES} from '@/tools/currencies';
-import {TriangleAlert} from 'lucide-react';
+import { CreateWallet } from '@/apis/WalletService';
+import { Card, CardContent } from '@/components/ui/card';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import { Input } from '@/components/ui/input';
+import { LoaderApi } from '@/assets/icons/Svg';
+import { useRef, useState } from 'react';
+import { Toast } from '@/tools/Toast';
+import { ResponseWallet } from '@/interfaces/Wallet';
+import { CURRENCIES } from '@/tools/currencies';
+import { TriangleAlert } from 'lucide-react';
 
 export const Carrusel = () => {
 	const btnNext = useRef(null);
@@ -31,12 +31,22 @@ export const Carrusel = () => {
 			const floatValue = parseFloat(value);
 			if (item === 'salario') {
 				const formattedValue = floatValue.toLocaleString();
+				const savingValue = parseInt(ahorro.replace(/[^0-9.]/g, ''));
+				if (savingValue >= value) {
+					setIsMajor(true);
+				} else {
+					setIsMajor(false);
+				}
 				setSalario(formattedValue);
 			} else if (item === 'ahorro') {
 				const formattedValue = floatValue.toLocaleString();
-				const salaryValidate = parseInt(salario.replace(/[^0-9.]/g, ''));
+				const savingValidate = parseInt(salario.replace(/[^0-9.]/g, ''));
 
-				salaryValidate <= value ? setIsMajor(true) : setIsMajor(false);
+				if (savingValidate <= value) {
+					setIsMajor(true);
+				} else {
+					setIsMajor(false);
+				}
 
 				setAhorro(formattedValue);
 			} else if (item === 'currency') {
@@ -84,7 +94,7 @@ export const Carrusel = () => {
 
 	return (
 		<section className='flex justify-center items-center h-screen '>
-			<Carousel className=' md:max-w-3xl max-w-sm md:h-full  flex justify-center items-center mt-16 '>
+			<Carousel className=' md:max-w-3xl max-w-sm h-screen fixed  flex justify-center items-center mt-16 '>
 				<CarouselContent>
 					<CarouselItem className='flex  justify-center'>
 						<div className='p-1 flex items-center justify-center '>
@@ -101,7 +111,7 @@ export const Carrusel = () => {
 
 									<button
 										onClick={(e) => handleNextCarousel(e)}
-										className=' hover:bg-slate-200 ring-1 ring-black dark:bg-slate-800 w-full h-8 mt-6 rounded-md dark:hover:bg-slate-900'>
+										className=' hover:bg-zinc-200   bg-zinc-700 w-full h-8 mt-6 rounded-md dark:hover:bg-zinc-900 text-white'>
 										Siguiente
 									</button>
 								</CardContent>
@@ -109,88 +119,91 @@ export const Carrusel = () => {
 						</div>
 					</CarouselItem>
 
-					<CarouselItem className='flex justify-center'>
-						<div className='p-1 flex items-center justify-center w-[580px] h-[600px]'>
-							<Card className='h-full w-full'>
+					<CarouselItem className='flex justify-center '>
+						<div className='p-1 flex items-center justify-center w-[580px] h-[600px] '>
+							<Card className='h-full w-full '>
 								<CardContent className='flex h-full w-full items-center justify-center p-6 gap-8 flex-col'>
-									<p className='mb-10 text-2xl'>
+									<p className='mb-10 text-2xl '>
 										Salario y Ahorro <span className='text-red-500'>*</span>
 									</p>
 
 									<form action=''>
-										<div>
-											<div className=''>
-												<h2>Selecciona tipo de moneda:</h2>
-												<div className='flex justify-around mt-3 mb-6'>
-													{CURRENCIES.map((c) => (
-														<div key={c.symbol} className='flex'>
-															<label htmlFor={c.symbol} className='pl-2 flex gap-3'>
-																<input
-																	defaultChecked={c.symbol === 'cop'}
-																	id={c.symbol}
-																	onChange={(e) => handleValuesMoney(e, 'currency')}
-																	type='radio'
-																	value={c.symbol}
-																	name='typeCurrency'
-																/>
-																<div>
-																	<span className='capitalize'>{c.name}</span>
-																	<span className='uppercase'>({c.symbol})</span>
-																</div>
-															</label>
-														</div>
-													))}
-												</div>
-											</div>
-											<div className='w-full'>
-												<p className='mb-2'>
-													¿Cual es tu salario mensual promedio? <span className='text-red-500'>*</span>
-												</p>
-												<div className=' flex  justify-center items-center gap-2'>
-													<Input
-														type='text'
-														className='appearance-none'
-														value={salario}
-														onChange={(e) => handleValuesMoney(e, 'salario')}
-													/>
-												</div>
-											</div>
-
-											<div className='w-full'>
-												<p className='mb-2'>
-													¿Cual es la cantidad que esperas ahorrar mensualmente? <span className='text-red-500'>*</span>
-												</p>
-												<div className='flex  justify-center items-center gap-2'>
-													<Input
-														type='text'
-														className='appearance-none'
-														value={ahorro}
-														onChange={(e) => handleValuesMoney(e, 'ahorro')}
-													/>
-												</div>
-												{isMajor ? (
-													<div className='flex items-center mt-2 gap-2'>
-														<TriangleAlert className='text-yellow-600' />
-														<p className=''>Lo que esperas ahorrar no puede ser mayor o igual a tus ingresos</p>
+										<div className=''>
+											<h2>Selecciona tipo de moneda:</h2>
+											<div className='flex justify-around mt-3 mb-6'>
+												{CURRENCIES.map((c) => (
+													<div
+														key={c.symbol}
+														className='flex'>
+														<label
+															htmlFor={c.symbol}
+															className='pl-2 flex gap-3 items-center cursor-pointer'>
+															<input
+																defaultChecked={c.symbol === 'cop'}
+																id={c.symbol}
+																onChange={(e) => handleValuesMoney(e, 'currency')}
+																type='radio'
+																value={c.symbol}
+																className='size-4 cursor-pointer'
+																name='typeCurrency'
+															/>
+															<div>
+																<span className='capitalize'>{c.name}</span>
+																<span className='uppercase'>({c.symbol})</span>
+															</div>
+														</label>
 													</div>
-												) : (
-													''
-												)}
+												))}
+											</div>
+										</div>
+										<div className='w-full mb-5'>
+											<p className='mb-2'>
+												¿Cual es tu salario mensual promedio? <span className='text-red-500'>*</span>
+											</p>
+											<div className=' flex  justify-center items-center gap-2'>
+												<Input
+													type='text'
+													className='appearance-none  dark:border-white border-zinc-900'
+													value={salario}
+													onChange={(e) => handleValuesMoney(e, 'salario')}
+												/>
+											</div>
+										</div>
 
-												<div className='flex items-center gap-3'>
-													<button
-														onClick={(e) => handleBackCarousel(e)}
-														className='hover:bg-slate-200 ring-1 ring-black dark:bg-slate-800 w-full h-8 mt-6 rounded-md dark:hover:bg-slate-900'>
-														Atras
-													</button>
-
-													<button
-														onClick={(e) => handleNextCarousel(e)}
-														disabled={salario === '0' || ahorro === '0' || isMajor}
-														className='hover:bg-slate-200 ring-1 ring-black dark:bg-slate-800 w-full h-8 mt-6 rounded-md dark:hover:bg-slate-900'>
-														Confirmar
-													</button>
+										<div className='w-full'>
+											<p className='mb-2'>
+												¿Cual es la cantidad que esperas ahorrar mensualmente? <span className='text-red-500'>*</span>
+											</p>
+											<div className='flex  justify-center items-center gap-2'>
+												<Input
+													type='text'
+													className='appearance-none border dark:border-white border-zinc-900'
+													value={ahorro}
+													onChange={(e) => handleValuesMoney(e, 'ahorro')}
+												/>
+											</div>
+											{isMajor ? (
+												<div className='flex items-center mt-2 gap-2'>
+													<TriangleAlert className='text-yellow-600' />
+													<p className=''>Lo que esperas ahorrar no puede ser mayor o igual a tus ingresos</p>
 												</div>
+											) : (
+												''
+											)}
+
+											<div className='flex items-center gap-3'>
+												<button
+													onClick={(e) => handleBackCarousel(e)}
+													className='hover:bg-zinc-200  text-white  bg-zinc-700 w-full h-8 mt-6 rounded-md dark:hover:bg-zinc-900'>
+													Atras
+												</button>
+
+												<button
+													onClick={(e) => handleNextCarousel(e)}
+													disabled={salario === '0' || ahorro === '0' || isMajor}
+													className='hover:bg-zinc-200   bg-zinc-700 text-white w-full h-8 mt-6 rounded-md disabled:dark:hover:bg-zinc-700 hover:dark:bg-zinc-900'>
+													Confirmar
+												</button>
 											</div>
 										</div>
 									</form>
@@ -214,7 +227,7 @@ export const Carrusel = () => {
 										</p>
 										<button
 											onClick={(e) => handleBackCarousel(e)}
-											className=' hover:bg-slate-200 ring-1 ring-black dark:bg-slate-800 w-5/6 h-8 mt-6 rounded-md dark:hover:bg-slate-900'>
+											className=' hover:bg-zinc-200   text-white bg-zinc-700 w-5/6 h-8 mt-6 rounded-md dark:hover:bg-zinc-900'>
 											Volver
 										</button>
 									</div>
@@ -236,13 +249,11 @@ export const Carrusel = () => {
 													<span className='font-normal text-lg mx-2 text-green-500'>
 														{currency === 'cop' ? (
 															<>
-																<span className='capitalize'>peso colombiano </span>{' '}
-																<span className='uppercase '>({currency})</span>
+																<span className='capitalize'>peso colombiano </span> <span className='uppercase '>({currency})</span>
 															</>
 														) : (
 															<>
-																<span className='capitalize'>Dolar Americano </span>{' '}
-																<span className='uppercase'>({currency})</span>
+																<span className='capitalize'>Dolar Americano </span> <span className='uppercase'>({currency})</span>
 															</>
 														)}
 													</span>
@@ -253,13 +264,13 @@ export const Carrusel = () => {
 										<div className='flex  w-full gap-3'>
 											<button
 												onClick={(e) => handleBackCarousel(e)}
-												className=' hover:bg-slate-200 ring-1 ring-black dark:bg-slate-800 h-8 w-full mt-6 rounded-md dark:hover:bg-slate-900'>
+												className=' hover:bg-zinc-200   dark:bg-zinc-800 h-8 w-full mt-6 rounded-md dark:hover:bg-zinc-900'>
 												Atras
 											</button>
 											<button
 												disabled={loader}
 												onClick={submitInfoWallet}
-												className='hover:bg-slate-200 ring-1 ring-black dark:bg-slate-800 h-8 w-full mt-6 rounded-md dark:hover:bg-slate-900 flex justify-center'>
+												className='hover:bg-zinc-200   dark:bg-zinc-800 h-8 w-full mt-6 rounded-md dark:hover:bg-zinc-900 flex justify-center'>
 												{loader ? <LoaderApi /> : 'Crear billetera'}
 											</button>
 										</div>
@@ -279,8 +290,14 @@ export const Carrusel = () => {
 						</div>
 					</CarouselItem>
 				</CarouselContent>
-				<CarouselPrevious className='hidden md:flex' ref={btnBack} />
-				<CarouselNext className='hidden md:flex' ref={btnNext} />
+				<CarouselPrevious
+					className='hidden md:flex hover:bg-zinc-600'
+					ref={btnBack}
+				/>
+				<CarouselNext
+					className='hidden md:flex hover:bg-zinc-600'
+					ref={btnNext}
+				/>
 			</Carousel>
 		</section>
 	);

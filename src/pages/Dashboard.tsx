@@ -115,11 +115,11 @@ export const Dashboard = () => {
 	return (
 		<main>
 			{userData && userData?.status === 404 ? (
-				<div className='flex justify-center items-center bg-slate-200 dark:bg-slate-900/30'>
+				<div className='flex justify-center items-center bg-slate-200 dark:bg-zinc-900'>
 					<Carrusel />
 				</div>
 			) : (
-				<div className='flex flex-col md:grid md:grid-cols-3 h-full pt-20 p-5 gap-5 dark:bg-slate-900/30 bg-slate-200  '>
+				<div className='flex flex-col md:grid md:grid-cols-3 h-full pt-20 p-5 gap-5 dark:dark:bg-zinc-900 bg-slate-200  '>
 					<section className='md:flex grid grid-cols-2 grid-rows-2 md:flex-nowrap w-full gap-3 md:col-span-3  '>
 						<AddExpense sendData={(e) => recibeResponseChild(e)} apiData={userData?.wallet} />
 						<AddDebt sendData={(e) => recibeResponseChild(e)} apiData={userData?.wallet} />

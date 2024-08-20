@@ -54,8 +54,8 @@ export default function Header() {
 
 	return (
 		<>
-			<header className='  dark:bg-slate-950 dark:text-white z-50 absolute  flex w-full justify-center gap-5  '>
-				<div className=' w-[98%] fixed flex justify-between shadow-sm shadow-slate-700 rounded-full p-3 z-10 bg-gradient-to-b dark:from-slate-900 dark:to-slate-950 bg-white'>
+			<header className='  dark:bg-zinc-950 dark:text-white z-50 absolute  flex w-full justify-center gap-5  '>
+				<div className=' w-[98%] fixed flex justify-between shadow-sm shadow-z-700 rounded-full p-3 z-10 bg-gradient-to-b dark:from-zinc-900 dark:to-zinc-950 bg-white'>
 					<div className='flex justify-start gap-3 items-center'>
 						<p className='text-lg pl-5'>Lukafi</p>
 					</div>
@@ -75,7 +75,7 @@ export default function Header() {
 							{localStorage.lang == 'en' ? <Usa /> : <Col />}
 						</button>
 						{isOpen && (
-							<div className='absolute dark:text-white dark:bg-slate-900 bg-white  rounded-lg shadow w-36 right-20 top-12 '>
+							<div className='absolute dark:text-white dark:bg-zinc-900 bg-white  rounded-lg shadow w-36 right-20 top-12 '>
 								<div className='p-2 flex flex-col gap-3'>
 									<button
 										className='hover:scale-105'

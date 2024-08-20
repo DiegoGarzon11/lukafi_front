@@ -9,7 +9,7 @@ export const Home = () => {
 	const {t, i18n} = useTranslation();
 	i18n.changeLanguage();
 	return (
-		<div className='  dark:bg-slate-950 h-full '>
+		<div className='  dark:bg-zinc-900 h-full '>
 			<main className='flex flex-col items-center mx-5 md:w-2/3 md:m-auto pt-20'>
 				<section className='gap-3 md:grid md:grid-cols-2'>
 					<div className='pt-12 '>
@@ -56,7 +56,7 @@ export const Home = () => {
 					<img src='/images/vault.svg' alt='' />
 				</div>
 			</main>
-			<footer className='flex justify-around w-full dark:bg-slate-950 '>
+			<footer className='flex justify-around w-full dark:bg-zinc-950 '>
 				<div>
 					<p className='dark:text-white text-black text-4xl'>Lukafi</p>
 				</div>

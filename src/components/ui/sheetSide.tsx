@@ -27,7 +27,7 @@ export function SheetSide() {
 					</Button>
 				</SheetTrigger>
 				<SheetContent
-					className='dark:bg-slate-900 bg-slate-200 w-60 md:w-72'
+					className='dark:bg-zinc-900 bg-zinc-200 w-60 md:w-72'
 					aria-describedby={undefined}
 					side='right'>
 					<SheetTitle className='hidden' />
@@ -46,18 +46,18 @@ export function SheetSide() {
 							<p className=' dark:text-white/55 text-black/60'>{infoUser.email}</p>
 						</div>
 						<Button
-							className='w-full gap-4 justify-start py-6 bg-trasparent hover:bg-white dark:hover:bg-slate-800 text-black dark:text-white'
+							className='w-full gap-4 justify-start py-6 bg-trasparent hover:bg-white dark:hover:bg-zinc-800 text-black dark:text-white'
 							disabled>
 							<Wallet /> Billetera
 						</Button>
 						<Button
-							className='w-full gap-4 justify-start py-6 bg-trasparent hover:bg-white dark:hover:bg-slate-800 text-black dark:text-white'
+							className='w-full gap-4 justify-start py-6 bg-trasparent hover:bg-white dark:hover:bg-zinc-800 text-black dark:text-white'
 							disabled>
 							<User /> Perfil
 						</Button>
 
 						<Button
-							className='w-full gap-4 justify-start py-6 bg-transparent hover:bg-white dark:hover:bg-slate-800 text-black dark:text-white'
+							className='w-full gap-4 justify-start py-6 bg-transparent hover:bg-white dark:hover:bg-zinc-800 text-black dark:text-white'
 							onClick={() => {
 								closeSession();
 							}}>
@@ -66,7 +66,7 @@ export function SheetSide() {
 						</Button>
 
 						<Button
-							className='absolute gap-2 bottom-0 w-full py-6 bg-transparent hover:bg-white dark:hover:bg-slate-800 text-black dark:text-white'
+							className='absolute gap-2 bottom-0 w-full py-6 bg-transparent hover:bg-white dark:hover:bg-zinc-800 text-black dark:text-white'
 							disabled>
 							<Headset />
 							Ayuda
