@@ -107,7 +107,7 @@ export const Dashboard = () => {
 
 	if (loader) {
 		return (
-			<div className='h-screen flex justify-center pt-20 flex-col items-center gap-3 '>
+			<div className='h-screen flex justify-center pt-20 flex-col items-center gap-3'>
 				<LoaderComponent />
 			</div>
 		);
