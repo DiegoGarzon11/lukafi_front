@@ -14,7 +14,7 @@ function App() {
 		return () => clearTimeout(time);
 	}, []);
 	return (
-		<div  className={`app${loaded ? 'loaded' : ''}`}>
+		<div className={`app${loaded ? 'loaded' : ''}`}>
 			<BrowserRouter>
 				<Header />
 				<RoutesManager />
