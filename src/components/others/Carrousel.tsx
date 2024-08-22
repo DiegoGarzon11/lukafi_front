@@ -8,6 +8,7 @@ import { Toast } from '@/tools/Toast';
 import { ResponseWallet } from '@/interfaces/Wallet';
 import { CURRENCIES } from '@/tools/currencies';
 import { TriangleAlert } from 'lucide-react';
+import { LoaderComponent } from './Loader';
 
 export const Carrusel = () => {
 	const btnNext = useRef(null);
@@ -85,12 +86,11 @@ export const Carrusel = () => {
 			}, 1000);
 			setApiResponse(response);
 			if (response.status === 201) {
-				setTimeout(() => {
-					window.location.href = '/dashboard';
-				}, 1000);
+				window.location.href = '/dashboard';
 			}
 		}
 	}
+
 
 	return (
 		<section className='flex justify-center items-center h-screen '>
@@ -114,10 +114,10 @@ export const Carrusel = () => {
 										className=' hover:bg-zinc-500   bg-zinc-700 w-full h-8 mt-6 rounded-md dark:hover:bg-zinc-900 text-white'>
 										Siguiente
 									</button>
-									<p className='block'>
-										<span className='bg-gray-100 h-6 w-3'></span>
-										<span></span>
-										<span></span>
+									<p className='flex gap-2 m-0 absolute bottom-5'>
+										<span className='dark:bg-slate-100 bg-slate-700 h-3 w-3 rounded-full'></span>
+										<span className='dark:bg-slate-700 bg-slate-300 h-3 w-3 rounded-full'></span>
+										<span className='dark:bg-gray-700  bg-slate-300 h-3 w-3 rounded-full'></span>
 									</p>
 								</CardContent>
 							</Card>
@@ -134,7 +134,9 @@ export const Carrusel = () => {
 
 									<form action=''>
 										<div className=''>
-											<h2>Selecciona tipo de moneda:</h2>
+											<h2>
+												Selecciona tipo de moneda: <span className='text-red-500'>*</span>
+											</h2>
 											<div className='flex justify-around mt-3 mb-6'>
 												{CURRENCIES.map((c) => (
 													<div
@@ -212,7 +214,11 @@ export const Carrusel = () => {
 											</div>
 										</div>
 									</form>
-									<p className='font-semibold text-2xl bg-white text-black px-2 rounded-3xl'>2 - 3</p>
+									<p className='flex gap-2 m-0 absolute bottom-5'>
+										<span className='dark:bg-slate-700 bg-slate-300  h-3 w-3 rounded-full'></span>
+										<span className='dark:bg-slate-100 bg-slate-700  h-3 w-3 rounded-full'></span>
+										<span className='dark:bg-gray-700 bg-slate-300  h-3 w-3 rounded-full'></span>
+									</p>
 								</CardContent>
 							</Card>
 						</div>
@@ -236,20 +242,18 @@ export const Carrusel = () => {
 											className=' hover:bg-zinc-500   text-white bg-zinc-700 w-5/6 h-8 mt-6 rounded-md dark:hover:bg-zinc-900'>
 											Volver
 										</button>
+										<p className='flex gap-2 m-0 absolute bottom-5'>
+											<span className='dark:bg-slate-700  bg-slate-300 h-3 w-3 rounded-full'></span>
+											<span className='dark:bg-slate-700  bg-slate-300 h-3 w-3 rounded-full'></span>
+											<span className='dark:bg-gray-100  bg-slate-700 h-3 w-3 rounded-full'></span>
+										</p>
 									</div>
 								) : (
 									<CardContent className='flex-grow flex h-full w-full items-center justify-center p-6 gap-8 flex-col'>
 										<p className='text-3xl mb-20 '>Tu billetera luce asi</p>
 
 										<div className='flex flex-col justify-center items-start gap-10'>
-											<div className='flex flex-col gap-10 justify-center  items-center '>
-												<p className='font-medium text-lg flex flex-col md:flex-row'>
-													Tu salario es: <span className='font-normal text-lg mx-2 text-green-500'>{salario}</span>
-												</p>
-
-												<p className='font-medium text-lg flex flex-col md:flex-row '>
-													Tu ahorro es: <span className='font-normal text-lg mx-2 text-green-500'>{ahorro}</span>
-												</p>
+											<div className='flex flex-col gap-10 justify-center  items-start '>
 												<p className='font-medium text-lg  flex flex-col md:flex-row'>
 													Tu tipo de moneda es:
 													<span className='font-normal text-lg mx-2 text-green-500'>
@@ -264,6 +268,13 @@ export const Carrusel = () => {
 														)}
 													</span>
 												</p>
+												<p className='font-medium text-lg flex flex-col md:flex-row'>
+													Tu salario es: <span className='font-normal text-lg mx-2 text-green-500'>{salario}</span>
+												</p>
+
+												<p className='font-medium text-lg flex flex-col md:flex-row '>
+													Tu ahorro es: <span className='font-normal text-lg mx-2 text-green-500'>{ahorro}</span>
+												</p>
 											</div>
 										</div>
 
@@ -277,7 +288,7 @@ export const Carrusel = () => {
 												disabled={loader}
 												onClick={submitInfoWallet}
 												className='hover:bg-zinc-500 text-white bg-zinc-700 h-8 w-full mt-6 rounded-md dark:hover:bg-zinc-900 flex justify-center items-center'>
-												{loader ?  <LoaderApi color='white' /> : 'Crear billetera'}
+												{loader ? <LoaderApi color='white' /> : 'Crear billetera'}
 											</button>
 										</div>
 
@@ -290,7 +301,11 @@ export const Carrusel = () => {
 										) : (
 											''
 										)}
-										<p className='font-semibold text-2xl bg-white text-black px-2 rounded-3xl'>1 - 3</p>
+										<p className='flex gap-2 m-0 absolute bottom-5'>
+											<span className='dark:bg-slate-700  bg-slate-300 h-3 w-3 rounded-full'></span>
+											<span className='dark:bg-slate-700  bg-slate-300  h-3 w-3 rounded-full'></span>
+											<span className='dark:bg-gray-100  bg-slate-700 h-3 w-3 rounded-full'></span>
+										</p>
 									</CardContent>
 								)}
 							</Card>

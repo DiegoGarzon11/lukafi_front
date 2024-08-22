@@ -13,7 +13,7 @@ export const PageNotFound = () => {
 	};
 
 	return (
-		<main className='flex flex-col items-center justify-center bg-slate-300 dark:bg-slate-950 h-screen'>
+		<main className='flex flex-col items-center justify-center bg-zinc-300 dark:bg-zinc-900 h-screen'>
 			<div className='flex flex-col xl:flex-row relative justify-between items-center w-3/4 '>
 				<div
 					onMouseEnter={handleMouseEnter}
