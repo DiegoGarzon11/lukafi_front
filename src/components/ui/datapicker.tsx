@@ -1,15 +1,15 @@
 'use client';
 
-import { CalendarIcon } from '@radix-ui/react-icons';
-import { format } from 'date-fns';
+import {CalendarIcon} from '@radix-ui/react-icons';
+import {format} from 'date-fns';
 
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { Calendar } from '@/components/ui/calendar';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { useState } from 'react';
+import {cn} from '@/lib/utils';
+import {Button} from '@/components/ui/button';
+import {Calendar} from '@/components/ui/calendar';
+import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
+import {useState} from 'react';
 
-export function DatePicker({ sendDate }) {
+export function DatePicker({sendDate}) {
 	const [date, setDate] = useState<Date>();
 
 	const handleDateSelect = (selectedDate) => {
@@ -27,17 +27,8 @@ export function DatePicker({ sendDate }) {
 					{date ? format(date, 'PPPP') : <span>Selecciona la fecha limite</span>}
 				</Button>
 			</PopoverTrigger>
-			<PopoverContent
-				className='w-auto'
-				align='center'>
-				<Calendar
-					mode='single'
-					className=''
-					selected={date}
-					onSelect={handleDateSelect}
-					initialFocus
-					disableNavigation={false}
-				/>
+			<PopoverContent className='w-auto' align='center'>
+				<Calendar mode='single' className='' selected={date} onSelect={handleDateSelect} initialFocus disableNavigation={false} />
 			</PopoverContent>
 		</Popover>
 	);

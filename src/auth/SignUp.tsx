@@ -108,7 +108,7 @@ export default function SignUp() {
 						</label>
 						<Input
 							type='text'
-							className='bg-white'
+							className='bg-white text-black'
 							placeholder={t('form.field.name')}
 							onChange={handleChange}
 							value={data.name}
@@ -121,7 +121,7 @@ export default function SignUp() {
 						</label>
 						<Input
 							type='text'
-							className='bg-white'
+							className='bg-white text-black'
 							placeholder={t('form.field.lastName')}
 							onChange={handleChange}
 							value={data.lastName}
@@ -136,7 +136,7 @@ export default function SignUp() {
 					<Input
 						autoComplete='email'
 						type='email'
-						className='bg-white'
+						className='bg-white text-black'
 						placeholder={t('form.field.email')}
 						onChange={handleChange}
 						value={data.email}
@@ -148,8 +148,8 @@ export default function SignUp() {
 						{t('form.field.nacionality')} <span className='text-red-500'>*</span>
 					</label>
 					<Select onValueChange={(value) => handeleNacionality(value)} value={data.nacionality}>
-						<SelectTrigger className='w-full bg-white text-zinc-400'>
-							<SelectValue placeholder={t('form.field.nacionality')} />
+						<SelectTrigger className='w-full bg-white text-black'>
+							<SelectValue placeholder={t('form.field.nacionality')} className='text-black' />
 						</SelectTrigger>
 						<SelectContent className='dark:bg-zinc-900'>
 							<SelectGroup>
@@ -168,52 +168,60 @@ export default function SignUp() {
 						{t('form.field.bth')}
 					</label>
 					<div className='flex gap-8'>
-						<Select onValueChange={(value) => handleDateChange(value, 'year')} value={date.year}>
-							<SelectTrigger className='w-full bg-white text-zinc-400'>
-								<SelectValue placeholder={t('form.field.year')} />
-							</SelectTrigger>
-							<SelectContent className='dark:bg-zinc-900'>
-								<SelectGroup>
-									<SelectLabel className='text-lg '>{t('form.field.year')}</SelectLabel>
-									{years.map((e, i) => (
-										<SelectItem key={i} value={e.toString()}>
-											{e}
-										</SelectItem>
-									))}
-								</SelectGroup>
-							</SelectContent>
-						</Select>
-
-						<Select onValueChange={(value) => handleDateChange(value, 'month')} value={date.month}>
-							<SelectTrigger className='w-full bg-white text-zinc-400'>
-								<SelectValue placeholder={t('form.field.month')} />
-							</SelectTrigger>
-							<SelectContent className='dark:bg-zinc-900'>
-								<SelectGroup>
-									<SelectLabel className='text-lg'>{t('form.field.month')}</SelectLabel>
-									{months.map((e, i) => (
-										<SelectItem key={i} value={e.toString()}>
-											{e}
-										</SelectItem>
-									))}
-								</SelectGroup>
-							</SelectContent>
-						</Select>
-						<Select onValueChange={(value) => handleDateChange(value, 'day')} value={date.day}>
-							<SelectTrigger className='w-full bg-white text-zinc-400'>
-								<SelectValue placeholder={t('form.field.day')} />
-							</SelectTrigger>
-							<SelectContent className='dark:bg-zinc-900'>
-								<SelectGroup>
-									<SelectLabel className='text-lg'>{t('form.field.day')}</SelectLabel>
-									{days.map((e, i) => (
-										<SelectItem key={i} value={e.toString()}>
-											{e}
-										</SelectItem>
-									))}
-								</SelectGroup>
-							</SelectContent>
-						</Select>
+						<div className='w-1/3'>
+							<label htmlFor=''>{t('form.field.year')}</label>
+							<Select onValueChange={(value) => handleDateChange(value, 'year')} value={date.year}>
+								<SelectTrigger className='w-full bg-white text-black'>
+									<SelectValue placeholder={t('form.field.year')} />
+								</SelectTrigger>
+								<SelectContent className='dark:bg-zinc-900'>
+									<SelectGroup>
+										<SelectLabel className='text-lg '>{t('form.field.year')}</SelectLabel>
+										{years.map((e, i) => (
+											<SelectItem key={i} value={e.toString()}>
+												{e}
+											</SelectItem>
+										))}
+									</SelectGroup>
+								</SelectContent>
+							</Select>
+						</div>
+						<div className='w-1/3'>
+							<label htmlFor=''>{t('form.field.month')}</label>
+							<Select onValueChange={(value) => handleDateChange(value, 'month')} value={date.month}>
+								<SelectTrigger className='w-full bg-white text-black'>
+									<SelectValue placeholder={t('form.field.month')} />
+								</SelectTrigger>
+								<SelectContent className='dark:bg-zinc-900'>
+									<SelectGroup>
+										<SelectLabel className='text-lg'>{t('form.field.month')}</SelectLabel>
+										{months.map((e, i) => (
+											<SelectItem key={i} value={e.toString()}>
+												{e}
+											</SelectItem>
+										))}
+									</SelectGroup>
+								</SelectContent>
+							</Select>
+						</div>
+						<div className='w-1/3'>
+							<label htmlFor=''>{t('form.field.day')}</label>
+							<Select onValueChange={(value) => handleDateChange(value, 'day')} value={date.day}>
+								<SelectTrigger className='w-full bg-white text-black'>
+									<SelectValue placeholder={t('form.field.day')} />
+								</SelectTrigger>
+								<SelectContent className='dark:bg-zinc-900'>
+									<SelectGroup>
+										<SelectLabel className='text-lg'>{t('form.field.day')}</SelectLabel>
+										{days.map((e, i) => (
+											<SelectItem key={i} value={e.toString()}>
+												{e}
+											</SelectItem>
+										))}
+									</SelectGroup>
+								</SelectContent>
+							</Select>
+						</div>
 					</div>
 				</div>
 
@@ -225,7 +233,7 @@ export default function SignUp() {
 						<Input
 							autoComplete='new-password'
 							type={showPassword ? 'text' : 'password'}
-							className='bg-white'
+							className='bg-white text-black'
 							placeholder={t('form.field.password')}
 							onChange={handleChange}
 							value={data.password}
@@ -247,7 +255,7 @@ export default function SignUp() {
 							autoComplete='new-password'
 							type={showPasswordConfirm ? 'text' : 'password'}
 							onChange={handleChange}
-							className='bg-white'
+							className='bg-white text-black'
 							value={data.confirmPassword}
 							name='confirmPassword'
 						/>
