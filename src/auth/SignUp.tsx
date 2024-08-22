@@ -169,10 +169,10 @@ export default function SignUp() {
 					</label>
 					<div className='flex gap-8'>
 						<Select onValueChange={(value) => handleDateChange(value, 'year')} value={date.year}>
-							<SelectTrigger className='w-full'>
+							<SelectTrigger className='w-full bg-white text-zinc-400'>
 								<SelectValue placeholder={t('form.field.year')} />
 							</SelectTrigger>
-							<SelectContent>
+							<SelectContent className='dark:bg-zinc-900'>
 								<SelectGroup>
 									<SelectLabel className='text-lg '>{t('form.field.year')}</SelectLabel>
 									{years.map((e, i) => (
@@ -185,10 +185,10 @@ export default function SignUp() {
 						</Select>
 
 						<Select onValueChange={(value) => handleDateChange(value, 'month')} value={date.month}>
-							<SelectTrigger className='w-full'>
+							<SelectTrigger className='w-full bg-white text-zinc-400'>
 								<SelectValue placeholder={t('form.field.month')} />
 							</SelectTrigger>
-							<SelectContent>
+							<SelectContent className='dark:bg-zinc-900'>
 								<SelectGroup>
 									<SelectLabel className='text-lg'>{t('form.field.month')}</SelectLabel>
 									{months.map((e, i) => (
@@ -200,10 +200,10 @@ export default function SignUp() {
 							</SelectContent>
 						</Select>
 						<Select onValueChange={(value) => handleDateChange(value, 'day')} value={date.day}>
-							<SelectTrigger className='w-full'>
+							<SelectTrigger className='w-full bg-white text-zinc-400'>
 								<SelectValue placeholder={t('form.field.day')} />
 							</SelectTrigger>
-							<SelectContent>
+							<SelectContent className='dark:bg-zinc-900'>
 								<SelectGroup>
 									<SelectLabel className='text-lg'>{t('form.field.day')}</SelectLabel>
 									{days.map((e, i) => (
@@ -263,7 +263,7 @@ export default function SignUp() {
 				{data.password == data.confirmPassword ? '' : <p className='text-center text-red-500 text-lg'>Las contraseñas no coinciden</p>}
 				<Button
 					type='submit'
-					className='text-lg text-white bg-zinc-900 flex justify-center items-center '
+					className='text-lg text-white bg-zinc-950 flex justify-center items-center '
 					disabled={
 						data.name == '' ||
 						data.lastName == '' ||
