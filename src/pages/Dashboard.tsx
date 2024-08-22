@@ -114,8 +114,8 @@ export const Dashboard = () => {
 	}
 	return (
 		<main>
-			{userData && userData?.status !== 404 ? (
-				<div className='flex justify-center items-center bg-slate-200 dark:bg-zinc-900'>
+			{userData && userData?.status === 404 ? (
+				<div className='flex justify-center items-center bg-zinc-300 dark:bg-zinc-900'>
 					<Carrusel />
 				</div>
 			) : (

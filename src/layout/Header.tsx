@@ -55,7 +55,7 @@ export default function Header() {
 	return (
 		<>
 			<header className='  dark:bg-zinc-950 dark:text-white z-50 absolute  flex w-full justify-center gap-5  '>
-				<div className=' w-[98%] fixed flex justify-between shadow-sm shadow-z-700 rounded-full p-3 z-10 bg-gradient-to-b dark:from-zinc-900 dark:to-zinc-950 bg-white'>
+				<div className=' w-[98%] fixed flex justify-between shadow-sm shadow-z-700 rounded-full p-3 z-10 bg-gradient-to-b dark:from-zinc-900 dark:to-zinc-950 from-white to-zinc-200 '>
 					<div className='flex justify-start gap-3 items-center'>
 						<p className='text-lg pl-5'>Lukafi</p>
 					</div>

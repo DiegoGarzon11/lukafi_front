@@ -35,8 +35,8 @@ export default function Auth() {
 							<button
 								disabled={view}
 								className={`${
-									view ? 'dark:text-white font-bold bg-zinc-300 text-black dark:bg-zinc-900' : 'text-black dark:text-white'
-								}  text-xl border rounded-l-full p-3 md:w-40 border-zinc-900`}
+									view ? 'dark:text-white font-bold bg-slate-200 text-black dark:bg-slate-900' : 'text-black dark:text-white'
+								}  text-xl border rounded-l-full p-3 md:w-40  `}
 								onClick={changeAuth}>
 								{t('form.field.signIn')}
 							</button>
