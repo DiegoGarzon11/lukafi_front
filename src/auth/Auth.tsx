@@ -35,7 +35,7 @@ export default function Auth() {
 							<button
 								disabled={view}
 								className={`${
-									view ? 'dark:text-white font-bold bg-slate-200 text-black dark:bg-zinc-900' : 'text-black dark:text-white'
+									view ? 'dark:text-white font-bold bg-zinc-200 text-black dark:bg-zinc-900' : 'text-black dark:text-white'
 								}  text-xl border border-zinc-900 rounded-l-full p-3 md:w-40`}
 								onClick={changeAuth}>
 								{t('form.field.signIn')}
@@ -59,8 +59,8 @@ export default function Auth() {
 					</p>
 				</div>
 
-				<div className={` flex justify-center items-start lg:items-center w-full h-full   ${view ? 'md:-order-1' : ''}  `}>
-					<section className='w-11/12   '>{view ? <SignIn /> : <SignUp />}</section>
+				<div className={` flex justify-center items-start lg:items-center w-full h-screen  ${view ? 'md:-order-1' : ''}  `}>
+					<section className='w-11/12  h-screen flex justify-center items-center  '>{view ? <SignIn /> : <SignUp />}</section>
 				</div>
 			</div>
 		</>

@@ -76,7 +76,7 @@ export default function SignIn() {
 				''
 			)}
 
-			<form className='mt-10 grid gap-8 p-8 shadow-sm bg-zinc-300 dark:bg-zinc-900 rounded-2xl' onSubmit={handleSubmit}>
+			<form className='mt-10 grid w-full h-3/4 gap-8 p-8 shadow-sm bg-zinc-100 dark:bg-zinc-900 rounded-2xl' onSubmit={handleSubmit}>
 				<h1 className='text-4xl mb-6 font-semibold'>{t('form.field.signIn')}</h1>
 				<div>
 					<label htmlFor='' className='text-lg'>
