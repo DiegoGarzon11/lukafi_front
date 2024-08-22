@@ -116,7 +116,7 @@ export default function SignIn() {
 						disabled={!data.email || !data.password || loader}
 						className='w-full disabled:bg-slate-200 font-semibold bg-slate-700 text-white text-lg flex justify-center items-center'
 						type='submit'>
-						{loader || statusCode?.status === 200 ? <LoaderApi /> : t('form.field.signIn')}
+						{loader || statusCode?.status === 200 ? <LoaderApi color='white' /> : t('form.field.signIn')}
 					</Button>
 				</div>
 

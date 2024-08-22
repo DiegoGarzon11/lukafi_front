@@ -299,7 +299,7 @@ export default function SignUp() {
 						data.confirmPassword == '' ||
 						data.password != data.confirmPassword
 					}>
-					{loader || statusCode?.status === 201 ? <LoaderApi /> : t('form.field.signUp')}
+					{loader || statusCode?.status === 201 ? <LoaderApi color='white' /> : t('form.field.signUp')}
 				</Button>
 			</form>
 		</>

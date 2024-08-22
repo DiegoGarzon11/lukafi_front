@@ -1,13 +1,13 @@
-import {CreateWallet} from '@/apis/WalletService';
-import {Card, CardContent} from '@/components/ui/card';
-import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious} from '@/components/ui/carousel';
-import {Input} from '@/components/ui/input';
-import {LoaderApi} from '@/assets/icons/Svg';
-import {useRef, useState} from 'react';
-import {Toast} from '@/tools/Toast';
-import {ResponseWallet} from '@/interfaces/Wallet';
-import {CURRENCIES} from '@/tools/currencies';
-import {TriangleAlert} from 'lucide-react';
+import { CreateWallet } from '@/apis/WalletService';
+import { Card, CardContent } from '@/components/ui/card';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import { Input } from '@/components/ui/input';
+import { LoaderApi } from '@/assets/icons/Svg';
+import { useRef, useState } from 'react';
+import { Toast } from '@/tools/Toast';
+import { ResponseWallet } from '@/interfaces/Wallet';
+import { CURRENCIES } from '@/tools/currencies';
+import { TriangleAlert } from 'lucide-react';
 
 export const Carrusel = () => {
 	const btnNext = useRef(null);
@@ -114,6 +114,11 @@ export const Carrusel = () => {
 										className=' hover:bg-zinc-500   bg-zinc-700 w-full h-8 mt-6 rounded-md dark:hover:bg-zinc-900 text-white'>
 										Siguiente
 									</button>
+									<p className='block'>
+										<span className='bg-gray-100 h-6 w-3'></span>
+										<span></span>
+										<span></span>
+									</p>
 								</CardContent>
 							</Card>
 						</div>
@@ -132,8 +137,12 @@ export const Carrusel = () => {
 											<h2>Selecciona tipo de moneda:</h2>
 											<div className='flex justify-around mt-3 mb-6'>
 												{CURRENCIES.map((c) => (
-													<div key={c.symbol} className='flex'>
-														<label htmlFor={c.symbol} className='pl-2 flex gap-3 items-center cursor-pointer'>
+													<div
+														key={c.symbol}
+														className='flex'>
+														<label
+															htmlFor={c.symbol}
+															className='pl-2 flex gap-3 items-center cursor-pointer'>
 															<input
 																defaultChecked={c.symbol === 'cop'}
 																id={c.symbol}
@@ -203,6 +212,7 @@ export const Carrusel = () => {
 											</div>
 										</div>
 									</form>
+									<p className='font-semibold text-2xl bg-white text-black px-2 rounded-3xl'>2 - 3</p>
 								</CardContent>
 							</Card>
 						</div>
@@ -245,13 +255,11 @@ export const Carrusel = () => {
 													<span className='font-normal text-lg mx-2 text-green-500'>
 														{currency === 'cop' ? (
 															<>
-																<span className='capitalize'>peso colombiano </span>{' '}
-																<span className='uppercase '>({currency})</span>
+																<span className='capitalize'>peso colombiano </span> <span className='uppercase '>({currency})</span>
 															</>
 														) : (
 															<>
-																<span className='capitalize'>Dolar Americano </span>{' '}
-																<span className='uppercase'>({currency})</span>
+																<span className='capitalize'>Dolar Americano </span> <span className='uppercase'>({currency})</span>
 															</>
 														)}
 													</span>
@@ -269,7 +277,7 @@ export const Carrusel = () => {
 												disabled={loader}
 												onClick={submitInfoWallet}
 												className='hover:bg-zinc-500 text-white bg-zinc-700 h-8 w-full mt-6 rounded-md dark:hover:bg-zinc-900 flex justify-center items-center'>
-												{loader ? <LoaderApi clasName="fill-white"/> : 'Crear billetera'}
+												{loader ?  <LoaderApi color='white' /> : 'Crear billetera'}
 											</button>
 										</div>
 
@@ -282,14 +290,21 @@ export const Carrusel = () => {
 										) : (
 											''
 										)}
+										<p className='font-semibold text-2xl bg-white text-black px-2 rounded-3xl'>1 - 3</p>
 									</CardContent>
 								)}
 							</Card>
 						</div>
 					</CarouselItem>
 				</CarouselContent>
-				<CarouselPrevious className='hidden md:flex hover:bg-zinc-600' ref={btnBack} />
-				<CarouselNext className='hidden md:flex hover:bg-zinc-600' ref={btnNext} />
+				<CarouselPrevious
+					className='hidden md:flex hover:bg-zinc-600'
+					ref={btnBack}
+				/>
+				<CarouselNext
+					className='hidden md:flex hover:bg-zinc-600'
+					ref={btnNext}
+				/>
 			</Carousel>
 		</section>
 	);
