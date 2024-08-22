@@ -111,7 +111,7 @@ export const Carrusel = () => {
 
 									<button
 										onClick={(e) => handleNextCarousel(e)}
-										className=' hover:bg-zinc-200   bg-zinc-700 w-full h-8 mt-6 rounded-md dark:hover:bg-zinc-900 text-white'>
+										className=' hover:bg-zinc-500   bg-zinc-700 w-full h-8 mt-6 rounded-md dark:hover:bg-zinc-900 text-white'>
 										Siguiente
 									</button>
 								</CardContent>
@@ -190,14 +190,14 @@ export const Carrusel = () => {
 											<div className='flex items-center gap-3'>
 												<button
 													onClick={(e) => handleBackCarousel(e)}
-													className='hover:bg-zinc-200  text-white  bg-zinc-700 w-full h-8 mt-6 rounded-md dark:hover:bg-zinc-900'>
+													className='hover:bg-zinc-500  text-white  bg-zinc-700 w-full h-8 mt-6 rounded-md dark:hover:bg-zinc-900'>
 													Atras
 												</button>
 
 												<button
 													onClick={(e) => handleNextCarousel(e)}
 													disabled={salario === '0' || ahorro === '0' || isMajor}
-													className='hover:bg-zinc-200   bg-zinc-700 text-white w-full h-8 mt-6 rounded-md disabled:dark:hover:bg-zinc-700 hover:dark:bg-zinc-900'>
+													className='hover:bg-zinc-500   bg-zinc-700 text-white w-full h-8 mt-6 rounded-md disabled:dark:hover:bg-zinc-700 hover:dark:bg-zinc-900'>
 													Confirmar
 												</button>
 											</div>
@@ -223,7 +223,7 @@ export const Carrusel = () => {
 										</p>
 										<button
 											onClick={(e) => handleBackCarousel(e)}
-											className=' hover:bg-zinc-200   text-white bg-zinc-700 w-5/6 h-8 mt-6 rounded-md dark:hover:bg-zinc-900'>
+											className=' hover:bg-zinc-500   text-white bg-zinc-700 w-5/6 h-8 mt-6 rounded-md dark:hover:bg-zinc-900'>
 											Volver
 										</button>
 									</div>
@@ -262,14 +262,14 @@ export const Carrusel = () => {
 										<div className='flex  w-full gap-3'>
 											<button
 												onClick={(e) => handleBackCarousel(e)}
-												className=' hover:bg-zinc-200   dark:bg-zinc-700 h-8 w-full mt-6 rounded-md dark:hover:bg-zinc-900'>
+												className=' hover:bg-zinc-500  text-white bg-zinc-700 h-8 w-full mt-6 rounded-md dark:hover:bg-zinc-900'>
 												Atras
 											</button>
 											<button
 												disabled={loader}
 												onClick={submitInfoWallet}
-												className='hover:bg-zinc-200  dark:bg-zinc-700 h-8 w-full mt-6 rounded-md dark:hover:bg-zinc-900'>
-												{loader ? <LoaderApi /> : 'Crear billetera'}
+												className='hover:bg-zinc-500 text-white bg-zinc-700 h-8 w-full mt-6 rounded-md dark:hover:bg-zinc-900 flex justify-center items-center'>
+												{loader ? <LoaderApi clasName="fill-white"/> : 'Crear billetera'}
 											</button>
 										</div>
 

@@ -250,17 +250,18 @@ export const LoaderPage = () => (
 		</circle>
 	</svg>
 );
-export const LoaderApi = () => (
+export const LoaderApi = ({clasName}) => (
 	<svg
 		xmlns='http://www.w3.org/2000/svg'
 		width='28'
 		height='28'
+		className={clasName}
 		viewBox='0 0 24 24'>
 		<circle
 			cx='12'
 			cy='2'
 			r='0'
-			fill='green'>
+			>
 			<animate
 				attributeName='r'
 				begin='0'
@@ -275,7 +276,7 @@ export const LoaderApi = () => (
 			cx='12'
 			cy='2'
 			r='0'
-			fill='green'
+			
 			transform='rotate(45 12 12)'>
 			<animate
 				attributeName='r'
@@ -291,7 +292,7 @@ export const LoaderApi = () => (
 			cx='12'
 			cy='2'
 			r='0'
-			fill='green'
+			
 			transform='rotate(90 12 12)'>
 			<animate
 				attributeName='r'
@@ -307,7 +308,7 @@ export const LoaderApi = () => (
 			cx='12'
 			cy='2'
 			r='0'
-			fill='green'
+			
 			transform='rotate(135 12 12)'>
 			<animate
 				attributeName='r'
@@ -323,7 +324,7 @@ export const LoaderApi = () => (
 			cx='12'
 			cy='2'
 			r='0'
-			fill='green'
+			
 			transform='rotate(180 12 12)'>
 			<animate
 				attributeName='r'
@@ -339,7 +340,7 @@ export const LoaderApi = () => (
 			cx='12'
 			cy='2'
 			r='0'
-			fill='green'
+			
 			transform='rotate(225 12 12)'>
 			<animate
 				attributeName='r'
@@ -355,7 +356,7 @@ export const LoaderApi = () => (
 			cx='12'
 			cy='2'
 			r='0'
-			fill='green'
+			
 			transform='rotate(270 12 12)'>
 			<animate
 				attributeName='r'
@@ -371,7 +372,7 @@ export const LoaderApi = () => (
 			cx='12'
 			cy='2'
 			r='0'
-			fill='green'
+			
 			transform='rotate(315 12 12)'>
 			<animate
 				attributeName='r'
