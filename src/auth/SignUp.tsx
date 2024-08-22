@@ -61,10 +61,11 @@ export default function SignUp() {
 	async function handleSubmit(event) {
 		setLoader(true);
 
-		const fecha = `${date.day}/${date.month}/${date.year}`;
+		const fecha = `${date.month}/${date.day}/${date.year}`;
+
 		const values = {
 			...data,
-			age: fecha,
+			age: new Date(fecha),
 		};
 		event.preventDefault();
 
@@ -178,67 +179,75 @@ export default function SignUp() {
 					<label
 						htmlFor=''
 						className='text-lg'>
-						{t('form.field.bth')}
+						{t('form.field.bth')} <span className='text-red-500'>*</span>
 					</label>
-					<div className='flex gap-8'>
-						<Select
-							onValueChange={(value) => handleDateChange(value, 'year')}
-							value={date.year}>
-							<SelectTrigger className='w-full'>
-								<SelectValue placeholder={t('form.field.year')} />
-							</SelectTrigger>
-							<SelectContent>
-								<SelectGroup>
-									<SelectLabel className='text-lg '>{t('form.field.year')}</SelectLabel>
-									{years.map((e, i) => (
-										<SelectItem
-											key={i}
-											value={e.toString()}>
-											{e}
-										</SelectItem>
-									))}
-								</SelectGroup>
-							</SelectContent>
-						</Select>
-
-						<Select
-							onValueChange={(value) => handleDateChange(value, 'month')}
-							value={date.month}>
-							<SelectTrigger className='w-full'>
-								<SelectValue placeholder={t('form.field.month')} />
-							</SelectTrigger>
-							<SelectContent>
-								<SelectGroup>
-									<SelectLabel className='text-lg'>{t('form.field.month')}</SelectLabel>
-									{months.map((e, i) => (
-										<SelectItem
-											key={i}
-											value={e.toString()}>
-											{e}
-										</SelectItem>
-									))}
-								</SelectGroup>
-							</SelectContent>
-						</Select>
-						<Select
-							onValueChange={(value) => handleDateChange(value, 'day')}
-							value={date.day}>
-							<SelectTrigger className='w-full'>
-								<SelectValue placeholder={t('form.field.day')} />
-							</SelectTrigger>
-							<SelectContent>
-								<SelectGroup>
-									<SelectLabel className='text-lg'>{t('form.field.day')}</SelectLabel>
-									{days.map((e, i) => (
-										<SelectItem
-											key={i}
-											value={e.toString()}>
-											{e}
-										</SelectItem>
-									))}
-								</SelectGroup>
-							</SelectContent>
-						</Select>
+					<div className='flex gap-8 w-full mt-3'>
+						<div className='w-full flex flex-col gap-2'>
+							<label htmlFor=''>Año</label>
+							<Select
+								onValueChange={(value) => handleDateChange(value, 'year')}
+								value={date.year}>
+								<SelectTrigger className='w-full'>
+									<SelectValue placeholder={t('form.field.year')} />
+								</SelectTrigger>
+								<SelectContent>
+									<SelectGroup>
+										<SelectLabel className='text-lg '>{t('form.field.year')}</SelectLabel>
+										{years.map((e, i) => (
+											<SelectItem
+												key={i}
+												value={e.toString()}>
+												{e}
+											</SelectItem>
+										))}
+									</SelectGroup>
+								</SelectContent>
+							</Select>
+						</div>
+						<div className='w-full flex flex-col gap-2'>
+							<label htmlFor=''>Mes</label>
+							<Select
+								onValueChange={(value) => handleDateChange(value, 'month')}
+								value={date.month}>
+								<SelectTrigger className='w-full'>
+									<SelectValue placeholder={t('form.field.month')} />
+								</SelectTrigger>
+								<SelectContent>
+									<SelectGroup>
+										<SelectLabel className='text-lg'>{t('form.field.month')}</SelectLabel>
+										{months.map((e, i) => (
+											<SelectItem
+												key={i}
+												value={e.toString()}>
+												{e}
+											</SelectItem>
+										))}
+									</SelectGroup>
+								</SelectContent>
+							</Select>
+						</div>
+						<div className='w-full flex flex-col gap-2'>
+							<label htmlFor=''>Dia</label>
+							<Select
+								onValueChange={(value) => handleDateChange(value, 'day')}
+								value={date.day}>
+								<SelectTrigger className='w-full'>
+									<SelectValue placeholder={t('form.field.day')} />
+								</SelectTrigger>
+								<SelectContent>
+									<SelectGroup>
+										<SelectLabel className='text-lg'>{t('form.field.day')}</SelectLabel>
+										{days.map((e, i) => (
+											<SelectItem
+												key={i}
+												value={e.toString()}>
+												{e}
+											</SelectItem>
+										))}
+									</SelectGroup>
+								</SelectContent>
+							</Select>
+						</div>
 					</div>
 				</div>
 
