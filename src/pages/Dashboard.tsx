@@ -115,7 +115,7 @@ export const Dashboard = () => {
 	return (
 		<main>
 			{userData && userData?.status === 404 ? (
-				<div className='flex justify-center items-center bg-zinc-300 dark:bg-zinc-900'>
+				<div className='flex justify-center items-center bg-zinc-200 dark:bg-zinc-900/50'>
 					<Carrusel />
 				</div>
 			) : (
@@ -124,14 +124,14 @@ export const Dashboard = () => {
 						<AddExpense sendData={(e) => recibeResponseChild(e)} apiData={userData?.wallet} />
 						<AddDebt sendData={(e) => recibeResponseChild(e)} apiData={userData?.wallet} />
 						<a
-							className='w-full h-full dark:bg-zinc-900 bg-zinc-300 text-black  dark:text-white rounded-md flex justify-center items-center '
+							className='w-full h-full dark:hover:bg-zinc-900 dark:bg-zinc-900/50 bg-zinc-200 text-black  dark:text-white rounded-md flex justify-center items-center '
 							href='#seeDebt'>
 							<Button variant='ghost' className='flex items-center gap-3 h-full w-full'>
 								Ver gastos <Eye />
 							</Button>
 						</a>
 						<a
-							className='w-full h-full dark:bg-zinc-900 bg-zinc-300 text-black  dark:text-white rounded-md flex justify-center items-center '
+							className='w-full h-full dark:hover:bg-zinc-900 dark:bg-zinc-900/50 bg-zinc-200 text-black  dark:text-white rounded-md flex justify-center items-center '
 							href='#seeExpenses'>
 							<Button variant='ghost' className='flex items-center gap-3 h-full w-full'>
 								Ver deudas <Eye />
@@ -139,13 +139,13 @@ export const Dashboard = () => {
 						</a>
 					</section>
 					<section className='flex md:col-span-3 md:row-span-8 flex-wrap md:flex-nowrap  gap-8  '>
-						<article className=' w-full h-full  shadow-sm border-none dark:bg-zinc-900 bg-zinc-300 text-black  dark:text-white rounded-xl  p-3'>
+						<article className=' w-full h-full  shadow-sm border-none dark:bg-zinc-900/50 bg-zinc-200 text-black  dark:text-white rounded-xl  p-3'>
 							<div>
 								<p>Tu salario mensual actualmente:</p>
 								<p className='text-green-500'>{userData?.wallet?.salary.toLocaleString()}</p>
 							</div>
 						</article>
-						<article className=' w-full h-full  shadow-sm border-none dark:bg-zinc-900 bg-zinc-300 text-black  dark:text-white rounded-xl  p-3'>
+						<article className=' w-full h-full  shadow-sm border-none dark:bg-zinc-900/50 bg-zinc-200 text-black  dark:text-white rounded-xl  p-3'>
 							<div>
 								<p className='text-lg font-semibold'>Tus ahorros actualmente:</p>
 								<p className='font-semibold my-3'>
@@ -176,7 +176,7 @@ export const Dashboard = () => {
 								</p>
 							</div>
 						</article>
-						<article className='w-full  md:h-full shadow-sm border-none  dark:bg-zinc-900 bg-zinc-300 text-black  dark:text-white rounded-xl  p-3'>
+						<article className='w-full  md:h-full shadow-sm border-none  dark:bg-zinc-900/50 bg-zinc-200 text-black  dark:text-white rounded-xl  p-3'>
 							<div>
 								<p>Tu meta de ahorro mensual actual</p>
 								<p className='text-green-500'>{Number(userData?.wallet?.saving).toLocaleString()}</p>
@@ -184,9 +184,9 @@ export const Dashboard = () => {
 						</article>
 					</section>
 
-					<section className=' shadow-sm md:col-span-3 md:row-span-6  rounded-xl    flex flex-col md:flex-row justify-around gap-5'>
-						<div className='md:w-5/6 w-full bg-zinc-900  shadow-sm rounded-xl  flex justify-around '>
-							<div className='flex flex-col dark:bg-zinc-900 bg-zinc-300 w-full h-full'>
+					<section className='  md:col-span-3 md:row-span-6    flex flex-col md:flex-row justify-around gap-5'>
+						<div className='md:w-5/6 w-full   shadow-sm   flex justify-around '>
+							<div className='flex flex-col dark:bg-zinc-900/50 rounded-xl  bg-zinc-200 w-full h-full'>
 								<div className='flex flex-col md:flex-row items-center justify-between px-5 py-3 gap-2'>
 									<p className='text-lg '>
 										Obervar <span className='font-semibold'>gastos por categoria</span>
@@ -205,7 +205,7 @@ export const Dashboard = () => {
 								<ChartDonut />
 							</div>
 						</div>
-						<div className='w-full bg-zinc-300 dark:bg-zinc-900  shadow-sm rounded-xl '>
+						<div className='w-full bg-zinc-200 dark:bg-zinc-900/50  shadow-sm rounded-xl '>
 							<div className='flex flex-col md:flex-row justify-between items-center mb-10 px-5 pt-3 gap-3'>
 								<p className='text-lg'>
 									Obersevar <span className='font-semibold'>balance de gastos</span>
@@ -225,7 +225,7 @@ export const Dashboard = () => {
 					</section>
 					<section id='seeExpenses' className=' shadow-sm  md:col-span-3 md:row-span-2     '>
 						<div className=' w-full  flex flex-col md:flex-row justify-between gap-5 order-3 '>
-							<div className='dark:bg-zinc-900 bg-zinc-300 p-5 w-full md:w-2/5 rounded-xl'>
+							<div className='dark:bg-zinc-900/50 bg-zinc-200 p-5 w-full md:w-2/5 rounded-xl'>
 								<div className='flex gap- items-center'>
 									<h5 className='text-2xl'>Todos tus gastos </h5>
 								</div>
@@ -271,7 +271,7 @@ export const Dashboard = () => {
 									</div>
 								</div>
 							</div>
-							<div className='dark:bg-zinc-900 bg-zinc-300 p-5 w-full md:w-2/3 rounded-xl'>
+							<div className='dark:bg-zinc-900/50 bg-zinc-200 p-5 w-full md:w-2/3 rounded-xl'>
 								<div className='flex gap- items-center'>
 									<h5 className='text-2xl'>Tus gastos fijos mensuales</h5>
 								</div>
@@ -339,7 +339,7 @@ export const Dashboard = () => {
 					</section>
 					<section id='seeDebt' className=' shadow-sm md:col-span-3 h-full row-span-9'>
 						<div className='  w-full  flex  justify-between gap-5 order-3'>
-							<div className='dark:bg-zinc-900 bg-zinc-300 p-5 w-full rounded-xl'>
+							<div className='dark:bg-zinc-900/50 bg-zinc-200 p-5 w-full rounded-xl'>
 								<div className='flex gap- items-center'>
 									<h5 className='text-2xl'>Todas tus deudas</h5>
 								</div>

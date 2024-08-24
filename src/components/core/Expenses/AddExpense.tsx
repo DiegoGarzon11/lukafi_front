@@ -82,20 +82,20 @@ export const AddExpense = ({apiData, sendData}) => {
 			<DialogTrigger asChild>
 				<Button
 					variant='ghost'
-					className='w-full py-6 dark:hover:bg-zinc-900/40  dark:bg-zinc-900  bg-zinc-300 text-black  dark:text-white flex items-center gap-3'>
+					className='w-full py-6 dark:hover:bg-zinc-900  dark:bg-zinc-900/50  bg-zinc-300 text-black  dark:text-white flex items-center gap-3'>
 					Agregar gasto <BadgePlus />
 				</Button>
 			</DialogTrigger>
 			<DialogContent className='sm:max-w-[425px] '>
 				<DialogHeader>
-					<DialogTitle>Nueva gasto</DialogTitle>
-					<DialogDescription>Completa los campos segun el gasto corresponda</DialogDescription>
+					<DialogTitle>Nuevo gasto</DialogTitle>
+					<DialogDescription>Completa los campos correspondientes al gasto</DialogDescription>
 				</DialogHeader>
 
 				<div className='flex gap-5 items-center'>
 					<div>
 						<label htmlFor='value_name' className='mb-2'>
-							Nombre gasto <span className='text-red-500'>*</span>
+							Nombre del gasto <span className='text-red-500'>*</span>
 							<Input value={name} onChange={(e) => handleValues(e, 'name')} id='value_name' type='text' />
 						</label>
 					</div>

@@ -1,11 +1,11 @@
 import {Col, Usa, Moon, Sun} from '@/assets/icons/Svg';
 import {useTranslation} from 'react-i18next';
 import {useEffect, useState} from 'react';
-import {Link, Outlet} from 'react-router-dom';
+import {Link, Outlet, useLocation} from 'react-router-dom';
 import {Button} from '@/components/ui/button';
 import {SheetSide} from '@/components/ui/sheetSide';
-
 export default function Header() {
+	const location = useLocation();
 	const [isOpen, setIsOpen] = useState(false);
 	const [theme, setTheme] = useState(() => {
 		const savedTheme = localStorage.getItem('theme');
@@ -23,6 +23,8 @@ export default function Header() {
 
 		document.documentElement.lang = e;
 	};
+	console.log(location.pathname);
+	
 	const handleTheme = () => {
 		setTheme((prevTheme) => {
 			const newTheme = prevTheme === 'dark' ? 'light' : 'dark';
@@ -54,14 +56,14 @@ export default function Header() {
 
 	return (
 		<>
-			<header className='  dark:bg-zinc-950 dark:text-white z-50 absolute  flex w-full justify-center gap-5  '>
-				<div className=' w-[98%] fixed flex justify-between shadow-sm shadow-z-700 rounded-full p-3 z-10 bg-gradient-to-b dark:from-zinc-900 dark:to-zinc-950 from-white to-zinc-200 '>
+			<header className='   z-50 absolute  flex w-full justify-center gap-5  '>
+				<div className=' w-[98%] fixed flex justify-between shadow-sm shadow-z-700 rounded-full p-3 z-10 bg-gradient-to-b dark:from-zinc-800 dark:to-zinc-900 from-zinc-100 to-zinc-300 '>
 					<div className='flex justify-start gap-3 items-center'>
 						<p className='text-lg pl-5'>Lukafi</p>
 					</div>
 
 					<div className='flex items-center gap-5'>
-						{!localStorage.token && (
+						{!localStorage.token && location.pathname === '/' && (
 							<div>
 								<Link to='/auth'>
 									<Button variant='black_outline'>
