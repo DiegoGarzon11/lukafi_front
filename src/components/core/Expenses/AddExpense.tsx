@@ -1,11 +1,11 @@
 import { NewExpense } from '@/apis/ExpenseService';
 import { LoaderApi } from '@/assets/icons/Svg';
 import { Button } from '@/components/ui/button';
-import { DatePicker } from '@/components/ui/datapicker';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ApiResponse } from '@/interfaces/Api';
 import { Toast } from '@/tools/Toast';
 import { BadgePlus } from 'lucide-react';
@@ -15,14 +15,11 @@ export const AddExpense = ({ apiData, sendData }) => {
 	const [deadLine, setDeadLine] = useState(null);
 	const [name, setName] = useState('');
 	const [value, setValue] = useState('0');
-	const [isFixed, setIsFixed] = useState('false');
+	const [isFixed, setIsFixed] = useState('true');
 	const [responseApiNewExpense, setResponseApiNewExpense] = useState<ApiResponse | undefined>(undefined);
 	const [visibilytToast, setVisibilityToast] = useState(false);
 	const [loader, setLoader] = useState(false);
-
-	const handleDate = (e) => {
-		setDeadLine(e);
-	};
+	const days = Array.from({ length: 31 }, (_, i) => i + 1);
 	const handleValues = (e, type) => {
 		if (type === 'value') {
 			let value = e.target.value.replace(/[^0-9.]/g, '');
@@ -42,7 +39,10 @@ export const AddExpense = ({ apiData, sendData }) => {
 			setIsFixed(e);
 		}
 	};
-
+	const handleDateFixedCost = (e) => {
+		setDeadLine(e);
+		console.log(e);
+	};
 	const submitExpense = async () => {
 		setLoader(true);
 		const sendIsFixed: boolean = isFixed === 'true';
@@ -52,7 +52,7 @@ export const AddExpense = ({ apiData, sendData }) => {
 			user_id: apiData.user_id,
 			name,
 			is_paid: !sendIsFixed,
-			paid_in: new Date(),
+			paid_in: !sendIsFixed ? new Date() : '',
 			value,
 			deadLine,
 			isFixed: sendIsFixed,
@@ -90,14 +90,14 @@ export const AddExpense = ({ apiData, sendData }) => {
 					Agregar gasto <BadgePlus />
 				</Button>
 			</DialogTrigger>
-			<DialogContent className='sm:max-w-[425px] '>
+			<DialogContent className='sm:max-w-[550px]  '>
 				<DialogHeader>
 					<DialogTitle>Nuevo gasto</DialogTitle>
 					<DialogDescription>Completa los campos correspondientes al gasto</DialogDescription>
 				</DialogHeader>
 
-				<div className='flex gap-5 items-center'>
-					<div>
+				<div className='flex gap-3 items-center justify-center'>
+					<div className='w-full'>
 						<label
 							htmlFor='value_name'
 							className='mb-2'>
@@ -111,7 +111,7 @@ export const AddExpense = ({ apiData, sendData }) => {
 							/>
 						</label>
 					</div>
-					<div>
+					<div className='w-full'>
 						<label
 							htmlFor='value_value'
 							className='mb-2'>
@@ -127,7 +127,7 @@ export const AddExpense = ({ apiData, sendData }) => {
 					</div>
 				</div>
 
-				<div className='flex justify-center items-center gap-5 flex-col  '>
+				<div className='flex justify-center items-center gap-5 flex-col'>
 					<label>
 						¿Es un gasto Fijo? <span className='text-red-500'>*</span>
 					</label>
@@ -153,13 +153,35 @@ export const AddExpense = ({ apiData, sendData }) => {
 					</RadioGroup>
 				</div>
 				{isFixed === 'true' && (
-					<div className='flex flex-col items-center'>
+					<div className='flex flex-col w-full bg-zinc-100 dark:bg-zinc-800/50 rounded-md p-3'>
 						<label
 							htmlFor='value_value'
 							className='self-start mb-2'>
-							Fecha limite de pago <span className='text-red-500'>*</span>
+							Fecha a pagar<span className='text-red-500'>*</span>
 						</label>
-						<DatePicker sendDate={handleDate} />
+
+						<div className=' flex flex-nowrap gap-3 items-center'>
+							<p className=''>El gasto fijo se debe pagar el dia </p>
+							<Select onValueChange={(e) => handleDateFixedCost(e)}>
+								<SelectTrigger className=' w-32 bg-zinc-200 dark:bg-zinc-800 dark:text-white text-black border border-green-500/50'>
+									<SelectValue placeholder='dia' />
+								</SelectTrigger>
+								<SelectContent className='dark:bg-zinc-700'>
+									<SelectGroup>
+										<SelectLabel className='text-lg'>dia</SelectLabel>
+										{days.map((e, i) => (
+											<SelectItem
+												className='focus:dark:bg-zinc-800 focus:bg-zinc-200'
+												key={i}
+												value={e.toString()}>
+												{e}
+											</SelectItem>
+										))}
+									</SelectGroup>
+								</SelectContent>
+							</Select>
+							<p>de cada mes</p>
+						</div>
 					</div>
 				)}
 				<Button
