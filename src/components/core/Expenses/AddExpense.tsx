@@ -1,17 +1,17 @@
-import {NewExpense} from '@/apis/ExpenseService';
-import {LoaderApi} from '@/assets/icons/Svg';
-import {Button} from '@/components/ui/button';
-import {DatePicker} from '@/components/ui/datapicker';
-import {Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger} from '@/components/ui/dialog';
-import {Input} from '@/components/ui/input';
-import {Label} from '@/components/ui/label';
-import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
-import {ApiResponse} from '@/interfaces/Api';
-import {Toast} from '@/tools/Toast';
-import {BadgePlus} from 'lucide-react';
-import {useState} from 'react';
+import { NewExpense } from '@/apis/ExpenseService';
+import { LoaderApi } from '@/assets/icons/Svg';
+import { Button } from '@/components/ui/button';
+import { DatePicker } from '@/components/ui/datapicker';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { ApiResponse } from '@/interfaces/Api';
+import { Toast } from '@/tools/Toast';
+import { BadgePlus } from 'lucide-react';
+import { useState } from 'react';
 
-export const AddExpense = ({apiData, sendData}) => {
+export const AddExpense = ({ apiData, sendData }) => {
 	const [deadLine, setDeadLine] = useState(null);
 	const [name, setName] = useState('');
 	const [value, setValue] = useState('0');
@@ -36,6 +36,9 @@ export const AddExpense = ({apiData, sendData}) => {
 		} else if (type === 'name') {
 			setName(e.target.value);
 		} else if (type === 'isFixed') {
+			if (isFixed === 'true') {
+				setDeadLine(null);
+			}
 			setIsFixed(e);
 		}
 	};
@@ -81,6 +84,7 @@ export const AddExpense = ({apiData, sendData}) => {
 		<Dialog>
 			<DialogTrigger asChild>
 				<Button
+					onClick={() => setDeadLine(null)}
 					variant='ghost'
 					className='w-full py-6 dark:hover:bg-zinc-900  dark:bg-zinc-900/50  bg-zinc-300 text-black  dark:text-white flex items-center gap-3'>
 					Agregar gasto <BadgePlus />
@@ -94,45 +98,74 @@ export const AddExpense = ({apiData, sendData}) => {
 
 				<div className='flex gap-5 items-center'>
 					<div>
-						<label htmlFor='value_name' className='mb-2'>
+						<label
+							htmlFor='value_name'
+							className='mb-2'>
 							Nombre del gasto <span className='text-red-500'>*</span>
-							<Input value={name} onChange={(e) => handleValues(e, 'name')} id='value_name' type='text' />
+							<Input
+								className='border dark:border-zinc-400 dark:bg-zinc-800/30'
+								value={name}
+								onChange={(e) => handleValues(e, 'name')}
+								id='value_name'
+								type='text'
+							/>
 						</label>
 					</div>
 					<div>
-						<label htmlFor='value_value' className='mb-2'>
+						<label
+							htmlFor='value_value'
+							className='mb-2'>
 							Valor $ <span className='text-red-500'>*</span>
-							<Input value={value} onChange={(e) => handleValues(e, 'value')} id='value_value' type='text' />
+							<Input
+								className='border dark:border-zinc-400 dark:bg-zinc-800/30'
+								value={value}
+								onChange={(e) => handleValues(e, 'value')}
+								id='value_value'
+								type='text'
+							/>
 						</label>
 					</div>
-				</div>
-				<div className='flex flex-col items-center'>
-					<label htmlFor='value_value' className='self-start mb-2'>
-						Fecha limite de pago $ <span className='text-gray-400'>(opcional)</span>
-					</label>
-					<DatePicker sendDate={handleDate} />
 				</div>
 
 				<div className='flex justify-center items-center gap-5 flex-col  '>
 					<label>
 						¿Es un gasto Fijo? <span className='text-red-500'>*</span>
 					</label>
-					<RadioGroup className='flex items-center' defaultValue={isFixed} onValueChange={(e) => handleValues(e, 'isFixed')}>
+					<RadioGroup
+						className='flex items-center'
+						defaultValue={isFixed}
+						onValueChange={(e) => handleValues(e, 'isFixed')}>
 						<div className='flex items-center space-x-2'>
-							<RadioGroupItem value='true' id='true' />
+							<RadioGroupItem
+								value='true'
+								id='true'
+							/>
 							<Label htmlFor='r1'>Si</Label>
 						</div>
 
 						<div className='flex items-center space-x-2'>
-							<RadioGroupItem value='false' id='false' />
+							<RadioGroupItem
+								value='false'
+								id='false'
+							/>
 							<Label htmlFor='r2'>No</Label>
 						</div>
 					</RadioGroup>
 				</div>
+				{isFixed === 'true' && (
+					<div className='flex flex-col items-center'>
+						<label
+							htmlFor='value_value'
+							className='self-start mb-2'>
+							Fecha limite de pago <span className='text-red-500'>*</span>
+						</label>
+						<DatePicker sendDate={handleDate} />
+					</div>
+				)}
 				<Button
-					disabled={name === '' || value === '0' || (isFixed && deadLine === null)}
+					disabled={name === '' || value === '0' || (isFixed === 'true' && !deadLine)}
 					onClick={submitExpense}
-					className={` py-2 rounded-md text-slate-300 flex justify-center`}>
+					className={`disabled:text-zinc-400 bg-zinc-600 hover:bg-zinc-800 dark:bg-zinc-100 text-white  py-2 rounded-md dark:text-black hover:dark:bg-zinc-300 flex justify-center`}>
 					{loader ? <LoaderApi color='white' /> : 'Confirmar'}
 				</Button>
 			</DialogContent>

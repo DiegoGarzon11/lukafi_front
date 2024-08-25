@@ -21,14 +21,14 @@ export function DatePicker({sendDate}) {
 		<Popover>
 			<PopoverTrigger asChild>
 				<Button
-					variant={'outline'}
+					variant={'black_outline'}
 					className={cn('w-full  justify-center text-center font-normal h-10 text-base bgs ', !date && 'text-muted-foreground')}>
 					<CalendarIcon className='mr-2 h-4 w-4' />
 					{date ? format(date, 'PPPP') : <span>Selecciona la fecha limite</span>}
 				</Button>
 			</PopoverTrigger>
-			<PopoverContent className='w-auto' align='center'>
-				<Calendar mode='single' className='' selected={date} onSelect={handleDateSelect} initialFocus disableNavigation={false} />
+			<PopoverContent className='w-auto dark:bg-zinc-800 dark:text-white bg-zinc-100 text-black'>
+				<Calendar mode='single' selected={date} onSelect={handleDateSelect} initialFocus disableNavigation={false} />
 			</PopoverContent>
 		</Popover>
 	);
