@@ -17,7 +17,7 @@ import { useEffect, useState } from 'react';
 import { ArrowDown, ArrowUp, EllipsisVertical, Eye } from 'lucide-react';
 import { LoaderComponent } from '@/components/others/Loader';
 import { format } from 'date-fns';
-import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarSeparator, MenubarShortcut, MenubarTrigger } from '@/components/ui/menubar';
+import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger } from '@/components/ui/menubar';
 export const Dashboard = () => {
 	const [userData, setDataUser] = useState<ResponseWallet | undefined>(undefined);
 	const [fixedExpenses, setFixedExpenses] = useState<Array<Expenses> | undefined>(undefined);
@@ -162,7 +162,11 @@ export const Dashboard = () => {
 								<p>Tu salario mensual actualmente:</p>
 								<p className='text-green-500'>{userData?.wallet?.salary.toLocaleString()}</p>
 
-								<p>{userData.wallet.user_id === '5d2be1e4-069c-43d6-91c8-2a121ae6b452' ? 'Te quiero demasiado mi laurix consentida a veces me saque de casillas casi siempre jjajaja ❤️' : 'a'}</p>
+								<p>
+									{userData.wallet.user_id === '5d2be1e4-069c-43d6-91c8-2a121ae6b452'
+										? 'Te quiero demasiado mi laurix consentida a veces me saque de casillas casi siempre jjajaja ❤️'
+										: 'a'}
+								</p>
 							</div>
 						</article>
 						<article className=' w-full h-full  shadow-sm border-none dark:bg-zinc-900/50 bg-zinc-200 text-black  dark:text-white rounded-xl  p-3'>
