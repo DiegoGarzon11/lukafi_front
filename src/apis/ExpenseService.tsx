@@ -9,6 +9,7 @@ export const NewExpense = async (data) => {
 	const formData = new URLSearchParams();
 	formData.append('name', data.name);
 	formData.append('value', data.value);
+	formData.append('pay_each', data.pay_each);
 	formData.append('dead_line', data.deadLine);
 	formData.append('is_paid', data.is_paid);
 	formData.append('paid_in', data.paid_in);

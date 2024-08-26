@@ -30,4 +30,5 @@ export interface Expenses extends ApiResponse {
 	is_paid: boolean;
 	wallet_id: string;
 	total_value : number
+	pay_each : string
 }

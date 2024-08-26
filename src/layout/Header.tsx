@@ -23,7 +23,7 @@ export default function Header() {
 
 		document.documentElement.lang = e;
 	};
-	console.log(location.pathname);
+	
 	
 	const handleTheme = () => {
 		setTheme((prevTheme) => {

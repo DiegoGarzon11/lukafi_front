@@ -41,11 +41,11 @@ export const AddExpense = ({ apiData, sendData }) => {
 	};
 	const handleDateFixedCost = (e) => {
 		setDeadLine(e);
-		console.log(e);
 	};
 	const submitExpense = async () => {
 		setLoader(true);
 		const sendIsFixed: boolean = isFixed === 'true';
+		
 
 		const params = {
 			wallet_id: apiData.wallet_id,
@@ -53,6 +53,7 @@ export const AddExpense = ({ apiData, sendData }) => {
 			name,
 			is_paid: !sendIsFixed,
 			paid_in: !sendIsFixed ? new Date() : '',
+			pay_each: deadLine,
 			value,
 			deadLine,
 			isFixed: sendIsFixed,

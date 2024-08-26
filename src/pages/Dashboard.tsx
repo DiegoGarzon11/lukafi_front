@@ -1,21 +1,23 @@
-import {DeleteDebt, GetDebts} from '@/apis/DebtService';
-import {GetDailyExpenses, GetExpenses, GetFixedExpenses, PayFixedExpense} from '@/apis/ExpenseService';
-import {GetWalletUser} from '@/apis/WalletService';
-import {Edit, Trash} from '@/assets/icons/Svg';
-import {Chart, ChartDonut} from '@/components/core/Charts';
-import {AddDebt} from '@/components/core/Debts/AddDebt';
-import {AddExpense} from '@/components/core/Expenses/AddExpense';
-import {Carrusel} from '@/components/others/Carrousel';
-import {TooltipComponent} from '@/components/others/Tooltip';
-import {Button} from '@/components/ui/button';
-import {Table, TableBody, TableCell, TableRow} from '@/components/ui/table';
-import {Debt, Expenses, ResponseWallet} from '@/interfaces/Wallet';
+import { DeleteDebt, GetDebts } from '@/apis/DebtService';
+import { GetDailyExpenses, GetExpenses, GetFixedExpenses, PayFixedExpense } from '@/apis/ExpenseService';
+import { GetWalletUser } from '@/apis/WalletService';
+import { Edit, Trash } from '@/assets/icons/Svg';
+import { Chart, ChartDonut } from '@/components/core/Charts';
+import { AddDebt } from '@/components/core/Debts/AddDebt';
+import { AddExpense } from '@/components/core/Expenses/AddExpense';
+import { Carrusel } from '@/components/others/Carrousel';
+import { TooltipComponent } from '@/components/others/Tooltip';
+import { Button } from '@/components/ui/button';
+import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
+import { Debt, Expenses, ResponseWallet } from '@/interfaces/Wallet';
 import '@/styles/Dashboard.css';
-import {Toast} from '@/tools/Toast';
-import {Dialog, DialogContent, DialogTrigger, DialogTitle, DialogHeader, DialogDescription} from '@/components/ui/dialog';
-import {useEffect, useState} from 'react';
-import {ArrowDown, ArrowUp, Eye} from 'lucide-react';
-import {LoaderComponent} from '@/components/others/Loader';
+import { Toast } from '@/tools/Toast';
+import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogHeader, DialogDescription } from '@/components/ui/dialog';
+import { useEffect, useState } from 'react';
+import { ArrowDown, ArrowUp, EllipsisVertical, Eye } from 'lucide-react';
+import { LoaderComponent } from '@/components/others/Loader';
+import { format } from 'date-fns';
+import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarSeparator, MenubarShortcut, MenubarTrigger } from '@/components/ui/menubar';
 export const Dashboard = () => {
 	const [userData, setDataUser] = useState<ResponseWallet | undefined>(undefined);
 	const [fixedExpenses, setFixedExpenses] = useState<Array<Expenses> | undefined>(undefined);
@@ -94,6 +96,12 @@ export const Dashboard = () => {
 			setVisibilityToast(false);
 		}, 1000);
 	};
+	function difrenceBeetwenDate(deadline: Date) {
+		const currentTime: Date = new Date();
+		const differenceInTime: number = deadline.getTime() - currentTime.getTime();
+		const differenceInDays: number = Math.ceil(differenceInTime / (1000 * 60 * 60 * 24));
+		return differenceInDays;
+	}
 	const payExpense = async (expense) => {
 		const params = {
 			wallet_id: expense.wallet_id,
@@ -121,19 +129,29 @@ export const Dashboard = () => {
 			) : (
 				<div className='flex flex-col md:grid md:grid-cols-3 h-full pt-20 p-5 gap-5 dark:bg-zinc-800 bg-white  '>
 					<section className='md:flex grid grid-cols-2 grid-rows-2 md:flex-nowrap w-full gap-3 md:col-span-3  '>
-						<AddExpense sendData={(e) => recibeResponseChild(e)} apiData={userData?.wallet} />
-						<AddDebt sendData={(e) => recibeResponseChild(e)} apiData={userData?.wallet} />
+						<AddExpense
+							sendData={(e) => recibeResponseChild(e)}
+							apiData={userData?.wallet}
+						/>
+						<AddDebt
+							sendData={(e) => recibeResponseChild(e)}
+							apiData={userData?.wallet}
+						/>
 						<a
 							className='w-full h-full dark:hover:bg-zinc-900 dark:bg-zinc-900/50 bg-zinc-200 text-black  dark:text-white rounded-md flex justify-center items-center '
 							href='#seeDebt'>
-							<Button variant='ghost' className='flex items-center gap-3 h-full w-full'>
+							<Button
+								variant='ghost'
+								className='flex items-center gap-3 h-full w-full'>
 								Ver gastos <Eye />
 							</Button>
 						</a>
 						<a
 							className='w-full h-full dark:hover:bg-zinc-900 dark:bg-zinc-900/50 bg-zinc-200 text-black  dark:text-white rounded-md flex justify-center items-center '
 							href='#seeExpenses'>
-							<Button variant='ghost' className='flex items-center gap-3 h-full w-full'>
+							<Button
+								variant='ghost'
+								className='flex items-center gap-3 h-full w-full'>
 								Ver deudas <Eye />
 							</Button>
 						</a>
@@ -143,6 +161,8 @@ export const Dashboard = () => {
 							<div>
 								<p>Tu salario mensual actualmente:</p>
 								<p className='text-green-500'>{userData?.wallet?.salary.toLocaleString()}</p>
+
+								<p>{userData.wallet.user_id === '5d2be1e4-069c-43d6-91c8-2a121ae6b452' ? 'Te quiero demasiado mi laurix consentida a veces me saque de casillas casi siempre jjajaja ❤️' : 'a'}</p>
 							</div>
 						</article>
 						<article className=' w-full h-full  shadow-sm border-none dark:bg-zinc-900/50 bg-zinc-200 text-black  dark:text-white rounded-xl  p-3'>
@@ -193,10 +213,14 @@ export const Dashboard = () => {
 									</p>
 									<div className='flex gap-5 justify-end'>
 										<Button className=''>Dia</Button>
-										<Button disabled className=''>
+										<Button
+											disabled
+											className=''>
 											Mes
 										</Button>
-										<Button disabled className=''>
+										<Button
+											disabled
+											className=''>
 											Año
 										</Button>
 									</div>
@@ -212,10 +236,14 @@ export const Dashboard = () => {
 								</p>
 								<div className='flex gap-5'>
 									<Button className=''>Dia</Button>
-									<Button disabled className=''>
+									<Button
+										disabled
+										className=''>
 										Mes
 									</Button>
-									<Button disabled className=''>
+									<Button
+										disabled
+										className=''>
 										Año
 									</Button>
 								</div>
@@ -223,7 +251,9 @@ export const Dashboard = () => {
 							<Chart trigger={trigger} />
 						</div>
 					</section>
-					<section id='seeExpenses' className=' shadow-sm  md:col-span-3 md:row-span-2     '>
+					<section
+						id='seeExpenses'
+						className=' shadow-sm  md:col-span-3 md:row-span-2     '>
 						<div className=' w-full  flex flex-col md:flex-row justify-between gap-5 order-3 '>
 							<div className='dark:bg-zinc-900/50 bg-zinc-200 p-5 w-full md:w-2/5 rounded-xl'>
 								<div className='flex gap- items-center'>
@@ -242,30 +272,40 @@ export const Dashboard = () => {
 									<div className='w-full h-52 overflow-auto overflow-x-hidden scrollbar-custom'>
 										<Table className='w-full'>
 											<TableBody className='  overflow-auto  overflow-x-hidden   scrollbar-custom'>
-												{expenses?.map((e) => (
-													<TableRow key={e?.expense_id}>
-														<TableCell className='font-medium  w-full'>
-															<p>{new Date(e?.created_in).toLocaleDateString()}</p>
-														</TableCell>
-														<TableCell className='font-medium w-full hidden md:block'>
-															{e?.name.length >= 20 ? (
-																<TooltipComponent message={`${e?.name.slice(0, 20)}...`} content={e?.name} />
-															) : (
-																<p>{e?.name}</p>
-															)}
-														</TableCell>
-														<TableCell className='font-medium w-full block md:hidden'>
-															{e?.name.length >= 8 ? (
-																<TooltipComponent message={`${e?.name.slice(0, 8)}...`} content={e?.name} />
-															) : (
-																<p>{e?.name}</p>
-															)}
-														</TableCell>
-														<TableCell className='font-medium w-full'>
-															<p>{e?.value.toLocaleString()}</p>
-														</TableCell>
-													</TableRow>
-												))}
+												{expenses?.map((e) =>
+													e.is_paid ? (
+														<TableRow key={e?.expense_id}>
+															<TableCell className='font-medium  w-full'>
+																<p>{new Date(e?.created_in).toLocaleDateString()}</p>
+															</TableCell>
+															<TableCell className='font-medium w-full hidden md:block'>
+																{e?.name.length >= 20 ? (
+																	<TooltipComponent
+																		message={`${e?.name.slice(0, 20)}...`}
+																		content={e?.name}
+																	/>
+																) : (
+																	<p>{e?.name}</p>
+																)}
+															</TableCell>
+															<TableCell className='font-medium w-full block md:hidden'>
+																{e?.name.length >= 8 ? (
+																	<TooltipComponent
+																		message={`${e?.name.slice(0, 8)}...`}
+																		content={e?.name}
+																	/>
+																) : (
+																	<p>{e?.name}</p>
+																)}
+															</TableCell>
+															<TableCell className='font-medium w-full'>
+																<p>{e?.value.toLocaleString()}</p>
+															</TableCell>
+														</TableRow>
+													) : (
+														''
+													)
+												)}
 											</TableBody>
 										</Table>
 									</div>
@@ -281,9 +321,10 @@ export const Dashboard = () => {
 										<article className=' flex text-base font-semibold py-4 dark:text-zinc-300 text-slate-500 border-b border-slate-500 mb-3'>
 											<p className='w-full text-start'>Nombre</p>
 											<p className='w-full text-start'>Valor</p>
-											<p className='w-full text-start'>Pagar Cada</p>
-											<p className='w-full text-start '> </p>
-											<p className='w-full text-start hidden md:block'> </p>
+											<p className='w-full text-start hidden md:block'>Pagar Cada</p>
+											<p className='w-full text-start '>Proximo pago</p>
+											<p className='w-full text-start ' />
+											<p className='w-full text-start ' />
 										</article>
 									</section>
 
@@ -294,8 +335,13 @@ export const Dashboard = () => {
 													<TableRow key={f.expense_id}>
 														<TableCell className='font-medium w-full'>{f.name}</TableCell>
 														<TableCell className='font-medium w-full'>{f.value.toLocaleString()}</TableCell>
-														<TableCell className='font-medium w-full '>
-															<span className='font-bold'>{new Date(f.dead_line).getDay() + 1} </span> de cada mes
+														<TableCell className='font-medium w-full hidden md:block '>
+															<span className='font-bold'>{f.pay_each} </span> de cada mes
+														</TableCell>
+														<TableCell className='font-medium w-full flex flex-col '>
+															<span className='font-bold'>{format(f.dead_line, 'PP')} </span>
+
+															<span className='opacity-70'>({difrenceBeetwenDate(new Date(f.dead_line))} dias)</span>
 														</TableCell>
 														<TableCell className='font-medium w-full '>
 															<Dialog>
@@ -320,13 +366,34 @@ export const Dashboard = () => {
 															</Dialog>
 														</TableCell>
 
-														<TableCell className='font-medium   w-full hidden md:flex'>
-															<Button variant='ghost' className='w-full'>
-																<Trash className={'w-6'} />
-															</Button>
-															<Button variant='ghost' className='w-full'>
-																<Edit className={'w-6'} />
-															</Button>
+														<TableCell className='font-medium   w-full '>
+															<Menubar>
+																<MenubarMenu>
+																	<MenubarTrigger className='cursor-pointer '>
+																		<EllipsisVertical />
+																	</MenubarTrigger>
+																	<MenubarContent
+																		align='center'
+																		className='bg-transparent border-none flex flex-col'>
+																		<MenubarItem className='flex items-center gap-3  hover:dark:bg-zinc-900 cursor-pointer hover:bg-zinc-300'>
+																			<p>Editar</p>
+																			<Button
+																				variant='ghost'
+																				className='w-full flex justify-end'>
+																				<Edit className={'w-6 '} />
+																			</Button>
+																		</MenubarItem>
+																		<MenubarItem className='flex items-center gap-3 hover:dark:bg-zinc-900 cursor-pointer hover:bg-zinc-300'>
+																			<p>Eliminar</p>
+																			<Button
+																				variant='ghost'
+																				className='w-full flex justify-end'>
+																				<Trash className={'w-6'} />
+																			</Button>
+																		</MenubarItem>
+																	</MenubarContent>
+																</MenubarMenu>
+															</Menubar>
 														</TableCell>
 													</TableRow>
 												))}
@@ -337,7 +404,9 @@ export const Dashboard = () => {
 							</div>
 						</div>
 					</section>
-					<section id='seeDebt' className=' shadow-sm md:col-span-3 h-full row-span-9'>
+					<section
+						id='seeDebt'
+						className=' shadow-sm md:col-span-3 h-full row-span-9'>
 						<div className='  w-full  flex  justify-between gap-5 order-3'>
 							<div className='dark:bg-zinc-900/50 bg-zinc-200 p-5 w-full rounded-xl'>
 								<div className='flex gap- items-center'>
@@ -366,7 +435,10 @@ export const Dashboard = () => {
 														</TableCell>
 														<TableCell className='font-medium md:w-full w-20 hidden md:block'>
 															{d?.person.length >= 10 ? (
-																<TooltipComponent message={`${d?.person.slice(0, 10)}...`} content={d?.person} />
+																<TooltipComponent
+																	message={`${d?.person.slice(0, 10)}...`}
+																	content={d?.person}
+																/>
 															) : (
 																<p>{d?.person}</p>
 															)}
@@ -374,7 +446,10 @@ export const Dashboard = () => {
 
 														<TableCell className='font-medium md:w-full w-16 block md:hidden align-middle'>
 															{d?.person.length >= 10 ? (
-																<TooltipComponent message={`${d?.person.slice(0, 10)}...`} content={d?.person} />
+																<TooltipComponent
+																	message={`${d?.person.slice(0, 10)}...`}
+																	content={d?.person}
+																/>
 															) : (
 																<p>{d?.person}</p>
 															)}
@@ -382,7 +457,10 @@ export const Dashboard = () => {
 
 														<TableCell className='font-medium md:w-full hidden md:block align-middle'>
 															{d?.reason.length >= 20 ? (
-																<TooltipComponent message={`${d?.reason.slice(0, 20)}`} content={d?.reason} />
+																<TooltipComponent
+																	message={`${d?.reason.slice(0, 20)}`}
+																	content={d?.reason}
+																/>
 															) : (
 																<p>{d?.reason}</p>
 															)}
@@ -390,7 +468,10 @@ export const Dashboard = () => {
 
 														<TableCell className='font-medium md:w-full block md:hidden w-20 align-middle'>
 															{d?.reason.length >= 10 ? (
-																<TooltipComponent message={`${d?.reason.slice(0, 8)}...`} content={d?.reason} />
+																<TooltipComponent
+																	message={`${d?.reason.slice(0, 8)}...`}
+																	content={d?.reason}
+																/>
 															) : (
 																<p>{d?.reason}</p>
 															)}
@@ -407,10 +488,15 @@ export const Dashboard = () => {
 															</p>
 														</TableCell>
 														<TableCell className='font-medium  w-20 hidden md:flex md:w-full'>
-															<Button onClick={() => deleteDebt(d)} variant='ghost' className='w-full  '>
+															<Button
+																onClick={() => deleteDebt(d)}
+																variant='ghost'
+																className='w-full  '>
 																<Trash className={'w-6'} />
 															</Button>
-															<Button variant='ghost' className='w-full '>
+															<Button
+																variant='ghost'
+																className='w-full '>
 																<Edit className={'w-6'} />
 															</Button>
 														</TableCell>
