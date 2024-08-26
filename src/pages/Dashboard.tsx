@@ -161,12 +161,6 @@ export const Dashboard = () => {
 							<div>
 								<p>Tu salario mensual actualmente:</p>
 								<p className='text-green-500'>{userData?.wallet?.salary.toLocaleString()}</p>
-
-								<p>
-									{userData.wallet.user_id === '5d2be1e4-069c-43d6-91c8-2a121ae6b452'
-										? 'Te quiero demasiado mi laurix consentida a veces me saque de casillas casi siempre jjajaja ❤️'
-										: 'a'}
-								</p>
 							</div>
 						</article>
 						<article className=' w-full h-full  shadow-sm border-none dark:bg-zinc-900/50 bg-zinc-200 text-black  dark:text-white rounded-xl  p-3'>
