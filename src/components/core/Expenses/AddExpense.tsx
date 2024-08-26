@@ -1,5 +1,7 @@
+import { GetAllCategories } from '@/apis/CategoryService';
 import { NewExpense } from '@/apis/ExpenseService';
 import { LoaderApi } from '@/assets/icons/Svg';
+import { Combobox } from '@/components/others/Combobox';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
@@ -7,9 +9,10 @@ import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ApiResponse } from '@/interfaces/Api';
+import { Category } from '@/interfaces/Category';
 import { Toast } from '@/tools/Toast';
 import { BadgePlus } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export const AddExpense = ({ apiData, sendData }) => {
 	const [deadLine, setDeadLine] = useState(null);
@@ -19,6 +22,8 @@ export const AddExpense = ({ apiData, sendData }) => {
 	const [responseApiNewExpense, setResponseApiNewExpense] = useState<ApiResponse | undefined>(undefined);
 	const [visibilytToast, setVisibilityToast] = useState(false);
 	const [loader, setLoader] = useState(false);
+	const [categories, setCategories] = useState<Array<Category> | undefined>([]);
+	const [selectedCategory, setSelectedCategory] = useState<Category | undefined>(null);
 	const days = Array.from({ length: 31 }, (_, i) => i + 1);
 	const handleValues = (e, type) => {
 		if (type === 'value') {
@@ -42,10 +47,18 @@ export const AddExpense = ({ apiData, sendData }) => {
 	const handleDateFixedCost = (e) => {
 		setDeadLine(e);
 	};
+
+	async function fetchCategories() {
+		const getAllCategories = await GetAllCategories();
+		setCategories(getAllCategories);
+	}
+	const handleCategory = (e) => {
+	
+		setSelectedCategory(e);
+	};
 	const submitExpense = async () => {
 		setLoader(true);
 		const sendIsFixed: boolean = isFixed === 'true';
-		
 
 		const params = {
 			wallet_id: apiData.wallet_id,
@@ -57,6 +70,8 @@ export const AddExpense = ({ apiData, sendData }) => {
 			value,
 			deadLine,
 			isFixed: sendIsFixed,
+			category_id: selectedCategory?.category_id,
+			category_name: selectedCategory?.category_name,
 		};
 
 		const response = await NewExpense(params);
@@ -85,7 +100,10 @@ export const AddExpense = ({ apiData, sendData }) => {
 		<Dialog>
 			<DialogTrigger asChild>
 				<Button
-					onClick={() => setDeadLine(null)}
+					onClick={() => {
+						setDeadLine(null);
+						fetchCategories();
+					}}
 					variant='ghost'
 					className='w-full py-6 dark:hover:bg-zinc-900  dark:bg-zinc-900/50  bg-zinc-300 text-black  dark:text-white flex items-center gap-3'>
 					Agregar gasto <BadgePlus />
@@ -127,32 +145,42 @@ export const AddExpense = ({ apiData, sendData }) => {
 						</label>
 					</div>
 				</div>
+				<div className='flex w-full gap-3'>
+					<div className='flex justify-center items-center gap-5 flex-col w-full'>
+						<label>
+							¿Es un gasto Fijo? <span className='text-red-500'>*</span>
+						</label>
+						<RadioGroup
+							className='flex items-center'
+							defaultValue={isFixed}
+							onValueChange={(e) => handleValues(e, 'isFixed')}>
+							<div className='flex items-center space-x-2'>
+								<RadioGroupItem
+									value='true'
+									id='true'
+								/>
+								<Label htmlFor='r1'>Si</Label>
+							</div>
 
-				<div className='flex justify-center items-center gap-5 flex-col'>
-					<label>
-						¿Es un gasto Fijo? <span className='text-red-500'>*</span>
-					</label>
-					<RadioGroup
-						className='flex items-center'
-						defaultValue={isFixed}
-						onValueChange={(e) => handleValues(e, 'isFixed')}>
-						<div className='flex items-center space-x-2'>
-							<RadioGroupItem
-								value='true'
-								id='true'
-							/>
-							<Label htmlFor='r1'>Si</Label>
-						</div>
+							<div className='flex items-center space-x-2'>
+								<RadioGroupItem
+									value='false'
+									id='false'
+								/>
+								<Label htmlFor='r2'>No</Label>
+							</div>
+						</RadioGroup>
+					</div>
 
-						<div className='flex items-center space-x-2'>
-							<RadioGroupItem
-								value='false'
-								id='false'
-							/>
-							<Label htmlFor='r2'>No</Label>
-						</div>
-					</RadioGroup>
+					<div className='w-full'>
+						<label htmlFor=''>Tipo de gasto</label> <span className='text-red-500'>*</span>
+						<Combobox
+							data={categories}
+							selected={(e) => handleCategory(e)}
+						/>
+					</div>
 				</div>
+
 				{isFixed === 'true' && (
 					<div className='flex flex-col w-full bg-zinc-100 dark:bg-zinc-800/50 rounded-md p-3'>
 						<label
@@ -186,7 +214,7 @@ export const AddExpense = ({ apiData, sendData }) => {
 					</div>
 				)}
 				<Button
-					disabled={name === '' || value === '0' || (isFixed === 'true' && !deadLine)}
+					disabled={name === '' || value === '0' || selectedCategory === null || (isFixed === 'true' && !deadLine)}
 					onClick={submitExpense}
 					className={`disabled:text-zinc-400 bg-zinc-600 hover:bg-zinc-800 dark:bg-zinc-100 text-white  py-2 rounded-md dark:text-black hover:dark:bg-zinc-300 flex justify-center`}>
 					{loader ? <LoaderApi color='white' /> : 'Confirmar'}

@@ -14,6 +14,8 @@ export const NewExpense = async (data) => {
 	formData.append('is_paid', data.is_paid);
 	formData.append('paid_in', data.paid_in);
 	formData.append('is_fixed', data.isFixed);
+	formData.append('category_id', data.category_id);
+	formData.append('category_name', data.category_name);
 
 	try {
 		const response = await fetch(`${API_HTTP + MAIN_ROUTE}new-expense/${data.wallet_id}/${data.user_id}`, {
