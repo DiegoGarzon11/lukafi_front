@@ -223,8 +223,8 @@ export const Dashboard = () => {
 										</Button>
 									</div>
 								</div>
-
-								<ChartDonut  trigger={trigger}/>
+								{expenses.length > 0 ? <ChartDonut trigger={trigger} /> : 'Actualmente no tienes ningún gasto'}
+								<ChartDonut trigger={trigger} />
 							</div>
 						</div>
 						<div className='w-full bg-zinc-200 dark:bg-zinc-900/50  shadow-sm rounded-xl '>
@@ -246,7 +246,7 @@ export const Dashboard = () => {
 									</Button>
 								</div>
 							</div>
-							<Chart trigger={trigger} />
+							{expenses.length > 0 ? <Chart trigger={trigger} /> : 'Actualmente no tienes ningún gasto'}
 						</div>
 					</section>
 					<section
