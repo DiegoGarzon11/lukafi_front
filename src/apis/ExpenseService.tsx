@@ -94,3 +94,19 @@ export const GetDailyExpenses = async (data) => {
 	}
 	console.warn('datos no enviados');
 };
+
+export const  GetExpensesByCategory = async (data) => {
+	if (data) {
+		try {
+			const response = await fetch(`${API_HTTP + MAIN_ROUTE}get-expenses-by-category/${data}`, {
+				method: 'GET',
+			});
+
+			return await response.json();
+		} catch (error) {
+			console.error(error);
+		}
+		return;
+	}
+	console.warn('datos no enviados');
+};

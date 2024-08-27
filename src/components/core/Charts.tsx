@@ -1,7 +1,9 @@
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell, Sector } from 'recharts';
-import { GetDailyExpenses } from '@/apis/ExpenseService';
+import { GetDailyExpenses, GetExpensesByCategory } from '@/apis/ExpenseService';
 import { useEffect, useState } from 'react';
 import { GetWalletUser } from '@/apis/WalletService';
+import { PieChart, Pie } from 'recharts';
+import { ExpensesByCategory } from '@/interfaces/Wallet';
 
 const CustomTooltip = ({ payload }) => {
 	return (
@@ -54,18 +56,21 @@ export const Chart = ({ trigger }) => {
 	);
 };
 
-import { PieChart, Pie } from 'recharts';
-
-const data01 = [
-	{ name: 'Group A', value: 400 },
-	{ name: 'Group B', value: 300 },
-	{ name: 'Group C', value: 300 },
-	{ name: 'Group D', value: 200 },
-	{ name: 'Group E', value: 278 },
-	{ name: 'Group F', value: 189 },
+const COLORS = [
+	'#E85C0D',
+	'#3795BD',
+	'#88D66C',
+	'#3FA2F6',
+	'#F4CE14',
+	'#4C3BCF',
+	'#E88D67',
+	'#B7B597',
+	'#FF5F00',
+	'#A91D3A',
+	'#68D2E8',
+	'#E9C874',
+	'#481E14',
 ];
-
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 const showName = (props) => {
 	const RADIAN = Math.PI / 180;
 	const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, percent, value } = props;
@@ -87,7 +92,7 @@ const showName = (props) => {
 				dy={8}
 				textAnchor='middle'
 				fill={fill}>
-				{payload.name}
+				{payload.category_name}
 			</text>
 			<Sector
 				cx={cx}
@@ -123,7 +128,7 @@ const showName = (props) => {
 				x={ex + (cos >= 0 ? 1 : -1) * 12}
 				y={ey}
 				textAnchor={textAnchor}
-				fill='#333'>{`PV ${value}`}</text>
+				fill='#333'>{`Valor ${value.toLocaleString()}`}</text>
 			<text
 				x={ex + (cos >= 0 ? 1 : -1) * 12}
 				y={ey}
@@ -135,26 +140,37 @@ const showName = (props) => {
 		</g>
 	);
 };
-export const ChartDonut = () => {
+export const ChartDonut = ({ trigger }) => {
+	const userInfo = JSON.parse(localStorage.userMain);
+	const [expensesByCategory, setExpensesByCategory] = useState<Array<ExpensesByCategory>>([]);
+
+	useEffect(() => {
+		const getExpensesCategory = async () => {
+			const wallet = await GetWalletUser(userInfo?.user_id);
+			const expensesByCategory = await GetExpensesByCategory(wallet?.wallet.wallet_id);
+			setExpensesByCategory(expensesByCategory?.expenses);
+		};
+		getExpensesCategory();
+	}, [trigger]);
+
 	return (
-		<ResponsiveContainer
-		height={330}>
+		<ResponsiveContainer height={330}>
 			<PieChart
 				width={600}
 				height={400}>
 				<Pie
 					activeShape={showName}
-					data={data01}
+					data={expensesByCategory}
 					cx='50%'
 					cy='50%'
 					innerRadius={60}
 					outerRadius={80}
 					fill='#8884d8'
 					dataKey='value'>
-					{data01.map((_, index) => (
+					{expensesByCategory.map((e, i) => (
 						<Cell
-							key={`cell-${index}`}
-							fill={COLORS[index % COLORS.length]}
+							key={e.expense_id}
+							fill={COLORS[i % COLORS.length]}
 						/>
 					))}
 				</Pie>
