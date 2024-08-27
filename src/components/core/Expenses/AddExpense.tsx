@@ -12,7 +12,7 @@ import { ApiResponse } from '@/interfaces/Api';
 import { Category } from '@/interfaces/Category';
 import { Toast } from '@/tools/Toast';
 import { BadgePlus } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export const AddExpense = ({ apiData, sendData }) => {
 	const [deadLine, setDeadLine] = useState(null);
@@ -53,7 +53,6 @@ export const AddExpense = ({ apiData, sendData }) => {
 		setCategories(getAllCategories);
 	}
 	const handleCategory = (e) => {
-	
 		setSelectedCategory(e);
 	};
 	const submitExpense = async () => {
