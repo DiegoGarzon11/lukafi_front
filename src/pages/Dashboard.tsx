@@ -14,7 +14,7 @@ import '@/styles/Dashboard.css';
 import { Toast } from '@/tools/Toast';
 import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogHeader, DialogDescription } from '@/components/ui/dialog';
 import { useEffect, useState } from 'react';
-import { ArrowDown, ArrowUp, EllipsisVertical, Eye } from 'lucide-react';
+import { AlertTriangle, ArrowDown, ArrowUp, EllipsisVertical, Eye } from 'lucide-react';
 import { LoaderComponent } from '@/components/others/Loader';
 import { format } from 'date-fns';
 import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger } from '@/components/ui/menubar';
@@ -223,8 +223,14 @@ export const Dashboard = () => {
 										</Button>
 									</div>
 								</div>
-								{expenses.length > 0 ? <ChartDonut trigger={trigger} /> : 'Actualmente no tienes ningún gasto'}
-								<ChartDonut trigger={trigger} />
+								{expenses?.length > 0 ? (
+									<ChartDonut trigger={trigger} />
+								) : (
+									<div className=' flex justify-center items-center gap-3  h-full'>
+										<AlertTriangle className='text-yellow-500' />
+										<p className='text-lg font-semibold'>Actualmente no tienes ningún gasto</p>
+									</div>
+								)}
 							</div>
 						</div>
 						<div className='w-full bg-zinc-200 dark:bg-zinc-900/50  shadow-sm rounded-xl '>
@@ -246,7 +252,14 @@ export const Dashboard = () => {
 									</Button>
 								</div>
 							</div>
-							{expenses.length > 0 ? <Chart trigger={trigger} /> : 'Actualmente no tienes ningún gasto'}
+							{expenses?.length > 0 ? (
+								<Chart trigger={trigger} />
+							) : (
+								<div className=' flex justify-center items-center gap-3  pb-7 '>
+									<AlertTriangle className='text-yellow-500' />
+									<p className='text-lg font-semibold'>Actualmente no tienes ningún gasto</p>
+								</div>
+							)}
 						</div>
 					</section>
 					<section

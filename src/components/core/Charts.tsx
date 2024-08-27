@@ -167,7 +167,7 @@ export const ChartDonut = ({ trigger }) => {
 					outerRadius={80}
 					fill='#8884d8'
 					dataKey='value'>
-					{expensesByCategory.map((e, i) => (
+					{expensesByCategory?.map((e, i) => (
 						<Cell
 							key={e.expense_id}
 							fill={COLORS[i % COLORS.length]}
