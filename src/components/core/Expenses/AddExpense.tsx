@@ -1,20 +1,20 @@
-import { GetAllCategories } from '@/apis/CategoryService';
-import { NewExpense } from '@/apis/ExpenseService';
-import { LoaderApi } from '@/assets/icons/Svg';
-import { Combobox } from '@/components/others/Combobox';
-import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { ApiResponse } from '@/interfaces/Api';
-import { Category } from '@/interfaces/Category';
-import { Toast } from '@/tools/Toast';
-import { BadgePlus } from 'lucide-react';
-import { useState } from 'react';
+import {GetAllCategories} from '@/apis/CategoryService';
+import {NewExpense} from '@/apis/ExpenseService';
+import {LoaderApi} from '@/assets/icons/Svg';
+import {Combobox} from '@/components/others/Combobox';
+import {Button} from '@/components/ui/button';
+import {Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger} from '@/components/ui/dialog';
+import {Input} from '@/components/ui/input';
+import {Label} from '@/components/ui/label';
+import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
+import {Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue} from '@/components/ui/select';
+import {ApiResponse} from '@/interfaces/Api';
+import {Category} from '@/interfaces/Category';
+import {Toast} from '@/tools/Toast';
+import {BadgePlus} from 'lucide-react';
+import {useState} from 'react';
 
-export const AddExpense = ({ apiData, sendData }) => {
+export const AddExpense = ({apiData, sendData}) => {
 	const [deadLine, setDeadLine] = useState(null);
 	const [name, setName] = useState('');
 	const [value, setValue] = useState('0');
@@ -24,7 +24,7 @@ export const AddExpense = ({ apiData, sendData }) => {
 	const [loader, setLoader] = useState(false);
 	const [categories, setCategories] = useState<Array<Category> | undefined>([]);
 	const [selectedCategory, setSelectedCategory] = useState<Category | undefined>(null);
-	const days = Array.from({ length: 31 }, (_, i) => i + 1);
+	const days = Array.from({length: 31}, (_, i) => i + 1);
 
 	const handleValues = (e, type) => {
 		if (type === 'value') {
@@ -118,9 +118,7 @@ export const AddExpense = ({ apiData, sendData }) => {
 
 				<div className='flex gap-3 items-center justify-center'>
 					<div className='w-full'>
-						<label
-							htmlFor='value_name'
-							className='mb-2'>
+						<label htmlFor='value_name' className='mb-2'>
 							Nombre del gasto <span className='text-red-500'>*</span>
 							<Input
 								className='border dark:border-zinc-400 dark:bg-zinc-800/30'
@@ -132,9 +130,7 @@ export const AddExpense = ({ apiData, sendData }) => {
 						</label>
 					</div>
 					<div className='w-full'>
-						<label
-							htmlFor='value_value'
-							className='mb-2'>
+						<label htmlFor='value_value' className='mb-2'>
 							Valor $ <span className='text-red-500'>*</span>
 							<Input
 								className='border dark:border-zinc-400 dark:bg-zinc-800/30'
@@ -151,23 +147,14 @@ export const AddExpense = ({ apiData, sendData }) => {
 						<label>
 							¿Es un gasto Fijo? <span className='text-red-500'>*</span>
 						</label>
-						<RadioGroup
-							className='flex items-center'
-							defaultValue={isFixed}
-							onValueChange={(e) => handleValues(e, 'isFixed')}>
+						<RadioGroup className='flex items-center' defaultValue={isFixed} onValueChange={(e) => handleValues(e, 'isFixed')}>
 							<div className='flex items-center space-x-2'>
-								<RadioGroupItem
-									value='true'
-									id='true'
-								/>
+								<RadioGroupItem value='true' id='true' />
 								<Label htmlFor='r1'>Si</Label>
 							</div>
 
 							<div className='flex items-center space-x-2'>
-								<RadioGroupItem
-									value='false'
-									id='false'
-								/>
+								<RadioGroupItem value='false' id='false' />
 								<Label htmlFor='r2'>No</Label>
 							</div>
 						</RadioGroup>
@@ -175,18 +162,13 @@ export const AddExpense = ({ apiData, sendData }) => {
 
 					<div className='w-full'>
 						<label htmlFor=''>Tipo de gasto</label> <span className='text-red-500'>*</span>
-						<Combobox
-							data={categories}
-							selected={(e) => handleCategory(e)}
-						/>
+						<Combobox data={categories} selected={(e) => handleCategory(e)} />
 					</div>
 				</div>
 
 				{isFixed === 'true' && (
 					<div className='flex flex-col w-full bg-zinc-100 dark:bg-zinc-800/50 rounded-md p-3'>
-						<label
-							htmlFor='value_value'
-							className='self-start mb-2'>
+						<label htmlFor='value_value' className='self-start mb-2'>
 							Fecha a pagar<span className='text-red-500'>*</span>
 						</label>
 
@@ -200,11 +182,7 @@ export const AddExpense = ({ apiData, sendData }) => {
 									<SelectGroup>
 										<SelectLabel className='text-lg'>dia</SelectLabel>
 										{days.map((e, i) => (
-											<SelectItem
-												disabled={e <= new Date().getDate()}
-												className='focus:dark:bg-zinc-800 focus:bg-zinc-200'
-												key={i}
-												value={e.toString()}>
+											<SelectItem className='focus:dark:bg-zinc-800 focus:bg-zinc-200' key={i} value={e.toString()}>
 												{e}
 											</SelectItem>
 										))}
