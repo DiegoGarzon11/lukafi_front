@@ -1,4 +1,4 @@
-import { API_HTTP } from '@/tools/router';
+import {API_HTTP} from '@/tools/router';
 const MAIN_ROUTE = '/debt/';
 
 export const NewDebt = async (data) => {
@@ -8,6 +8,7 @@ export const NewDebt = async (data) => {
 	const formData = new URLSearchParams();
 	formData.append('person', data.person);
 	formData.append('value', data.value);
+	formData.append('dead_line', data.date);
 	formData.append('reason', data.reason);
 	formData.append('debt_type', data.debtType);
 

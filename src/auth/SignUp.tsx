@@ -16,7 +16,21 @@ export default function SignUp() {
 	i18n.changeLanguage();
 	const currentYear = new Date().getFullYear();
 	const years = Array.from({length: currentYear - 1960 - 15 + 1}, (_, i) => 1960 + i);
-	const months = Array.from({length: 12}, (_, i) => i + 1);
+	const months = [
+		'Enero',
+		'Febrero',
+		'Marzo',
+		'Abril',
+		'Mayo',
+		'Junio',
+		'Julio',
+		'Agosto',
+		'Septiembre',
+		'Octubre',
+		'Noviembre',
+		'Diciembre',
+	];
+
 	const days = Array.from({length: 31}, (_, i) => i + 1);
 	const [showPassword, setShowPassword] = useState(false);
 	const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
@@ -67,6 +81,7 @@ export default function SignUp() {
 			...data,
 			age: new Date(fecha),
 		};
+
 		event.preventDefault();
 
 		try {
@@ -179,7 +194,7 @@ export default function SignUp() {
 									<SelectGroup>
 										<SelectLabel className='text-lg '>{t('form.field.year')}</SelectLabel>
 										{years.map((e, i) => (
-											<SelectItem className='focus:bg-zinc-300 focus:dark:bg-zinc-700' key={i} value={e.toString()}>
+											<SelectItem className='focus:bg-zinc-300 focus:dark:bg-zinc-700' key={i} value={(i + 1).toString()}>
 												{e}
 											</SelectItem>
 										))}

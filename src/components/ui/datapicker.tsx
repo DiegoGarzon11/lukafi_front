@@ -11,16 +11,19 @@ import {useState} from 'react';
 
 export function DatePicker({sendDate}) {
 	const [date, setDate] = useState<Date>();
+	const [openCalendar, setOpenCalendar] = useState(false);
 
 	const handleDateSelect = (selectedDate) => {
 		setDate(selectedDate);
 		sendDate(selectedDate);
+		setOpenCalendar(false);
 	};
 
 	return (
-		<Popover>
+		<Popover open={openCalendar}>
 			<PopoverTrigger asChild>
 				<Button
+					onClick={() => setOpenCalendar(true)}
 					variant={'black_outline'}
 					className={cn('w-full  justify-center text-center font-normal h-10 text-base bgs ', !date && 'text-muted-foreground')}>
 					<CalendarIcon className='mr-2 h-4 w-4' />

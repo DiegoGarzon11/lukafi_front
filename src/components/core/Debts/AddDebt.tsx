@@ -1,6 +1,8 @@
 import {NewDebt} from '@/apis/DebtService';
 import {Expense, Income, LoaderApi} from '@/assets/icons/Svg';
 import {Button} from '@/components/ui/button';
+import {DatePicker} from '@/components/ui/datapicker';
+
 import {Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger} from '@/components/ui/dialog';
 import {Input} from '@/components/ui/input';
 import {ApiResponse} from '@/interfaces/Api';
@@ -16,6 +18,7 @@ export const AddDebt = ({apiData, sendData}) => {
 	const [debtType, setDebtType] = useState(null);
 	const [visibilytToast, setVisibilityToast] = useState(false);
 	const [responseDebt, setResponseDebt] = useState<ApiResponse | undefined>(null);
+	const [date, setDate] = useState('');
 
 	const handleValues = (e, type) => {
 		if (type === 'money') {
@@ -35,6 +38,9 @@ export const AddDebt = ({apiData, sendData}) => {
 			setReason(e.target.value);
 		}
 	};
+	const getDate = (date) => {
+		setDate(date);
+	};
 
 	const submitDebt = async () => {
 		setLoader(true);
@@ -46,6 +52,7 @@ export const AddDebt = ({apiData, sendData}) => {
 			value: value.replace(/,/g, ''),
 			reason,
 			debtType,
+			date,
 		};
 
 		const response = await NewDebt(params);
@@ -60,6 +67,7 @@ export const AddDebt = ({apiData, sendData}) => {
 			setReason('');
 			setDebtType(null);
 			setLoader(false);
+			setDate('');
 		}
 
 		setTimeout(() => {
@@ -125,8 +133,11 @@ export const AddDebt = ({apiData, sendData}) => {
 					<label htmlFor=''>
 						Motivo <span className='text-red-500'>*</span>{' '}
 					</label>
-
 					<Input id='value_income' type='text' value={reason} onChange={(e) => handleValues(e, 'reason')} />
+				</div>
+				<div>
+					<label htmlFor=''>Fecha limite de pago (recomendado)</label>
+					<DatePicker sendDate={getDate} />
 				</div>
 				<Button
 					disabled={debtType === null || person === '' || reason === '' || value === '' || value === '0'}
