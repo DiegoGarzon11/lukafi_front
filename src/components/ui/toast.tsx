@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as ToastPrimitives from '@radix-ui/react-toast';
 import { cva, type VariantProps } from 'class-variance-authority';
-import {X} from 'lucide-react'
+import { X } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 
@@ -13,10 +13,7 @@ const ToastViewport = React.forwardRef<
 >(({ className, ...props }, ref) => (
 	<ToastPrimitives.Viewport
 		ref={ref}
-		className={cn(
-			'fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0  sm:flex-col md:max-w-[420px]',
-			className
-		)}
+		className={cn('fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:right-0  sm:flex-col md:max-w-[420px]', className)}
 		{...props}
 	/>
 ));
@@ -30,7 +27,7 @@ const toastVariants = cva(
 				success: 'bg-green-500',
 				error: 'bg-red-500',
 				warning: 'bg-yellow-500',
-				information: 'bg-blue-500'
+				information: 'bg-blue-500',
 			},
 		},
 	}

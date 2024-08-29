@@ -25,6 +25,7 @@ export const AddExpense = ({ apiData, sendData }) => {
 	const [categories, setCategories] = useState<Array<Category> | undefined>([]);
 	const [selectedCategory, setSelectedCategory] = useState<Category | undefined>(null);
 	const days = Array.from({ length: 31 }, (_, i) => i + 1);
+
 	const handleValues = (e, type) => {
 		if (type === 'value') {
 			let value = e.target.value.replace(/[^0-9.]/g, '');
@@ -72,6 +73,7 @@ export const AddExpense = ({ apiData, sendData }) => {
 			category_id: selectedCategory?.category_id,
 			category_name: selectedCategory?.category_name,
 		};
+		console.log(params);
 
 		const response = await NewExpense(params);
 
@@ -199,6 +201,7 @@ export const AddExpense = ({ apiData, sendData }) => {
 										<SelectLabel className='text-lg'>dia</SelectLabel>
 										{days.map((e, i) => (
 											<SelectItem
+												disabled={e <= new Date().getDate()}
 												className='focus:dark:bg-zinc-800 focus:bg-zinc-200'
 												key={i}
 												value={e.toString()}>

@@ -59,8 +59,8 @@ export default function Auth() {
 					</p>
 				</div>
 
-				<div className={` flex justify-center items-start lg:items-center w-full h-screen  ${view ? 'md:-order-1' : ''}  `}>
-					<section className='w-11/12  h-screen flex justify-center items-center  '>{view ? <SignIn /> : <SignUp />}</section>
+				<div className={` flex justify-center items-start lg:items-center w-full  ${view ? 'md:-order-1' : ''}  `}>
+					<section className='w-11/12   flex justify-center items-center  h-screen '>{view ? <SignIn /> : <SignUp />}</section>
 				</div>
 			</div>
 		</>

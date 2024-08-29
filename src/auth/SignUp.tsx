@@ -1,37 +1,24 @@
-import {UserRegister} from '@/apis/UserService';
-import {EyeClose, EyeOpen} from '@/assets/icons/Svg';
-import {Button} from '@/components/ui/button';
-import {Input} from '@/components/ui/input';
-import {Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue} from '@/components/ui/select';
-import {ResponseWallet} from '@/interfaces/Wallet';
-import {COUNTRIES} from '@/tools/countries';
-import {Toast} from '@/tools/Toast';
-import {LoaderApi} from '@/assets/icons/Svg';
-import {useState} from 'react';
-import {useTranslation} from 'react-i18next';
+import { UserRegister } from '@/apis/UserService';
+import { EyeClose, EyeOpen } from '@/assets/icons/Svg';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { ResponseWallet } from '@/interfaces/Wallet';
+import { COUNTRIES } from '@/tools/countries';
+import { Toast } from '@/tools/Toast';
+import { LoaderApi } from '@/assets/icons/Svg';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export default function SignUp() {
-	const {t, i18n} = useTranslation();
+	const { t, i18n } = useTranslation();
 
 	i18n.changeLanguage();
 	const currentYear = new Date().getFullYear();
-	const years = Array.from({length: currentYear - 1960 - 15 + 1}, (_, i) => 1960 + i);
-	const months = [
-		'Enero',
-		'Febrero',
-		'Marzo',
-		'Abril',
-		'Mayo',
-		'Junio',
-		'Julio',
-		'Agosto',
-		'Septiembre',
-		'Octubre',
-		'Noviembre',
-		'Diciembre',
-	];
+	const years = Array.from({ length: currentYear - 1960 - 15 + 1 }, (_, i) => 1960 + i);
+	const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
-	const days = Array.from({length: 31}, (_, i) => i + 1);
+	const days = Array.from({ length: 31 }, (_, i) => i + 1);
 	const [showPassword, setShowPassword] = useState(false);
 	const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
 	const [statusCode, setStatusCode] = useState<ResponseWallet | undefined>(null);
@@ -53,7 +40,7 @@ export default function SignUp() {
 	});
 
 	function handleChange(e) {
-		const {name, value} = e.target;
+		const { name, value } = e.target;
 		setData((prevData) => ({
 			...prevData,
 			[name]: value,
@@ -73,8 +60,9 @@ export default function SignUp() {
 	};
 
 	async function handleSubmit(event) {
+		event.preventDefault();
 		setLoader(true);
-
+		setVisibilityToast(false);
 		const fecha = `${date.month}/${date.day}/${date.year}`;
 
 		const values = {
@@ -82,13 +70,10 @@ export default function SignUp() {
 			age: new Date(fecha),
 		};
 
-		event.preventDefault();
-
 		try {
 			const infoRegister = await UserRegister(values);
 			setStatusCode(infoRegister);
 			if (infoRegister?.status === 201) {
-				setVisibilityToast(true);
 				setLoader(true);
 				setTimeout(() => {
 					return (window.location.href = '/auth');
@@ -97,7 +82,7 @@ export default function SignUp() {
 		} catch (error) {
 			console.error(error);
 		} finally {
-			setVisibilityToast(false);
+			setVisibilityToast(true);
 			setLoader(false);
 		}
 	}
@@ -107,7 +92,7 @@ export default function SignUp() {
 			{visibilytToast ? (
 				<Toast
 					visibility={visibilytToast}
-					message={statusCode?.status === 409 ? 'Usuario ya existente' : 'Registro exitoso'}
+					message={statusCode?.message}
 					severity={statusCode?.status === 409 ? 'warning' : 'success'}
 				/>
 			) : (
@@ -120,7 +105,9 @@ export default function SignUp() {
 				<h1 className='text-4xl mb-6 md:mt-10 font-semibold'>{t('form.field.signUp')}</h1>
 				<div className='flex gap-3'>
 					<div className='w-full'>
-						<label htmlFor='' className='text-lg'>
+						<label
+							htmlFor=''
+							className='text-lg'>
 							{t('form.field.name')} <span className='text-red-500'>*</span>
 						</label>
 						<Input
@@ -132,7 +119,9 @@ export default function SignUp() {
 						/>
 					</div>
 					<div className='w-full'>
-						<label htmlFor='' className='text-lg'>
+						<label
+							htmlFor=''
+							className='text-lg'>
 							{t('form.field.lastName')} <span className='text-red-500'>*</span>
 						</label>
 						<Input
@@ -145,7 +134,9 @@ export default function SignUp() {
 					</div>
 				</div>
 				<div>
-					<label htmlFor='' className='text-lg'>
+					<label
+						htmlFor=''
+						className='text-lg'>
 						{t('form.field.email')} <span className='text-red-500'>*</span>
 					</label>
 					<Input
@@ -158,10 +149,14 @@ export default function SignUp() {
 					/>
 				</div>
 				<div className='flex flex-col w-full'>
-					<label htmlFor='' className='text-lg'>
+					<label
+						htmlFor=''
+						className='text-lg'>
 						{t('form.field.nacionality')} <span className='text-red-500'>*</span>
 					</label>
-					<Select onValueChange={(value) => handeleNacionality(value)} value={data.nacionality}>
+					<Select
+						onValueChange={(value) => handeleNacionality(value)}
+						value={data.nacionality}>
 						<SelectTrigger className='w-full border-zinc-300 dark:bg-zinc-800/30	'>
 							<SelectValue />
 						</SelectTrigger>
@@ -169,7 +164,10 @@ export default function SignUp() {
 							<SelectGroup>
 								<SelectLabel>{t('form.label.countries')}</SelectLabel>
 								{COUNTRIES.map((e) => (
-									<SelectItem className='focus:bg-zinc-300 focus:dark:bg-zinc-700 ' key={e.id} value={e.name}>
+									<SelectItem
+										className='focus:bg-zinc-300 focus:dark:bg-zinc-700 '
+										key={e.id}
+										value={e.name}>
 										{e.name}
 									</SelectItem>
 								))}
@@ -178,15 +176,21 @@ export default function SignUp() {
 					</Select>
 				</div>
 				<div className='flex flex-col'>
-					<label htmlFor='' className='text-lg'>
+					<label
+						htmlFor=''
+						className='text-lg'>
 						{t('form.field.bth')}
 					</label>
 					<div className='flex gap-8'>
 						<div className='w-1/3'>
-							<label className='text-sm' htmlFor=''>
+							<label
+								className='text-sm'
+								htmlFor=''>
 								{t('form.field.year')}
 							</label>
-							<Select onValueChange={(value) => handleDateChange(value, 'year')} value={date.year}>
+							<Select
+								onValueChange={(value) => handleDateChange(value, 'year')}
+								value={date.year}>
 								<SelectTrigger className='w-full border-zinc-300 dark:bg-zinc-800/30'>
 									<SelectValue />
 								</SelectTrigger>
@@ -194,7 +198,10 @@ export default function SignUp() {
 									<SelectGroup>
 										<SelectLabel className='text-lg '>{t('form.field.year')}</SelectLabel>
 										{years.map((e, i) => (
-											<SelectItem className='focus:bg-zinc-300 focus:dark:bg-zinc-700' key={i} value={(i + 1).toString()}>
+											<SelectItem
+												className='focus:bg-zinc-300 focus:dark:bg-zinc-700'
+												key={i}
+												value={(i + 1).toString()}>
 												{e}
 											</SelectItem>
 										))}
@@ -203,10 +210,14 @@ export default function SignUp() {
 							</Select>
 						</div>
 						<div className='w-1/3'>
-							<label className='text-sm' htmlFor=''>
+							<label
+								className='text-sm'
+								htmlFor=''>
 								{t('form.field.month')}
 							</label>
-							<Select onValueChange={(value) => handleDateChange(value, 'month')} value={date.month}>
+							<Select
+								onValueChange={(value) => handleDateChange(value, 'month')}
+								value={date.month}>
 								<SelectTrigger className='w-full border-zinc-300 dark:bg-zinc-800/30'>
 									<SelectValue />
 								</SelectTrigger>
@@ -214,7 +225,10 @@ export default function SignUp() {
 									<SelectGroup>
 										<SelectLabel className='text-lg'>{t('form.field.month')}</SelectLabel>
 										{months.map((e, i) => (
-											<SelectItem className='focus:bg-zinc-300 focus:dark:bg-zinc-700' key={i} value={e.toString()}>
+											<SelectItem
+												className='focus:bg-zinc-300 focus:dark:bg-zinc-700'
+												key={i}
+												value={e.toString()}>
 												{e}
 											</SelectItem>
 										))}
@@ -223,10 +237,14 @@ export default function SignUp() {
 							</Select>
 						</div>
 						<div className='w-1/3'>
-							<label className='text-sm' htmlFor=''>
+							<label
+								className='text-sm'
+								htmlFor=''>
 								{t('form.field.day')}
 							</label>
-							<Select onValueChange={(value) => handleDateChange(value, 'day')} value={date.day}>
+							<Select
+								onValueChange={(value) => handleDateChange(value, 'day')}
+								value={date.day}>
 								<SelectTrigger className='w-full border-zinc-300 dark:bg-zinc-800/30'>
 									<SelectValue className='text-red-400' />
 								</SelectTrigger>
@@ -234,7 +252,10 @@ export default function SignUp() {
 									<SelectGroup>
 										<SelectLabel className='text-lg'>{t('form.field.day')}</SelectLabel>
 										{days.map((e, i) => (
-											<SelectItem className='focus:bg-zinc-300 focus:dark:bg-zinc-700' key={i} value={e.toString()}>
+											<SelectItem
+												className='focus:bg-zinc-300 focus:dark:bg-zinc-700'
+												key={i}
+												value={e.toString()}>
 												{e}
 											</SelectItem>
 										))}
@@ -247,7 +268,9 @@ export default function SignUp() {
 
 				<div className='flex justify-between flex-col lg:flex-row gap-5'>
 					<div className='relative w-full'>
-						<label htmlFor='' className='text-lg'>
+						<label
+							htmlFor=''
+							className='text-lg'>
 							{t('form.field.password')} <span className='text-red-500'>*</span>
 						</label>
 						<Input
@@ -267,7 +290,9 @@ export default function SignUp() {
 						</button>
 					</div>
 					<div className='relative w-full'>
-						<label htmlFor='' className='text-lg'>
+						<label
+							htmlFor=''
+							className='text-lg'>
 							{t('form.field.confirmPassword')} <span className='text-red-500'>*</span>
 						</label>
 						<Input
@@ -290,7 +315,7 @@ export default function SignUp() {
 				{data.password == data.confirmPassword ? '' : <p className='text-center text-red-500 text-lg'>Las contraseñas no coinciden</p>}
 				<Button
 					type='submit'
-					className='text-lg text-white bg-zinc-950 flex justify-center items-center relative  '
+					className='text-lg text-white bg-zinc-950 flex justify-center items-center  wf  '
 					disabled={
 						data.name == '' ||
 						data.lastName == '' ||

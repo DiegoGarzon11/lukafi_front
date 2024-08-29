@@ -4,7 +4,7 @@ import { useToast } from '@/components/ui/use-toast';
 
 export function Toast({ visibility, severity, message }: { visibility: boolean; severity: string; message: string }) {
 	const btn = useRef(null);
-	const { toast } = useToast();
+	const { toast,  } = useToast();
 	const severityToVariant = {
 		information: 'information',
 		warning: 'warning',
@@ -14,7 +14,6 @@ export function Toast({ visibility, severity, message }: { visibility: boolean; 
 	useEffect(() => {
 		if (visibility) {
 			btn.current.click();
-		
 		}
 	}, [visibility]);
 
@@ -25,8 +24,8 @@ export function Toast({ visibility, severity, message }: { visibility: boolean; 
 			variant='outline'
 			onClick={() => {
 				toast({
-					duration: 1000,
-					description: message,
+					title: message,
+					duration: 1200,
 					variant: severityToVariant[severity],
 				});
 			}}>

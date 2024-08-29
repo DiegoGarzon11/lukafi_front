@@ -1,16 +1,16 @@
-import {UserDefault, UserSignIn} from '@/apis/UserService';
-import {EyeClose, EyeOpen} from '@/assets/icons/Svg';
-import {Button} from '@/components/ui/button';
-import {Input} from '@/components/ui/input';
-import {Toast} from '@/tools/Toast';
-import {LoaderApi} from '@/assets/icons/Svg';
-import {useState} from 'react';
-import {useTranslation} from 'react-i18next';
-import {Link} from 'react-router-dom';
-import {ApiResponse} from '@/interfaces/Api';
+import { UserDefault, UserSignIn } from '@/apis/UserService';
+import { EyeClose, EyeOpen } from '@/assets/icons/Svg';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Toast } from '@/tools/Toast';
+import { LoaderApi } from '@/assets/icons/Svg';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
+import { ApiResponse } from '@/interfaces/Api';
 
 export default function SignIn() {
-	const {t, i18n} = useTranslation();
+	const { t, i18n } = useTranslation();
 	i18n.changeLanguage();
 
 	const [loader, setLoader] = useState(false);
@@ -25,7 +25,7 @@ export default function SignIn() {
 	});
 
 	function handleChange(e) {
-		const {name, value} = e.target;
+		const { name, value } = e.target;
 		setData((prevData) => ({
 			...prevData,
 			[name]: value,
@@ -44,7 +44,6 @@ export default function SignIn() {
 		try {
 			const dataUserSignIn = await UserSignIn(data);
 			setStatusCode(dataUserSignIn);
-			setVisibilityToast(true);
 
 			if (dataUserSignIn.token) {
 				localStorage.setItem('token', dataUserSignIn?.token);
@@ -76,10 +75,14 @@ export default function SignIn() {
 				''
 			)}
 
-			<form className='mt-10 grid w-full h-3/4 gap-8 p-8 shadow-sm bg-zinc-100 dark:bg-zinc-900 rounded-2xl' onSubmit={handleSubmit}>
+			<form
+				className='mt-10 grid w-full h-3/4 gap-8 p-8 shadow-sm bg-zinc-100 dark:bg-zinc-900 rounded-2xl'
+				onSubmit={handleSubmit}>
 				<h1 className='text-4xl mb-6 font-semibold'>{t('form.field.signIn')}</h1>
 				<div>
-					<label htmlFor='' className='text-lg'>
+					<label
+						htmlFor=''
+						className='text-lg'>
 						{t('form.field.email')}
 					</label>
 					<Input
@@ -93,7 +96,9 @@ export default function SignIn() {
 					/>
 				</div>
 				<div className='relative'>
-					<label htmlFor='' className='text-lg'>
+					<label
+						htmlFor=''
+						className='text-lg'>
 						{t('form.field.password')}
 					</label>
 					<Input
@@ -105,7 +110,9 @@ export default function SignIn() {
 						name='password'
 						required
 					/>
-					<div className='absolute right-2 top-8 cursor-pointer' onClick={handleClick}>
+					<div
+						className='absolute right-2 top-8 cursor-pointer'
+						onClick={handleClick}>
 						{icon}
 					</div>
 				</div>
@@ -118,7 +125,9 @@ export default function SignIn() {
 					</Button>
 				</div>
 
-				<Link to='' className='text-lg'>
+				<Link
+					to=''
+					className='text-lg'>
 					{t('form.password.forgotten')}
 				</Link>
 			</form>
