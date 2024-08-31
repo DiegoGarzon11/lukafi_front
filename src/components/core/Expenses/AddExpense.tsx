@@ -1,21 +1,21 @@
-import { GetAllCategories } from '@/apis/CategoryService';
-import { NewExpense } from '@/apis/ExpenseService';
-import { LoaderApi } from '@/assets/icons/Svg';
-import { Combobox } from '@/components/others/Combobox';
-import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { ApiResponse } from '@/interfaces/Api';
-import { Category } from '@/interfaces/Category';
-import { Toast } from '@/tools/Toast';
-import { BadgePlus, Info } from 'lucide-react';
-import { useState } from 'react';
+import {GetAllCategories} from '@/apis/CategoryService';
+import {NewExpense} from '@/apis/ExpenseService';
+import {LoaderApi} from '@/assets/icons/Svg';
+import {Combobox} from '@/components/others/Combobox';
+import {Button} from '@/components/ui/button';
+import {Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger} from '@/components/ui/dialog';
+import {Input} from '@/components/ui/input';
+import {Label} from '@/components/ui/label';
+import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
+import {Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue} from '@/components/ui/select';
+import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from '@/components/ui/tooltip';
+import {ApiResponse} from '@/interfaces/Api';
+import {Category} from '@/interfaces/Category';
+import {Toast} from '@/tools/Toast';
+import {BadgePlus, Info} from 'lucide-react';
+import {useState} from 'react';
 
-export const AddExpense = ({ apiData, sendData }) => {
+export const AddExpense = ({apiData, sendData}) => {
 	const [deadLine, setDeadLine] = useState(0);
 	const [name, setName] = useState('');
 	const [value, setValue] = useState('0');
@@ -25,9 +25,8 @@ export const AddExpense = ({ apiData, sendData }) => {
 	const [loader, setLoader] = useState(false);
 	const [categories, setCategories] = useState<Array<Category> | undefined>([]);
 	const [selectedCategory, setSelectedCategory] = useState<Category | undefined>(null);
-	const days = Array.from({ length: 31 }, (_, i) => i + 1);
-	
-	
+	const days = Array.from({length: 31}, (_, i) => i + 1);
+
 	const handleValues = (e, type) => {
 		if (type === 'value') {
 			let value = e.target.value.replace(/[^0-9.]/g, '');
@@ -105,8 +104,7 @@ export const AddExpense = ({ apiData, sendData }) => {
 					onClick={() => {
 						setDeadLine(0);
 						fetchCategories();
-						setSelectedCategory(null)
-					
+						setSelectedCategory(null);
 					}}
 					variant='ghost'
 					className='w-full py-6 dark:hover:bg-zinc-900  dark:bg-zinc-900/50  bg-zinc-300 text-black  dark:text-white flex items-center gap-3'>
@@ -121,9 +119,7 @@ export const AddExpense = ({ apiData, sendData }) => {
 
 				<div className='flex gap-3 items-center justify-center'>
 					<div className='w-full'>
-						<label
-							htmlFor='value_name'
-							className='mb-2'>
+						<label htmlFor='value_name' className='mb-2'>
 							Nombre del gasto <span className='text-red-500'>*</span>
 							<Input
 								className='border dark:border-zinc-400 dark:bg-zinc-800/30'
@@ -135,9 +131,7 @@ export const AddExpense = ({ apiData, sendData }) => {
 						</label>
 					</div>
 					<div className='w-full'>
-						<label
-							htmlFor='value_value'
-							className='mb-2'>
+						<label htmlFor='value_value' className='mb-2'>
 							Valor $ <span className='text-red-500'>*</span>
 							<Input
 								className='border dark:border-zinc-400 dark:bg-zinc-800/30'
@@ -154,23 +148,14 @@ export const AddExpense = ({ apiData, sendData }) => {
 						<label>
 							¿Es un gasto Fijo? <span className='text-red-500'>*</span>
 						</label>
-						<RadioGroup
-							className='flex items-center'
-							defaultValue={isFixed}
-							onValueChange={(e) => handleValues(e, 'isFixed')}>
+						<RadioGroup className='flex items-center' defaultValue={isFixed} onValueChange={(e) => handleValues(e, 'isFixed')}>
 							<div className='flex items-center space-x-2'>
-								<RadioGroupItem
-									value='true'
-									id='true'
-								/>
+								<RadioGroupItem value='true' id='true' />
 								<Label htmlFor='r1'>Si</Label>
 							</div>
 
 							<div className='flex items-center space-x-2'>
-								<RadioGroupItem
-									value='false'
-									id='false'
-								/>
+								<RadioGroupItem value='false' id='false' />
 								<Label htmlFor='r2'>No</Label>
 							</div>
 						</RadioGroup>
@@ -178,18 +163,13 @@ export const AddExpense = ({ apiData, sendData }) => {
 
 					<div className='w-full'>
 						<label htmlFor=''>Tipo de gasto</label> <span className='text-red-500'>*</span>
-						<Combobox
-							data={categories}
-							selected={(e) => handleCategory(e)}
-						/>
+						<Combobox data={categories} selected={(e) => handleCategory(e)} />
 					</div>
 				</div>
 
 				{isFixed === 'true' && (
 					<div className='flex flex-col w-full bg-zinc-100 dark:bg-zinc-800/50 rounded-md p-3'>
-						<label
-							htmlFor='value_value'
-							className='self-start mb-2'>
+						<label htmlFor='value_value' className='self-start mb-2'>
 							Fecha a pagar<span className='text-red-500'>*</span>
 						</label>
 
@@ -203,10 +183,7 @@ export const AddExpense = ({ apiData, sendData }) => {
 									<SelectGroup>
 										<SelectLabel className='text-lg'>dia</SelectLabel>
 										{days.map((e, i) => (
-											<SelectItem
-												className='focus:dark:bg-zinc-800 focus:bg-zinc-200'
-												key={i}
-												value={e.toString()}>
+											<SelectItem className='focus:dark:bg-zinc-800 focus:bg-zinc-200' key={i} value={e.toString()}>
 												{e}
 											</SelectItem>
 										))}
@@ -222,19 +199,15 @@ export const AddExpense = ({ apiData, sendData }) => {
 								<TooltipProvider>
 									<Tooltip>
 										<TooltipTrigger asChild>
-											<Button
-												variant='ghost'
-												className='px-1'>
+											<Button variant='ghost' className='px-1'>
 												<Info className='text-blue-400 ' />
 											</Button>
 										</TooltipTrigger>
-										<TooltipContent
-											side='bottom'
-											className=' rounded-md  z-50   flex  justify-center hover:bg-transparent '>
+										<TooltipContent side='bottom' className=' rounded-md  z-50   flex  justify-center hover:bg-transparent '>
 											<div className='flex  dark:bg-zinc-900 w-2/5'>
 												<p className='text-balance tracking-wider font-semibold'>
-													Se mostrara como ya pago, ya que la fecha a pagar es anterior a la fecha actual. Por lo cual la proxima fecha a
-													pagar sera el mes siguienete al actual.
+													Se mostrara como ya pago, ya que la fecha a pagar es anterior a la fecha actual. Por lo cual la
+													proxima fecha a pagar sera el mes siguienete al actual.
 												</p>
 											</div>
 										</TooltipContent>
@@ -247,10 +220,10 @@ export const AddExpense = ({ apiData, sendData }) => {
 					</div>
 				)}
 				<Button
-					disabled={name === '' || value === '0' || selectedCategory === null || (isFixed === 'true' && !deadLine)}
+					disabled={loader || name === '' || value === '0' || selectedCategory === null || (isFixed === 'true' && !deadLine)}
 					onClick={submitExpense}
-					className={`disabled:text-zinc-400 bg-zinc-600 hover:bg-zinc-800 dark:bg-zinc-100 text-white  py-2 rounded-md dark:text-black hover:dark:bg-zinc-300 flex justify-center`}>
-					{loader ? <LoaderApi color='white' /> : 'Confirmar'}
+					className={`disabled:text-zinc-200  bg-zinc-700 hover:bg-zinc-500 dark:bg-zinc-500 text-white rounded-md hover:dark:bg-zinc-600 flex justify-center`}>
+					{loader ? <LoaderApi color='black' /> : 'Confirmar'}
 				</Button>
 			</DialogContent>
 			{visibilytToast && (

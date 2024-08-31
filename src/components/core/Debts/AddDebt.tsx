@@ -160,10 +160,12 @@ export const AddDebt = ({apiData, sendData}) => {
 				<Button
 					disabled={debtType === null || person === '' || reason === '' || value === '' || value === '0'}
 					onClick={submitDebt}
-					className={` py-2 rounded-md text-zinc-300 flex justify-center ${
-						debtType === null || person === '' || reason === '' || value === '' || value === '0' ? 'bg-gray-200 ' : ' bg-slate-800'
+					className={` py-2 rounded-md text-zinc-100 flex justify-center ${
+						debtType === null || person === '' || reason === '' || value === '' || value === '0'
+							? 'bg-gray-300 '
+							: ' bg-zinc-700 hover:bg-zinc-500 hover:dark:bg-zinc-600 dark:bg-zinc-500'
 					}`}>
-					{loader ? <LoaderApi color='white' /> : 'Confirmar'}
+					{loader ? <LoaderApi color='black' /> : 'Confirmar'}
 				</Button>
 			</DialogContent>
 			{visibilytToast && (
