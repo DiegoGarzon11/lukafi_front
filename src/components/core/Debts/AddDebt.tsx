@@ -118,25 +118,43 @@ export const AddDebt = ({apiData, sendData}) => {
 				<div className='flex gap-5 items-center'>
 					<div>
 						<label htmlFor=''>
-							Nombre <span className='text-red-500'>*</span>
+							Nombre deuda<span className='text-red-500'>*</span>
 						</label>
-						<Input value={person} onChange={(e) => handleValues(e, 'name')} />
+						<Input
+							value={person}
+							className='border dark:border-zinc-400 dark:bg-zinc-800/30'
+							onChange={(e) => handleValues(e, 'name')}
+						/>
 					</div>
 					<div>
 						<label htmlFor=''>
 							Valor $ <span className='text-red-500'>*</span>
 						</label>
-						<Input id='value_income' type='text' value={value} onChange={(e) => handleValues(e, 'money')} />
+						<Input
+							id='value_income'
+							className='border dark:border-zinc-400 dark:bg-zinc-800/30'
+							type='text'
+							value={value}
+							onChange={(e) => handleValues(e, 'money')}
+						/>
 					</div>
 				</div>
 				<div>
 					<label htmlFor=''>
-						Motivo <span className='text-red-500'>*</span>{' '}
+						Motivo deuda<span className='text-red-500'>*</span>{' '}
 					</label>
-					<Input id='value_income' type='text' value={reason} onChange={(e) => handleValues(e, 'reason')} />
+					<Input
+						id='value_income'
+						type='text'
+						className='border dark:border-zinc-400 dark:bg-zinc-800/30'
+						value={reason}
+						onChange={(e) => handleValues(e, 'reason')}
+					/>
 				</div>
 				<div>
-					<label htmlFor=''>Fecha limite de pago (recomendado)</label>
+					<label htmlFor=''>
+						Fecha limite de pago <span className='text-zinc-500'>(recomendado)</span>
+					</label>
 					<DatePicker sendDate={getDate} />
 				</div>
 				<Button

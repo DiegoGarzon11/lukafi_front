@@ -25,7 +25,10 @@ export function DatePicker({sendDate}) {
 				<Button
 					onClick={() => setOpenCalendar(true)}
 					variant={'black_outline'}
-					className={cn('w-full  justify-center text-center font-normal h-10 text-base bgs ', !date && 'text-muted-foreground')}>
+					className={cn(
+						'w-full  justify-center text-center font-normal h-10 text-base bgs border border-zinc-200 dark:border-zinc-400 	',
+						!date && 'text-muted-foreground'
+					)}>
 					<CalendarIcon className='mr-2 h-4 w-4' />
 					{date ? format(date, 'PPPP') : <span>Selecciona la fecha limite</span>}
 				</Button>
