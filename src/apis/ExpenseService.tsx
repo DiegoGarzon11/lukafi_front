@@ -50,7 +50,7 @@ export const GetExpenses = async (data) => {
 export const GetFixedExpenses = async (data) => {
 	if (data) {
 		try {
-			const response = await fetch(`${API_HTTP + MAIN_ROUTE}get-fixed-expenses/${data}`, {
+			const response = await fetch(`${API_HTTP + MAIN_ROUTE}get-fixed-expenses/${data.wallet_id}`, {
 				method: 'GET',
 			});
 
@@ -79,6 +79,20 @@ export const PayFixedExpense = async (data) => {
 	}
 	console.warn('datos no enviados');
 };
+export const DeleteFixedExpense = async (data) => {
+	if (data) {
+		try {
+			const response = await fetch(`${API_HTTP + MAIN_ROUTE}delete-fixed-expense/${data.wallet_id}/${data.expense_id}`, {
+				method: 'DELETE',
+			});
+			return await response.json();
+		} catch (error) {
+			console.error(error);
+		}
+		return;
+	}
+	console.warn('datos no enviados');
+};
 export const GetDailyExpenses = async (data) => {
 	if (data) {
 		try {
@@ -95,7 +109,7 @@ export const GetDailyExpenses = async (data) => {
 	console.warn('datos no enviados');
 };
 
-export const  GetExpensesByCategory = async (data) => {
+export const GetExpensesByCategory = async (data) => {
 	if (data) {
 		try {
 			const response = await fetch(`${API_HTTP + MAIN_ROUTE}get-expenses-by-category/${data}`, {
