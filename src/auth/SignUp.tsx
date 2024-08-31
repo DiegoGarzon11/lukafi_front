@@ -10,7 +10,7 @@ import { LoaderApi } from '@/assets/icons/Svg';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-export default function SignUp() {
+export default function SignUp({ isRegisterOk }) {
 	const { t, i18n } = useTranslation();
 
 	i18n.changeLanguage();
@@ -24,6 +24,7 @@ export default function SignUp() {
 	const [statusCode, setStatusCode] = useState<ResponseWallet | undefined>(null);
 	const [loader, setLoader] = useState(false);
 	const [visibilytToast, setVisibilityToast] = useState(false);
+
 	const [date, setDate] = useState({
 		year: '',
 		month: '',
@@ -76,7 +77,7 @@ export default function SignUp() {
 			if (infoRegister?.status === 201) {
 				setLoader(true);
 				setTimeout(() => {
-					return (window.location.href = '/auth');
+					isRegisterOk(true);
 				}, 1000);
 			}
 		} catch (error) {

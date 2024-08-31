@@ -3,7 +3,7 @@ import {useTranslation} from 'react-i18next';
 import {useEffect, useState} from 'react';
 import {Link, Outlet, useLocation} from 'react-router-dom';
 import {Button} from '@/components/ui/button';
-import {SheetSide} from '@/components/ui/sheetSide';
+import {SheetSide} from '@/layout/sheetSide';
 export default function Header() {
 	const location = useLocation();
 	const [isOpen, setIsOpen] = useState(false);

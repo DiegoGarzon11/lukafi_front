@@ -1,13 +1,13 @@
-import {CreateWallet} from '@/apis/WalletService';
-import {Card, CardContent} from '@/components/ui/card';
-import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious} from '@/components/ui/carousel';
-import {Input} from '@/components/ui/input';
-import {LoaderApi} from '@/assets/icons/Svg';
-import {useRef, useState} from 'react';
-import {Toast} from '@/tools/Toast';
-import {ResponseWallet} from '@/interfaces/Wallet';
-import {CURRENCIES} from '@/tools/currencies';
-import {TriangleAlert} from 'lucide-react';
+import { CreateWallet } from '@/apis/WalletService';
+import { Card, CardContent } from '@/components/ui/card';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import { Input } from '@/components/ui/input';
+import { LoaderApi } from '@/assets/icons/Svg';
+import { useRef, useState } from 'react';
+import { Toast } from '@/tools/Toast';
+import { ResponseWallet } from '@/interfaces/Wallet';
+import { CURRENCIES } from '@/tools/currencies';
+import { TriangleAlert } from 'lucide-react';
 
 export const Carrusel = () => {
 	const btnNext = useRef(null);
@@ -67,26 +67,33 @@ export const Carrusel = () => {
 
 	async function submitInfoWallet() {
 		setLoader(true);
-
+		console.log(visibility);
 		const params = {
 			currency_type: currency,
 			salary: salario.replace(/,/g, ''),
 			saving: ahorro.replace(/,/g, ''),
 			user_id: user?.user_id,
 		};
-
-		const response = await CreateWallet(params);
-
-		if (response) {
+		try {
+			const response: ResponseWallet = await CreateWallet(params);
+			if (!response) {
+				return;
+			} else if (response.status === 404) {
+				window.location.href = '/auth';
+				localStorage.removeItem('userMain');
+				localStorage.removeItem('token');
+			}
 			setLoader(false);
 			setVisibilityToast(true);
-			setTimeout(() => {
-				setVisibilityToast(false);
-			}, 1000);
 			setApiResponse(response);
 			if (response.status === 201) {
 				window.location.href = '/dashboard';
 			}
+		} catch (error) {
+			console.log(error);
+		} finally {
+			setLoader(false);
+			setVisibilityToast(true);
 		}
 	}
 	return (
@@ -136,8 +143,12 @@ export const Carrusel = () => {
 											</h2>
 											<div className='flex justify-around mt-3 mb-6'>
 												{CURRENCIES.map((c) => (
-													<div key={c.symbol} className='flex'>
-														<label htmlFor={c.symbol} className='pl-2 flex gap-3 items-center cursor-pointer'>
+													<div
+														key={c.symbol}
+														className='flex'>
+														<label
+															htmlFor={c.symbol}
+															className='pl-2 flex gap-3 items-center cursor-pointer'>
 															<input
 																defaultChecked={c.symbol === 'cop'}
 																id={c.symbol}
@@ -252,13 +263,11 @@ export const Carrusel = () => {
 													<span className='font-normal text-lg mx-2 text-green-500'>
 														{currency === 'cop' ? (
 															<>
-																<span className='capitalize'>peso colombiano </span>{' '}
-																<span className='uppercase '>({currency})</span>
+																<span className='capitalize'>peso colombiano </span> <span className='uppercase '>({currency})</span>
 															</>
 														) : (
 															<>
-																<span className='capitalize'>Dolar Americano </span>{' '}
-																<span className='uppercase'>({currency})</span>
+																<span className='capitalize'>Dolar Americano </span> <span className='uppercase'>({currency})</span>
 															</>
 														)}
 													</span>
@@ -290,7 +299,7 @@ export const Carrusel = () => {
 										{visibility ? (
 											<Toast
 												message={apiResponse?.message}
-												severity={apiResponse.status === 201 ? 'success' : 'error'}
+												severity={apiResponse?.status === 201 ? 'success' : 'error'}
 												visibility={visibility}
 											/>
 										) : (
@@ -307,8 +316,14 @@ export const Carrusel = () => {
 						</div>
 					</CarouselItem>
 				</CarouselContent>
-				<CarouselPrevious className='hidden md:flex hover:bg-zinc-600' ref={btnBack} />
-				<CarouselNext className='hidden md:flex hover:bg-zinc-600' ref={btnNext} />
+				<CarouselPrevious
+					className='hidden md:flex hover:bg-zinc-600'
+					ref={btnBack}
+				/>
+				<CarouselNext
+					className='hidden md:flex hover:bg-zinc-600'
+					ref={btnNext}
+				/>
 			</Carousel>
 		</section>
 	);

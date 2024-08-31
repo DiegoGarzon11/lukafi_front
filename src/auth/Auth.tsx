@@ -9,6 +9,9 @@ export default function Auth() {
 	const {t, i18n} = useTranslation();
 	i18n.changeLanguage();
 	const [view, setView] = useState(true);
+	const changueView = (e) => {
+		setView(e);
+	}
 	const changeAuth = () => {
 		setView((prevView) => !prevView);
 	};
@@ -60,7 +63,7 @@ export default function Auth() {
 				</div>
 
 				<div className={` flex justify-center items-start lg:items-center w-full  ${view ? 'md:-order-1' : ''}  `}>
-					<section className='w-11/12   flex justify-center items-center  h-screen '>{view ? <SignIn /> : <SignUp />}</section>
+					<section className='w-11/12   flex justify-center items-center  h-screen '>{view ? <SignIn /> : <SignUp isRegisterOk={changueView} />}</section>
 				</div>
 			</div>
 		</>

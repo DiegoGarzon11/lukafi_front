@@ -8,7 +8,7 @@ export function SheetSide() {
 	const {t, i18n} = useTranslation();
 	i18n.changeLanguage();
 
-	const infoUser = JSON.parse(localStorage.userMain);
+	const infoUser =  localStorage.userMain ?  JSON.parse(localStorage?.userMain) : '';
 
 	function closeSession() {
 		localStorage.removeItem('token');

@@ -19,7 +19,7 @@ const RoutesManager = () => (
 		/>
 		<Route
 			path='dashboard'
-			element={isAuthenticated ? <Dashboard /> : <Navigate to='/signIn' />}
+			element={isAuthenticated ? <Dashboard /> : <Navigate to='/auth' />}
 		/>
 		
 		<Route
