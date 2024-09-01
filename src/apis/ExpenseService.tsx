@@ -79,6 +79,23 @@ export const PayFixedExpense = async (data) => {
 	}
 	console.warn('datos no enviados');
 };
+export const ResetDeadLine = async (data) => {
+	if (data) {
+		try {
+			const response = await fetch(`${API_HTTP + MAIN_ROUTE}reset-deadline/${data.wallet_id}/${data.expense_id}`, {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			});
+			return await response.json();
+		} catch (error) {
+			console.error(error);
+		}
+		return;
+	}
+	console.warn('datos no enviados');
+};
 export const DeleteFixedExpense = async (data) => {
 	if (data) {
 		try {

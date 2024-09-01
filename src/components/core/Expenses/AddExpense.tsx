@@ -66,7 +66,7 @@ export const AddExpense = ({apiData, sendData}) => {
 			user_id: apiData.user_id,
 			name,
 			is_paid: !sendIsFixed,
-			paid_in: !sendIsFixed ? new Date() : '',
+			paid_in: sendIsFixed ? null : new Date(),
 			pay_each: deadLine,
 			value,
 			deadLine,

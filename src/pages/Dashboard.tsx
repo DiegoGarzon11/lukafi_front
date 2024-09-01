@@ -1,5 +1,5 @@
 import { DeleteDebt, GetDebts } from '@/apis/DebtService';
-import { DeleteFixedExpense, GetDailyExpenses, GetExpenses, GetFixedExpenses, PayFixedExpense } from '@/apis/ExpenseService';
+import { DeleteFixedExpense, GetDailyExpenses, GetExpenses, GetFixedExpenses, PayFixedExpense, ResetDeadLine } from '@/apis/ExpenseService';
 import { GetWalletUser } from '@/apis/WalletService';
 import { Edit, LoaderApi, Trash } from '@/assets/icons/Svg';
 import { Chart, ChartDonut } from '@/components/core/Charts';
@@ -16,7 +16,7 @@ import { ApiResponse } from '@/interfaces/Api';
 import { Debt, Expenses, ResponseWallet } from '@/interfaces/Wallet';
 import '@/styles/Dashboard.css';
 import { Toast } from '@/tools/Toast';
-import { format } from 'date-fns';
+import { format, formatISO } from 'date-fns';
 import { AlertTriangle, ArrowDown, ArrowUp, EllipsisVertical, Eye } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
@@ -43,7 +43,16 @@ export const Dashboard = () => {
 
 	const getExpenses = async (walletId) => {
 		const expenses = await GetExpenses(walletId);
+
 		setExpenses(expenses?.expenses);
+	};
+	const newDeadLine = async (walletId, expenseId) => {
+		const params = {
+			wallet_id: walletId,
+			expense_id: expenseId,
+		};
+		await ResetDeadLine(params);
+		getExpenses(walletId.wallet_id);
 	};
 	const getFixedExpenses = async (walletId) => {
 		const fixedExpenses = await GetFixedExpenses(walletId);
@@ -75,12 +84,29 @@ export const Dashboard = () => {
 
 		setFixedExpenses(responseFixedExpenses?.expenses);
 	};
+	function difrenceBeetwenDate(deadline: Date) {
+		const currentTime: Date = new Date();
+		const differenceInTime: number = deadline.getTime() - currentTime.getTime();
+		const differenceInDays: number = Math.ceil(differenceInTime / (1000 * 60 * 60 * 24));
+		return differenceInDays;
+	}
 
 	useEffect(() => {
 		if (userData?.wallet?.wallet_id) {
 			const fetchExpensesAndDebts = async () => {
 				const fixedExpenses = await GetFixedExpenses(userData.wallet);
 				setFixedExpenses(fixedExpenses?.expenses);
+
+				for (let i = 0; i < fixedExpenses?.expenses.length; i++) {
+					const defaultDeadLine = new Date(fixedExpenses?.expenses[i].dead_line);
+
+					const diferenceBetweenDates = difrenceBeetwenDate(defaultDeadLine);
+					if (diferenceBetweenDates <= 5 && fixedExpenses?.expenses[i].is_paid === true) {
+						
+						newDeadLine(userData.wallet.wallet_id, fixedExpenses?.expenses[i].expense_id);
+					}
+				}
+
 				getDebts(userData.wallet);
 				getExpenses(userData.wallet);
 			};
@@ -132,12 +158,7 @@ export const Dashboard = () => {
 			setExpenseToDelete(null);
 		}
 	};
-	function difrenceBeetwenDate(deadline: Date) {
-		const currentTime: Date = new Date();
-		const differenceInTime: number = deadline.getTime() - currentTime.getTime();
-		const differenceInDays: number = Math.ceil(differenceInTime / (1000 * 60 * 60 * 24));
-		return differenceInDays;
-	}
+
 	const payExpense = async (expense) => {
 		const params = {
 			wallet_id: expense.wallet_id,
@@ -146,6 +167,8 @@ export const Dashboard = () => {
 		const response = await PayFixedExpense(params);
 		setTrigger((prev) => prev + 1);
 		getExpenses(userData.wallet);
+
+		//! TODO: show a toast with the message of the pay fixed expense
 		console.log(response);
 	};
 
