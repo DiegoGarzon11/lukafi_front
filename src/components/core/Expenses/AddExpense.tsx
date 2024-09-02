@@ -203,8 +203,8 @@ export const AddExpense = ({apiData, sendData}) => {
 												<Info className='text-blue-400 ' />
 											</Button>
 										</TooltipTrigger>
-										<TooltipContent side='bottom' className=' rounded-md  z-50   flex  justify-center hover:bg-transparent '>
-											<div className='flex  dark:bg-zinc-900 w-2/5'>
+										<TooltipContent side='bottom' className='  z-50   flex  justify-center hover:bg-transparent '>
+											<div className='flex  dark:bg-zinc-900 bg-zinc-300  w-2/5 rounded-md'>
 												<p className='text-balance tracking-wider font-semibold'>
 													Se mostrara como ya pago, ya que la fecha a pagar es anterior a la fecha actual. Por lo cual la
 													proxima fecha a pagar sera el mes siguienete al actual.

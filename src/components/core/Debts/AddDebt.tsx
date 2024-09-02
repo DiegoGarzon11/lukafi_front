@@ -92,6 +92,7 @@ export const AddDebt = ({apiData, sendData}) => {
 						Selecciona la opción que deseas y escribe los datos de la persona relacionada a la deuda
 					</DialogDescription>
 				</DialogHeader>
+					<p>Seleccionar el tipo de deuda <span className='text-red-500'>*</span></p>
 				<div className='flex justify-evenly gap-5'>
 					<div
 						onClick={() => setDebtType(1)}
@@ -106,7 +107,7 @@ export const AddDebt = ({apiData, sendData}) => {
 					</div>
 					<div
 						onClick={() => setDebtType(0)}
-						className={`border  p-5 rounded-xl w-40 cursor-pointer ${debtType === 2 ? 'border-red-300' : 'border-gray-200/50'}`}>
+						className={`border  p-5 rounded-xl w-40 cursor-pointer ${debtType === 0 ? 'border-red-300' : 'border-gray-200/50'}`}>
 						<div className='flex justify-center flex-col items-center gap-2'>
 							<Expense color={`${debtType === 0 ? 'red' : 'gray'}`} />
 							<label className={`${debtType === 0 ? 'text-red-500' : 'opacity-15'} cursor-pointer`} htmlFor=''>
@@ -118,7 +119,7 @@ export const AddDebt = ({apiData, sendData}) => {
 				<div className='flex gap-5 items-center'>
 					<div>
 						<label htmlFor=''>
-							Nombre deuda<span className='text-red-500'>*</span>
+							Persona relacionada<span className='text-red-500'>*</span>
 						</label>
 						<Input
 							value={person}
@@ -128,7 +129,7 @@ export const AddDebt = ({apiData, sendData}) => {
 					</div>
 					<div>
 						<label htmlFor=''>
-							Valor $ <span className='text-red-500'>*</span>
+							Valor deuda $ <span className='text-red-500'>*</span>
 						</label>
 						<Input
 							id='value_income'
@@ -141,7 +142,7 @@ export const AddDebt = ({apiData, sendData}) => {
 				</div>
 				<div>
 					<label htmlFor=''>
-						Motivo deuda<span className='text-red-500'>*</span>{' '}
+						Motivo de la deuda<span className='text-red-500'>*</span>
 					</label>
 					<Input
 						id='value_income'
