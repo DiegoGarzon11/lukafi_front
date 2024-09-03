@@ -19,9 +19,7 @@ export function SheetSide() {
 		localStorage.removeItem('userMain');
 		window.location.href = '/';
 	}
-	const handleBtnModule = (e) => {
-		console.log(e);
-	};
+	
 
 	return (
 		<div className='flex items-center'>

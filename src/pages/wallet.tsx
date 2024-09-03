@@ -1,4 +1,4 @@
-const Wallet = () => {
+export const WalletComponent = () => {
 	return (
 		<section className='flex flex-col items-center h-full pt-20 p-5 gap-5 dark:bg-zinc-800 bg-white font-thin'>
 			<div className='w-1/4 h-60 bg-zinc-900 rounded-lg'>
@@ -12,4 +12,3 @@ const Wallet = () => {
 	);
 };
 
-export default Wallet;

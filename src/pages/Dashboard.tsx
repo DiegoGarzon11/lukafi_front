@@ -22,7 +22,7 @@ import {ApiResponse} from '@/interfaces/Api';
 import {Debt, Expenses, ResponseWallet} from '@/interfaces/Wallet';
 import '@/styles/Dashboard.css';
 import {Toast} from '@/tools/Toast';
-import {format, formatISO} from 'date-fns';
+import {format} from 'date-fns';
 import {AlertTriangle, ArrowDown, ArrowUp, EllipsisVertical, Eye} from 'lucide-react';
 import {useEffect, useState} from 'react';
 
