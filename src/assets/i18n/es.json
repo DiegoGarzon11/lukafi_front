@@ -15,7 +15,7 @@
 	"form.field.day": "Dia",
 	"form.field.signUp": "Registrarse",
 	"form.field.signIn": "Iniciar sesion",
-	"form.btn.back" :"Volver",
+	"form.btn.back": "Volver",
 	"form.label.countries": "Paises",
 	"form.password.forgotten": "¿Olvidaste tu contraseña?",
 	"home.phrase1.text1": "Bienvenido a",
@@ -39,5 +39,47 @@
 
 	"component.card.button": "Conoce mas",
 
-	"sheet.button.signOut": "Cerrar sesion"
+	"sheet.button.signOut": "Cerrar sesion",
+
+	"dashboard.addExpense": "Agregar gasto",
+	"dashboard.addDebt": "Agregar deuda",
+	"dashboard.seeExpenses": "Ver gaston",
+	"dashboard.seeDebts": "Ver deudas",
+	"dashboard.savings": "Tus ahorros actualmente",
+	"dashboard.before": "Antes",
+	"dashboard.now": "Ahora",
+	"dashboard.rangeSaving": "Te encuentras en tu rango de ahorro",
+
+	"dashboard.availableBalance": "Saldo disponible",
+
+	"dashboard.goalSaving": "Sobrepasaste tú meta de ahorros",
+	"dashboard.viewExpensesCategory": "Observar gastos por categoria",
+	"dashboard.day": "Dia",
+	"dashboard.month": "Mes",
+	"dashboard.year": "Año",
+	"dashboard.viewBalanceExpenses": "Obersevar balance de gastos",
+	"dashboard.noExpenses": "Actualmente no tienes ningún gasto",
+	"dashboard.allExpenses": "Todos tus gastos",
+	"dashboard.allFixedExpenses": "Todos tus gastos fijos mesuales",
+	"dashboard.date": "Fecha",
+	"dashboard.name": "Nombre",
+	"dashboard.value": "Valor",
+	"dashboard.payEach": "Pagar cada",
+	"dashboard.nextPayment": "Proximo pago",
+	"dashboard.allDebts": "Todas tus deudas",
+	"dashboard.person": "Persona",
+	"dashboard.reason": "Razón",
+	"dashboard.state": "Estado",
+	"dashboard.edit": "Editar",
+	"dashboard.eliminate": "Eliminar",
+	"dashboard.cancel": "Cancelar",
+	"dashboard.ofEachMonth": "De cada mes",
+	"dashboard.confirm": "Confirmar",
+	"dashboard.payment": "Pago",
+	"dashboard.monthlyExpense": "del gasto mensual",
+
+	"sheetside.wallet": "Billetera",
+	"sheetside.account": "Cuenta",
+	"sheetside.profile": "Perfil",
+	"sheetside.help": "Ayuda"
 }

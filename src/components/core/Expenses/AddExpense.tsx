@@ -14,6 +14,7 @@ import {Category} from '@/interfaces/Category';
 import {Toast} from '@/tools/Toast';
 import {BadgePlus, Info} from 'lucide-react';
 import {useState} from 'react';
+import {useTranslation} from 'react-i18next';
 
 export const AddExpense = ({apiData, sendData}) => {
 	const [deadLine, setDeadLine] = useState(0);
@@ -26,6 +27,9 @@ export const AddExpense = ({apiData, sendData}) => {
 	const [categories, setCategories] = useState<Array<Category> | undefined>([]);
 	const [selectedCategory, setSelectedCategory] = useState<Category | undefined>(null);
 	const days = Array.from({length: 31}, (_, i) => i + 1);
+
+	const {t, i18n} = useTranslation();
+	i18n.changeLanguage();
 
 	const handleValues = (e, type) => {
 		if (type === 'value') {
@@ -108,7 +112,7 @@ export const AddExpense = ({apiData, sendData}) => {
 					}}
 					variant='ghost'
 					className='w-full py-6 dark:hover:bg-zinc-900  dark:bg-zinc-900/50  bg-zinc-300 text-black  dark:text-white flex items-center gap-3'>
-					Agregar gasto <BadgePlus />
+					{t('dashboard.addExpense')} <BadgePlus />
 				</Button>
 			</DialogTrigger>
 			<DialogContent className='sm:max-w-[550px]  '>

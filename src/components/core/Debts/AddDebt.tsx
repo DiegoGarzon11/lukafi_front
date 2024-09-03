@@ -9,6 +9,7 @@ import {ApiResponse} from '@/interfaces/Api';
 import {Toast} from '@/tools/Toast';
 import {BadgePlus} from 'lucide-react';
 import {useState} from 'react';
+import {useTranslation} from 'react-i18next';
 
 export const AddDebt = ({apiData, sendData}) => {
 	const [person, setPerson] = useState('');
@@ -19,6 +20,9 @@ export const AddDebt = ({apiData, sendData}) => {
 	const [visibilytToast, setVisibilityToast] = useState(false);
 	const [responseDebt, setResponseDebt] = useState<ApiResponse | undefined>(null);
 	const [date, setDate] = useState('');
+
+	const {t, i18n} = useTranslation();
+	i18n.changeLanguage();
 
 	const handleValues = (e, type) => {
 		if (type === 'money') {
@@ -82,7 +86,7 @@ export const AddDebt = ({apiData, sendData}) => {
 				<Button
 					variant='ghost'
 					className='w-full py-6 dark:hover:bg-zinc-900 dark:bg-zinc-900/50 bg-zinc-300 text-black dark:text-white flex items-center gap-3'>
-					Agregar deuda <BadgePlus />
+					{t('dashboard.addDebt')} <BadgePlus />
 				</Button>
 			</DialogTrigger>
 			<DialogContent className='sm:max-w-[425px] '>
@@ -92,7 +96,9 @@ export const AddDebt = ({apiData, sendData}) => {
 						Selecciona la opción que deseas y escribe los datos de la persona relacionada a la deuda
 					</DialogDescription>
 				</DialogHeader>
-					<p>Seleccionar el tipo de deuda <span className='text-red-500'>*</span></p>
+				<p>
+					Seleccionar el tipo de deuda <span className='text-red-500'>*</span>
+				</p>
 				<div className='flex justify-evenly gap-5'>
 					<div
 						onClick={() => setDebtType(1)}

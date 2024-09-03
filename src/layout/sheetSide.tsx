@@ -54,13 +54,14 @@ export function SheetSide() {
 							Dashboard
 						</Button>
 					</Link>
-					<h6 className='text-sm pl-2 text-blue-500'>Cuenta</h6>
+					<h6 className='text-sm pl-2 text-blue-500'>{t('sheetside.account')}</h6>
 					<Button
 						className='w-full gap-4 justify-start py-6 bg-trasparent  hover:bg-white dark:hover:bg-zinc-800 text-black dark:text-white'
 						disabled>
-						<User /> Perfil
+						<User />
+						{t('sheetside.profile')}
 					</Button>
-					<h6 className='text-sm pl-2 text-blue-500'>Billetera</h6>
+					<h6 className='text-sm pl-2 text-blue-500'>{t('sheetside.wallet')}</h6>
 					<Link onClick={() => setSheetOpen(false)} to='wallet'>
 						<Button
 							onClick={() => setBtnSelected(1)}
@@ -68,10 +69,10 @@ export function SheetSide() {
 								btnSelected === 1 ? 'bg-white dark:bg-zinc-800' : 'bg-transparent'
 							}`}>
 							<Wallet />
-							Billetera
+							{t('sheetside.wallet')}
 						</Button>
 					</Link>
-					<div className='mt-48 '>
+					<div className='mt-48'>
 						<Button
 							className='w-full gap-4 justify-start py-6 bg-transparent hover:bg-white dark:hover:bg-zinc-800 text-black dark:text-white'
 							onClick={() => {
@@ -84,7 +85,7 @@ export function SheetSide() {
 							className='gap-2 w-full py-6 bg-transparent hover:bg-white dark:hover:bg-zinc-800 text-black dark:text-white'
 							disabled>
 							<Headset />
-							Ayuda
+							{t('sheetside.help')}
 						</Button>
 					</div>
 				</div>
