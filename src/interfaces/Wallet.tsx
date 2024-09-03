@@ -1,8 +1,7 @@
 import { ApiResponse } from './Api';
 export interface ResponseWallet extends ApiResponse {
 	wallet: {
-		debt_id: string;
-		expense_id: string;
+		created_in: string;
 		salary: number;
 		saving: number;
 		user_id: string;

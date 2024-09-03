@@ -1,5 +1,4 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-
 import { Home } from './pages/Home';
 import { Dashboard } from './pages/Dashboard';
 import { PageNotFound } from './pages/Page404';
