@@ -5,7 +5,6 @@ import { Dashboard } from './pages/Dashboard';
 import { PageNotFound } from './pages/Page404';
 import Auth from './auth/Auth';
 import { WalletComponent } from './pages/Wallet';
-
 const isAuthenticated = localStorage.token;
 const RoutesManager = () => (
 	<Routes>

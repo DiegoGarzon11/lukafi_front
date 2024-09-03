@@ -19,8 +19,6 @@ export function SheetSide() {
 		localStorage.removeItem('userMain');
 		window.location.href = '/';
 	}
-	
-
 	return (
 		<div className='flex items-center'>
 			<Sheet open={sheetOpen}>
