@@ -229,7 +229,7 @@ export const Dashboard = () => {
 							</Button>
 						</a>
 					</section>
-					<section className='flex md:col-span-3 md:row-span-8 flex-wrap md:flex-nowrap  gap-8 h-56  '>
+					<section className='flex md:col-span-3 md:row-span-8 flex-wrap md:flex-nowrap  gap-8 md:h-56'>
 						<article className=' w-full h-full  shadow-sm border-none dark:bg-zinc-900/50 bg-zinc-200 text-black  dark:text-white rounded-xl  p-3'>
 							<div>
 								<p className='text-lg font-semibold'>Tus ahorros actualmente:</p>
