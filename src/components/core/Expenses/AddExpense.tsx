@@ -112,19 +112,19 @@ export const AddExpense = ({apiData, sendData}) => {
 					}}
 					variant='ghost'
 					className='w-full py-6 dark:hover:bg-zinc-900  dark:bg-zinc-900/50  bg-zinc-300 text-black  dark:text-white flex items-center gap-3'>
-					{t('dashboard.addExpense')} <BadgePlus />
+					{t('addExpense.addExpense')} <BadgePlus />
 				</Button>
 			</DialogTrigger>
 			<DialogContent className='sm:max-w-[550px]  '>
 				<DialogHeader>
-					<DialogTitle>Nuevo gasto</DialogTitle>
-					<DialogDescription>Completa los campos correspondientes al gasto</DialogDescription>
+					<DialogTitle>{t('addExpense.newExpense')}</DialogTitle>
+					<DialogDescription> {t('addExpense.completeFields')} </DialogDescription>
 				</DialogHeader>
 
 				<div className='flex gap-3 items-center justify-center'>
 					<div className='w-full'>
 						<label htmlFor='value_name' className='mb-2'>
-							Nombre del gasto <span className='text-red-500'>*</span>
+							{t('addExpense.nameExpense')} <span className='text-red-500'>*</span>
 							<Input
 								className='border dark:border-zinc-400 dark:bg-zinc-800/30'
 								value={name}
@@ -136,7 +136,7 @@ export const AddExpense = ({apiData, sendData}) => {
 					</div>
 					<div className='w-full'>
 						<label htmlFor='value_value' className='mb-2'>
-							Valor $ <span className='text-red-500'>*</span>
+							{t('addExpense.amount')} $ <span className='text-red-500'>*</span>
 							<Input
 								className='border dark:border-zinc-400 dark:bg-zinc-800/30'
 								value={value}
@@ -150,12 +150,12 @@ export const AddExpense = ({apiData, sendData}) => {
 				<div className='flex w-full gap-3'>
 					<div className='flex justify-center items-center gap-5 flex-col w-full'>
 						<label>
-							¿Es un gasto Fijo? <span className='text-red-500'>*</span>
+							{t('addExpense.fixedExpense')} <span className='text-red-500'>*</span>
 						</label>
 						<RadioGroup className='flex items-center' defaultValue={isFixed} onValueChange={(e) => handleValues(e, 'isFixed')}>
 							<div className='flex items-center space-x-2'>
 								<RadioGroupItem value='true' id='true' />
-								<Label htmlFor='r1'>Si</Label>
+								<Label htmlFor='r1'> {t('addExpense.yes')} </Label>
 							</div>
 
 							<div className='flex items-center space-x-2'>
@@ -166,7 +166,7 @@ export const AddExpense = ({apiData, sendData}) => {
 					</div>
 
 					<div className='w-full'>
-						<label htmlFor=''>Tipo de gasto</label> <span className='text-red-500'>*</span>
+						<label htmlFor=''> {t('addExpense.typeExpense')} </label> <span className='text-red-500'>*</span>
 						<Combobox data={categories} selected={(e) => handleCategory(e)} />
 					</div>
 				</div>
@@ -174,18 +174,19 @@ export const AddExpense = ({apiData, sendData}) => {
 				{isFixed === 'true' && (
 					<div className='flex flex-col w-full bg-zinc-100 dark:bg-zinc-800/50 rounded-md p-3'>
 						<label htmlFor='value_value' className='self-start mb-2'>
-							Fecha a pagar<span className='text-red-500'>*</span>
+							{t('addExpense.paymentDay')} <span className='text-red-500'>*</span>
 						</label>
 
-						<div className=' flex flex-nowrap gap-3 items-center'>
-							<p className=''>El gasto fijo se debe pagar el dia </p>
+						<div className=' flex flex-wrap gap-x-3 items-center'>
+							<p className=''>{t('addExpense.paymentDayP')} </p>
 							<Select onValueChange={(e) => handleDateFixedCost(e)}>
 								<SelectTrigger className=' w-32 bg-zinc-200 dark:bg-zinc-800 dark:text-white text-black border border-green-500/50'>
-									<SelectValue placeholder='dia' />
+									<SelectValue placeholder={`${t('dashboard.day')}`} />
 								</SelectTrigger>
 								<SelectContent className='dark:bg-zinc-700'>
 									<SelectGroup>
-										<SelectLabel className='text-lg'>dia</SelectLabel>
+										<SelectLabel className='text-lg'>{t('dashboard.day')}</SelectLabel>
+
 										{days.map((e, i) => (
 											<SelectItem className='focus:dark:bg-zinc-800 focus:bg-zinc-200' key={i} value={e.toString()}>
 												{e}
@@ -194,12 +195,12 @@ export const AddExpense = ({apiData, sendData}) => {
 									</SelectGroup>
 								</SelectContent>
 							</Select>
-							<p>de cada mes</p>
+							<p> {t('dashboard.ofEachMonth')} </p>
 						</div>
 
 						{deadLine !== 0 && deadLine < new Date().getDate() ? (
 							<div className='text-center mt-3 font-semibold flex justify-center '>
-								<p className=' text-blue-400'>El gasto fijo se enviara como gasto ya pago </p>
+								<p className=' text-blue-400'> {t('addExpense.sentFixedExpense')} </p>
 								<TooltipProvider>
 									<Tooltip>
 										<TooltipTrigger asChild>

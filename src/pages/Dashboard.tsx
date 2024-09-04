@@ -410,15 +410,21 @@ export const Dashboard = () => {
 														<TableCell className='font-medium w-full flex flex-col '>
 															<span
 																className={`font-bold  ${
-																	difrenceBeetwenDate(new Date(f?.dead_line)) < 5 ? 'text-red-500' : 'text-white'
+																	difrenceBeetwenDate(new Date(f?.dead_line)) < 5
+																		? 'text-red-500'
+																		: 'text-black dark:text-white'
 																} `}>
 																{format(f?.dead_line, 'PP')}
 															</span>
 															<span
 																className={`font-bold  ${
-																	difrenceBeetwenDate(new Date(f?.dead_line)) < 5 ? 'text-red-500' : 'text-white'
+																	difrenceBeetwenDate(new Date(f?.dead_line)) < 5
+																		? 'text-red-500'
+																		: 'text-black dark:text-white'
 																} `}>
-																<span className='opacity-70'>({difrenceBeetwenDate(new Date(f?.dead_line))} dias)</span>
+																<span className='opacity-70'>
+																	({difrenceBeetwenDate(new Date(f?.dead_line))} {t('dashboard.day')}s)
+																</span>
 															</span>
 														</TableCell>
 														<TableCell className='font-medium w-full '>
@@ -427,7 +433,7 @@ export const Dashboard = () => {
 																	className={`${
 																		f.is_paid ? 'bg-transparent text-blue-500' : '  bg-green-600'
 																	} rounded-md p-1 w-full`}>
-																	{f.is_paid ? 'Ya esta pago' : 'Pagar'}
+																	{f.is_paid ? `${t('dashboard.alreadyPaid')}` : `${t('dashboard.pay')}`}
 																</DialogTrigger>
 																{!f.is_paid && (
 																	<DialogContent className='w-[400px] h-32'>
@@ -601,28 +607,28 @@ export const Dashboard = () => {
 				<DialogContent aria-describedby={null} className='w-[400px] '>
 					<DialogHeader>
 						<DialogTitle className='my-3'>
-							<p className='my-3 font-bold text-2xl'>Confirmación de eliminación</p>
+							<p className='my-3 font-bold text-2xl'> {t('dashboard.confirmElimination"')} </p>
 							{debtToDelete ? (
 								<p className='text-balance'>
-									¿Estas seguro de eliminar la deuda <span className='font-semibold text-blue-500'>{debtToDelete?.reason}</span> ?
+									{t('dashboard.eliminateDebt')} <span className='font-semibold text-blue-500'>{debtToDelete?.reason}</span> ?
 								</p>
 							) : (
 								<p className='text-pretty text-lg'>
-									¿Estas seguro de eliminar el gasto <span className='font-semibold text-blue-500'>{expenseToDelete?.name}</span> ?
+									{t('dashboard.eliminateExpense')} <span className='font-semibold text-blue-500'>{expenseToDelete?.name}</span> ?
 								</p>
 							)}
 						</DialogTitle>
 						<DialogDescription className='flex justify-end items-end gap-5 h-full'>
 							<Button className='w-full bg-red-500 text-white' onClick={() => setOpenDialog(false)}>
-								Cancelar
+								{t('dashboard.cancel')}
 							</Button>
 							{debtToDelete ? (
 								<Button onClick={() => deleteDebt(debtToDelete)} variant='ghost' className='w-full bg-green-500 text-white'>
-									{loader ? <LoaderApi color='white' /> : 'Eliminar'}
+									{loader ? <LoaderApi color='white' /> : `${t('dashboard.eliminate')}`}
 								</Button>
 							) : (
 								<Button onClick={() => deleteExpense(expenseToDelete)} variant='ghost' className='w-full bg-green-500 text-white'>
-									{loader ? <LoaderApi color='white' /> : 'Eliminar'}
+									{loader ? <LoaderApi color='white' /> : `${t('dashboard.eliminate')}`}
 								</Button>
 							)}
 						</DialogDescription>

@@ -86,18 +86,16 @@ export const AddDebt = ({apiData, sendData}) => {
 				<Button
 					variant='ghost'
 					className='w-full py-6 dark:hover:bg-zinc-900 dark:bg-zinc-900/50 bg-zinc-300 text-black dark:text-white flex items-center gap-3'>
-					{t('dashboard.addDebt')} <BadgePlus />
+					{t('addDebt.addDebt')} <BadgePlus />
 				</Button>
 			</DialogTrigger>
 			<DialogContent className='sm:max-w-[425px] '>
 				<DialogHeader>
-					<DialogTitle>Nueva deuda</DialogTitle>
-					<DialogDescription>
-						Selecciona la opción que deseas y escribe los datos de la persona relacionada a la deuda
-					</DialogDescription>
+					<DialogTitle>{t('addDebt.newDebt')}</DialogTitle>
+					<DialogDescription>{t('addDebt.instructions')}</DialogDescription>
 				</DialogHeader>
 				<p>
-					Seleccionar el tipo de deuda <span className='text-red-500'>*</span>
+					{t('addDebt.selectTypeDebt')} <span className='text-red-500'>*</span>
 				</p>
 				<div className='flex justify-evenly gap-5'>
 					<div
@@ -107,7 +105,7 @@ export const AddDebt = ({apiData, sendData}) => {
 							<Income color={`${debtType === 1 ? 'green' : 'gray'}`} />
 
 							<label className={`${debtType === 1 ? 'text-green-500' : 'opacity-15'} cursor-pointer`} htmlFor=''>
-								Te debe...
+								{t('addDebt.owesYou')}...
 							</label>
 						</div>
 					</div>
@@ -117,7 +115,7 @@ export const AddDebt = ({apiData, sendData}) => {
 						<div className='flex justify-center flex-col items-center gap-2'>
 							<Expense color={`${debtType === 0 ? 'red' : 'gray'}`} />
 							<label className={`${debtType === 0 ? 'text-red-500' : 'opacity-15'} cursor-pointer`} htmlFor=''>
-								Debes a ...
+								{t('addDebt.youOwe')} ...
 							</label>
 						</div>
 					</div>
@@ -125,7 +123,7 @@ export const AddDebt = ({apiData, sendData}) => {
 				<div className='flex gap-5 items-center'>
 					<div>
 						<label htmlFor=''>
-							Persona relacionada<span className='text-red-500'>*</span>
+							{t('addDebt.relatedPerson')} <span className='text-red-500'>*</span>
 						</label>
 						<Input
 							value={person}
@@ -135,7 +133,7 @@ export const AddDebt = ({apiData, sendData}) => {
 					</div>
 					<div>
 						<label htmlFor=''>
-							Valor deuda $ <span className='text-red-500'>*</span>
+							{t('addDebt.amount')} $ <span className='text-red-500'>*</span>
 						</label>
 						<Input
 							id='value_income'
@@ -148,7 +146,7 @@ export const AddDebt = ({apiData, sendData}) => {
 				</div>
 				<div>
 					<label htmlFor=''>
-						Motivo de la deuda<span className='text-red-500'>*</span>
+						{t('addDebt.reasonDebt')} <span className='text-red-500'>*</span>
 					</label>
 					<Input
 						id='value_income'
@@ -160,7 +158,7 @@ export const AddDebt = ({apiData, sendData}) => {
 				</div>
 				<div>
 					<label htmlFor=''>
-						Fecha limite de pago <span className='text-zinc-500'>(recomendado)</span>
+						{t('addDebt.paymenteDeadline')} <span className='text-zinc-500'>({t('addDebt.recomended')})</span>
 					</label>
 					<DatePicker sendDate={getDate} />
 				</div>
@@ -172,7 +170,7 @@ export const AddDebt = ({apiData, sendData}) => {
 							? 'bg-gray-300 '
 							: ' bg-zinc-700 hover:bg-zinc-500 hover:dark:bg-zinc-600 dark:bg-zinc-500'
 					}`}>
-					{loader ? <LoaderApi color='black' /> : 'Confirmar'}
+					{loader ? <LoaderApi color='black' /> : `${t('dashboard.confirm')}`}
 				</Button>
 			</DialogContent>
 			{visibilytToast && (

@@ -8,10 +8,14 @@ import {Button} from '@/components/ui/button';
 import {Calendar} from '@/components/ui/calendar';
 import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
 import {useState} from 'react';
+import {useTranslation} from 'react-i18next';
 
 export function DatePicker({sendDate}) {
 	const [date, setDate] = useState<Date>();
 	const [openCalendar, setOpenCalendar] = useState(false);
+
+	const {t, i18n} = useTranslation();
+	i18n.changeLanguage();
 
 	const handleDateSelect = (selectedDate) => {
 		setDate(selectedDate);
@@ -30,7 +34,7 @@ export function DatePicker({sendDate}) {
 						!date && 'text-muted-foreground'
 					)}>
 					<CalendarIcon className='mr-2 h-4 w-4' />
-					{date ? format(date, 'PPPP') : <span>Selecciona la fecha limite</span>}
+					{date ? format(date, 'PPPP') : <span> {t('dataPicker.selectDate')} </span>}
 				</Button>
 			</PopoverTrigger>
 			<PopoverContent className='w-auto dark:bg-zinc-800 dark:text-white bg-zinc-100 text-black'>
