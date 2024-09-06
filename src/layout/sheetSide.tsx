@@ -27,7 +27,7 @@ export function SheetSide() {
 				</Button>
 			</SheetTrigger>
 			<SheetContent className='dark:bg-zinc-900 bg-zinc-200 w-60 md:w-72' aria-describedby={undefined} side='right'>
-				<div className='w-ful flex justify-end'>
+				<div className='relative w-ful flex justify-end'>
 					<SheetClose className='mr-3' onClick={() => setSheetOpen(false)}>
 						<X />
 					</SheetClose>
@@ -72,7 +72,7 @@ export function SheetSide() {
 							{t('sheetside.wallet')}
 						</Button>
 					</Link>
-					<div className='mt-48'>
+					<div className='absolute bottom-0'>
 						<Button
 							className='w-full gap-4 justify-start py-6 bg-transparent hover:bg-white dark:hover:bg-zinc-800 text-black dark:text-white'
 							onClick={() => {
