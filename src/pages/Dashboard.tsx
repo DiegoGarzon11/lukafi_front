@@ -217,14 +217,14 @@ export const Dashboard = () => {
 						<a
 							className='w-full h-full dark:hover:bg-zinc-900 dark:bg-zinc-900/50 bg-zinc-200 text-black  dark:text-white rounded-md flex justify-center items-center '
 							href='#seeDebt'>
-							<Button variant='ghost' className='flex items-center gap-3 h-full w-full'>
+							<Button variant='ghost' className='flex items-center gap-3 h-full w-full hover:bg-zinc-400 dark:hover:bg-zinc-900'>
 								{t('dashboard.seeExpenses')} <Eye />
 							</Button>
 						</a>
 						<a
 							className='w-full h-full dark:hover:bg-zinc-900 dark:bg-zinc-900/50 bg-zinc-200 text-black  dark:text-white rounded-md flex justify-center items-center '
 							href='#seeExpenses'>
-							<Button variant='ghost' className='flex items-center gap-3 h-full w-full'>
+							<Button variant='ghost' className='flex items-center gap-3 h-full w-full hover:bg-zinc-400 dark:hover:bg-zinc-900'>
 								{t('dashboard.seeDebts')} <Eye />
 							</Button>
 						</a>
@@ -473,7 +473,7 @@ export const Dashboard = () => {
 																			setExpenseToDelete(f);
 																		}}
 																		className='hover:dark:bg-zinc-700 cursor-pointer'>
-																		<p>{t('dashboard.eliminate')}</p>
+																		<p>{t('dashboard.delete')}</p>
 																		<Button variant='ghost' className='w-full flex justify-end'>
 																			<Trash className={'w-6'} />
 																		</Button>
@@ -578,7 +578,7 @@ export const Dashboard = () => {
 																			setDebtToDelete(d);
 																		}}
 																		className='hover:dark:bg-zinc-700 cursor-pointer flex justify-between'>
-																		<p>{t('dashboard.eliminate')}</p>
+																		<p>{t('dashboard.delete')}</p>
 
 																		<Trash className={'w-6'} />
 																	</DropdownMenuItem>
@@ -607,14 +607,14 @@ export const Dashboard = () => {
 				<DialogContent aria-describedby={null} className='w-[400px] '>
 					<DialogHeader>
 						<DialogTitle className='my-3'>
-							<p className='my-3 font-bold text-2xl'> {t('dashboard.confirmElimination"')} </p>
+							<p className='my-3 font-bold text-2xl'> {t('dashboard.confirmDelete')} </p>
 							{debtToDelete ? (
 								<p className='text-balance'>
-									{t('dashboard.eliminateDebt')} <span className='font-semibold text-blue-500'>{debtToDelete?.reason}</span> ?
+									{t('dashboard.removeDebt')} <span className='font-semibold text-blue-500'>{debtToDelete?.reason}</span> ?
 								</p>
 							) : (
 								<p className='text-pretty text-lg'>
-									{t('dashboard.eliminateExpense')} <span className='font-semibold text-blue-500'>{expenseToDelete?.name}</span> ?
+									{t('dashboard.removeExpense')} <span className='font-semibold text-blue-500'>{expenseToDelete?.name}</span> ?
 								</p>
 							)}
 						</DialogTitle>
@@ -624,11 +624,11 @@ export const Dashboard = () => {
 							</Button>
 							{debtToDelete ? (
 								<Button onClick={() => deleteDebt(debtToDelete)} variant='ghost' className='w-full bg-green-500 text-white'>
-									{loader ? <LoaderApi color='white' /> : `${t('dashboard.eliminate')}`}
+									{loader ? <LoaderApi color='white' /> : `${t('dashboard.delete')}`}
 								</Button>
 							) : (
 								<Button onClick={() => deleteExpense(expenseToDelete)} variant='ghost' className='w-full bg-green-500 text-white'>
-									{loader ? <LoaderApi color='white' /> : `${t('dashboard.eliminate')}`}
+									{loader ? <LoaderApi color='white' /> : `${t('dashboard.delete')}`}
 								</Button>
 							)}
 						</DialogDescription>

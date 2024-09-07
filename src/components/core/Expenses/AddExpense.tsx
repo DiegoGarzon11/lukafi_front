@@ -111,7 +111,7 @@ export const AddExpense = ({apiData, sendData}) => {
 						setSelectedCategory(null);
 					}}
 					variant='ghost'
-					className='w-full py-6 dark:hover:bg-zinc-900  dark:bg-zinc-900/50  bg-zinc-300 text-black  dark:text-white flex items-center gap-3'>
+					className='w-full py-6 dark:hover:bg-zinc-900  dark:bg-zinc-900/50  bg-zinc-300 hover:bg-zinc-400 text-black  dark:text-white flex items-center gap-3'>
 					{t('addExpense.addExpense')} <BadgePlus />
 				</Button>
 			</DialogTrigger>
