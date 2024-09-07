@@ -97,6 +97,7 @@
 	"dashboard.person": "Person",
 	"dashboard.reason": "Reason",
 	"dashboard.state": "State",
+	"dashboard.debt.seeAmount": "Amounts",
 	"dashboard.edit": "Edit",
 	"dashboard.delete": "Delete",
 	"dashboard.cancel": "Cancel",

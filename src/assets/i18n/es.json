@@ -39,8 +39,6 @@
 
 	"component.card.button": "Conoce mas",
 
-	"sheet.button.signOut": "Cerrar sesion",
-
 	"addExpense.addExpense": "Agregar gasto",
 	"addExpense.newExpense": "Nuevo gasto",
 	"addExpense.completeFields": "Completa los campos correspondientes al gasto",
@@ -73,12 +71,9 @@
 	"dashboard.before": "Antes",
 	"dashboard.now": "Ahora",
 	"dashboard.rangeSaving": "Te encuentras en tu rango de ahorro",
-
 	"dashboard.chart": "En el dia",
 	"dashboard.chartSpent": "gastaste",
-
 	"dashboard.availableBalance": "Saldo disponible",
-
 	"dashboard.goalSaving": "Sobrepasaste tú meta de ahorros",
 	"dashboard.viewExpensesCategory": "Observar gastos por categoria",
 	"dashboard.day": "Dia",
@@ -98,6 +93,7 @@
 	"dashboard.reason": "Razón",
 	"dashboard.state": "Estado",
 	"dashboard.edit": "Editar",
+	"dashboard.debt.seeAmount": "Montos",
 	"dashboard.delete": "Eliminar",
 	"dashboard.cancel": "Cancelar",
 	"dashboard.ofEachMonth": "de cada mes",
@@ -113,5 +109,8 @@
 	"sheetside.wallet": "Billetera",
 	"sheetside.account": "Cuenta",
 	"sheetside.profile": "Perfil",
-	"sheetside.help": "Ayuda"
+	"sheetside.help": "Ayuda",
+	"sheet.button.signOut": "Cerrar sesion"
+
+	
 }

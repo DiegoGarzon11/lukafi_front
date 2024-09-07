@@ -18,6 +18,12 @@ export interface Debt extends ApiResponse {
 	value: number;
 	wallet_id: string;
 }
+export interface DebtsHistory extends ApiResponse {
+	id: string;
+	amount: number;
+	date: string;
+	debt_id: string;
+}
 export interface Expenses extends ApiResponse {
 	created_in: string;
 	dead_line: string;
@@ -31,7 +37,7 @@ export interface Expenses extends ApiResponse {
 	total_value: number;
 	pay_each: string;
 }
-export interface ExpensesByCategory  {
+export interface ExpensesByCategory {
 	expense_id: string;
 	category_name: string;
 	total: number;

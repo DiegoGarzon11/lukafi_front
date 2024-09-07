@@ -1,31 +1,25 @@
-import {DeleteDebt, GetDebts} from '@/apis/DebtService';
-import {DeleteFixedExpense, GetDailyExpenses, GetExpenses, GetFixedExpenses, PayFixedExpense, ResetDeadLine} from '@/apis/ExpenseService';
-import {GetWalletUser} from '@/apis/WalletService';
-import {Edit, LoaderApi, Trash} from '@/assets/icons/Svg';
-import {Chart, ChartDonut} from '@/components/core/Charts';
-import {AddDebt} from '@/components/core/Debts/AddDebt';
-import {AddExpense} from '@/components/core/Expenses/AddExpense';
-import {Carrusel} from '@/components/others/Carrousel';
-import {LoaderComponent} from '@/components/others/Loader';
-import {TooltipComponent} from '@/components/others/Tooltip';
-import {Button} from '@/components/ui/button';
-import {Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger} from '@/components/ui/dialog';
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuSeparator,
-	DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import {Table, TableBody, TableCell, TableRow} from '@/components/ui/table';
-import {ApiResponse} from '@/interfaces/Api';
-import {Debt, Expenses, ResponseWallet} from '@/interfaces/Wallet';
+import { DeleteDebt, GetDebts, GetDebtToHistory } from '@/apis/DebtService';
+import { DeleteFixedExpense, GetDailyExpenses, GetExpenses, GetFixedExpenses, PayFixedExpense, ResetDeadLine } from '@/apis/ExpenseService';
+import { GetWalletUser } from '@/apis/WalletService';
+import { Edit, LoaderApi, Trash } from '@/assets/icons/Svg';
+import { Chart, ChartDonut } from '@/components/core/Charts';
+import { AddDebt } from '@/components/core/Debts/AddDebt';
+import { AddExpense } from '@/components/core/Expenses/AddExpense';
+import { Carrusel } from '@/components/others/Carrousel';
+import { LoaderComponent } from '@/components/others/Loader';
+import { TooltipComponent } from '@/components/others/Tooltip';
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { ApiResponse } from '@/interfaces/Api';
+import { Debt, DebtsHistory, Expenses, ResponseWallet } from '@/interfaces/Wallet';
 import '@/styles/Dashboard.css';
-import {Toast} from '@/tools/Toast';
-import {format} from 'date-fns';
-import {AlertTriangle, ArrowDown, ArrowUp, EllipsisVertical, Eye} from 'lucide-react';
-import {useEffect, useState} from 'react';
-import {useTranslation} from 'react-i18next';
+import { Toast } from '@/tools/Toast';
+import { format } from 'date-fns';
+import { AlertTriangle, ArrowDown, ArrowUp, EllipsisVertical, Eye, ScrollText } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const Dashboard = () => {
 	const [userData, setDataUser] = useState<ResponseWallet | undefined>(undefined);
@@ -36,14 +30,16 @@ export const Dashboard = () => {
 	const [restExpenses, setRestExpenses] = useState<Expenses | number>(0);
 	const [trigger, setTrigger] = useState(0);
 	const [loader, setLoader] = useState(false);
-	const [openDialog, setOpenDialog] = useState(false);
+	const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+	const [debtToDelete, setDebtToDelete] = useState<Debt | undefined>(undefined);
+	const [openAmountDialog, setOpenAmountDialog] = useState(false);
+	const [amountToSee, setAmountToSee] = useState<Array<DebtsHistory> | undefined>([]);
 	const [fetching, setFetching] = useState(true);
 	const [visibilityToast, setVisibilityToast] = useState(false);
-	const [debtToDelete, setDebtToDelete] = useState<Debt | undefined>(undefined);
 	const [expenseToDelete, setExpenseToDelete] = useState<Expenses | undefined>(undefined);
 	const user = JSON.parse(localStorage.getItem('userMain'));
 
-	const {t, i18n} = useTranslation();
+	const { t, i18n } = useTranslation();
 	i18n.changeLanguage();
 
 	const getDebts = async (walletId) => {
@@ -70,11 +66,7 @@ export const Dashboard = () => {
 	};
 	function generateRandomNumbers() {
 		let result = '';
-
-		// El primer número debe ser entre 1 y 9
 		result += Math.floor(Math.random() * 9) + 1;
-
-		// Los siguientes números pueden ser entre 0 y 9
 		for (let i = 1; i < 16; i++) {
 			result += Math.floor(Math.random() * 10);
 			if ((i + 1) % 4 === 0 && i !== 15) {
@@ -138,7 +130,10 @@ export const Dashboard = () => {
 			fetchExpensesAndDebts();
 		}
 	}, [userData, trigger]);
-
+	const setDebtToHistory = async (debt) => {
+		const getDebt = await GetDebtToHistory(debt);
+		return setAmountToSee(getDebt?.debts);
+	};
 	const deleteDebt = async (e) => {
 		setLoader(true);
 		setVisibilityToast(false);
@@ -157,7 +152,7 @@ export const Dashboard = () => {
 		} finally {
 			setVisibilityToast(true);
 			setLoader(false);
-			setOpenDialog(false);
+			setOpenDeleteDialog(false);
 			setDebtToDelete(null);
 		}
 	};
@@ -178,7 +173,7 @@ export const Dashboard = () => {
 		} finally {
 			setVisibilityToast(true);
 			setLoader(false);
-			setOpenDialog(false);
+			setOpenDeleteDialog(false);
 			setExpenseToDelete(null);
 		}
 	};
@@ -212,19 +207,29 @@ export const Dashboard = () => {
 			) : (
 				<div className='flex flex-col md:grid md:grid-cols-3 h-full pt-20 p-5 gap-5 dark:bg-zinc-800 bg-white'>
 					<section className='md:flex grid grid-cols-2 grid-rows-2 md:flex-nowrap w-full gap-3 md:col-span-3  '>
-						<AddExpense sendData={(e) => recibeResponseChild(e)} apiData={userData?.wallet} />
-						<AddDebt sendData={(e) => recibeResponseChild(e)} apiData={userData?.wallet} />
+						<AddExpense
+							sendData={(e) => recibeResponseChild(e)}
+							apiData={userData?.wallet}
+						/>
+						<AddDebt
+							sendData={(e) => recibeResponseChild(e)}
+							apiData={userData?.wallet}
+						/>
 						<a
 							className='w-full h-full dark:hover:bg-zinc-900 dark:bg-zinc-900/50 bg-zinc-200 text-black  dark:text-white rounded-md flex justify-center items-center '
 							href='#seeDebt'>
-							<Button variant='ghost' className='flex items-center gap-3 h-full w-full hover:bg-zinc-400 dark:hover:bg-zinc-900'>
+							<Button
+								variant='ghost'
+								className='flex items-center gap-3 h-full w-full hover:bg-zinc-400 dark:hover:bg-zinc-900'>
 								{t('dashboard.seeExpenses')} <Eye />
 							</Button>
 						</a>
 						<a
 							className='w-full h-full dark:hover:bg-zinc-900 dark:bg-zinc-900/50 bg-zinc-200 text-black  dark:text-white rounded-md flex justify-center items-center '
 							href='#seeExpenses'>
-							<Button variant='ghost' className='flex items-center gap-3 h-full w-full hover:bg-zinc-400 dark:hover:bg-zinc-900'>
+							<Button
+								variant='ghost'
+								className='flex items-center gap-3 h-full w-full hover:bg-zinc-400 dark:hover:bg-zinc-900'>
 								{t('dashboard.seeDebts')} <Eye />
 							</Button>
 						</a>
@@ -287,10 +292,14 @@ export const Dashboard = () => {
 									<p className='text-lg '>{t('dashboard.viewExpensesCategory')}</p>
 									<div className='flex gap-5 justify-end'>
 										<Button className=''>{t('dashboard.day')}</Button>
-										<Button disabled className=''>
+										<Button
+											disabled
+											className=''>
 											{t('dashboard.month')}
 										</Button>
-										<Button disabled className=''>
+										<Button
+											disabled
+											className=''>
 											{t('dashboard.year')}
 										</Button>
 									</div>
@@ -310,10 +319,14 @@ export const Dashboard = () => {
 								<p className='text-lg'>{t('dashboard.viewBalanceExpenses')}</p>
 								<div className='flex gap-5'>
 									<Button className=''>{t('dashboard.day')}</Button>
-									<Button disabled className=''>
+									<Button
+										disabled
+										className=''>
 										{t('dashboard.month')}
 									</Button>
-									<Button disabled className=''>
+									<Button
+										disabled
+										className=''>
 										{t('dashboard.year')}
 									</Button>
 								</div>
@@ -328,7 +341,9 @@ export const Dashboard = () => {
 							)}
 						</div>
 					</section>
-					<section id='seeExpenses' className=' shadow-sm  md:col-span-3 md:row-span-2     '>
+					<section
+						id='seeExpenses'
+						className=' shadow-sm  md:col-span-3 md:row-span-2     '>
 						<div className=' w-full  flex flex-col md:flex-row justify-between gap-5 order-3 '>
 							<div className='dark:bg-zinc-900/50 bg-zinc-200 p-5 w-full md:w-2/5 rounded-xl'>
 								<div className='flex gap- items-center'>
@@ -355,14 +370,20 @@ export const Dashboard = () => {
 															</TableCell>
 															<TableCell className='font-medium w-full hidden md:block'>
 																{e?.name.length >= 20 ? (
-																	<TooltipComponent message={`${e?.name.slice(0, 20)}...`} content={e?.name} />
+																	<TooltipComponent
+																		message={`${e?.name.slice(0, 20)}...`}
+																		content={e?.name}
+																	/>
 																) : (
 																	<p>{e?.name}</p>
 																)}
 															</TableCell>
 															<TableCell className='font-medium w-full block md:hidden'>
 																{e?.name.length >= 8 ? (
-																	<TooltipComponent message={`${e?.name.slice(0, 8)}...`} content={e?.name} />
+																	<TooltipComponent
+																		message={`${e?.name.slice(0, 8)}...`}
+																		content={e?.name}
+																	/>
 																) : (
 																	<p>{e?.name}</p>
 																)}
@@ -410,17 +431,13 @@ export const Dashboard = () => {
 														<TableCell className='font-medium w-full flex flex-col '>
 															<span
 																className={`font-bold  ${
-																	difrenceBeetwenDate(new Date(f?.dead_line)) < 5
-																		? 'text-red-500'
-																		: 'text-black dark:text-white'
+																	difrenceBeetwenDate(new Date(f?.dead_line)) < 5 ? 'text-red-500' : 'text-black dark:text-white'
 																} `}>
 																{format(f?.dead_line, 'PP')}
 															</span>
 															<span
 																className={`font-bold  ${
-																	difrenceBeetwenDate(new Date(f?.dead_line)) < 5
-																		? 'text-red-500'
-																		: 'text-black dark:text-white'
+																	difrenceBeetwenDate(new Date(f?.dead_line)) < 5 ? 'text-red-500' : 'text-black dark:text-white'
 																} `}>
 																<span className='opacity-70'>
 																	({difrenceBeetwenDate(new Date(f?.dead_line))} {t('dashboard.day')}s)
@@ -463,18 +480,22 @@ export const Dashboard = () => {
 																	<DropdownMenuSeparator />
 																	<DropdownMenuItem className='hover:dark:bg-zinc-700 cursor-pointer'>
 																		<p>{t('dashboard.edit')}</p>
-																		<Button variant='ghost' className='w-full flex justify-end'>
+																		<Button
+																			variant='ghost'
+																			className='w-full flex justify-end'>
 																			<Edit className={'w-6 '} />
 																		</Button>
 																	</DropdownMenuItem>
 																	<DropdownMenuItem
 																		onClick={() => {
-																			setOpenDialog(true);
+																			setOpenDeleteDialog(true);
 																			setExpenseToDelete(f);
 																		}}
 																		className='hover:dark:bg-zinc-700 cursor-pointer'>
 																		<p>{t('dashboard.delete')}</p>
-																		<Button variant='ghost' className='w-full flex justify-end'>
+																		<Button
+																			variant='ghost'
+																			className='w-full flex justify-end'>
 																			<Trash className={'w-6'} />
 																		</Button>
 																	</DropdownMenuItem>
@@ -490,7 +511,9 @@ export const Dashboard = () => {
 							</div>
 						</div>
 					</section>
-					<section id='seeDebt' className=' shadow-sm md:col-span-3 h-full row-span-9'>
+					<section
+						id='seeDebt'
+						className=' shadow-sm md:col-span-3 h-full row-span-9'>
 						<div className='  w-full  flex  justify-between gap-5 order-3'>
 							<div className='dark:bg-zinc-900/50 bg-zinc-200 p-5 w-full rounded-xl'>
 								<div className='flex gap- items-center'>
@@ -519,7 +542,10 @@ export const Dashboard = () => {
 														</TableCell>
 														<TableCell className='font-medium md:w-full w-20 hidden md:block'>
 															{d?.person.length >= 10 ? (
-																<TooltipComponent message={`${d?.person.slice(0, 10)}...`} content={d?.person} />
+																<TooltipComponent
+																	message={`${d?.person.slice(0, 10)}...`}
+																	content={d?.person}
+																/>
 															) : (
 																<p>{d?.person}</p>
 															)}
@@ -527,7 +553,10 @@ export const Dashboard = () => {
 
 														<TableCell className='font-medium md:w-full w-16 block md:hidden align-middle'>
 															{d?.person.length >= 10 ? (
-																<TooltipComponent message={`${d?.person.slice(0, 10)}...`} content={d?.person} />
+																<TooltipComponent
+																	message={`${d?.person.slice(0, 10)}...`}
+																	content={d?.person}
+																/>
 															) : (
 																<p>{d?.person}</p>
 															)}
@@ -535,7 +564,10 @@ export const Dashboard = () => {
 
 														<TableCell className='font-medium md:w-full hidden md:block align-middle'>
 															{d?.reason.length >= 20 ? (
-																<TooltipComponent message={`${d?.reason.slice(0, 20)}`} content={d?.reason} />
+																<TooltipComponent
+																	message={`${d?.reason.slice(0, 20)}`}
+																	content={d?.reason}
+																/>
 															) : (
 																<p>{d?.reason}</p>
 															)}
@@ -543,7 +575,10 @@ export const Dashboard = () => {
 
 														<TableCell className='font-medium md:w-full block md:hidden w-20 align-middle'>
 															{d?.reason.length >= 10 ? (
-																<TooltipComponent message={`${d?.reason.slice(0, 8)}...`} content={d?.reason} />
+																<TooltipComponent
+																	message={`${d?.reason.slice(0, 8)}...`}
+																	content={d?.reason}
+																/>
 															) : (
 																<p>{d?.reason}</p>
 															)}
@@ -565,17 +600,25 @@ export const Dashboard = () => {
 																	<EllipsisVertical />
 																</DropdownMenuTrigger>
 																<DropdownMenuContent className='dark:bg-zinc-800'>
-																	<DropdownMenuSeparator />
-																	<DropdownMenuItem className='hover:dark:bg-zinc-700 cursor-pointer'>
+																	<DropdownMenuItem
+																		onClick={() => {
+																			setDebtToHistory(d);
+																			setOpenAmountDialog(true);
+																		}}
+																		className='hover:dark:bg-zinc-700 cursor-pointer flex justify-between'>
+																		<p>{t('dashboard.debt.seeAmount')}</p>
+
+																		<ScrollText />
+																	</DropdownMenuItem>
+																	<DropdownMenuItem className='hover:dark:bg-zinc-700 cursor-pointer flex justify-between'>
 																		<p> {t('dashboard.edit')} </p>
-																		<Button variant='ghost' className='w-full flex justify-end'>
-																			<Edit className={'w-6 '} />
-																		</Button>
+
+																		<Edit className={'w-6 '} />
 																	</DropdownMenuItem>
 																	<DropdownMenuItem
 																		onClick={() => {
-																			setOpenDialog(true);
 																			setDebtToDelete(d);
+																			setOpenDeleteDialog(true);
 																		}}
 																		className='hover:dark:bg-zinc-700 cursor-pointer flex justify-between'>
 																		<p>{t('dashboard.delete')}</p>
@@ -603,8 +646,12 @@ export const Dashboard = () => {
 					message={ApiResponse.message}
 				/>
 			)}
-			<Dialog open={openDialog} onOpenChange={setOpenDialog}>
-				<DialogContent aria-describedby={null} className='w-[400px] '>
+			<Dialog
+				open={openDeleteDialog}
+				onOpenChange={setOpenDeleteDialog}>
+				<DialogContent
+					aria-describedby={null}
+					className='w-[400px] '>
 					<DialogHeader>
 						<DialogTitle className='my-3'>
 							<p className='my-3 font-bold text-2xl'> {t('dashboard.confirmDelete')} </p>
@@ -619,19 +666,70 @@ export const Dashboard = () => {
 							)}
 						</DialogTitle>
 						<DialogDescription className='flex justify-end items-end gap-5 h-full'>
-							<Button className='w-full bg-red-500 text-white' onClick={() => setOpenDialog(false)}>
+							<Button
+								className='w-full bg-red-500 text-white'
+								onClick={() => setOpenDeleteDialog(false)}>
 								{t('dashboard.cancel')}
 							</Button>
 							{debtToDelete ? (
-								<Button onClick={() => deleteDebt(debtToDelete)} variant='ghost' className='w-full bg-green-500 text-white'>
+								<Button
+									onClick={() => deleteDebt(debtToDelete)}
+									variant='ghost'
+									className='w-full bg-green-500 text-white'>
 									{loader ? <LoaderApi color='white' /> : `${t('dashboard.delete')}`}
 								</Button>
 							) : (
-								<Button onClick={() => deleteExpense(expenseToDelete)} variant='ghost' className='w-full bg-green-500 text-white'>
+								<Button
+									onClick={() => deleteExpense(expenseToDelete)}
+									variant='ghost'
+									className='w-full bg-green-500 text-white'>
 									{loader ? <LoaderApi color='white' /> : `${t('dashboard.delete')}`}
 								</Button>
 							)}
 						</DialogDescription>
+					</DialogHeader>
+				</DialogContent>
+			</Dialog>
+
+			<Dialog
+				open={openAmountDialog}
+				onOpenChange={setOpenAmountDialog}>
+				<DialogContent
+					aria-describedby={null}
+					className='w-[400px] '>
+					<DialogHeader>
+						<DialogTitle className='my-3'>
+							<p className='my-3 font-bold text-2xl'> Historial de pagos</p>
+							{amountToSee && (
+								<Table className='flex flex-col gap-3'>
+									<TableHeader>
+										<TableRow className='flex justify-between items-center'>
+											<TableHead>Date</TableHead>
+											<TableHead>Amount</TableHead>
+										</TableRow>
+									</TableHeader>
+									<TableBody>
+										{amountToSee.map((amount) => (
+											<TableRow
+												className='flex justify-between'
+												key={amount.id}>
+												<TableCell className='font-medium'>{format(new Date(amount.date), 'PP')}</TableCell>
+												<TableCell className='font-medium'>{amount.amount.toLocaleString()}</TableCell>
+											</TableRow>
+										))}
+									</TableBody>
+									<TableFooter>
+										<TableRow className='flex justify-between'>
+											<TableCell colSpan={3}>Total</TableCell>
+											<TableCell className='text-left'>
+												{amountToSee.reduce((a: number, c: DebtsHistory) => a + c.amount, 0).toLocaleString()}
+											</TableCell>
+										</TableRow>
+									</TableFooter>
+									<TableCaption>A list of your amounts histories..</TableCaption>
+								</Table>
+							)}
+						</DialogTitle>
 					</DialogHeader>
 				</DialogContent>
 			</Dialog>
