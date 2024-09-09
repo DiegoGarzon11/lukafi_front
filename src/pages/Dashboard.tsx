@@ -656,9 +656,12 @@ export const Dashboard = () => {
 						<DialogTitle className='my-3'>
 							<p className='my-3 font-bold text-2xl'> {t('dashboard.confirmDelete')} </p>
 							{debtToDelete ? (
-								<p className='text-balance'>
-									{t('dashboard.removeDebt')} <span className='font-semibold text-blue-500'>{debtToDelete?.reason}</span> ?
-								</p>
+								<>
+									<p className='mb-3 opacity-80'> Al eliminar la deuda se eliminará también el historial de montos correspondientes a la misma.</p>
+									<p className='text-balance   '>
+										{t('dashboard.removeDebt')} <span className='font-semibold text-blue-500'>{debtToDelete?.reason}</span> ?
+									</p>
+								</>
 							) : (
 								<p className='text-pretty text-lg'>
 									{t('dashboard.removeExpense')} <span className='font-semibold text-blue-500'>{expenseToDelete?.name}</span> ?
@@ -699,35 +702,46 @@ export const Dashboard = () => {
 					className='w-[400px] '>
 					<DialogHeader>
 						<DialogTitle className='my-3'>
-							<p className='my-3 font-bold text-2xl'> Historial de pagos</p>
-							{amountToSee && (
+							<p className='my-3 font-bold text-2xl text-center border-y-4 border-dashed py-3 dark:border-white border-black'>
+								{' '}
+								Historial de pagos
+							</p>
+							{amountToSee?.length > 0 ? (
 								<Table className='flex flex-col gap-3'>
 									<TableHeader>
-										<TableRow className='flex justify-between items-center'>
-											<TableHead>Date</TableHead>
-											<TableHead>Amount</TableHead>
+										<TableRow className='flex justify-between items-center px-5 pt-5 '>
+											<TableHead className='dark:text-white text-black'>N°</TableHead>
+
+											<TableHead className='dark:text-white text-black'>Fecha/hora</TableHead>
+											<TableHead className='dark:text-white text-black'>Monto</TableHead>
 										</TableRow>
 									</TableHeader>
-									<TableBody>
-										{amountToSee.map((amount) => (
+									<TableBody className='overflow-auto pb-5 h-72 scrollbar-custom'>
+										{amountToSee.map((amount, i) => (
 											<TableRow
-												className='flex justify-between'
+												className='flex justify-between px-5'
 												key={amount.id}>
-												<TableCell className='font-medium'>{format(new Date(amount.date), 'PP')}</TableCell>
-												<TableCell className='font-medium'>{amount.amount.toLocaleString()}</TableCell>
+												<TableCell className='font-normal'>{i + 1}</TableCell>
+
+												<TableCell className='font-normal'>{format(new Date(amount.date), 'MMM d, yy / HH:mm')}</TableCell>
+												<TableCell className=' font-bold'>$ {amount.amount.toLocaleString()}</TableCell>
 											</TableRow>
 										))}
 									</TableBody>
 									<TableFooter>
-										<TableRow className='flex justify-between'>
+										<TableRow className='flex justify-between px-5'>
 											<TableCell colSpan={3}>Total</TableCell>
 											<TableCell className='text-left'>
-												{amountToSee.reduce((a: number, c: DebtsHistory) => a + c.amount, 0).toLocaleString()}
+												$ {amountToSee.reduce((a: number, c: DebtsHistory) => a + c.amount, 0).toLocaleString()}
 											</TableCell>
 										</TableRow>
 									</TableFooter>
-									<TableCaption>A list of your amounts histories..</TableCaption>
+									<TableCaption>Lista de pagos realizados</TableCaption>
 								</Table>
+							) : (
+								<div className='flex justify-center items-center'>
+									<p className='text-center text-lg mt-5 text-blue-500'>Actualmente no tienes historial de ningun monto realizado</p>
+								</div>
 							)}
 						</DialogTitle>
 					</DialogHeader>
