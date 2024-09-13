@@ -1,4 +1,4 @@
-import { DeleteDebt, GetDebts, GetDebtToHistory } from '@/apis/DebtService';
+import { addAmount, DeleteDebt, GetDebts, GetDebtToHistory } from '@/apis/DebtService';
 import { DeleteFixedExpense, GetDailyExpenses, GetExpenses, GetFixedExpenses, PayFixedExpense, ResetDeadLine } from '@/apis/ExpenseService';
 import { GetWalletUser } from '@/apis/WalletService';
 import { Edit, LoaderApi, Trash } from '@/assets/icons/Svg';
@@ -11,13 +11,14 @@ import { TooltipComponent } from '@/components/others/Tooltip';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { ApiResponse } from '@/interfaces/Api';
 import { Debt, DebtsHistory, Expenses, ResponseWallet } from '@/interfaces/Wallet';
 import '@/styles/Dashboard.css';
 import { Toast } from '@/tools/Toast';
 import { format } from 'date-fns';
-import { AlertTriangle, ArrowDown, ArrowUp, EllipsisVertical, Eye, ScrollText } from 'lucide-react';
+import { AlertTriangle, ArrowDown, ArrowUp, EllipsisVertical, Eye, NotebookPen, ScrollText, Trash2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -33,10 +34,13 @@ export const Dashboard = () => {
 	const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
 	const [debtToDelete, setDebtToDelete] = useState<Debt | undefined>(undefined);
 	const [openAmountDialog, setOpenAmountDialog] = useState(false);
+	const [openAddAmountDialog, setOpenAddAmountDialog] = useState(false);
 	const [amountToSee, setAmountToSee] = useState<Array<DebtsHistory> | undefined>([]);
 	const [fetching, setFetching] = useState(true);
 	const [visibilityToast, setVisibilityToast] = useState(false);
 	const [expenseToDelete, setExpenseToDelete] = useState<Expenses | undefined>(undefined);
+	const [amount, setAmount] = useState('');
+	const [debtToAddAmount, setDebtToAddAmount] = useState<Debt | undefined>(undefined);
 	const user = JSON.parse(localStorage.getItem('userMain'));
 
 	const { t, i18n } = useTranslation();
@@ -75,7 +79,21 @@ export const Dashboard = () => {
 		}
 		return result;
 	}
+	const handleValues = (e) => {
+		if (e.target.value.replace(/[^0-9.]/g, '') > Number(debtToAddAmount?.missing_payment)) {
+			return;
+		}
+		let value = e.target.value.replace(/[^0-9.]/g, '');
+		if (value === '') {
+			value = 0;
+		}
 
+		const floatValue = parseFloat(value);
+		const formattedValue = floatValue.toLocaleString();
+
+		setAmount(formattedValue);
+		return;
+	};
 	useEffect(() => {
 		const fetchData = async () => {
 			const dataUser = await GetWalletUser(user?.user_id);
@@ -190,6 +208,29 @@ export const Dashboard = () => {
 		//! TODO: show a toast with the message of the pay fixed expense
 		console.log(response);
 	};
+
+	const submitAmount = async () => {
+		const params = {
+			wallet_id: debtToAddAmount.wallet_id,
+			debt_id: debtToAddAmount.debt_id,
+			amount: amount.replace(/,/g, ''),
+		};
+
+		const response = await addAmount(params);
+		setAmount('');
+		setDebtToAddAmount(null);
+		setOpenAddAmountDialog(false);
+		if (response) {
+			setApiResponse(response);
+			setVisibilityToast(true);
+			getDebts(userData.wallet);
+		}
+		setTimeout(() => {
+			setVisibilityToast(false);
+			setApiResponse(null);
+		}, 1000);
+	};
+
 
 	if (fetching) {
 		return (
@@ -389,7 +430,7 @@ export const Dashboard = () => {
 																)}
 															</TableCell>
 															<TableCell className='font-medium w-full'>
-																<p>{e?.value.toLocaleString()}</p>
+																<p>$ {e?.value.toLocaleString()}</p>
 															</TableCell>
 														</TableRow>
 													) : (
@@ -424,7 +465,7 @@ export const Dashboard = () => {
 												{fixedExpenses?.map((f) => (
 													<TableRow key={f.expense_id}>
 														<TableCell className='font-medium w-full'>{f.name}</TableCell>
-														<TableCell className='font-medium w-full'>{f.value.toLocaleString()}</TableCell>
+														<TableCell className='font-medium w-full'>$ {f.value.toLocaleString()}</TableCell>
 														<TableCell className='font-medium w-full hidden md:block '>
 															<span className='font-bold'>{f.pay_each} </span> {t('dashboard.ofEachMonth')}
 														</TableCell>
@@ -457,7 +498,7 @@ export const Dashboard = () => {
 																		<DialogHeader>
 																			<DialogTitle>
 																				{t('dashboard.confirm')}
-																				<span className='underline'> {t('dashboard.payment')} </span>{' '}
+																				<span className='underline'> {t('dashboard.payment')} </span>
 																				{t('dashboard.monthlyExpense')}
 																				<span className='text-blue-500 font-semibold'> {f.name}</span>?
 																			</DialogTitle>
@@ -523,114 +564,128 @@ export const Dashboard = () => {
 								<div className='w-full'>
 									<section className='w-full  '>
 										<article className=' flex text-base font-semibold py-4 dark:text-zinc-300 text-slate-500 border-b border-slate-500 mb-3'>
-											<p className='md:w-full hidden md:block text-start pl-2'>{t('dashboard.date')}</p>
-											<p className='md:w-full w-20 text-start pl-2'>{t('dashboard.person')}</p>
-											<p className='md:w-full w-20 text-start pl-2'>{t('dashboard.reason')}</p>
-											<p className='md:w-full w-20 text-start pl-2'>{t('dashboard.value')}</p>
-											<p className='md:w-full w-20 text-start pl-2'>{t('dashboard.state')}</p>
-											<p className='md:w-full  text-start pl-2' />
+											<p className='w-full  hidden md:block pl-2'>{t('dashboard.date')}</p>
+											<p className='w-full '>{t('dashboard.person')}</p>
+											<p className='w-full hidden md:block '>{t('dashboard.reason')}</p>
+											<p className='w-full '>{t('dashboard.value')}</p>
+											<p className='w-full '>{t('dashboard.state')}</p>
+											<p className='w-full hidden md:block '>{t('dashboard.deadLine')}</p>
+											<p className='w-full' />
 										</article>
 									</section>
 
 									<div className='w-full h-60 overflow-auto overflow-x-hidden scrollbar-custom'>
 										<Table className='w-full'>
-											<TableBody className=' w-full overflow-auto  overflow-x-hidden   scrollbar-custom'>
-												{debts?.map((d) => (
-													<TableRow key={d?.debt_id}>
-														<TableCell className='font-medium  md:w-full w-20 hidden md:block'>
-															<p>{new Date(d?.created_in).toLocaleDateString()}</p>
-														</TableCell>
-														<TableCell className='font-medium md:w-full w-20 hidden md:block'>
-															{d?.person.length >= 10 ? (
-																<TooltipComponent
-																	message={`${d?.person.slice(0, 10)}...`}
-																	content={d?.person}
-																/>
-															) : (
-																<p>{d?.person}</p>
-															)}
-														</TableCell>
+											{debts.length == 0 ? (
+												<p className='text-center text-lg mt-5 text-blue-500'>Actualmente no tienes ningún deuda</p>
+											) : (
+												<TableBody className=' w-full overflow-auto  overflow-x-hidden   scrollbar-custom'>
+													{debts?.map((d) => (
+														<TableRow key={d?.debt_id}>
+															<TableCell className='font-medium  w-full  hidden md:block'>
+																<p>{new Date(d?.created_in).toLocaleDateString()}</p>
+															</TableCell>
+															<TableCell className='font-medium w-full  hidden md:block'>
+																{d?.person.length >= 10 ? (
+																	<TooltipComponent
+																		message={`${d?.person.slice(0, 10)}...`}
+																		content={d?.person}
+																	/>
+																) : (
+																	<p>{d?.person}</p>
+																)}
+															</TableCell>
 
-														<TableCell className='font-medium md:w-full w-16 block md:hidden align-middle'>
-															{d?.person.length >= 10 ? (
-																<TooltipComponent
-																	message={`${d?.person.slice(0, 10)}...`}
-																	content={d?.person}
-																/>
-															) : (
-																<p>{d?.person}</p>
-															)}
-														</TableCell>
+															<TableCell className='font-medium w-full  block md:hidden align-middle'>
+																{d?.person.length >= 10 ? (
+																	<TooltipComponent
+																		message={`${d?.person.slice(0, 10)}...`}
+																		content={d?.person}
+																	/>
+																) : (
+																	<p>{d?.person}</p>
+																)}
+															</TableCell>
 
-														<TableCell className='font-medium md:w-full hidden md:block align-middle'>
-															{d?.reason.length >= 20 ? (
-																<TooltipComponent
-																	message={`${d?.reason.slice(0, 20)}`}
-																	content={d?.reason}
-																/>
-															) : (
-																<p>{d?.reason}</p>
-															)}
-														</TableCell>
+															<TableCell className='font-medium  hidden md:block w-full  align-middle'>
+																{d?.reason.length >= 10 ? (
+																	<TooltipComponent
+																		message={`${d?.reason.slice(0, 8)}...`}
+																		content={d?.reason}
+																	/>
+																) : (
+																	<p>{d?.reason}</p>
+																)}
+															</TableCell>
+															<TableCell className='font-medium w-full  align-middle'>
+																<p>$ {d?.missing_payment.toLocaleString()}</p>
+																<p className='opacity-55 text-nowrap'>$ {d?.value.toLocaleString()}</p>
+															</TableCell>
+															<TableCell className='font-medium w-full '>
+																{d?.missing_payment === 0 ? (
+																	<p className='text-blue-500'>Ya está pago</p>
+																) : (
+																	<p
+																		className={` rounded-md px-2 py-1 text-start  ${
+																			d?.debt_type == 0 ? 'text-red-500' : 'text-green-500'
+																		}`}>
+																		{d?.debt_type == 0 ? 'Debes' : 'Te deben'}
+																	</p>
+																)}
+															</TableCell>
+															<TableCell className='font-medium w-full hidden md:block '>
+																<p>{d?.dead_line ? format(new Date(d?.dead_line), 'PP') : 'Sin fecha limite'}</p>
+															</TableCell>
+															<TableCell className='font-medium  w-full'>
+																<DropdownMenu>
+																	<DropdownMenuTrigger>
+																		<EllipsisVertical />
+																	</DropdownMenuTrigger>
+																	<DropdownMenuContent className='dark:bg-zinc-800 w-44'>
+																		<DropdownMenuItem
+																			disabled={d?.missing_payment === 0}
+																			onClick={() => {
+																				setDebtToAddAmount(d);
+																				setOpenAddAmountDialog(true);
+																			}}
+																			className='hover:dark:bg-zinc-700 cursor-pointer flex justify-between'>
+																			<p className='dark:text-slate-300text-slate-700 font-semibold'>
+																				{t('dashboard.debt.addAmount')}
+																			</p>
 
-														<TableCell className='font-medium md:w-full block md:hidden w-20 align-middle'>
-															{d?.reason.length >= 10 ? (
-																<TooltipComponent
-																	message={`${d?.reason.slice(0, 8)}...`}
-																	content={d?.reason}
-																/>
-															) : (
-																<p>{d?.reason}</p>
-															)}
-														</TableCell>
-														<TableCell className='font-medium md:w-full w-20 align-middle'>
-															<p>{d?.value.toLocaleString()}</p>
-														</TableCell>
-														<TableCell className='font-medium md:w-full w-20'>
-															<p
-																className={` rounded-md px-2 py-1 text-start ${
-																	d?.debt_type == 0 ? 'text-red-500' : 'text-green-500'
-																}`}>
-																{d?.debt_type == 0 ? 'Debes' : 'Te deben'}
-															</p>
-														</TableCell>
-														<TableCell className='font-medium  w-20 hidden md:flex md:w-full'>
-															<DropdownMenu>
-																<DropdownMenuTrigger>
-																	<EllipsisVertical />
-																</DropdownMenuTrigger>
-																<DropdownMenuContent className='dark:bg-zinc-800'>
-																	<DropdownMenuItem
-																		onClick={() => {
-																			setDebtToHistory(d);
-																			setOpenAmountDialog(true);
-																		}}
-																		className='hover:dark:bg-zinc-700 cursor-pointer flex justify-between'>
-																		<p>{t('dashboard.debt.seeAmount')}</p>
+																			<NotebookPen className='dark:text-slate-300text-slate-700' />
+																		</DropdownMenuItem>
+																		<DropdownMenuItem
+																			onClick={() => {
+																				setDebtToHistory(d);
 
-																		<ScrollText />
-																	</DropdownMenuItem>
-																	<DropdownMenuItem className='hover:dark:bg-zinc-700 cursor-pointer flex justify-between'>
-																		<p> {t('dashboard.edit')} </p>
+																				setOpenAmountDialog(true);
+																			}}
+																			className='hover:dark:bg-zinc-700 cursor-pointer flex justify-between'>
+																			<p className='dark:text-slate-300text-slate-700 font-semibold'>
+																				{t('dashboard.debt.seeAmount')}
+																			</p>
 
-																		<Edit className={'w-6 '} />
-																	</DropdownMenuItem>
-																	<DropdownMenuItem
-																		onClick={() => {
-																			setDebtToDelete(d);
-																			setOpenDeleteDialog(true);
-																		}}
-																		className='hover:dark:bg-zinc-700 cursor-pointer flex justify-between'>
-																		<p>{t('dashboard.delete')}</p>
+																			<ScrollText className='dark:text-slate-300text-slate-700' />
+																		</DropdownMenuItem>
 
-																		<Trash className={'w-6'} />
-																	</DropdownMenuItem>
-																</DropdownMenuContent>
-															</DropdownMenu>
-														</TableCell>
-													</TableRow>
-												))}
-											</TableBody>
+																		<DropdownMenuItem
+																			onClick={() => {
+																				setDebtToDelete(d);
+																				setOpenDeleteDialog(true);
+																			}}
+																			className='hover:dark:bg-zinc-700 cursor-pointer flex justify-between'>
+																			<p className='dark:text-slate-300text-slate-700 font-semibold'>{t('dashboard.delete')}</p>
+
+																			<Trash2 className='dark:text-slate-300text-slate-700' />
+																		</DropdownMenuItem>
+																	</DropdownMenuContent>
+																</DropdownMenu>
+															</TableCell>
+														</TableRow>
+													))}
+												</TableBody>
+											)}
 										</Table>
 									</div>
 								</div>
@@ -657,7 +712,10 @@ export const Dashboard = () => {
 							<p className='my-3 font-bold text-2xl'> {t('dashboard.confirmDelete')} </p>
 							{debtToDelete ? (
 								<>
-									<p className='mb-3 opacity-80'> Al eliminar la deuda se eliminará también el historial de montos correspondientes a la misma.</p>
+									<p className='mb-3 opacity-80'>
+										{' '}
+										Al eliminar la deuda se eliminará también el historial de montos correspondientes a la misma.
+									</p>
 									<p className='text-balance   '>
 										{t('dashboard.removeDebt')} <span className='font-semibold text-blue-500'>{debtToDelete?.reason}</span> ?
 									</p>
@@ -703,7 +761,6 @@ export const Dashboard = () => {
 					<DialogHeader>
 						<DialogTitle className='my-3'>
 							<p className='my-3 font-bold text-2xl text-center border-y-4 border-dashed py-3 dark:border-white border-black'>
-								{' '}
 								Historial de pagos
 							</p>
 							{amountToSee?.length > 0 ? (
@@ -744,6 +801,43 @@ export const Dashboard = () => {
 								</div>
 							)}
 						</DialogTitle>
+					</DialogHeader>
+				</DialogContent>
+			</Dialog>
+			<Dialog
+				open={openAddAmountDialog}
+				onOpenChange={setOpenAddAmountDialog}>
+				<DialogContent
+					aria-describedby={null}
+					className='w-[400px] '>
+					<DialogHeader>
+						<DialogTitle className='my-3'>
+							<p className='my-3 font-bold text-2xl text-center  py-3 dark:border-white border-black'>Agrega el monto de la deuda</p>
+						</DialogTitle>
+						<DialogDescription className='flex flex-col justify-center gap-5 h-full '>
+							<p className='text-white font-semibold text-base text-pretty'>
+								<span className='text-red-500 mx-2'>*</span>El monto a agregar no puede ser mayor a la deuda
+							</p>
+							<Input
+								className='border dark:border-zinc-400 dark:bg-zinc-800/30 text-white'
+								value={amount}
+								onChange={handleValues}
+							/>
+							<div className='flex justify-evenly items-center gap-5'>
+								<div className='text-center text-lg  text-red-500'>
+									<p>Antes de agregar</p>
+									<p className='font-semibold'>{debtToAddAmount?.missing_payment.toLocaleString()}</p>
+								</div>
+								<div className='text-center text-lg  text-green-500'>
+									<p>Con el monto a agregar</p>
+									<p className='font-semibold'>
+										{(Number(debtToAddAmount?.missing_payment) - Number(amount.replace(/,/g, ''))).toLocaleString()}
+									</p>
+								</div>
+							</div>
+
+							<Button onClick={submitAmount}>Confirmar</Button>
+						</DialogDescription>
 					</DialogHeader>
 				</DialogContent>
 			</Dialog>

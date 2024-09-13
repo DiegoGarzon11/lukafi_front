@@ -1,4 +1,4 @@
-import {API_HTTP} from '@/tools/router';
+import { API_HTTP } from '@/tools/router';
 const MAIN_ROUTE = '/debt/';
 
 export const NewDebt = async (data) => {
@@ -33,6 +33,28 @@ export const GetDebts = async (data) => {
 			const response = await fetch(`${API_HTTP + MAIN_ROUTE}get-debts/${data.wallet_id}`, {
 				method: 'GET',
 			});
+
+			return await response.json();
+		} catch (error) {
+			console.error(error);
+		}
+		return;
+	}
+	console.warn('datos no enviados');
+};
+export const addAmount = async (data) => {
+	if (data) {
+		try {
+			const formData = new URLSearchParams();
+			formData.append('amount', data.amount);
+			const response = await fetch(`${API_HTTP + MAIN_ROUTE}add-amount/${data.wallet_id}/${data.debt_id}`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded',
+				},
+				body: formData,
+			});
+			console.log(data.amount);
 
 			return await response.json();
 		} catch (error) {

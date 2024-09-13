@@ -16,6 +16,8 @@ export interface Debt extends ApiResponse {
 	person: string;
 	reason: string;
 	value: number;
+	missing_payment: number;
+	dead_line: string;
 	wallet_id: string;
 }
 export interface DebtsHistory extends ApiResponse {
