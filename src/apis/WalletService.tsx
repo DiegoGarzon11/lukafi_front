@@ -15,6 +15,20 @@ export const GetWalletUser = async (user_id: string) => {
 		console.warn('Wallet not found');
 	}
 };
+export const GetWalletValues = async (wallet_id: string) => {
+	if (wallet_id) {
+		try {
+			const response = await fetch(`${API_HTTP}/wallet/get-wallet-values/${wallet_id}`, {
+				method: 'GET',
+			});
+			return await response.json();
+		} catch (error) {
+			console.error(error);
+		}
+	} else {
+		console.warn('Wallet not found');
+	}
+};
 export const CreateWallet = async (data) => {
 	if (data) {
 		const formData = new URLSearchParams();

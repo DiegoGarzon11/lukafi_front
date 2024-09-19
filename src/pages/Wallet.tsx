@@ -1,6 +1,8 @@
+import { ChartFinance } from "@/components/core/Charts";
+
 export const WalletComponent = () => {
 	return (
-		<section className='flex flex-col items-center h-full pt-20 p-5 gap-5 dark:bg-zinc-800 bg-white font-thin'>
+		<section className='flex  items-center justify-between h-full pt-20 p-5 gap-5 dark:bg-zinc-800 bg-white font-thin'>
 			<div className='h-60 flex flex-col justify-between  bg-gradient-to-l  to-cyan-400  from-gray-900 w-96 rounded-3xl p-8 shadow-xl shadow-zinc-900/90'>
 				<div className='flex justify-between'>
 				
@@ -15,6 +17,9 @@ export const WalletComponent = () => {
 					<p className='font-semibold'>1111 2222 2222 2222</p>
 					<p>09/23</p>
 				</div>
+			</div>
+			<div className='flex flex-col justify-between h-full w-2/3 rounded-3xl p-8 shadow-sm shadow-zinc-900/90'>
+				<ChartFinance/>
 			</div>
 		</section>
 	);

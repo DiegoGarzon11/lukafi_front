@@ -3,7 +3,7 @@ import {Home} from './pages/Home';
 import {Dashboard} from './pages/Dashboard';
 import {PageNotFound} from './pages/Page404';
 import Auth from './auth/Auth';
-import {WalletComponent} from './pages/WalletConfig';
+import {WalletComponent} from './pages/Wallet';
 import Profile from './pages/Profile';
 
 const isAuthenticated = localStorage.token;

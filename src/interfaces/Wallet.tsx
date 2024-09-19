@@ -4,6 +4,9 @@ export interface ResponseWallet extends ApiResponse {
 		created_in: string;
 		salary: number;
 		saving: number;
+		fixed_expenses: number;
+		debts: number;
+		vairable_expenses: number;
 		user_id: string;
 		wallet_id: string;
 	};
@@ -43,4 +46,13 @@ export interface ExpensesByCategory {
 	expense_id: string;
 	category_name: string;
 	total: number;
+}
+
+export interface wallet_values extends ApiResponse {
+	salary: number;
+	saving: number;
+	fixed_expenses: number;
+	variable_expenses: number;
+	debts: number;
+
 }
