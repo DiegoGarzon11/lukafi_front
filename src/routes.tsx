@@ -5,6 +5,7 @@ import {PageNotFound} from './pages/Page404';
 import Auth from './auth/Auth';
 import {WalletComponent} from './pages/Wallet';
 import Profile from './pages/Profile';
+import { ForgetPassword } from './pages/RestorePassword';
 
 const isAuthenticated = localStorage.token;
 const RoutesManager = () => (
@@ -14,6 +15,7 @@ const RoutesManager = () => (
 		<Route path='dashboard' element={isAuthenticated ? <Dashboard /> : <Navigate to='/auth' />} />
 		<Route path='/wallet' element={isAuthenticated ? <WalletComponent /> : <Navigate to='/auth' />} />
 		<Route path='/profile' element={isAuthenticated ? <Profile /> : <Navigate to='/profile' />} />
+		<Route path='/auth/restore-password' element={isAuthenticated ? <Dashboard /> : <ForgetPassword/>} />
 		<Route path='*' element={<PageNotFound />} />
 	</Routes>
 );

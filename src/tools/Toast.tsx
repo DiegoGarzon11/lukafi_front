@@ -25,7 +25,7 @@ export function Toast({ visibility, severity, message }: { visibility: boolean; 
 			onClick={() => {
 				toast({
 					title: message,
-					duration: 1200,
+					duration: 2000,
 					variant: severityToVariant[severity],
 				});
 			}}>

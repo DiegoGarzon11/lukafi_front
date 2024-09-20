@@ -56,3 +56,37 @@ export const UserDefault = async () => {
 		}
 	} 
 };
+export const RestorePassword = async (data) => {
+	const dataForm = new URLSearchParams();
+	dataForm.append('email', data);
+
+	try {
+		const response = await fetch(`${API_HTTP}/user/restore-password`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+			},
+			body: dataForm,
+		});
+		return await response.json();
+	} catch (error) {
+		console.error(error);
+	}
+};
+export const GenerateNewPassword = async (password, token) => {
+	const dataForm = new URLSearchParams();
+	dataForm.append('newPassword', password);
+
+	try {
+		const response = await fetch(`${API_HTTP}/user/generate-new-password/${token}`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+			},
+			body: dataForm,
+		});
+		return await response.json();
+	} catch (error) {
+		console.error(error);
+	}
+};

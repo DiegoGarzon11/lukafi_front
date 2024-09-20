@@ -3,7 +3,7 @@ import { GetDailyExpenses, GetExpensesByCategory } from '@/apis/ExpenseService';
 import { useEffect, useState } from 'react';
 import { GetWalletUser, GetWalletValues } from '@/apis/WalletService';
 import { PieChart, Pie } from 'recharts';
-import { ExpensesByCategory, ResponseWallet, wallet_values } from '@/interfaces/Wallet';
+import { ExpensesByCategory, wallet_values } from '@/interfaces/Wallet';
 import { useTranslation } from 'react-i18next';
 
 const COLORS = [
@@ -205,7 +205,7 @@ export const ChartFinance = () => {
 	const percentageData = [
 		{
 			name: 'Ahorros',
-			value: values?.salary - values?.fixed_expenses - values?.variable_expenses  - values?.debts,
+			value: values?.salary - values?.fixed_expenses - values?.variable_expenses - values?.debts,
 			color: '#1A4870',
 		},
 		{
@@ -226,7 +226,7 @@ export const ChartFinance = () => {
 	];
 	const showName = (props) => {
 		const RADIAN = Math.PI / 180;
-		const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload,  value } = props;
+		const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, value } = props;
 		const sin = Math.sin(-RADIAN * midAngle);
 		const cos = Math.cos(-RADIAN * midAngle);
 		const sx = cx + (outerRadius + 10) * cos;
@@ -292,7 +292,7 @@ export const ChartFinance = () => {
 					fontSize={16}
 					fontWeight={600}
 					fill='green'>
-					{payload.name === 'Ahorros' ? `${((values.saving / values.salary) * 100).toFixed(2)}%` : ''}
+					{payload.name === 'Ahorros' ? `${((values.salary / values.salary) * 100).toFixed(2)}%` : ''}
 					{payload.name === 'Gastos fijos' ? `${((values.fixed_expenses / values.salary) * 100).toFixed(2)}%` : ''}
 					{payload.name === 'Gastos variables' ? `${((values.variable_expenses / values.salary) * 100).toFixed(2)}%` : ''}
 					{payload.name === 'Deudas' ? `${((values.debts / values.salary) * 100).toFixed(2)}%` : ''}
@@ -317,7 +317,7 @@ export const ChartFinance = () => {
 					outerRadius={80}
 					fill='#8884d8'
 					dataKey='value'>
-					{percentageData?.map((e, i) => (
+					{percentageData?.map((e) => (
 						<Cell
 							key={e.name}
 							fill={e.color}

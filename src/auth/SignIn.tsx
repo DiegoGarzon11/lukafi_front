@@ -126,7 +126,7 @@ export default function SignIn() {
 				</div>
 
 				<Link
-					to=''
+					to='restore-password'
 					className='text-lg'>
 					{t('form.password.forgotten')}
 				</Link>
