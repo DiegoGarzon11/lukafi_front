@@ -141,3 +141,22 @@ export const GetExpensesByCategory = async (data) => {
 	}
 	console.warn('datos no enviados');
 };
+
+export const EditFixedExpenses = async (data) => {
+	if (data) {
+		try {
+			const response = await fetch(`${API_HTTP + MAIN_ROUTE}update-fixed-expenses/${data.expense_id}/${data.wallet_id}`, {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(data),
+			});
+			return await response.json();
+		} catch (error) {
+			console.error(error);
+		}
+		return;
+	}
+	console.warn('datos no enviados');
+};

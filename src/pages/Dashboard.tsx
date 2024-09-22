@@ -1,5 +1,5 @@
 import { addAmount, DeleteDebt, GetDebts, GetDebtToHistory } from '@/apis/DebtService';
-import { DeleteFixedExpense, GetDailyExpenses, GetExpenses, GetFixedExpenses, PayFixedExpense, ResetDeadLine } from '@/apis/ExpenseService';
+import { DeleteFixedExpense, EditFixedExpenses, GetDailyExpenses, GetExpenses, GetFixedExpenses, PayFixedExpense, ResetDeadLine } from '@/apis/ExpenseService';
 import { GetWalletUser } from '@/apis/WalletService';
 import { Edit, LoaderApi, Trash } from '@/assets/icons/Svg';
 import { Chart, ChartDonut } from '@/components/core/Charts';
@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { ApiResponse } from '@/interfaces/Api';
 import { Debt, DebtsHistory, Expenses, ResponseWallet } from '@/interfaces/Wallet';
@@ -41,7 +42,11 @@ export const Dashboard = () => {
 	const [expenseToDelete, setExpenseToDelete] = useState<Expenses | undefined>(undefined);
 	const [amount, setAmount] = useState('');
 	const [debtToAddAmount, setDebtToAddAmount] = useState<Debt | undefined>(undefined);
+	const [openModalEditFixedExpenses, setOpenModalEditFixedExpenses] = useState(false);
+	const [fixedExpenseToEdit, setFixedExpenseToEdit] = useState<Expenses | undefined>(undefined);
+	const [payEach, setPayEach] = useState(null);
 	const user = JSON.parse(localStorage.getItem('userMain'));
+	const days = Array.from({ length: 31 }, (_, i) => i + 1);
 
 	const { t, i18n } = useTranslation();
 	i18n.changeLanguage();
@@ -230,8 +235,29 @@ export const Dashboard = () => {
 			setApiResponse(null);
 		}, 1000);
 	};
-
-
+	const handlePayEach = (e) => {
+		setPayEach(e);
+	};
+	const submitEditFixedExpenses = async () => {
+		const params = {
+			wallet_id: fixedExpenseToEdit.wallet_id,
+			expense_id: fixedExpenseToEdit.expense_id,
+			value: amount.replace(/,/g, ''),
+			pay_each: payEach === null ? fixedExpenseToEdit.pay_each : payEach,
+			dead_line: fixedExpenseToEdit.dead_line,
+		};
+		const response = await EditFixedExpenses(params);
+		if (response) {
+			setApiResponse(response);
+			setVisibilityToast(true);
+			getFixedExpenses(userData.wallet);
+			setOpenModalEditFixedExpenses(false);
+		}
+		setTimeout(() => {
+			setVisibilityToast(false);
+			setApiResponse(null);
+		}, 1000);
+	};
 	if (fetching) {
 		return (
 			<div className='h-screen flex justify-center pt-20 flex-col items-center gap-3'>
@@ -519,7 +545,12 @@ export const Dashboard = () => {
 																</DropdownMenuTrigger>
 																<DropdownMenuContent className='dark:bg-zinc-800'>
 																	<DropdownMenuSeparator />
-																	<DropdownMenuItem className='hover:dark:bg-zinc-700 cursor-pointer'>
+																	<DropdownMenuItem
+																		onClick={() => {
+																			setOpenModalEditFixedExpenses(true);
+																			setFixedExpenseToEdit(f);
+																		}}
+																		className='hover:dark:bg-zinc-700 cursor-pointer'>
 																		<p>{t('dashboard.edit')}</p>
 																		<Button
 																			variant='ghost'
@@ -837,6 +868,57 @@ export const Dashboard = () => {
 							</div>
 
 							<Button onClick={submitAmount}>Confirmar</Button>
+						</DialogDescription>
+					</DialogHeader>
+				</DialogContent>
+			</Dialog>
+			<Dialog
+				open={openModalEditFixedExpenses}
+				onOpenChange={setOpenModalEditFixedExpenses}>
+				<DialogContent
+					aria-describedby={null}
+					className='w-[500px] '>
+					<DialogHeader>
+						<DialogTitle className='my-3'>
+							<p className='my-3 font-bold text-2xl text-center  py-3 dark:border-white border-black'>
+								Modificar gasto fijo <span className='text-orange-500'>{fixedExpenseToEdit?.name}</span>
+							</p>
+						</DialogTitle>
+						<DialogDescription className='flex flex-col justify-center gap-5 h-full '>
+							<div>
+								<label htmlFor=''>
+									Valor a pagar <span className='text-red-500'>*</span>
+								</label>
+								<Input
+									className='border dark:border-zinc-400 dark:bg-zinc-800/30 text-white'
+									value={amount}
+									onChange={handleValues}
+								/>
+							</div>
+							<div className=' flex flex-wrap gap-x-3 items-center'>
+								<p className=''>{t('addExpense.paymentDayP')} </p>
+								<Select onValueChange={handlePayEach}>
+									<SelectTrigger className=' w-32 bg-zinc-200 dark:bg-zinc-800 dark:text-white text-black border border-green-500/50'>
+										<SelectValue placeholder={fixedExpenseToEdit?.pay_each} />
+									</SelectTrigger>
+									<SelectContent className='dark:bg-zinc-700'>
+										<SelectGroup>
+											<SelectLabel className='text-lg'>{t('dashboard.day')}</SelectLabel>
+											{days.map((e, i) => (
+												<SelectItem
+													className='focus:dark:bg-zinc-800 focus:bg-zinc-200'
+													key={i}
+													value={e.toString()}>
+													{e}
+												</SelectItem>
+											))}
+										</SelectGroup>
+									</SelectContent>
+								</Select>
+								<p> {t('dashboard.ofEachMonth')} </p>
+							</div>
+
+							<Button onClick={submitEditFixedExpenses}>Confirmar</Button>
 						</DialogDescription>
 					</DialogHeader>
 				</DialogContent>
