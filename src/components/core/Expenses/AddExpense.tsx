@@ -115,7 +115,7 @@ export const AddExpense = ({apiData, sendData}) => {
 					{t('addExpense.addExpense')} <BadgePlus />
 				</Button>
 			</DialogTrigger>
-			<DialogContent className='sm:max-w-[550px]  '>
+			<DialogContent className=' w-[95%] md:w-[500px] rounded-md '>
 				<DialogHeader>
 					<DialogTitle>{t('addExpense.newExpense')}</DialogTitle>
 					<DialogDescription> {t('addExpense.completeFields')} </DialogDescription>

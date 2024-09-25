@@ -1,17 +1,17 @@
-import {NewDebt} from '@/apis/DebtService';
-import {Expense, Income, LoaderApi} from '@/assets/icons/Svg';
-import {Button} from '@/components/ui/button';
-import {DatePicker} from '@/components/ui/datapicker';
+import { NewDebt } from '@/apis/DebtService';
+import { Expense, Income, LoaderApi } from '@/assets/icons/Svg';
+import { Button } from '@/components/ui/button';
+import { DatePicker } from '@/components/ui/datapicker';
 
-import {Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger} from '@/components/ui/dialog';
-import {Input} from '@/components/ui/input';
-import {ApiResponse} from '@/interfaces/Api';
-import {Toast} from '@/tools/Toast';
-import {BadgePlus} from 'lucide-react';
-import {useState} from 'react';
-import {useTranslation} from 'react-i18next';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { ApiResponse } from '@/interfaces/Api';
+import { Toast } from '@/tools/Toast';
+import { BadgePlus } from 'lucide-react';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
-export const AddDebt = ({apiData, sendData}) => {
+export const AddDebt = ({ apiData, sendData }) => {
 	const [person, setPerson] = useState('');
 	const [value, setValue] = useState('');
 	const [reason, setReason] = useState('');
@@ -21,7 +21,7 @@ export const AddDebt = ({apiData, sendData}) => {
 	const [responseDebt, setResponseDebt] = useState<ApiResponse | undefined>(null);
 	const [date, setDate] = useState('');
 
-	const {t, i18n} = useTranslation();
+	const { t, i18n } = useTranslation();
 	i18n.changeLanguage();
 
 	const handleValues = (e, type) => {
@@ -89,7 +89,7 @@ export const AddDebt = ({apiData, sendData}) => {
 					{t('addDebt.addDebt')} <BadgePlus />
 				</Button>
 			</DialogTrigger>
-			<DialogContent className='sm:max-w-[425px] '>
+			<DialogContent className=' w-11/12 md:w-[500px] rounded-md '>
 				<DialogHeader>
 					<DialogTitle>{t('addDebt.newDebt')}</DialogTitle>
 					<DialogDescription>{t('addDebt.instructions')}</DialogDescription>
@@ -100,21 +100,25 @@ export const AddDebt = ({apiData, sendData}) => {
 				<div className='flex justify-evenly gap-5'>
 					<div
 						onClick={() => setDebtType(1)}
-						className={`border  p-5 rounded-xl w-40 cursor-pointer ${debtType === 1 ? 'border-green-300' : 'border-gray-200/50'}`}>
+						className={`border  p-5 rounded-xl w-1/2 cursor-pointer ${debtType === 1 ? 'border-green-300' : 'border-gray-200/50'}`}>
 						<div className='flex justify-center flex-col items-center gap-2 '>
 							<Income color={`${debtType === 1 ? 'green' : 'gray'}`} />
 
-							<label className={`${debtType === 1 ? 'text-green-500' : 'opacity-15'} cursor-pointer`} htmlFor=''>
+							<label
+								className={`${debtType === 1 ? 'text-green-500' : 'opacity-15'} cursor-pointer`}
+								htmlFor=''>
 								{t('addDebt.owesYou')}...
 							</label>
 						</div>
 					</div>
 					<div
 						onClick={() => setDebtType(0)}
-						className={`border  p-5 rounded-xl w-40 cursor-pointer ${debtType === 0 ? 'border-red-300' : 'border-gray-200/50'}`}>
+						className={`border  p-5 rounded-xl w-1/2 cursor-pointer ${debtType === 0 ? 'border-red-300' : 'border-gray-200/50'}`}>
 						<div className='flex justify-center flex-col items-center gap-2'>
 							<Expense color={`${debtType === 0 ? 'red' : 'gray'}`} />
-							<label className={`${debtType === 0 ? 'text-red-500' : 'opacity-15'} cursor-pointer`} htmlFor=''>
+							<label
+								className={`${debtType === 0 ? 'text-red-500' : 'opacity-15'} cursor-pointer`}
+								htmlFor=''>
 								{t('addDebt.youOwe')} ...
 							</label>
 						</div>

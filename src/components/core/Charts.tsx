@@ -301,8 +301,6 @@ export const ChartFinance = () => {
 		);
 	};
 
-	console.log('valuess___--', percentageData);
-
 	return (
 		<ResponsiveContainer height={330}>
 			<PieChart

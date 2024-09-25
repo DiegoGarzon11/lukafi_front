@@ -7,11 +7,12 @@ import { Button } from '@/components/ui/button';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { useState } from 'react';
+import '@/styles/Dashboard.css';
 
 export function Combobox({ data, selected }) {
 	const [open, setOpen] = useState(false);
 	const [value, setValue] = useState('');
-	
+
 	return (
 		<Popover
 			open={open}
@@ -26,15 +27,15 @@ export function Combobox({ data, selected }) {
 					<CaretSortIcon className='ml-2 h-4 w-4 shrink-0 opacity-50' />
 				</Button>
 			</PopoverTrigger>
-			<PopoverContent className='w-full p-0'>
-				<Command className='bg-zinc-200 dark:bg-zinc-800/50'>
+			<PopoverContent align='start' side='bottom' className='w-full p-0' sideOffset={10} sticky='always' > 
+				<Command className='bg-zinc-200 dark:bg-zinc-800/50   '>
 					<CommandInput
 						placeholder='Buscar categoria...'
 						className='h-9'
 					/>
-					<CommandList>
+					<CommandList  className=' scrollbar-custom'>
 						<CommandEmpty>Categoria no encontrada.</CommandEmpty>
-						<CommandGroup>
+						<CommandGroup className='  '>
 							{data.map((c) => (
 								<CommandItem
 									className='cursor-pointer hover:bg-zinc-300 dark:hover:bg-zinc-700'

@@ -1,5 +1,13 @@
 import { addAmount, DeleteDebt, GetDebts, GetDebtToHistory } from '@/apis/DebtService';
-import { DeleteFixedExpense, EditFixedExpenses, GetDailyExpenses, GetExpenses, GetFixedExpenses, PayFixedExpense, ResetDeadLine } from '@/apis/ExpenseService';
+import {
+	DeleteFixedExpense,
+	EditFixedExpenses,
+	GetDailyExpenses,
+	GetExpenses,
+	GetFixedExpenses,
+	PayFixedExpense,
+	ResetDeadLine,
+} from '@/apis/ExpenseService';
 import { GetWalletUser } from '@/apis/WalletService';
 import { Edit, LoaderApi, Trash } from '@/assets/icons/Svg';
 import { Chart, ChartDonut } from '@/components/core/Charts';
@@ -497,7 +505,7 @@ export const Dashboard = () => {
 														</TableCell>
 														<TableCell className='font-medium w-full flex flex-col '>
 															<span
-																className={`font-bold  ${
+																className={`font-bold hidden md:block ${
 																	difrenceBeetwenDate(new Date(f?.dead_line)) < 5 ? 'text-red-500' : 'text-black dark:text-white'
 																} `}>
 																{format(f?.dead_line, 'PP')}
@@ -520,17 +528,17 @@ export const Dashboard = () => {
 																	{f.is_paid ? `${t('dashboard.alreadyPaid')}` : `${t('dashboard.pay')}`}
 																</DialogTrigger>
 																{!f.is_paid && (
-																	<DialogContent className='w-[400px] h-32'>
+																	<DialogContent 	className=' w-[95%] md:w-[500px] rounded-md '>
 																		<DialogHeader>
-																			<DialogTitle>
+																			<DialogTitle className='text-start'>
 																				{t('dashboard.confirm')}
 																				<span className='underline'> {t('dashboard.payment')} </span>
 																				{t('dashboard.monthlyExpense')}
 																				<span className='text-blue-500 font-semibold'> {f.name}</span>?
 																			</DialogTitle>
 																			<DialogDescription className='flex justify-end items-end gap-5 h-full '>
-																				<Button>{t('dashboard.cancel')}</Button>
-																				<Button onClick={() => payExpense(f)}>{t('dashboard.confirm')}</Button>
+																				<Button className='bg-red-500'>{t('dashboard.cancel')}</Button>
+																				<Button className='bg-green-500' onClick={() => payExpense(f)}>{t('dashboard.confirm')}</Button>
 																			</DialogDescription>
 																		</DialogHeader>
 																	</DialogContent>
@@ -606,10 +614,10 @@ export const Dashboard = () => {
 									</section>
 
 									<div className='w-full h-60 overflow-auto overflow-x-hidden scrollbar-custom'>
-										<Table className='w-full'>
-											{debts.length == 0 ? (
-												<p className='text-center text-lg mt-5 text-blue-500'>Actualmente no tienes ningún deuda</p>
-											) : (
+										{debts.length == 0 ? (
+											<p className='text-center text-lg mt-5 text-blue-500'>Actualmente no tienes ningún deuda</p>
+										) : (
+											<Table className='w-full'>
 												<TableBody className=' w-full overflow-auto  overflow-x-hidden   scrollbar-custom'>
 													{debts?.map((d) => (
 														<TableRow key={d?.debt_id}>
@@ -654,7 +662,7 @@ export const Dashboard = () => {
 															</TableCell>
 															<TableCell className='font-medium w-full '>
 																{d?.missing_payment === 0 ? (
-																	<p className='text-blue-500'>Ya está pago</p>
+																	<p className='text-blue-500'>Pagado</p>
 																) : (
 																	<p
 																		className={` rounded-md px-2 py-1 text-start  ${
@@ -716,8 +724,8 @@ export const Dashboard = () => {
 														</TableRow>
 													))}
 												</TableBody>
-											)}
-										</Table>
+											</Table>
+										)}
 									</div>
 								</div>
 							</div>
@@ -737,7 +745,7 @@ export const Dashboard = () => {
 				onOpenChange={setOpenDeleteDialog}>
 				<DialogContent
 					aria-describedby={null}
-					className='w-[400px] '>
+					className=' w-[95%] md:w-[500px] rounded-md '>
 					<DialogHeader>
 						<DialogTitle className='my-3'>
 							<p className='my-3 font-bold text-2xl'> {t('dashboard.confirmDelete')} </p>
@@ -788,7 +796,7 @@ export const Dashboard = () => {
 				onOpenChange={setOpenAmountDialog}>
 				<DialogContent
 					aria-describedby={null}
-					className='w-[400px] '>
+					className=' w-[95%] md:w-[500px] rounded-md '>
 					<DialogHeader>
 						<DialogTitle className='my-3'>
 							<p className='my-3 font-bold text-2xl text-center border-y-4 border-dashed py-3 dark:border-white border-black'>
@@ -840,7 +848,7 @@ export const Dashboard = () => {
 				onOpenChange={setOpenAddAmountDialog}>
 				<DialogContent
 					aria-describedby={null}
-					className='w-[400px] '>
+					className=' w-[95%] md:w-[500px] rounded-md '>
 					<DialogHeader>
 						<DialogTitle className='my-3'>
 							<p className='my-3 font-bold text-2xl text-center  py-3 dark:border-white border-black'>Agrega el monto de la deuda</p>
@@ -877,14 +885,14 @@ export const Dashboard = () => {
 				onOpenChange={setOpenModalEditFixedExpenses}>
 				<DialogContent
 					aria-describedby={null}
-					className='w-[500px] '>
+					className=' w-[95%] md:w-[500px] rounded-md '>
 					<DialogHeader>
 						<DialogTitle className='my-3'>
 							<p className='my-3 font-bold text-2xl text-center  py-3 dark:border-white border-black'>
 								Modificar gasto fijo <span className='text-orange-500'>{fixedExpenseToEdit?.name}</span>
 							</p>
 						</DialogTitle>
-						<DialogDescription className='flex flex-col justify-center gap-5 h-full '>
+						<div className='flex flex-col justify-center gap-5 h-full '>
 							<div>
 								<label htmlFor=''>
 									Valor a pagar <span className='text-red-500'>*</span>
@@ -919,7 +927,7 @@ export const Dashboard = () => {
 							</div>
 
 							<Button onClick={submitEditFixedExpenses}>Confirmar</Button>
-						</DialogDescription>
+						</div>
 					</DialogHeader>
 				</DialogContent>
 			</Dialog>
