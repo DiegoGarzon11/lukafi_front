@@ -26,16 +26,12 @@ export const ForgetPassword = () => {
 			const response = await RestorePassword(email);
 			if (response) {
 				setToken(response?.token);
-
-				setVisibilityToast(true);
-				setResponse(response);
 				setLoader(true);
 			}
 		} catch (error) {
 			console.error(error);
 		} finally {
 			setLoader(false);
-			setVisibilityToast(true);
 		}
 	};
 	const newPassword = async (e) => {
@@ -105,6 +101,17 @@ export const ForgetPassword = () => {
 						<form
 							onSubmit={newPassword}
 							className='flex flex-col gap-3 w-full my-5'>
+							<div className='flex items-center gap-3 '>
+								<Input
+									type='checkbox'
+									className='w-4'
+									checked={password.length >= 5}
+									readOnly
+								/>
+								<p className='font-semibold'>
+									Debe tener al menos 5 caracteres <span className='text-red-500'>*</span>
+								</p>
+							</div>
 							<div className='relative'>
 								<label
 									htmlFor=''
@@ -154,7 +161,7 @@ export const ForgetPassword = () => {
 								''
 							) : (
 								<button
-									disabled={!email || loader}
+									disabled={!email || loader || password.length <= 5 || password !== confirmPassword}
 									type='submit'
 									className='w-full rounded-md p-2 bg-zinc-300 dark:bg-zinc-700 text-white font-semibold flex justify-center'>
 									{loader ? <LoaderApi color='white' /> : 'Enviar'}
@@ -162,7 +169,7 @@ export const ForgetPassword = () => {
 							)}
 						</form>
 						{password == confirmPassword ? (
-							<p className='text-center text-green-500 text-lg'>Contraseña creada correctamente</p>
+							<p className='text-center text-green-500 text-lg'>Las contraseñas coinciden</p>
 						) : (
 							<p className='text-center text-red-500 text-lg'>Las contraseñas no coinciden</p>
 						)}
