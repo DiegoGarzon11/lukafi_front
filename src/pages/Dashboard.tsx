@@ -149,7 +149,7 @@ export const Dashboard = () => {
 					const defaultDeadLine = new Date(fixedExpenses?.expenses[i].dead_line);
 
 					const diferenceBetweenDates = difrenceBeetwenDate(defaultDeadLine);
-					if (diferenceBetweenDates <= 5 && fixedExpenses?.expenses[i].is_paid === true) {
+					if (diferenceBetweenDates <= 30 && fixedExpenses?.expenses[i].is_paid === true) {
 						newDeadLine(userData.wallet.wallet_id, fixedExpenses?.expenses[i].expense_id);
 					}
 				}
@@ -506,13 +506,13 @@ export const Dashboard = () => {
 														<TableCell className='font-medium w-full flex flex-col '>
 															<span
 																className={`font-bold hidden md:block ${
-																	difrenceBeetwenDate(new Date(f?.dead_line)) < 5 ? 'text-red-500' : 'text-black dark:text-white'
+																	difrenceBeetwenDate(new Date(f?.dead_line)) <= 5 ? 'text-red-500' : 'text-black dark:text-white'
 																} `}>
 																{format(f?.dead_line, 'PP')}
 															</span>
 															<span
 																className={`font-bold  ${
-																	difrenceBeetwenDate(new Date(f?.dead_line)) < 5 ? 'text-red-500' : 'text-black dark:text-white'
+																	difrenceBeetwenDate(new Date(f?.dead_line)) <= 5 ? 'text-red-500' : 'text-black dark:text-white'
 																} `}>
 																<span className='opacity-70'>
 																	({difrenceBeetwenDate(new Date(f?.dead_line))} {t('dashboard.day')}s)

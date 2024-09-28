@@ -64,12 +64,15 @@ export const AddExpense = ({apiData, sendData}) => {
 	const submitExpense = async () => {
 		setLoader(true);
 		const sendIsFixed: boolean = isFixed === 'true';
+console.log(isFixed);
+console.log(typeof isFixed);
+
 
 		const params = {
 			wallet_id: apiData.wallet_id,
 			user_id: apiData.user_id,
 			name,
-			is_paid: !sendIsFixed,
+			is_paid: isFixed === 'true' ? false : true,
 			paid_in: sendIsFixed ? null : new Date(),
 			pay_each: deadLine,
 			value,
