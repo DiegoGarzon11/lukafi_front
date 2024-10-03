@@ -27,6 +27,8 @@ export const ForgetPassword = () => {
 			if (response) {
 				setToken(response?.token);
 				setLoader(true);
+				setVisibilityToast(true);
+				setResponse(response);
 			}
 		} catch (error) {
 			console.error(error);
@@ -87,7 +89,7 @@ export const ForgetPassword = () => {
 					{isRedirect && response.success == true ? (
 						<div className='shadow shadow-green-500  rounded-md  p-5 flex flex-col justify-center gap-3 items-center'>
 							<h3 className='font-semibold text-xl my-3 flex items-center gap-2'>
-								Contraseña actualizada <BadgeCheck className='text-green-500' />{' '}
+								Contraseña actualizada <BadgeCheck className='text-green-500' />
 							</h3>
 							<p className='opacity-80'>Tu contraseña ha sido actualizada con éxito</p>
 							<p className='text-lg'>Serás redirigido en {numero} segundos</p>
@@ -95,7 +97,7 @@ export const ForgetPassword = () => {
 					) : (
 						''
 					)}
-					<div className='shadow dark:shadow-zinc-700  rounded-md  p-5 w-1/4'>
+					<div className='shadow dark:shadow-zinc-700  rounded-md  p-5  w-11/12 md:w-[500px]'>
 						<h3 className='font-semibold text-xl my-3'>Crear nueva contraseña</h3>
 						<p className='opacity-50'>Por tu seguridad te pedimos que tu nueva contraseña sea distintas a las anteriores</p>
 						<form
@@ -176,7 +178,7 @@ export const ForgetPassword = () => {
 					</div>
 				</>
 			) : (
-				<div className='shadow dark:shadow-zinc-700  rounded-md  p-5 w-1/4'>
+				<div className='shadow dark:shadow-zinc-700   p-5 w-11/12 md:w-[500px] rounded-md'>
 					<div className='flex justify-center flex-col items-center gap-5 mt-3'>
 						<img
 							src='/images/forgot-password.webp'
