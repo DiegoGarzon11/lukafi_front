@@ -65,6 +65,11 @@
 	"addDebt.paymenteDeadline": "Payment deadline",
 	"addDebt.recomended": "Recomended",
 
+	"addIncome.newIncome": "New income",
+	"addIncome.instructions": "Introduce the details of the person related to the income.",
+	"addIncome.name": "Name of the income",
+	"addIncome.amount": "Amount of the income",
+
 	"dataPicker.selectDate": "Select the payment day",
 	"dashboard.chart": "In the day",
 	"dashboard.chartSpent": "you spent",

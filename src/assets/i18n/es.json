@@ -63,6 +63,11 @@
 	"addDebt.paymenteDeadline": "Fecha limite de pago",
 	"addDebt.recomended": "Recomendado",
 
+	"addIncome.newIncome": "Nuevo ingreso",
+	"addIncome.instructions": "Introduce los datos relacionados con el ingreso",
+	"addIncome.name": "Nombre del ingreso",
+	"addIncome.amount": "Valor del ingreso",
+
 	"dataPicker.selectDate": "Selecionar la fecha de pago",
 
 	"dashboard.seeExpenses": "Ver gastos",
@@ -113,6 +118,4 @@
 	"sheetside.profile": "Perfil",
 	"sheetside.help": "Ayuda",
 	"sheet.button.signOut": "Cerrar sesion"
-
-	
 }

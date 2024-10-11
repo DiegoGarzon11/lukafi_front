@@ -8,11 +8,13 @@ import {
 	PayFixedExpense,
 	ResetDeadLine,
 } from '@/apis/ExpenseService';
+import { GetAllIncomes } from '@/apis/Income.service';
 import { GetWalletUser } from '@/apis/WalletService';
 import { Edit, LoaderApi, Trash } from '@/assets/icons/Svg';
 import { Chart, ChartDonut } from '@/components/core/Charts';
 import { AddDebt } from '@/components/core/Debts/AddDebt';
 import { AddExpense } from '@/components/core/Expenses/AddExpense';
+import { AddIncome } from '@/components/core/Income/AddIncome';
 import { Carrusel } from '@/components/others/Carrousel';
 import { LoaderComponent } from '@/components/others/Loader';
 import { TooltipComponent } from '@/components/others/Tooltip';
@@ -23,7 +25,7 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { ApiResponse } from '@/interfaces/Api';
-import { Debt, DebtsHistory, Expenses, ResponseWallet } from '@/interfaces/Wallet';
+import { Debt, DebtsHistory, Expenses, Incomes, ResponseWallet } from '@/interfaces/Wallet';
 import '@/styles/Dashboard.css';
 import { Toast } from '@/tools/Toast';
 import { format } from 'date-fns';
@@ -37,6 +39,7 @@ export const Dashboard = () => {
 	const [debts, setDebts] = useState<Array<Debt> | undefined>([]);
 	const [ApiResponse, setApiResponse] = useState<ApiResponse | undefined>(null);
 	const [expenses, setExpenses] = useState<Array<Expenses> | undefined>([]);
+	const [incomes, setIncomes] = useState<Array<Incomes> | undefined>([]);
 	const [restExpenses, setRestExpenses] = useState<Expenses | number>(0);
 	const [trigger, setTrigger] = useState(0);
 	const [loader, setLoader] = useState(false);
@@ -62,6 +65,13 @@ export const Dashboard = () => {
 	const getDebts = async (walletId) => {
 		const debts = await GetDebts(walletId);
 		setDebts(debts?.debts);
+	};
+	const getIncomes = async (walletId) => {
+		
+		const incomes = await GetAllIncomes(walletId);
+		setIncomes(incomes?.incomes);
+		console.log(incomes);
+		
 	};
 
 	const getExpenses = async (walletId) => {
@@ -108,6 +118,8 @@ export const Dashboard = () => {
 		return;
 	};
 	useEffect(() => {
+		console.log(incomes);
+
 		const fetchData = async () => {
 			const dataUser = await GetWalletUser(user?.user_id);
 			const dailyExpenses = await GetDailyExpenses(dataUser?.wallet?.wallet_id);
@@ -126,6 +138,7 @@ export const Dashboard = () => {
 	const recibeResponseChild = async (e: string) => {
 		if (e === 'debt') return getDebts(userData.wallet);
 		if (e === 'expense') return setTrigger((prev) => prev + 1);
+		if(e === 'income') return getIncomes(userData.wallet);
 
 		getExpenses(userData.wallet);
 		const responseFixedExpenses = await GetFixedExpenses(userData.wallet);
@@ -287,6 +300,10 @@ export const Dashboard = () => {
 							apiData={userData?.wallet}
 						/>
 						<AddDebt
+							sendData={(e) => recibeResponseChild(e)}
+							apiData={userData?.wallet}
+						/>
+							<AddIncome
 							sendData={(e) => recibeResponseChild(e)}
 							apiData={userData?.wallet}
 						/>
