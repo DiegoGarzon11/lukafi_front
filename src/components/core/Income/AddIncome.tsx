@@ -1,15 +1,15 @@
 import { AddNewIncome } from '@/apis/Income.service';
-import {  LoaderApi } from '@/assets/icons/Svg';
+import { LoaderApi } from '@/assets/icons/Svg';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { ApiResponse } from '@/interfaces/Api';
 import { Toast } from '@/tools/Toast';
-import { BadgePlus } from 'lucide-react';
+import {  PiggyBank } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-export const AddIncome = ({ apiData, sendData }) => {
+export const AddIncome = ({ apiData, className }) => {
 	const [name, setName] = useState('');
 	const [value, setValue] = useState('0');
 	const [loader, setLoader] = useState(false);
@@ -44,8 +44,6 @@ export const AddIncome = ({ apiData, sendData }) => {
 		const response = await AddNewIncome(params);
 
 		if (response) {
-			sendData('income');
-
 			setResponseIncome(response);
 			setVisibilityToast(true);
 			setValue('');
@@ -62,9 +60,10 @@ export const AddIncome = ({ apiData, sendData }) => {
 		<Dialog>
 			<DialogTrigger asChild>
 				<Button
+				disabled
 					variant='ghost'
-					className='w-full py-6 dark:hover:bg-zinc-900 dark:bg-zinc-900/50 bg-zinc-300 text-black dark:text-white hover:bg-zinc-400 flex items-center gap-3'>
-					{t('addIncome.newIncome')} <BadgePlus />
+					className={` ${className} py-6 dark:hover:bg-zinc-900 dark:bg-dark_primary_color bg-zinc-300 text-black dark:text-white hover:bg-zinc-400 flex items-center gap-3`}>
+					{t('addIncome.newIncome')} <PiggyBank />
 				</Button>
 			</DialogTrigger>
 			<DialogContent className=' w-11/12 md:w-[500px] rounded-md '>

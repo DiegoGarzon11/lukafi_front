@@ -67,3 +67,4 @@
     @apply bg-background text-foreground;
   }
 }
+html, body{ background: #121315 !important;}  

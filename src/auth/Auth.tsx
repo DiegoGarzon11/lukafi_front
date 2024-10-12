@@ -39,7 +39,7 @@ export default function Auth() {
 								disabled={view}
 								className={`${
 									view ? 'dark:text-white font-bold bg-zinc-200 text-black dark:bg-zinc-900' : 'text-black dark:text-white'
-								}  text-xl border border-zinc-900 rounded-l-full p-3 md:w-40`}
+								}  text-xl border border-gray-600/50 rounded-l-full p-3 md:w-40`}
 								onClick={changeAuth}>
 								{t('form.field.signIn')}
 							</button>
@@ -47,7 +47,7 @@ export default function Auth() {
 								disabled={!view}
 								className={`${
 									view ? 'text-black dark:text-white' : 'dark:bg-zinc-900 dark:text-white bg-zinc-300 font-bold  '
-								} text-xl border border-zinc-900 rounded-r-full p-3 md:w-40`}
+								} text-xl border border-gray-600/50 rounded-r-full p-3 md:w-40`}
 								onClick={changeAuth}>
 								{t('form.field.signUp')}
 							</button>

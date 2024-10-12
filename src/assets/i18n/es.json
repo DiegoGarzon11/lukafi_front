@@ -113,9 +113,13 @@
 	"dashboard.removeDebt": "¿Estas seguro de eliminar la deuda ",
 	"dashboard.removeExpense": "¿Estas seguro de eliminar el gasto",
 
-	"sheetside.wallet": "Billetera",
 	"sheetside.account": "Cuenta",
-	"sheetside.profile": "Perfil",
-	"sheetside.help": "Ayuda",
-	"sheet.button.signOut": "Cerrar sesion"
+	"sheetside.account.profile": "Perfil",
+	"sheetside.wallet": "Billetera",
+	"sheetside.wallet.editWallet": "Editar billetera",
+	"sheetside.wallet.expenses": "Gastos",
+	"sheetside.wallet.debts": "Deudas",
+	"sheetside.wallet.incomes": "Ingresos",
+	"sheetside.suport": "Soporte",
+	"sheetside.suport.help": "Ayuda"
 }

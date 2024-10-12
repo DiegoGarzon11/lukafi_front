@@ -113,7 +113,7 @@ export default function SignUp({ isRegisterOk }) {
 						</label>
 						<Input
 							type='text'
-							className='border-zinc-300 dark:bg-zinc-800/30'
+							className='border-gray-600/50 dark:bg-zinc-800/30'
 							onChange={handleChange}
 							value={data.name}
 							name='name'
@@ -127,7 +127,7 @@ export default function SignUp({ isRegisterOk }) {
 						</label>
 						<Input
 							type='text'
-							className='border-zinc-300 dark:bg-zinc-800/30'
+							className='border-gray-600/50 dark:bg-zinc-800/30'
 							onChange={handleChange}
 							value={data.lastName}
 							name='lastName'
@@ -143,7 +143,7 @@ export default function SignUp({ isRegisterOk }) {
 					<Input
 						autoComplete='email'
 						type='email'
-						className='border-zinc-300 dark:bg-zinc-800/30'
+						className='border-gray-600/50 dark:bg-zinc-800/30'
 						onChange={handleChange}
 						value={data.email}
 						name='email'
@@ -158,7 +158,7 @@ export default function SignUp({ isRegisterOk }) {
 					<Select
 						onValueChange={(value) => handeleNacionality(value)}
 						value={data.nacionality}>
-						<SelectTrigger className='w-full border-zinc-300 dark:bg-zinc-800/30	'>
+						<SelectTrigger className='w-full border-gray-600/50 dark:bg-zinc-800/30	'>
 							<SelectValue />
 						</SelectTrigger>
 						<SelectContent className='dark:bg-zinc-900'>
@@ -192,7 +192,7 @@ export default function SignUp({ isRegisterOk }) {
 							<Select
 								onValueChange={(value) => handleDateChange(value, 'year')}
 								value={date.year}>
-								<SelectTrigger className='w-full border-zinc-300 dark:bg-zinc-800/30'>
+								<SelectTrigger className='w-full border-gray-600/50 dark:bg-zinc-800/30'>
 									<SelectValue />
 								</SelectTrigger>
 								<SelectContent className='dark:bg-zinc-900'>
@@ -219,7 +219,7 @@ export default function SignUp({ isRegisterOk }) {
 							<Select
 								onValueChange={(value) => handleDateChange(value, 'month')}
 								value={date.month}>
-								<SelectTrigger className='w-full border-zinc-300 dark:bg-zinc-800/30'>
+								<SelectTrigger className='w-full border-gray-600/50 dark:bg-zinc-800/30'>
 									<SelectValue />
 								</SelectTrigger>
 								<SelectContent className='dark:bg-zinc-900'>
@@ -246,7 +246,7 @@ export default function SignUp({ isRegisterOk }) {
 							<Select
 								onValueChange={(value) => handleDateChange(value, 'day')}
 								value={date.day}>
-								<SelectTrigger className='w-full border-zinc-300 dark:bg-zinc-800/30'>
+								<SelectTrigger className='w-full border-gray-600/50 dark:bg-zinc-800/30'>
 									<SelectValue className='text-red-400' />
 								</SelectTrigger>
 								<SelectContent className='dark:bg-zinc-900'>
@@ -277,7 +277,7 @@ export default function SignUp({ isRegisterOk }) {
 						<Input
 							autoComplete='new-password'
 							type={showPassword ? 'text' : 'password'}
-							className='border-zinc-300 dark:bg-zinc-800/30'
+							className='border-gray-600/50 dark:bg-zinc-800/30'
 							onChange={handleChange}
 							value={data.password}
 							name='password'
@@ -300,7 +300,7 @@ export default function SignUp({ isRegisterOk }) {
 							autoComplete='new-password'
 							type={showPasswordConfirm ? 'text' : 'password'}
 							onChange={handleChange}
-							className='border-zinc-300 dark:bg-zinc-800/30'
+							className='border-gray-600/50 dark:bg-zinc-800/30'
 							value={data.confirmPassword}
 							name='confirmPassword'
 						/>

@@ -115,8 +115,13 @@
 	"dashboard.alreadyPaid": "Paid",
 	"dashboard.monthlyExpense": "Of monthly expense",
 
-	"sheetside.wallet": "Wallet",
 	"sheetside.account": "Account",
-	"sheetside.profile": "Profile",
-	"sheetside.help": "Help"
+	"sheetside.account.profile": "Profile",
+	"sheetside.wallet": "Wallet",
+	"sheetside.wallet.editWallet": "Edit wallet",
+	"sheetside.wallet.expenses": "Expenses",
+	"sheetside.wallet.debts": "Debts",
+	"sheetside.wallet.incomes": "Incomes",
+	"sheetside.suport": "Suport",
+	"sheetside.suport.help": "Help"
 }

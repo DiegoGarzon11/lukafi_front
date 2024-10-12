@@ -2,16 +2,15 @@ import { NewDebt } from '@/apis/DebtService';
 import { Expense, Income, LoaderApi } from '@/assets/icons/Svg';
 import { Button } from '@/components/ui/button';
 import { DatePicker } from '@/components/ui/datapicker';
-
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { ApiResponse } from '@/interfaces/Api';
 import { Toast } from '@/tools/Toast';
-import { BadgePlus } from 'lucide-react';
+import { HandCoins } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-export const AddDebt = ({ apiData, sendData }) => {
+export const AddDebt = ({ apiData,sendData, className }) => {
 	const [person, setPerson] = useState('');
 	const [value, setValue] = useState('');
 	const [reason, setReason] = useState('');
@@ -63,7 +62,6 @@ export const AddDebt = ({ apiData, sendData }) => {
 
 		if (response) {
 			sendData('debt');
-
 			setResponseDebt(response);
 			setVisibilityToast(true);
 			setValue('');
@@ -85,8 +83,8 @@ export const AddDebt = ({ apiData, sendData }) => {
 			<DialogTrigger asChild>
 				<Button
 					variant='ghost'
-					className='w-full py-6 dark:hover:bg-zinc-900 dark:bg-zinc-900/50 bg-zinc-300 text-black dark:text-white hover:bg-zinc-400 flex items-center gap-3'>
-					{t('addDebt.addDebt')} <BadgePlus />
+					className={` ${className} py-6 dark:hover:bg-hover_primary_color dark:bg-dark_primary_color bg-zinc-300 text-black dark:text-white hover:bg-zinc-400 flex items-center gap-3`}>
+					{t('addDebt.addDebt')} <HandCoins />
 				</Button>
 			</DialogTrigger>
 			<DialogContent className=' w-11/12 md:w-[500px] rounded-md '>
@@ -125,23 +123,23 @@ export const AddDebt = ({ apiData, sendData }) => {
 					</div>
 				</div>
 				<div className='flex gap-5 items-center'>
-					<div>
+					<div className='w-full'>
 						<label htmlFor=''>
 							{t('addDebt.relatedPerson')} <span className='text-red-500'>*</span>
 						</label>
 						<Input
 							value={person}
-							className='border dark:border-zinc-400 dark:bg-zinc-800/30'
+							className='border dark:border-zinc-400 dark:bg-zinc-800/30 '
 							onChange={(e) => handleValues(e, 'name')}
 						/>
 					</div>
-					<div>
+					<div className='w-full'>
 						<label htmlFor=''>
 							{t('addDebt.amount')} $ <span className='text-red-500'>*</span>
 						</label>
 						<Input
 							id='value_income'
-							className='border dark:border-zinc-400 dark:bg-zinc-800/30'
+							className='border dark:border-zinc-400 dark:bg-zinc-800/30 '
 							type='text'
 							value={value}
 							onChange={(e) => handleValues(e, 'money')}

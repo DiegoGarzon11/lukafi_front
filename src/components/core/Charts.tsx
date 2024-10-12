@@ -7,19 +7,19 @@ import { ExpensesByCategory, wallet_values } from '@/interfaces/Wallet';
 import { useTranslation } from 'react-i18next';
 
 const COLORS = [
-	'#E85C0D',
-	'#3795BD',
-	'#88D66C',
-	'#3FA2F6',
-	'#F4CE14',
-	'#4C3BCF',
-	'#E88D67',
-	'#B7B597',
-	'#FF5F00',
-	'#A91D3A',
-	'#68D2E8',
-	'#E9C874',
-	'#481E14',
+	'#00FF9C',
+	'#72BF78',
+	'#06D001',
+	'#15B392',
+	'#399918',
+	'#9BEC00',
+	'#81A263',
+	'#C3FF93',
+	'#0A6847',
+	'#12372A',
+	'#739072',
+	'#186F65',
+	'#96C291',
 ];
 const CustomTooltip = ({ payload }) => {
 	const { t, i18n } = useTranslation();
@@ -67,7 +67,7 @@ export const Chart = ({ trigger }) => {
 					activeDot={{ r: 8 }}
 					type='bump'
 					dataKey='total_value'
-					stroke='red'
+					stroke='#adea49'
 				/>
 			</LineChart>
 		</ResponsiveContainer>

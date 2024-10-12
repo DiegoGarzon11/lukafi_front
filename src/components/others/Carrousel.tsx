@@ -115,11 +115,11 @@ export const Carrusel = () => {
 
 									<button
 										onClick={(e) => handleNextCarousel(e)}
-										className=' hover:bg-zinc-500 bg-zinc-700 w-full h-8 mt-6 rounded-md dark:hover:bg-zinc-900 text-white'>
+										className=' hover:bg-zinc-500 bg-zinc-800 w-full h-8 mt-6 rounded-md dark:hover:bg-hover_primary_color text-white'>
 										Siguiente
 									</button>
 									<p className='flex gap-2 m-0 absolute bottom-5'>
-										<span className='dark:bg-slate-100 bg-slate-700 h-3 w-3 rounded-full'></span>
+										<span className='dark:bg-green-400 bg-green-700 h-3 w-3 rounded-full'></span>
 										<span className='dark:bg-slate-700 bg-slate-300 h-3 w-3 rounded-full'></span>
 										<span className='dark:bg-gray-700  bg-slate-300 h-3 w-3 rounded-full'></span>
 									</p>
@@ -174,7 +174,7 @@ export const Carrusel = () => {
 											<div className=' flex  justify-center items-center gap-2'>
 												<Input
 													type='text'
-													className='appearance-none  dark:border-white border-zinc-900'
+													className='appearance-none  dark:border-white border-gray-600/50'
 													value={salario}
 													onChange={(e) => handleValuesMoney(e, 'salario')}
 												/>
@@ -188,7 +188,7 @@ export const Carrusel = () => {
 											<div className='flex  justify-center items-center gap-2'>
 												<Input
 													type='text'
-													className='appearance-none border dark:border-white border-zinc-900'
+													className='appearance-none border dark:border-white border-gray-600/50'
 													value={ahorro}
 													onChange={(e) => handleValuesMoney(e, 'ahorro')}
 												/>
@@ -205,14 +205,14 @@ export const Carrusel = () => {
 											<div className='flex items-center gap-3'>
 												<button
 													onClick={(e) => handleBackCarousel(e)}
-													className='hover:bg-zinc-500  text-white  bg-zinc-700 w-full h-8 mt-6 rounded-md dark:hover:bg-zinc-900'>
+													className='hover:bg-zinc-500  text-white  bg-zinc-800 w-full h-8 mt-6 rounded-md dark:hover:bg-hover_primary_color'>
 													Atras
 												</button>
 
 												<button
 													onClick={(e) => handleNextCarousel(e)}
 													disabled={salario === '0' || ahorro === '0' || isMajor}
-													className='hover:bg-zinc-500   bg-zinc-700 text-white w-full h-8 mt-6 rounded-md disabled:dark:hover:bg-zinc-700 hover:dark:bg-zinc-900'>
+													className='hover:bg-zinc-500   bg-zinc-800 text-white w-full h-8 mt-6 rounded-md disabled:cursor-not-allowed disabled:dark:hover:bg-zinc-800 hover:dark:bg-hover_primary_color'>
 													Confirmar
 												</button>
 											</div>
@@ -220,7 +220,7 @@ export const Carrusel = () => {
 									</form>
 									<p className='flex gap-2 m-0 absolute bottom-5'>
 										<span className='dark:bg-slate-700 bg-slate-300  h-3 w-3 rounded-full'></span>
-										<span className='dark:bg-slate-100 bg-slate-700  h-3 w-3 rounded-full'></span>
+										<span className='dark:bg-green-400 bg-green-700  h-3 w-3 rounded-full'></span>
 										<span className='dark:bg-gray-700 bg-slate-300  h-3 w-3 rounded-full'></span>
 									</p>
 								</CardContent>
@@ -243,13 +243,13 @@ export const Carrusel = () => {
 										</p>
 										<button
 											onClick={(e) => handleBackCarousel(e)}
-											className=' hover:bg-zinc-500   text-white bg-zinc-700 w-5/6 h-8 mt-6 rounded-md dark:hover:bg-zinc-900'>
+											className=' hover:bg-zinc-500   text-white bg-zinc-700 w-5/6 h-8 mt-6 rounded-md dark:hover:bg-hover_primary_color'>
 											Volver
 										</button>
 										<p className='flex gap-2 m-0 absolute bottom-5'>
 											<span className='dark:bg-slate-700  bg-slate-300 h-3 w-3 rounded-full'></span>
 											<span className='dark:bg-slate-700  bg-slate-300 h-3 w-3 rounded-full'></span>
-											<span className='dark:bg-gray-100  bg-slate-700 h-3 w-3 rounded-full'></span>
+											<span className='dark:bg-green-400 bg-green-700  h-3 w-3 rounded-full'></span>
 										</p>
 									</div>
 								) : (
@@ -285,13 +285,13 @@ export const Carrusel = () => {
 										<div className='flex  w-full gap-3'>
 											<button
 												onClick={(e) => handleBackCarousel(e)}
-												className=' hover:bg-zinc-500  text-white bg-zinc-700 h-8 w-full mt-6 rounded-md dark:hover:bg-zinc-900'>
+												className=' hover:bg-zinc-500  text-white bg-zinc-700 dark:bg-zinc-800 h-8 w-full mt-6 rounded-md dark:hover:bg-hover_primary_color'>
 												Atras
 											</button>
 											<button
 												disabled={loader}
 												onClick={submitInfoWallet}
-												className='hover:bg-zinc-500 text-white bg-zinc-700 h-8 w-full mt-6 rounded-md dark:hover:bg-zinc-900 flex justify-center items-center'>
+												className='hover:bg-zinc-500 text-white bg-zinc-700 h-8 w-full mt-6 rounded-md dark:bg-zinc-800 dark:hover:bg-hover_primary_color flex justify-center items-center'>
 												{loader ? <LoaderApi color='white' /> : 'Crear billetera'}
 											</button>
 										</div>

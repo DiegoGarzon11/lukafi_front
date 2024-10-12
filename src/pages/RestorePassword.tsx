@@ -123,7 +123,7 @@ export const ForgetPassword = () => {
 								<Input
 									value={password}
 									onChange={(e) => setPassword(e.target.value)}
-									className='dark:text-white border-zinc-300 dark:bg-zinc-800/30 text-black'
+									className='dark:text-white border-gray-600/50 dark:bg-zinc-800/30 text-black'
 									autoComplete='current-password'
 									type={showPassword ? 'text' : 'password'}
 									name='password'
@@ -143,7 +143,7 @@ export const ForgetPassword = () => {
 									Confirmar contraseña <span className='text-red-500'>*</span>
 								</label>
 								<Input
-									className='dark:text-white border-zinc-300 dark:bg-zinc-800/30 text-black'
+									className='dark:text-white border-gray-600/50 dark:bg-zinc-800/30 text-black'
 									autoComplete='current-password'
 									value={confirmPassword}
 									onChange={(e) => setConfirmPassword(e.target.value)}
@@ -197,7 +197,7 @@ export const ForgetPassword = () => {
 								onChange={(e) => setEmail(e.target.value)}
 								type='email'
 								placeholder='Correo electrónico'
-								className='w-full rounded-md p-2 border-zinc-300 dark:border-zinc-700 border-solid border outline-none text-black'
+								className='w-full rounded-md p-2 border-gray-600/50 dark:border-zinc-700 border-solid border outline-none text-black'
 							/>
 							<button
 								disabled={!email || loader}

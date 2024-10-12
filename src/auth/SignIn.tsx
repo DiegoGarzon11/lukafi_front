@@ -86,7 +86,7 @@ export default function SignIn() {
 						{t('form.field.email')}
 					</label>
 					<Input
-						className='dark:text-white border-zinc-300 dark:bg-zinc-800/30 text-black'
+						className='dark:text-white border-gray-600/50 dark:bg-zinc-800/30 text-black'
 						autoComplete='email'
 						type='text'
 						onChange={handleChange}
@@ -102,7 +102,7 @@ export default function SignIn() {
 						{t('form.field.password')}
 					</label>
 					<Input
-						className='dark:text-white border-zinc-300 dark:bg-zinc-800/30 text-black'
+						className='dark:text-white border-gray-600/50 dark:bg-zinc-800/30 text-black'
 						autoComplete='current-password'
 						type={isOpen ? 'text' : 'password'}
 						onChange={handleChange}
