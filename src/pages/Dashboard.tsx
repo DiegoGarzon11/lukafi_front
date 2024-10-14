@@ -45,8 +45,8 @@ export const Dashboard = () => {
 	useEffect(() => {
 		const fetchData = async () => {
 			const dataUser = await GetWalletUser(user?.user_id);
-			const dailyExpenses = await GetDailyExpenses(dataUser?.wallet?.wallet_id);
 			setDataUser(dataUser);
+			const dailyExpenses = await GetDailyExpenses(dataUser?.wallet?.wallet_id);
 			setFetching(false);
 			const allToRest: number = dailyExpenses.expenses.reduce((a: number, c: Expenses) => {
 				return a + c.total_value;
@@ -59,6 +59,8 @@ export const Dashboard = () => {
 	}, [trigger]);
 
 	const recibeResponseChild = async (e: string) => {
+		console.log(trigger);
+		
 		if (e) return setTrigger((prev) => prev + 1);
 	};
 
@@ -100,6 +102,7 @@ export const Dashboard = () => {
 						/>
 						<div className='col-span-2 w-full'>
 							<AddIncome
+								sendData={(e) => recibeResponseChild(e)}
 								className='w-full '
 								apiData={userData?.wallet}
 							/>

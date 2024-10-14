@@ -5,11 +5,11 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Input } from '@/components/ui/input';
 import { ApiResponse } from '@/interfaces/Api';
 import { Toast } from '@/tools/Toast';
-import {  PiggyBank } from 'lucide-react';
+import { PiggyBank } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-export const AddIncome = ({ apiData, className }) => {
+export const AddIncome = ({ apiData, className, sendData }) => {
 	const [name, setName] = useState('');
 	const [value, setValue] = useState('0');
 	const [loader, setLoader] = useState(false);
@@ -21,7 +21,6 @@ export const AddIncome = ({ apiData, className }) => {
 
 	const handleValues = (e) => {
 		let value = e.target.value.replace(/[^0-9.]/g, '');
-
 		const floatValue = parseFloat(value);
 		const formattedValue = floatValue.toLocaleString();
 
@@ -29,9 +28,6 @@ export const AddIncome = ({ apiData, className }) => {
 	};
 
 	const submitIncome = async () => {
-		console.log(name);
-		console.log(value);
-
 		setLoader(true);
 
 		const params = {
@@ -44,6 +40,7 @@ export const AddIncome = ({ apiData, className }) => {
 		const response = await AddNewIncome(params);
 
 		if (response) {
+			sendData('income');
 			setResponseIncome(response);
 			setVisibilityToast(true);
 			setValue('');
@@ -60,7 +57,6 @@ export const AddIncome = ({ apiData, className }) => {
 		<Dialog>
 			<DialogTrigger asChild>
 				<Button
-				disabled
 					variant='ghost'
 					className={` ${className} py-6 dark:hover:bg-zinc-900 dark:bg-dark_primary_color bg-zinc-300 text-black dark:text-white hover:bg-zinc-400 flex items-center gap-3`}>
 					{t('addIncome.newIncome')} <PiggyBank />

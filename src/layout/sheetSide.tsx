@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Sheet, SheetClose, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet';
 import { useTranslation } from 'react-i18next';
 import dog from '@/assets/avatar/dog.webp';
-import logo from '../../public/images/logo.png';
+import logo from '/images/logo.png';
 import { DollarSign, HandCoins, Headset, LogOut, LucideLineChart, Menu, Pencil, PiggyBank, User, Wallet, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
@@ -154,19 +154,18 @@ export function SheetSide() {
 								</Link>
 							</AccordionContent>
 							<AccordionContent className='flex flex-col gap-2 pl-5'>
-								{/* <Link
+								<Link
 									onClick={() => setSheetOpen(false)}
-									to='wallet/incomes'> */}
-								<Button
-									disabled
-									onClick={() => setBtnSelected('incomes')}
-									className={`w-full gap-4 justify-start py-6 bg-zinc-200 hover:bg-white dark:hover:bg-hover_primary_color text-black dark:text-white ${
-										btnSelected === 'incomes' ? 'bg-white bg-gradient-to-b dark:from-[#0e1a12] dark:to-[#1a862a]' : 'bg-transparent'
-									}`}>
-									<PiggyBank />
-									{t('sheetside.wallet.incomes')}
-								</Button>
-								{/* </Link> */}
+									to='wallet/incomes'>
+									<Button
+										onClick={() => setBtnSelected('incomes')}
+										className={`w-full gap-4 justify-start py-6 bg-zinc-200 hover:bg-white dark:hover:bg-hover_primary_color text-black dark:text-white ${
+											btnSelected === 'incomes' ? 'bg-white bg-gradient-to-b dark:from-[#0e1a12] dark:to-[#1a862a]' : 'bg-transparent'
+										}`}>
+										<PiggyBank />
+										{t('sheetside.wallet.incomes')}
+									</Button>
+								</Link>
 							</AccordionContent>
 							<AccordionContent className='flex flex-col gap-2 pl-5'>
 								<Link

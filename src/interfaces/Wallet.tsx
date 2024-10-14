@@ -56,7 +56,7 @@ export interface wallet_values extends ApiResponse {
 	debts: number;
 
 }
-export interface Incomes  {
+export interface Incomes extends ApiResponse  {
 	income_id : string,
 	name : string,
 	value : number,
