@@ -1,7 +1,7 @@
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell, Sector } from 'recharts';
-import { GetDailyExpenses, GetExpensesByCategory } from '@/apis/ExpenseService';
+import { GetExpensesByCategory } from '@/apis/ExpenseService';
 import { useEffect, useState } from 'react';
-import { GetWalletUser, GetWalletValues } from '@/apis/WalletService';
+import { GetWalletUser, GetWalletValues, GetDailyReport } from '@/apis/WalletService';
 import { PieChart, Pie } from 'recharts';
 import { ExpensesByCategory, wallet_values } from '@/interfaces/Wallet';
 import { useTranslation } from 'react-i18next';
@@ -24,24 +24,48 @@ const COLORS = [
 const CustomTooltip = ({ payload }) => {
 	const { t, i18n } = useTranslation();
 	i18n.changeLanguage();
+	function validateColor(name) {
+		console.log(name);
+		
+		if (name === 'expenses') {
+			return '#9BEC00';
+		} else if (name === 'incomes') {
+			return 'red';
+		}
+	}
+	function validateName(name) {
+		if (name === 'expenses') {
+			return 'gastaste ';
+		} else if (name === 'incomes') {
+			return 'ingresaste ';
+		}
+	}
+	
+
 	return (
-		<div className='custom-tooltip'>
-			<p className='payload'>
-				{t('dashboard.chart')} {payload[0]?.payload?.date} {t('dashboard.chartSpent')} {Number(payload[0]?.payload?.total_value).toLocaleString()}
-			</p>
+		<div className='bg-zinc-900 p-5 rounded-md'>
+			{payload.map((p) => (
+				<p>
+					
+					{t('dashboard.chart')} {p.payload?.day} {t('dashboard.chartSpent')} 
+					<span className={`text-[${validateColor(p.name)}]`}> {validateName(p.name)} </span>
+					<span className={`text-[${validateColor(p.name)}]`}>	{Number(p.value).toLocaleString()} </span>
+				
+				</p>
+			))}
 		</div>
 	);
 };
 
 export const Chart = ({ trigger }) => {
 	const userInfo = JSON.parse(localStorage.userMain);
-	const [expensesPaid, setExpensesPaid] = useState();
+	const [report, setReport] = useState();
 
 	useEffect(() => {
 		const getDailyFixed = async () => {
 			const wallet = await GetWalletUser(userInfo?.user_id);
-			const dailyExpenses = await GetDailyExpenses(wallet?.wallet?.wallet_id);
-			setExpensesPaid(dailyExpenses?.expenses);
+			const dailyReport = await GetDailyReport(wallet?.wallet?.wallet_id);
+			setReport(dailyReport.results);
 		};
 		getDailyFixed();
 	}, [trigger]);
@@ -51,7 +75,7 @@ export const Chart = ({ trigger }) => {
 			<LineChart
 				width={500}
 				height={300}
-				data={expensesPaid}
+				data={report}
 				margin={{
 					top: 5,
 					right: 30,
@@ -59,20 +83,44 @@ export const Chart = ({ trigger }) => {
 					bottom: 5,
 				}}>
 				<CartesianGrid strokeDasharray=' 3 3' />
-				<XAxis dataKey='date' />
+				<XAxis dataKey='day' />
 				<YAxis />
 				<Tooltip content={CustomTooltip} />
 				<Legend />
 				<Line
-					activeDot={{ r: 8 }}
+					activeDot={{ r: 5 }}
+					strokeWidth={3}
 					type='bump'
-					dataKey='total_value'
-					stroke='#adea49'
+					dataKey='expenses'
+					stroke='#15B392'
+				/>
+				<Line
+					strokeWidth={3}
+					activeDot={{ r: 5 }}
+					type='bump'
+					dataKey='incomes'
+					stroke='#9BEC00'
 				/>
 			</LineChart>
 		</ResponsiveContainer>
 	);
 };
+
+// const COLORS = [
+// 	'#00FF9C',
+// 	'#72BF78',
+// 	'#06D001',
+// 	'#15B392',
+// 	'#399918',
+// 	'#9BEC00',
+// 	'#81A263',
+// 	'#C3FF93',
+// 	'#0A6847',
+// 	'#12372A',
+// 	'#739072',
+// 	'#186F65',
+// 	'#96C291',
+// ];
 
 export const ChartDonut = ({ trigger }) => {
 	const userInfo = JSON.parse(localStorage.userMain);

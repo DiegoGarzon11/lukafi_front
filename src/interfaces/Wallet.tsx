@@ -62,3 +62,6 @@ export interface Incomes extends ApiResponse  {
 	value : number,
 	date : string
 }
+export interface HistoryReport extends ApiResponse {
+	date: string;
+}

@@ -1,5 +1,5 @@
-import { GetDailyExpenses, GetExpenses } from '@/apis/ExpenseService';
-import { GetWalletUser } from '@/apis/WalletService';
+import { GetExpenses } from '@/apis/ExpenseService';
+import {  GetWalletUser } from '@/apis/WalletService';
 import { Chart, ChartDonut } from '@/components/core/Charts';
 import { AddDebt } from '@/components/core/Debts/AddDebt';
 import { AddExpense } from '@/components/core/Expenses/AddExpense';
@@ -17,7 +17,6 @@ import { useTranslation } from 'react-i18next';
 export const Dashboard = () => {
 	const [userData, setDataUser] = useState<ResponseWallet | undefined>(undefined);
 	const [expenses, setExpenses] = useState<Array<Expenses> | undefined>([]);
-	const [restExpenses, setRestExpenses] = useState<Expenses | number>(0);
 	const [trigger, setTrigger] = useState(0);
 	const [fetching, setFetching] = useState(true);
 	const user = JSON.parse(localStorage.getItem('userMain'));
@@ -46,13 +45,7 @@ export const Dashboard = () => {
 		const fetchData = async () => {
 			const dataUser = await GetWalletUser(user?.user_id);
 			setDataUser(dataUser);
-			const dailyExpenses = await GetDailyExpenses(dataUser?.wallet?.wallet_id);
 			setFetching(false);
-			const allToRest: number = dailyExpenses.expenses.reduce((a: number, c: Expenses) => {
-				return a + c.total_value;
-			}, 0);
-
-			setRestExpenses(allToRest);
 		};
 
 		fetchData();
@@ -60,7 +53,7 @@ export const Dashboard = () => {
 
 	const recibeResponseChild = async (e: string) => {
 		console.log(trigger);
-		
+
 		if (e) return setTrigger((prev) => prev + 1);
 	};
 
@@ -110,7 +103,7 @@ export const Dashboard = () => {
 					</section>
 					<section className='flex md:col-span-3 md:row-span-8 flex-wrap md:flex-nowrap  gap-3 md:h-56'>
 						<article className=' w-full h-full  shadow-sm border-none dark:bg-dark_primary_color bg-zinc-200 text-black  dark:text-white rounded-md  p-3'>
-							<div>
+							{/* <div>
 								<p className='text-lg font-semibold'>{t('dashboard.savings')}:</p>
 								<p className='font-semibold my-3'>
 									{t('dashboard.before')}:<span className='text-green-500 ml-3'>{userData?.wallet?.salary.toLocaleString()}</span>
@@ -137,7 +130,7 @@ export const Dashboard = () => {
 										? `${t('dashboard.rangeSaving')}`
 										: `${t('dashboard.goalSaving')}`}
 								</p>
-							</div>
+							</div> */}
 						</article>
 						<article className=' text-white flex flex-col justify-between  bg-gradient-to-r  to-green-400  from-gray-700 w-full md:w-2/5 rounded-3xl p-8 shadow-xl shadow-zinc-900/90'>
 							<div className='flex justify-between'>
@@ -146,11 +139,11 @@ export const Dashboard = () => {
 							</div>
 							<div className='flex flex-col'>
 								<p className=' font-semibold'>{t('dashboard.availableBalance')}</p>
-								<p className=' font-semibold text-3xl tracking-wider'>
+								{/* <p className=' font-semibold text-3xl tracking-wider'>
 									{Number(userData?.wallet?.salary) - Number(restExpenses) <= 0
 										? 0
 										: (Number(userData?.wallet?.salary) - Number(restExpenses)).toLocaleString()}
-								</p>
+								</p> */}
 							</div>
 							<div className='flex justify-between '>
 								<p className='font-semibold'>{generateRandomNumbers()}</p>
@@ -160,9 +153,10 @@ export const Dashboard = () => {
 					</section>
 
 					<section className='  md:col-span-3 md:row-span-6  flex flex-col justify-around gap-3'>
-						<div className='flex flex-col dark:bg-dark_primary_color rounded-md  bg-zinc-200 w-full h-full'>
-							<div className='flex flex-col md:flex-row items-center justify-between px-5 py-3 gap-2'>
-								<p className='text-lg '>{t('dashboard.viewExpensesCategory')}</p>
+						
+						<div className='flex flex-col dark:bg-dark_primary_color rounded-md  bg-zinc-200 w-full h-auto py-10'>
+							<div className='flex flex-col md:flex-row items-center justify-between p-5 gap-2'>
+								<p className='text-lg pb-5'>{t('dashboard.viewExpensesCategory')}</p>
 								<div className='flex gap-3 justify-end'>
 									<Button className=''>{t('dashboard.day')}</Button>
 									<Button
@@ -187,9 +181,9 @@ export const Dashboard = () => {
 							)}
 						</div>
 
-						<div className='w-full bg-zinc-200 dark:bg-dark_primary_color  shadow-sm rounded-md '>
-							<div className='flex flex-col md:flex-row justify-between items-center mb-10 px-5 pt-3 gap-3'>
-								<p className='text-lg'>{t('dashboard.viewBalanceExpenses')}</p>
+						<div className='flex flex-col dark:bg-dark_primary_color rounded-md  bg-zinc-200 w-full h-auto py-10'>
+							<div className='flex flex-col md:flex-row justify-between items-center  p-5   gap-3'>
+								<p className='text-lg pb-5'>{t('dashboard.viewBalanceExpenses')}</p>
 								<div className='flex gap-3'>
 									<Button className=''>{t('dashboard.day')}</Button>
 									<Button
@@ -207,7 +201,7 @@ export const Dashboard = () => {
 							{expenses?.length > 0 ? (
 								<Chart trigger={trigger} />
 							) : (
-								<div className=' flex justify-center items-center gap-3  pb-7 '>
+								<div className=' flex justify-center items-center gap-3   '>
 									<AlertTriangle className='text-yellow-500' />
 									<p className='text-lg font-semibold'> {t('dashboard.noExpenses')}</p>
 								</div>

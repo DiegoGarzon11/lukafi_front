@@ -41,6 +41,23 @@ export const GetAllIncomes = async (data) => {
 	}
 	console.warn('datos no enviados');
 };
+
+export const GetDailyIncomes = async (data) => {
+	if (data) {
+		try {
+			const response = await fetch(`${API_HTTP + MAIN_ROUTE}get-daily-incomes/${data}`, {
+				method: 'GET',
+			});
+
+			return await response.json();
+		} catch (error) {
+			console.error(error);
+		}
+		return;
+	}
+	console.warn('datos no enviados');
+};
+
 export const DeleteIncome = async (data) => {
 	if (data) {
 		try {

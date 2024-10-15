@@ -52,3 +52,18 @@ export const CreateWallet = async (data) => {
 	}
 	console.warn('datos no enviados');
 };
+export const GetDailyReport = async (data) => {
+	if (data) {
+		try {
+			const response = await fetch(`${API_HTTP}/wallet/get-daily-report/${data}`, {
+				method: 'GET',
+			});
+
+			return await response.json();
+		} catch (error) {
+			console.error(error);
+		}
+		return;
+	}
+	console.warn('datos no enviados');
+};

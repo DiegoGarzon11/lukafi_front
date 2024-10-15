@@ -155,7 +155,7 @@ export const SeeIncomes = () => {
 													</TableCell>
 
 													<TableCell className='font-medium w-full hidden md:block '>
-														<p>{i?.date ? format(new Date(i?.date), 'PP') : 'Sin fecha limite'}</p>
+														<p>{i?.value}</p>
 													</TableCell>
 													<TableCell className='font-medium  w-full'>
 														<DropdownMenu>
@@ -198,7 +198,7 @@ export const SeeIncomes = () => {
 				onOpenChange={setOpenDeleteDialog}>
 				<DialogContent
 					aria-describedby={null}
-					className=' w-[95%] md:w-[500px] rounded-md '>
+					className=' w-[95%] md:w-[500px] rounded-md '> 
 					<DialogHeader>
 						<DialogTitle className='my-3'>
 							<p className='my-3 font-bold text-2xl'> {t('dashboard.confirmDelete')} </p>

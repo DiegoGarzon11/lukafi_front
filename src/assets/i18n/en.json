@@ -71,8 +71,8 @@
 	"addIncome.amount": "Amount of the income",
 
 	"dataPicker.selectDate": "Select the payment day",
-	"dashboard.chart": "In the day",
-	"dashboard.chartSpent": "you spent",
+	"dashboard.chart": " On the Day",
+	"dashboard.chartSpent": "you moved",
 	"dashboard.confirmDelete": "Confirm delete",
 	"dashboard.removeDebt": "Are you sure to remove the debt",
 	"dashboard.removeExpense": "Are you sure to remove the expense",

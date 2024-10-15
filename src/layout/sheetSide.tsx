@@ -70,7 +70,7 @@ export function SheetSide() {
 						defaultValue={btnSelected}
 						type='single'
 						collapsible
-						className='w-full px-2 flex flex-col gap-2 overflow-y-scroll scrollbar-custom md:h-[350px] h-80'>
+						className='w-full px-2 flex flex-col gap-2 overflow-y-scroll scrollbar-custom md:h-[375px] h-80'>
 						<AccordionItem value='dashboard'>
 							<AccordionTrigger>
 								<div className='flex items-center gap-5'>
@@ -90,29 +90,6 @@ export function SheetSide() {
 										}`}>
 										<LucideLineChart className='rotation-180' />
 										Dashboard
-									</Button>
-								</Link>
-							</AccordionContent>
-						</AccordionItem>
-						<AccordionItem value='profile'>
-							<AccordionTrigger>
-								<div className='flex items-center gap-5'>
-									<User />
-
-									{t('sheetside.account')}
-								</div>
-							</AccordionTrigger>
-							<AccordionContent className='flex flex-col gap-2 pl-5 mt-3'>
-								<Link
-									to='/profile'
-									onClick={() => setSheetOpen(false)}>
-									<Button
-										onClick={() => setBtnSelected('profile')}
-										className={`w-full gap-4 justify-start py-6 bg-zinc-200 hover:bg-white dark:hover:bg-hover_primary_color text-black dark:text-white ${
-											btnSelected === 'profile' ? 'bg-white bg-gradient-to-b dark:from-[#0e1a12] dark:to-[#1a862a]' : 'bg-transparent'
-										}`}>
-										<User />
-										{t('sheetside.account.profile')}
 									</Button>
 								</Link>
 							</AccordionContent>
@@ -182,6 +159,30 @@ export function SheetSide() {
 								</Link>
 							</AccordionContent>
 						</AccordionItem>
+						<AccordionItem value='profile'>
+							<AccordionTrigger>
+								<div className='flex items-center gap-5'>
+									<User />
+
+									{t('sheetside.account')}
+								</div>
+							</AccordionTrigger>
+							<AccordionContent className='flex flex-col gap-2 pl-5 mt-3'>
+								<Link
+									to='/profile'
+									onClick={() => setSheetOpen(false)}>
+									<Button
+										onClick={() => setBtnSelected('profile')}
+										className={`w-full gap-4 justify-start py-6 bg-zinc-200 hover:bg-white dark:hover:bg-hover_primary_color text-black dark:text-white ${
+											btnSelected === 'profile' ? 'bg-white bg-gradient-to-b dark:from-[#0e1a12] dark:to-[#1a862a]' : 'bg-transparent'
+										}`}>
+										<User />
+										{t('sheetside.account.profile')}
+									</Button>
+								</Link>
+							</AccordionContent>
+						</AccordionItem>
+						
 						<AccordionItem value='help'>
 							<AccordionTrigger>
 								<div className='flex items-center gap-5 '>
