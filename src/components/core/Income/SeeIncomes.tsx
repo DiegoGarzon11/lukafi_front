@@ -113,9 +113,9 @@ export const SeeIncomes = () => {
 						<div className='w-full'>
 							<section className='w-full  '>
 								<article className=' flex text-base font-semibold py-4 dark:text-zinc-300 text-slate-500 border-b border-slate-500 mb-3'>
-									<p className='w-full  hidden md:block pl-2'>{t('dashboard.date')}</p>
+									<p className='w-full   pl-2'>{t('dashboard.date')}</p>
 									<p className='w-full '>{t('dashboard.name')}</p>
-									<p className='w-full hidden md:block '>{t('dashboard.value')}</p>
+									<p className='w-full '>{t('dashboard.value')}</p>
 									<p className='w-full' />
 								</article>
 							</section>
@@ -128,10 +128,10 @@ export const SeeIncomes = () => {
 										<TableBody className=' w-full overflow-auto  overflow-x-hidden   scrollbar-custom'>
 											{incomes?.map((i) => (
 												<TableRow key={i?.income_id}>
-													<TableCell className='font-medium  w-full  hidden md:block'>
+													<TableCell className='font-medium  w-full  '>
 														<p>{new Date(i?.date).toLocaleDateString()}</p>
 													</TableCell>
-													<TableCell className='font-medium w-full  hidden md:block'>
+													<TableCell className='font-medium w-full  '>
 														{i?.name.length >= 10 ? (
 															<TooltipComponent
 																message={`${i?.name.slice(0, 10)}...`}
@@ -153,7 +153,7 @@ export const SeeIncomes = () => {
 														)}
 													</TableCell>
 
-													<TableCell className='font-medium w-full hidden md:block '>
+													<TableCell className='font-medium w-full  '>
 														<p>{i?.value}</p>
 													</TableCell>
 													<TableCell className='font-medium  w-full'>
@@ -197,7 +197,7 @@ export const SeeIncomes = () => {
 				onOpenChange={setOpenDeleteDialog}>
 				<DialogContent
 					aria-describedby={null}
-					className=' w-[95%] md:w-[500px] rounded-md '> 
+					className=' w-[95%] md:w-[500px] rounded-md '>
 					<DialogHeader>
 						<DialogTitle className='my-3'>
 							<p className='my-3 font-bold text-2xl'> {t('dashboard.confirmDelete')} </p>
