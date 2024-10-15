@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Expenses, ResponseWallet } from '@/interfaces/Wallet';
 import '@/styles/Dashboard.css';
 import { format } from 'date-fns';
-import { AlertTriangle, ArrowDown, ArrowUp } from 'lucide-react';
+import { AlertTriangle } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
