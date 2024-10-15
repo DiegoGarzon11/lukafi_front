@@ -17,6 +17,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AddDebt } from './AddDebt';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
+import { LoaderComponent } from '@/components/others/Loader';
 export const SeeDebts = () => {
 	const [debts, setDebts] = useState<Array<Debt> | undefined>([]);
 	const [debtToAddAmount, setDebtToAddAmount] = useState<Debt | undefined>(undefined);
@@ -31,6 +32,7 @@ export const SeeDebts = () => {
 	const [amount, setAmount] = useState('');
 	const [trigger, setTrigger] = useState(0);
 	const [userData, setDataUser] = useState<ResponseWallet | undefined>(undefined);
+	const [fetching, setFetching] = useState(true);
 
 	const { t, i18n } = useTranslation();
 	i18n.changeLanguage();
@@ -44,8 +46,8 @@ export const SeeDebts = () => {
 		const fetchData = async () => {
 			const dataUser = await GetWalletUser(user?.user_id);
 			setDataUser(dataUser);
-
 			getDebts(dataUser?.wallet);
+			setFetching(false);
 		};
 
 		fetchData();
@@ -119,7 +121,13 @@ export const SeeDebts = () => {
 			setApiResponse(null);
 		}, 1000);
 	};
-
+	if (fetching) {
+		return (
+			<div className='h-screen flex justify-center pt-20 flex-col items-center gap-3 bg-dark_primary_color'>
+				<LoaderComponent />
+			</div>
+		);
+	}
 	return (
 		<main className='pt-20 p-3 h-screen'>
 			<nav className='flex w-full justify-between items-center pb-5'>
@@ -136,7 +144,7 @@ export const SeeDebts = () => {
 				</Breadcrumb>
 
 				<AddDebt
-						className='md:w-1/5 w-1/2 border border-border'
+					className='md:w-1/5 w-1/2 border border-border'
 					sendData={(e) => recibeResponseChild(e)}
 					apiData={userData?.wallet}
 				/>

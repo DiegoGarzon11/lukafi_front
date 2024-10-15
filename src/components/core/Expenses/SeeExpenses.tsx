@@ -48,6 +48,7 @@ export const SeeExpenses = () => {
 			setDataUser(dataUser);
 			const fixedExpenses = await GetFixedExpenses(dataUser.wallet);
 			setFixedExpenses(fixedExpenses?.expenses);
+			setFetching(false);
 		};
 
 		fetchData();
@@ -72,8 +73,9 @@ export const SeeExpenses = () => {
 		};
 		const response = await PayFixedExpense(params);
 		setTrigger((prev) => prev + 1);
+		
 
-		if (!response) {
+		if(!response){
 			return;
 		}
 		setVisibilityToast(true);
@@ -213,6 +215,7 @@ export const SeeExpenses = () => {
 			<section className=' shadow-sm  md:col-span-3 md:row-span-2 '>
 				<div className=' w-full  flex flex-col  justify-between gap-5 order-3 '>
 					<div className='dark:bg-dark_primary_color bg-zinc-200  md:p-5 w-full  rounded-xl border border-gray-600/50'>
+					
 						<div className='flex gap-3 flex-col items-start '>
 							<h5 className='text-2xl'> {t('dashboard.allFixedExpenses')} </h5>
 

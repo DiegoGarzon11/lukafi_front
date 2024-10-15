@@ -15,6 +15,7 @@ import { Button } from '@/components/ui/button';
 import { LoaderApi } from '@/assets/icons/Svg';
 import { ApiResponse } from '@/interfaces/Api';
 import { Toast } from '@/tools/Toast';
+import { LoaderComponent } from '@/components/others/Loader';
 
 export const SeeIncomes = () => {
 	const { t, i18n } = useTranslation();
@@ -28,7 +29,7 @@ export const SeeIncomes = () => {
 	const [ApiResponse, setApiResponse] = useState<ApiResponse | undefined>(null);
 	const [visibilyToast, setVisibilityToast] = useState(false);
 	const [loader, setLoader] = useState(false);
-
+	const [fetching, setFetching] = useState(true);
 	const getIncomes = async (walletId) => {
 		const income = await GetAllIncomes(walletId);
 		setIncomes(income?.incomes);
@@ -38,6 +39,7 @@ export const SeeIncomes = () => {
 			const wallet = await GetWalletUser(userData?.user_id);
 			setWalletId(wallet.wallet.wallet_id);
 			getIncomes(wallet.wallet);
+			setFetching(false)
 		};
 
 		fetchData();
@@ -74,6 +76,13 @@ export const SeeIncomes = () => {
 			setIncomeToDelete(null);
 		}
 	};
+	if (fetching) {
+		return (
+			<div className='h-screen flex justify-center pt-20 flex-col items-center gap-3 bg-dark_primary_color'>
+				<LoaderComponent />
+			</div>
+		);
+	}
 	return (
 		<main className='pt-20 p-3 h-screen'>
 			<nav className='flex w-full justify-between items-center pb-5'>
