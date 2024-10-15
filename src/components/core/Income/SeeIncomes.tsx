@@ -142,8 +142,19 @@ export const SeeIncomes = () => {
 														)}
 													</TableCell>
 
+													<TableCell className='font-medium w-full  block md:hidden align-middle'>
+														{i?.name.length >= 10 ? (
+															<TooltipComponent
+																message={`${i?.name.slice(0, 10)}...`}
+																content={i?.name}
+															/>
+														) : (
+															<p>{i?.name}</p>
+														)}
+													</TableCell>
+
 													<TableCell className='font-medium w-full  '>
-														<p>{i?.value}</p>
+														<p>{Number(i?.value).toLocaleString()}</p>
 													</TableCell>
 													<TableCell className='font-medium  w-full'>
 														<DropdownMenu>
