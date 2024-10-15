@@ -230,7 +230,7 @@ export const SeeExpenses = () => {
 
 						<div className='w-full '>
 							<section className='w-full '>
-								<article className=' flex text-base justify-center items-center font-semibold py-4 dark:text-zinc-300 text-slate-500 border-b border-gray-600/50 mb-3  gap-3 px-2 '>
+								<article className=' flex text-base justify-center items-center font-semibold py-4 dark:text-zinc-300 text-slate-500 border-b border-gray-600/50 mb-3  gap-5 px-2 '>
 									<p className='w-full text-start   '>{t('dashboard.name')}</p>
 									<p className='w-full text-start'>{t('dashboard.value')}</p>
 									<p className='w-full text-start hidden md:block'>{t('dashboard.payEach')}</p>

@@ -122,7 +122,7 @@ export const SeeIncomes = () => {
 						<div className='w-full'>
 							<section className='w-full  '>
 								<article className=' flex text-base font-semibold py-4 dark:text-zinc-300 text-slate-500 border-b border-slate-500 mb-3'>
-									<p className='w-full   pl-2'>{t('dashboard.date')}</p>
+									<p className='w-full   p'>{t('dashboard.date')}</p>
 									<p className='w-full '>{t('dashboard.name')}</p>
 									<p className='w-full '>{t('dashboard.value')}</p>
 									<p className='md:w-full w-auto' />
