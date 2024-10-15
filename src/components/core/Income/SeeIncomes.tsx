@@ -75,7 +75,7 @@ export const SeeIncomes = () => {
 		}
 	};
 	return (
-		<main className='pt-20 p-5 h-screen'>
+		<main className='pt-20 p-3 h-screen'>
 			<nav className='flex w-full justify-between items-center pb-5'>
 				<Breadcrumb>
 					<BreadcrumbList>
@@ -91,14 +91,14 @@ export const SeeIncomes = () => {
 
 				<AddIncome
 					sendData={(e) => recibeResponseChild(e)}
-					className='w-1/3'
+					className='md:w-1/5 w-1/2 border border-border'
 					apiData={dataWallet}
 				/>
 			</nav>
 
 			<section className=' shadow-sm md:col-span-3 row-span-9'>
 				<div className='  w-full  flex  justify-between gap-5 order-3'>
-					<div className='dark:bg-dark_primary_color bg-zinc-200 p-5 w-full rounded-xl border border-gray-600/50'>
+					<div className='dark:bg-dark_primary_color bg-zinc-200 p-3 w-full rounded-xl border border-gray-600/50'>
 						<div className='flex gap-3 flex-col items-start '>
 							<h5 className='text-2xl'> Todos tus ingresos </h5>
 							<div className='w-9/12'>
@@ -142,26 +142,15 @@ export const SeeIncomes = () => {
 														)}
 													</TableCell>
 
-													<TableCell className='font-medium w-full  block md:hidden align-middle'>
-														{i?.name.length >= 10 ? (
-															<TooltipComponent
-																message={`${i?.name.slice(0, 10)}...`}
-																content={i?.name}
-															/>
-														) : (
-															<p>{i?.name}</p>
-														)}
-													</TableCell>
-
 													<TableCell className='font-medium w-full  '>
-														<p>{Number(i?.value).toLocaleString()}</p>
+														<p>$ {Number(i?.value).toLocaleString()}</p>
 													</TableCell>
-													<TableCell className='font-medium  w-full'>
+													<TableCell className='font-medium  w-full text-end md:text-center cursor-pointer'>
 														<DropdownMenu>
 															<DropdownMenuTrigger>
 																<EllipsisVertical />
 															</DropdownMenuTrigger>
-															<DropdownMenuContent className='dark:bg-zinc-800 w-44'>
+															<DropdownMenuContent className='dark:bg-zinc-800 w-44 '>
 																<DropdownMenuItem
 																	onClick={() => {
 																		setIncomeToDelete(i);
@@ -170,7 +159,7 @@ export const SeeIncomes = () => {
 																	className='hover:dark:bg-zinc-700 cursor-pointer flex justify-between'>
 																	<p className='dark:text-slate-300text-slate-700 font-semibold'>{t('dashboard.delete')}</p>
 
-																	<Trash2 className='dark:text-slate-300text-slate-700' />
+																	<Trash2 className='dark:text-slate-300text-slate-700 cursor-pointer' />
 																</DropdownMenuItem>
 															</DropdownMenuContent>
 														</DropdownMenu>

@@ -64,8 +64,7 @@ export const AddExpense = ({ apiData, sendData, className }) => {
 	const submitExpense = async () => {
 		setLoader(true);
 		const sendIsFixed: boolean = isFixed === 'true';
-		console.log(isFixed);
-		console.log(typeof isFixed);
+		
 
 		const params = {
 			wallet_id: apiData.wallet_id,
@@ -209,7 +208,7 @@ export const AddExpense = ({ apiData, sendData, className }) => {
 
 										{days.map((e, i) => (
 											<SelectItem
-												className='focus:dark:bg-zinc-800 focus:bg-zinc-200'
+												className='focus:dark:bg-zinc-800 focus:bg-zinc-200 cursor-pointer'
 												key={i}
 												value={e.toString()}>
 												{e}

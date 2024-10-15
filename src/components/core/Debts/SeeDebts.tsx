@@ -121,7 +121,7 @@ export const SeeDebts = () => {
 	};
 
 	return (
-		<main className='pt-20 p-5 h-screen'>
+		<main className='pt-20 p-3 h-screen'>
 			<nav className='flex w-full justify-between items-center pb-5'>
 				<Breadcrumb>
 					<BreadcrumbList>
@@ -136,15 +136,14 @@ export const SeeDebts = () => {
 				</Breadcrumb>
 
 				<AddDebt
-					className='w-1/3'
+						className='md:w-1/5 w-1/2 border border-border'
 					sendData={(e) => recibeResponseChild(e)}
 					apiData={userData?.wallet}
 				/>
 			</nav>
-			<section
-				className=' shadow-sm md:col-span-3 row-span-9'>
+			<section className=' shadow-sm md:col-span-3 row-span-9'>
 				<div className='  w-full  flex  justify-between gap-5 order-3'>
-					<div className='dark:bg-dark_primary_color bg-zinc-200 p-5 w-full rounded-xl border border-gray-600/50'>
+					<div className='dark:bg-dark_primary_color bg-zinc-200 p-3 w-full rounded-xl border border-gray-600/50'>
 						<div className='flex gap-3 flex-col items-start '>
 							<h5 className='text-2xl'> {t('dashboard.allDebts')} </h5>
 							<div className='w-9/12'>

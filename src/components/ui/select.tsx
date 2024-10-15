@@ -33,7 +33,7 @@ const SelectScrollUpButton = React.forwardRef<
 	React.ElementRef<typeof SelectPrimitive.ScrollUpButton>,
 	React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollUpButton>
 >(({className, ...props}, ref) => (
-	<SelectPrimitive.ScrollUpButton ref={ref} className={cn('flex cursor-default items-center justify-center py-1', className)} {...props}>
+	<SelectPrimitive.ScrollUpButton ref={ref} className={cn('flex  items-center justify-center py-1', className)} {...props}>
 		<ChevronUpIcon />
 	</SelectPrimitive.ScrollUpButton>
 ));
@@ -43,7 +43,7 @@ const SelectScrollDownButton = React.forwardRef<
 	React.ElementRef<typeof SelectPrimitive.ScrollDownButton>,
 	React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollDownButton>
 >(({className, ...props}, ref) => (
-	<SelectPrimitive.ScrollDownButton ref={ref} className={cn('flex cursor-default items-center justify-center py-1', className)} {...props}>
+	<SelectPrimitive.ScrollDownButton ref={ref} className={cn('flex  items-center justify-center py-1', className)} {...props}>
 		<ChevronDownIcon />
 	</SelectPrimitive.ScrollDownButton>
 ));
@@ -93,7 +93,7 @@ const SelectItem = React.forwardRef<
 	<SelectPrimitive.Item
 		ref={ref}
 		className={cn(
-			'relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-2 pr-8 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-20',
+			'relative flex w-full  select-none items-center rounded-sm py-1.5 pl-2 pr-8 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-20',
 			className
 		)}
 		{...props}>

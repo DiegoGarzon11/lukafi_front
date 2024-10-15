@@ -19,6 +19,7 @@ import { LoaderApi } from '@/assets/icons/Svg';
 import { Toast } from '@/tools/Toast';
 import { AddExpense } from './AddExpense';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
+import { LoaderComponent } from '@/components/others/Loader';
 
 export const SeeExpenses = () => {
 	const [fixedExpenses, setFixedExpenses] = useState<Array<Expenses> | undefined>(undefined);
@@ -34,7 +35,7 @@ export const SeeExpenses = () => {
 	const [ApiResponse, setApiResponse] = useState<ApiResponse | undefined>(null);
 	const [visibilityToast, setVisibilityToast] = useState(false);
 	const [loader, setLoader] = useState(false);
-
+	const [fetching, setFetching] = useState(true);
 	const days = Array.from({ length: 31 }, (_, i) => i + 1);
 
 	const { t, i18n } = useTranslation();
@@ -71,10 +72,17 @@ export const SeeExpenses = () => {
 		};
 		const response = await PayFixedExpense(params);
 		setTrigger((prev) => prev + 1);
-		getExpenses(userData.wallet);
 
-		//! TODO: show a toast with the message of the pay fixed expense
-		console.log(response);
+		if (!response) {
+			return;
+		}
+		setVisibilityToast(true);
+		setApiResponse(response);
+		getExpenses(userData.wallet);
+		setTimeout(() => {
+			setVisibilityToast(false);
+			setApiResponse(null);
+		}, 1000);
 	};
 	const handlePayEach = (e) => {
 		setPayEach(e);
@@ -142,6 +150,10 @@ export const SeeExpenses = () => {
 			setLoader(false);
 			setOpenDeleteDialog(false);
 			setExpenseToDelete(null);
+			setTimeout(() => {
+				setVisibilityToast(false);
+				setApiResponse(null);
+			}, 1000);
 		}
 	};
 
@@ -156,7 +168,6 @@ export const SeeExpenses = () => {
 		const response = await EditFixedExpenses(params);
 		if (response) {
 			setApiResponse(response);
-			true;
 			getFixedExpenses(userData.wallet);
 			setOpenModalEditFixedExpenses(false);
 		}
@@ -171,9 +182,15 @@ export const SeeExpenses = () => {
 		const differenceInDays: number = Math.ceil(differenceInTime / (1000 * 60 * 60 * 24));
 		return differenceInDays;
 	}
-
+	if (fetching) {
+		return (
+			<div className='h-screen flex justify-center pt-20 flex-col items-center gap-3 bg-dark_primary_color'>
+				<LoaderComponent />
+			</div>
+		);
+	}
 	return (
-		<main className='pt-20 p-5 h-screen bg-dark_primary_color'>
+		<main className='pt-20 p-3 h-screen bg-dark_primary_color'>
 			<nav className='flex w-full justify-between items-center pb-5'>
 				<Breadcrumb>
 					<BreadcrumbList>
@@ -188,14 +205,14 @@ export const SeeExpenses = () => {
 				</Breadcrumb>
 
 				<AddExpense
-					className='w-1/3'
+					className='md:w-1/5 w-1/2 border border-border'
 					sendData={(e) => recibeResponseChild(e)}
 					apiData={userData?.wallet}
 				/>
 			</nav>
 			<section className=' shadow-sm  md:col-span-3 md:row-span-2 '>
 				<div className=' w-full  flex flex-col  justify-between gap-5 order-3 '>
-					<div className='dark:bg-dark_primary_color bg-zinc-200 p-5 w-full  rounded-xl border border-gray-600/50'>
+					<div className='dark:bg-dark_primary_color bg-zinc-200  md:p-5 w-full  rounded-xl border border-gray-600/50'>
 						<div className='flex gap-3 flex-col items-start '>
 							<h5 className='text-2xl'> {t('dashboard.allFixedExpenses')} </h5>
 
@@ -210,11 +227,11 @@ export const SeeExpenses = () => {
 
 						<div className='w-full '>
 							<section className='w-full '>
-								<article className=' flex text-base font-semibold py-4 dark:text-zinc-300 text-slate-500 border-b border-gray-600/50 mb-3'>
-									<p className='w-full text-start'>{t('dashboard.name')}</p>
+								<article className=' flex text-base justify-center items-center font-semibold py-4 dark:text-zinc-300 text-slate-500 border-b border-gray-600/50 mb-3  gap-3 px-2 '>
+									<p className='w-full text-start   '>{t('dashboard.name')}</p>
 									<p className='w-full text-start'>{t('dashboard.value')}</p>
 									<p className='w-full text-start hidden md:block'>{t('dashboard.payEach')}</p>
-									<p className='w-full text-start '> {t('dashboard.nextPayment')} </p>
+									<p className='w-full text-start  text-nowrap '> {t('dashboard.nextPayment')} </p>
 									<p className='w-full text-start ' />
 									<p className='w-full text-start ' />
 								</article>
@@ -225,12 +242,12 @@ export const SeeExpenses = () => {
 									<TableBody>
 										{fixedExpenses?.map((f) => (
 											<TableRow key={f.expense_id}>
-												<TableCell className='font-medium w-full'>{f.name}</TableCell>
-												<TableCell className='font-medium w-full'>$ {f.value.toLocaleString()}</TableCell>
+												<TableCell className='font-medium w-full '>{f.name}</TableCell>
+												<TableCell className='font-medium w-full '>$ {f.value.toLocaleString()}</TableCell>
 												<TableCell className='font-medium w-full hidden md:block '>
 													<span className='font-bold'>{f.pay_each} </span> {t('dashboard.ofEachMonth')}
 												</TableCell>
-												<TableCell className='font-medium w-full flex flex-col '>
+												<TableCell className='font-medium w-full flex flex-col  '>
 													<span
 														className={`font-bold hidden md:block ${
 															difrenceBeetwenDate(new Date(f?.dead_line)) <= 5 ? 'text-red-500' : 'text-black dark:text-white'
@@ -246,7 +263,7 @@ export const SeeExpenses = () => {
 														</span>
 													</span>
 												</TableCell>
-												<TableCell className='font-medium w-full '>
+												<TableCell className='font-medium w-full  '>
 													<Dialog>
 														<DialogTrigger
 															className={`${f.is_paid ? 'bg-transparent text-blue-500' : '  bg-green-600'} rounded-md p-1 w-full`}>
@@ -275,7 +292,7 @@ export const SeeExpenses = () => {
 													</Dialog>
 												</TableCell>
 
-												<TableCell className='font-medium   w-full '>
+												<TableCell className='font-medium   w-auto md:w-full text-end md:text-center   '>
 													<DropdownMenu>
 														<DropdownMenuTrigger>
 															<EllipsisVertical />
