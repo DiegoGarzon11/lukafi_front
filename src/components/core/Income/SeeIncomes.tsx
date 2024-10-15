@@ -125,7 +125,7 @@ export const SeeIncomes = () => {
 									<p className='w-full   pl-2'>{t('dashboard.date')}</p>
 									<p className='w-full '>{t('dashboard.name')}</p>
 									<p className='w-full '>{t('dashboard.value')}</p>
-									<p className='w-full' />
+									<p className='md:w-full w-auto' />
 								</article>
 							</section>
 
@@ -154,7 +154,7 @@ export const SeeIncomes = () => {
 													<TableCell className='font-medium w-full  '>
 														<p>$ {Number(i?.value).toLocaleString()}</p>
 													</TableCell>
-													<TableCell className='font-medium  w-full text-end md:text-center cursor-pointer'>
+													<TableCell className='font-medium  md:w-full w-auto text-end md:text-center cursor-pointer'>
 														<DropdownMenu>
 															<DropdownMenuTrigger>
 																<EllipsisVertical />
