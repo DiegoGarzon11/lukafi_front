@@ -38,7 +38,7 @@ export const SeeExpenses = () => {
 	const [fetching, setFetching] = useState(true);
 	const days = Array.from({ length: 31 }, (_, i) => i + 1);
 
-	const { t, i18n } = useTranslation();
+	const { t, i18n } = useTranslation(); 
 	i18n.changeLanguage();
 	const user = JSON.parse(localStorage.getItem('userMain'));
 
