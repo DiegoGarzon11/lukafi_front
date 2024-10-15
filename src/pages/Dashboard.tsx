@@ -36,7 +36,7 @@ export const Dashboard = () => {
 			result += Math.floor(Math.random() * 10);
 			if ((i + 1) % 4 === 0 && i !== 15) {
 				result += '-';
-			}
+			} 
 		}
 		return result;
 	}
