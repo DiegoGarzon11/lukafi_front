@@ -1,10 +1,11 @@
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell, Sector } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell, Sector, AreaChart, Area } from 'recharts';
 import { GetExpensesByCategory } from '@/apis/ExpenseService';
 import { useEffect, useState } from 'react';
 import { GetWalletUser, GetWalletValues, GetDailyReport } from '@/apis/WalletService';
 import { PieChart, Pie } from 'recharts';
-import { ExpensesByCategory, wallet_values } from '@/interfaces/Wallet';
+import { ExpensesByCategory, Incomes, wallet_values } from '@/interfaces/Wallet';
 import { useTranslation } from 'react-i18next';
+import { GetAllIncomes } from '@/apis/Income.service';
 
 const COLORS = [
 	'#00FF9C',
@@ -25,8 +26,7 @@ const CustomTooltip = ({ payload }) => {
 	const { t, i18n } = useTranslation();
 	i18n.changeLanguage();
 	function validateColor(name) {
-		console.log(name);
-		
+
 		if (name === 'expenses') {
 			return '#9BEC00';
 		} else if (name === 'incomes') {
@@ -40,17 +40,14 @@ const CustomTooltip = ({ payload }) => {
 			return 'ingresaste ';
 		}
 	}
-	
 
 	return (
 		<div className='bg-zinc-900 p-5 rounded-md'>
 			{payload.map((p) => (
 				<p>
-					
-					{t('dashboard.chart')} {p.payload?.day} {t('dashboard.chartSpent')} 
+					{t('dashboard.chart')} {p.payload?.day}
 					<span className={`text-[${validateColor(p.name)}]`}> {validateName(p.name)} </span>
-					<span className={`text-[${validateColor(p.name)}]`}>	{Number(p.value).toLocaleString()} </span>
-				
+					<span className={`text-[${validateColor(p.name)}]`}> {Number(p.value).toLocaleString()} </span>
 				</p>
 			))}
 		</div>
@@ -105,23 +102,6 @@ export const Chart = ({ trigger }) => {
 		</ResponsiveContainer>
 	);
 };
-
-// const COLORS = [
-// 	'#00FF9C',
-// 	'#72BF78',
-// 	'#06D001',
-// 	'#15B392',
-// 	'#399918',
-// 	'#9BEC00',
-// 	'#81A263',
-// 	'#C3FF93',
-// 	'#0A6847',
-// 	'#12372A',
-// 	'#739072',
-// 	'#186F65',
-// 	'#96C291',
-// ];
-
 export const ChartDonut = ({ trigger }) => {
 	const userInfo = JSON.parse(localStorage.userMain);
 	const [expensesByCategory, setExpensesByCategory] = useState<Array<ExpensesByCategory>>([]);
@@ -374,5 +354,54 @@ export const ChartFinance = () => {
 				<Tooltip active={false} />
 			</PieChart>
 		</ResponsiveContainer>
+	);
+};
+
+export const ChartIncomes = ({ trigger }) => {
+	const userInfo = JSON.parse(localStorage.userMain);
+	const [incomes, setIncomes] = useState<Array<Incomes>>([]);
+
+	useEffect(() => {
+		const getIncomes = async () => {
+			const wallet = await GetWalletUser(userInfo?.user_id);
+
+			const incomes = await GetDailyReport(wallet?.wallet.wallet_id);
+			setIncomes(incomes?.results);
+		};
+		getIncomes();
+	}, [trigger]);
+	return (
+		<>
+			<p>Registros de ingresos</p>
+
+			<ResponsiveContainer
+				width='100%'
+				height='85%'>
+				<AreaChart
+					width={500}
+					height={400}
+					data={incomes}
+					margin={{
+						top: 10,
+						right: 30,
+						left: 0,
+						bottom: 0,
+					}}>
+					<CartesianGrid
+						horizontal={false}
+						vertical={false}
+					/>
+					<Tooltip content={CustomTooltip} />
+					<XAxis dataKey='day' />
+					<Area
+						type='monotone'
+						dataKey='incomes'
+						stroke='green'
+						fill='green'
+						fillOpacity={1}
+					/>
+				</AreaChart>
+			</ResponsiveContainer>
+		</>
 	);
 };

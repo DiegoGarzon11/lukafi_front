@@ -1,6 +1,6 @@
 import { GetExpenses } from '@/apis/ExpenseService';
-import {  GetWalletUser } from '@/apis/WalletService';
-import { Chart, ChartDonut } from '@/components/core/Charts';
+import { GetWalletUser } from '@/apis/WalletService';
+import { Chart, ChartDonut, ChartIncomes } from '@/components/core/Charts';
 import { AddDebt } from '@/components/core/Debts/AddDebt';
 import { AddExpense } from '@/components/core/Expenses/AddExpense';
 import { AddIncome } from '@/components/core/Income/AddIncome';
@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Expenses, ResponseWallet } from '@/interfaces/Wallet';
 import '@/styles/Dashboard.css';
 import { format } from 'date-fns';
-import { AlertTriangle } from 'lucide-react';
+import { AlertTriangle, ArrowDown, ArrowUp } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -36,7 +36,7 @@ export const Dashboard = () => {
 			result += Math.floor(Math.random() * 10);
 			if ((i + 1) % 4 === 0 && i !== 15) {
 				result += '-';
-			} 
+			}
 		}
 		return result;
 	}
@@ -102,35 +102,44 @@ export const Dashboard = () => {
 						</div>
 					</section>
 					<section className='flex md:col-span-3 md:row-span-8 flex-wrap md:flex-nowrap  gap-3 md:h-56'>
-						<article className=' w-full h-full  shadow-sm border-none dark:bg-dark_primary_color bg-zinc-200 text-black  dark:text-white rounded-md  p-3'>
-							{/* <div>
-								<p className='text-lg font-semibold'>{t('dashboard.savings')}:</p>
-								<p className='font-semibold my-3'>
-									{t('dashboard.before')}:<span className='text-green-500 ml-3'>{userData?.wallet?.salary.toLocaleString()}</span>
+						<article className=' w-full h-full  shadow-sm border-none  text-black  dark:text-white  grid grid-cols-3 gap-3 '>
+							<div className='border border-border dark:bg-dark_primary_color bg-zinc-200 p-3 rounded-md flex justify-center flex-col items-center'>
+								<p>Reporte meta de ahorros</p>
+								
+								<div className='flex gap-3 items-center h-full'>
+								<p>
+									Meta: <span className='text-green-500'>{Number(userData?.wallet?.saving).toLocaleString()}</span>
 								</p>
-								<p className='font-semibold'>
-									{t('dashboard.now')}:
-									<span
-										className={`${
-											Number(userData?.wallet?.salary) - Number(restExpenses) >= Number(userData?.wallet?.saving)
-												? 'text-green-500'
-												: 'text-red-500'
-										}  ml-3`}>
-										{(Number(userData?.wallet?.salary) - Number(restExpenses)).toLocaleString()}
-									</span>
-								</p>
-								<p className='flex text-lg items-center gap-3 mt-3'>
-									{Number(userData?.wallet?.salary) - Number(restExpenses) >= Number(userData?.wallet?.saving) ? (
-										<ArrowUp color='green' />
-									) : (
-										<ArrowDown color='red' />
-									)}
+									<p>
+										Antes: <span className='text-green-500'>{Number(userData?.wallet?.salary).toLocaleString()}</span>
+									</p>
+									<p>
+										Ahora:
+										<span
+											className={`text-${
+												Number(userData?.wallet?.salary) - Number(userData?.wallet?.variable_expenses) <= Number(userData?.wallet?.saving)
+													? 'red'
+													: 'green'
+											}-500 flex items-center gap-2`}>
+											{(Number(userData?.wallet?.salary) - Number(userData?.wallet?.variable_expenses)).toLocaleString()}
 
-									{Number(userData?.wallet?.salary) - Number(restExpenses) >= Number(userData?.wallet?.saving)
-										? `${t('dashboard.rangeSaving')}`
-										: `${t('dashboard.goalSaving')}`}
-								</p>
-							</div> */}
+											{Number(userData?.wallet?.salary) - Number(userData?.wallet?.variable_expenses) <=
+											Number(userData?.wallet?.saving) ? (
+												<ArrowDown className='text-red-500' />
+											) : (
+												<ArrowUp className='text-green-500' />
+											)}
+										</span>
+									</p>
+								</div>
+							</div>
+							<div className='border border-border dark:bg-dark_primary_color bg-zinc-200  p-3 rounded-md flex justify-center flex-col items-center'>
+								<ChartIncomes trigger={trigger} />
+							</div>
+							<div className='border border-border dark:bg-dark_primary_color bg-zinc-200  p-3 rounded-md flex justify-center flex-col items-center'>
+								<p>Saldo disponible contando gastos fijos</p>
+								<p>{(Number(userData?.wallet?.salary) - Number(userData?.wallet?.fixed_expenses)).toLocaleString()}</p>
+							</div>
 						</article>
 						<article className=' text-white flex flex-col justify-between  bg-gradient-to-r  to-green-400  from-gray-700 w-full md:w-2/5 rounded-3xl p-8 shadow-xl shadow-zinc-900/90'>
 							<div className='flex justify-between'>
@@ -139,11 +148,9 @@ export const Dashboard = () => {
 							</div>
 							<div className='flex flex-col'>
 								<p className=' font-semibold'>{t('dashboard.availableBalance')}</p>
-								{/* <p className=' font-semibold text-3xl tracking-wider'>
-									{Number(userData?.wallet?.salary) - Number(restExpenses) <= 0
-										? 0
-										: (Number(userData?.wallet?.salary) - Number(restExpenses)).toLocaleString()}
-								</p> */}
+								<p className=' font-semibold text-3xl tracking-wider'>
+									{(Number(userData?.wallet?.salary) - Number(userData?.wallet?.variable_expenses)).toLocaleString()}
+								</p>
 							</div>
 							<div className='flex justify-between '>
 								<p className='font-semibold'>{generateRandomNumbers()}</p>
@@ -153,7 +160,6 @@ export const Dashboard = () => {
 					</section>
 
 					<section className='  md:col-span-3 md:row-span-6  flex flex-col justify-around gap-3'>
-						
 						<div className='flex flex-col dark:bg-dark_primary_color rounded-md  bg-zinc-200 w-full h-auto py-10'>
 							<div className='flex flex-col md:flex-row items-center justify-between p-5 gap-2'>
 								<p className='text-lg pb-5'>{t('dashboard.viewExpensesCategory')}</p>

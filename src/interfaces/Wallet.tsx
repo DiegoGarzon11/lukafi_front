@@ -6,7 +6,7 @@ export interface ResponseWallet extends ApiResponse {
 		saving: number;
 		fixed_expenses: number;
 		debts: number;
-		vairable_expenses: number;
+		variable_expenses: number;
 		user_id: string;
 		wallet_id: string;
 	};
