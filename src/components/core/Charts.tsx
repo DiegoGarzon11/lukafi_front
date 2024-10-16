@@ -5,7 +5,6 @@ import { GetWalletUser, GetWalletValues, GetDailyReport } from '@/apis/WalletSer
 import { PieChart, Pie } from 'recharts';
 import { ExpensesByCategory, Incomes, wallet_values } from '@/interfaces/Wallet';
 import { useTranslation } from 'react-i18next';
-import { GetAllIncomes } from '@/apis/Income.service';
 
 const COLORS = [
 	'#00FF9C',
