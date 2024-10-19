@@ -83,7 +83,7 @@ export const ForgetPassword = () => {
 	}, [isRedirect]);
 
 	return (
-		<section className='flex flex-col items-center justify-center h-screen pt-20 p-5 gap-5 dark:bg-zinc-800 bg-white font-thin'>
+		<section className='flex flex-col items-center justify-center h-screen pt-20 p-5 gap-5 dark:bg-dark_primary_color bg-white font-thin'>
 			{token ? (
 				<>
 					{isRedirect && response.success == true ? (
@@ -123,8 +123,8 @@ export const ForgetPassword = () => {
 								<Input
 									value={password}
 									onChange={(e) => setPassword(e.target.value)}
-									className='dark:text-white border-gray-600/50 dark:bg-zinc-800/30 text-black'
-									autoComplete='current-password'
+									className='dark:text-white border-gray-600/50 dark:bg-dark_primary_color/30 text-black'
+									autoComplete='new-password'
 									type={showPassword ? 'text' : 'password'}
 									name='password'
 								/>
@@ -143,8 +143,8 @@ export const ForgetPassword = () => {
 									Confirmar contraseña <span className='text-red-500'>*</span>
 								</label>
 								<Input
-									className='dark:text-white border-gray-600/50 dark:bg-zinc-800/30 text-black'
-									autoComplete='current-password'
+									className='dark:text-white border-gray-600/50 dark:bg-dark_primary_color/30 text-black'
+									autoComplete='new-password'
 									value={confirmPassword}
 									onChange={(e) => setConfirmPassword(e.target.value)}
 									type={showPasswordConfirm ? 'text' : 'password'}

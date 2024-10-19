@@ -76,7 +76,7 @@ export default function SignIn() {
 			)}
 
 			<form
-				className='mt-10 grid w-full h-3/4 gap-8 p-8 shadow-sm bg-zinc-100 dark:bg-zinc-900 rounded-2xl'
+				className='mt-10 grid w-full h-3/4 gap-8 p-8 shadow-sm bg-zinc-100 dark:bg-dark_primary_color rounded-md'
 				onSubmit={handleSubmit}>
 				<h1 className='text-4xl mb-6 font-semibold'>{t('form.field.signIn')}</h1>
 				<div>
@@ -127,7 +127,7 @@ export default function SignIn() {
 
 				<Link
 					to='restore-password'
-					className='text-lg'>
+					className='text-lg underline'>
 					{t('form.password.forgotten')}
 				</Link>
 			</form>

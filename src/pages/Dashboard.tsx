@@ -81,7 +81,7 @@ export const Dashboard = () => {
 					<Carrusel />
 				</div>
 			) : (
-				<div className='flex flex-col md:grid md:grid-cols-3 h-full pt-20 p-5 gap-3 dark:bg-black bg-white'>
+				<div className='flex flex-col md:grid md:grid-cols-3 h-full pt-20 p-3 gap-3 dark:bg-black bg-white'>
 					<section className='md:flex grid grid-cols-2 grid-rows-2 md:flex-nowrap w-full gap-3 md:col-span-3'>
 						<AddExpense
 							className='w-full'
@@ -102,8 +102,8 @@ export const Dashboard = () => {
 						</div>
 					</section>
 					<section className='flex md:col-span-3 md:row-span-8 flex-wrap md:flex-nowrap  gap-3 md:h-56'>
-						<article className=' w-full h-full  shadow-sm border-none  text-black  dark:text-white  grid grid-cols-3 gap-3 '>
-							<div className='border border-border dark:bg-dark_primary_color bg-zinc-200 p-3 rounded-md flex justify-center flex-col items-center'>
+						<article className=' w-full h-full  shadow-sm border-none  text-black  dark:text-white  md:grid md:grid-cols-3 gap-3 flex flex-col '>
+							<div className='border border-border dark:bg-dark_primary_color bg-zinc-200 p-3 rounded-md flex justify-center flex-col items-center h-48 md:h-full'>
 								<p>Reporte meta de ahorros</p>
 								
 								<div className='flex gap-3 items-center h-full'>
@@ -133,10 +133,10 @@ export const Dashboard = () => {
 									</p>
 								</div>
 							</div>
-							<div className='border border-border dark:bg-dark_primary_color bg-zinc-200  p-3 rounded-md flex justify-center flex-col items-center'>
+							<div className='border border-border dark:bg-dark_primary_color bg-zinc-200  p-3 rounded-md flex justify-center flex-col items-center h-48 md:h-full'>
 								<ChartIncomes trigger={trigger} />
 							</div>
-							<div className='border border-border dark:bg-dark_primary_color bg-zinc-200  p-3 rounded-md flex justify-center flex-col items-center'>
+							<div className='border border-border dark:bg-dark_primary_color bg-zinc-200  p-3 rounded-md flex justify-center flex-col items-center h-48 md:h-full'>
 								<p>Saldo disponible contando gastos fijos</p>
 								<p>{(Number(userData?.wallet?.salary) - Number(userData?.wallet?.fixed_expenses)).toLocaleString()}</p>
 							</div>

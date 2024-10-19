@@ -161,6 +161,11 @@ export const SeeDebts = () => {
 									className='border dark:border-zinc-400 dark:bg-zinc-800/30 text-white '
 								/>
 							</div>
+							<div className='flex gap-3 items-center'>
+								<p className='h-2 w-2 rounded-full bg-red-500'></p> <span>Debes</span>
+								<p className='h-2 w-2 rounded-full bg-green-500 '></p>
+								<span className=''>Te deben</span>
+							</div>
 						</div>
 
 						<div className='w-full'>
@@ -168,11 +173,11 @@ export const SeeDebts = () => {
 								<article className=' flex text-base font-semibold py-4 dark:text-zinc-300 text-slate-500 border-b border-slate-500 mb-3'>
 									<p className='w-full  hidden md:block pl-2'>{t('dashboard.date')}</p>
 									<p className='w-full '>{t('dashboard.person')}</p>
-									<p className='w-full hidden md:block '>{t('dashboard.reason')}</p>
+									<p className='w-full  '>{t('dashboard.reason')}</p>
 									<p className='w-full '>{t('dashboard.value')}</p>
-									<p className='w-full '>{t('dashboard.state')}</p>
+									<p className='w-full hidden md:block'>{t('dashboard.state')}</p>
 									<p className='w-full hidden md:block '>{t('dashboard.deadLine')}</p>
-									<p className='w-full' />
+									<p className='w-20 md:w-full' />
 								</article>
 							</section>
 
@@ -209,21 +214,31 @@ export const SeeDebts = () => {
 														)}
 													</TableCell>
 
-													<TableCell className='font-medium  hidden md:block w-full  align-middle'>
+													<TableCell className='font-medium w-full   align-middle'>
 														{d?.reason.length >= 10 ? (
 															<TooltipComponent
+																className={` rounded-md px-2 py-1 text-start  ${
+																	d?.debt_type == 0
+																		? 'text-red-500  underline decoration-blue-500 decoration-2'
+																		: 'text-green-500 underline decoration-blue-500 decoration-2'
+																}`}
 																message={`${d?.reason.slice(0, 8)}...`}
 																content={d?.reason}
 															/>
 														) : (
-															<p>{d?.reason}</p>
+															<p
+																className={` rounded-md px-2 py-1 text-start  ${
+																	d?.debt_type == 0 ? 'text-red-500 ' : 'text-green-500 '
+																}`}>
+																{d?.reason}
+															</p>
 														)}
 													</TableCell>
 													<TableCell className='font-medium w-full  align-middle'>
 														<p>$ {d?.missing_payment.toLocaleString()}</p>
 														<p className='opacity-55 text-nowrap'>$ {d?.value.toLocaleString()}</p>
 													</TableCell>
-													<TableCell className='font-medium w-full '>
+													<TableCell className='font-medium w-full hidden md:block '>
 														{d?.missing_payment === 0 ? (
 															<p className='text-blue-500'>Pagado</p>
 														) : (
@@ -238,12 +253,12 @@ export const SeeDebts = () => {
 													<TableCell className='font-medium w-full hidden md:block '>
 														<p>{d?.dead_line ? format(new Date(d?.dead_line), 'PP') : 'Sin fecha limite'}</p>
 													</TableCell>
-													<TableCell className='font-medium  w-full'>
+													<TableCell className='font-medium   w-auto md:w-full text-end md:text-center  '>
 														<DropdownMenu>
 															<DropdownMenuTrigger>
 																<EllipsisVertical />
 															</DropdownMenuTrigger>
-															<DropdownMenuContent className='dark:bg-zinc-800 w-44'>
+															<DropdownMenuContent className='dark:bg-zinc-800 w-44 '>
 																<DropdownMenuItem
 																	disabled={d?.missing_payment === 0}
 																	onClick={() => {

@@ -101,7 +101,7 @@ export default function SignUp({ isRegisterOk }) {
 			)}
 
 			<form
-				className=' h-screen mt-10 md:mt-0  w-full grid gap-5 p-8 bg-zinc-100 dark:bg-zinc-900 rounded-2xl  '
+				className=' h-screen mt-10 md:mt-0  w-full grid gap-5 p-8 bg-zinc-100 dark:bg-dark_primary_color rounded-2xl  '
 				onSubmit={handleSubmit}>
 				<h1 className='text-4xl mb-6 md:mt-10 font-semibold'>{t('form.field.signUp')}</h1>
 				<div className='flex gap-3'>
