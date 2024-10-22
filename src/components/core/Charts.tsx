@@ -233,22 +233,22 @@ export const ChartFinance = () => {
 		{
 			name: 'Ahorros',
 			value: values?.salary - values?.fixed_expenses - values?.variable_expenses - values?.debts,
-			color: '#1A4870',
+			color: COLORS[0],
 		},
 		{
 			name: 'Gastos fijos',
 			value: values?.fixed_expenses,
-			color: '#4F1787',
+			color: COLORS[1],
 		},
 		{
 			name: 'Gastos variables',
 			value: values?.variable_expenses,
-			color: '#FF8225',
+			color: COLORS[2],
 		},
 		{
 			name: 'Deudas',
 			value: values?.debts,
-			color: '#9CA986',
+			color: COLORS[3],
 		},
 	];
 	const showName = (props) => {
@@ -329,7 +329,7 @@ export const ChartFinance = () => {
 	};
 
 	return (
-		<ResponsiveContainer height={330}>
+		<ResponsiveContainer height={250}>
 			<PieChart
 				width={600}
 				height={400}>
