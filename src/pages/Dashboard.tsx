@@ -149,7 +149,7 @@ export const Dashboard = () => {
 							<div className='flex flex-col'>
 								<p className=' font-semibold'>{t('dashboard.availableBalance')}</p>
 								<p className=' font-semibold text-3xl tracking-wider'>
-									{(Number(userData?.wallet?.salary) - Number(userData?.wallet?.variable_expenses)).toLocaleString()}
+									{(Number(userData?.wallet?.available)).toLocaleString()}
 								</p>
 							</div>
 							<div className='flex justify-between '>

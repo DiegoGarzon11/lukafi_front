@@ -96,8 +96,8 @@ export const WalletComponent = () => {
 						</div>
 					</div>
 				</section>
-				<section className='flex flex-col gap-3 w-6/12'>
-					<div className='flex flex-col justify-between  rounded-xl p-8 shadow-sm shadow-zinc-900/90 min-w-4/5 dark:bg-dark_primary_color '>
+				<section className='flex flex-col gap-3 w-6/12 h-full'>
+					<div className='flex flex-col justify-between  rounded-xl  shadow-sm shadow-zinc-900/90  h-full dark:bg-dark_primary_color '>
 						<ChartFinance />
 					</div>
 					<div className='dark:bg-dark_primary_color rounded-xl flex flex-col items-center justify-center p-3 h-full  '>

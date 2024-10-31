@@ -2,9 +2,11 @@ import { ApiResponse } from './Api';
 export interface ResponseWallet extends ApiResponse {
 	wallet: {
 		created_in: string;
+		available: number;
 		salary: number;
 		saving: number;
 		fixed_expenses: number;
+		incomes: number;
 		debts: number;
 		variable_expenses: number;
 		user_id: string;
@@ -50,6 +52,8 @@ export interface ExpensesByCategory {
 
 export interface wallet_values extends ApiResponse {
 	salary: number;
+	available: number;
+	incomes : number
 	saving: number;
 	fixed_expenses: number;
 	variable_expenses: number;

@@ -25,7 +25,6 @@ const CustomTooltip = ({ payload }) => {
 	const { t, i18n } = useTranslation();
 	i18n.changeLanguage();
 	function validateColor(name) {
-
 		if (name === 'expenses') {
 			return '#9BEC00';
 		} else if (name === 'incomes') {
@@ -231,8 +230,8 @@ export const ChartFinance = () => {
 
 	const percentageData = [
 		{
-			name: 'Ahorros',
-			value: values?.salary - values?.fixed_expenses - values?.variable_expenses - values?.debts,
+			name: 'Disponible',
+			value: values?.available,
 			color: COLORS[0],
 		},
 		{
@@ -250,10 +249,15 @@ export const ChartFinance = () => {
 			value: values?.debts,
 			color: COLORS[3],
 		},
+		{
+			name: 'Ingresos',
+			value: values?.incomes,
+			color: COLORS[4],
+		},
 	];
 	const showName = (props) => {
 		const RADIAN = Math.PI / 180;
-		const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, value } = props;
+		const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, value, percent } = props;
 		const sin = Math.sin(-RADIAN * midAngle);
 		const cos = Math.cos(-RADIAN * midAngle);
 		const sx = cx + (outerRadius + 10) * cos;
@@ -319,17 +323,14 @@ export const ChartFinance = () => {
 					fontSize={16}
 					fontWeight={600}
 					fill='green'>
-					{payload.name === 'Ahorros' ? `${((values.salary / values.salary) * 100).toFixed(2)}%` : ''}
-					{payload.name === 'Gastos fijos' ? `${((values.fixed_expenses / values.salary) * 100).toFixed(2)}%` : ''}
-					{payload.name === 'Gastos variables' ? `${((values.variable_expenses / values.salary) * 100).toFixed(2)}%` : ''}
-					{payload.name === 'Deudas' ? `${((values.debts / values.salary) * 100).toFixed(2)}%` : ''}
+					{`${(percent * 100).toFixed(2)}%`}
 				</text>
 			</g>
 		);
 	};
 
 	return (
-		<ResponsiveContainer height={250}>
+		<ResponsiveContainer height={310}>
 			<PieChart
 				width={600}
 				height={400}>
