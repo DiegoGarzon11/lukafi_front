@@ -7,16 +7,18 @@ import { AddIncome } from '@/components/core/Income/AddIncome';
 import { Carrusel } from '@/components/others/Carrousel';
 import { LoaderComponent } from '@/components/others/Loader';
 import { Button } from '@/components/ui/button';
-import { Expenses, ResponseWallet } from '@/interfaces/Wallet';
+import { Expenses, Incomes, ResponseWallet } from '@/interfaces/Wallet';
 import '@/styles/Dashboard.css';
 import { format } from 'date-fns';
 import { AlertTriangle, ArrowDown, ArrowUp } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { GetAllIncomes } from '@/apis/Income.service';
 export const Dashboard = () => {
 	const [userData, setDataUser] = useState<ResponseWallet | undefined>(undefined);
 	const [expenses, setExpenses] = useState<Array<Expenses> | undefined>([]);
+	const [incomes, setIncomes] = useState<Array<Incomes> | undefined>([]);
 	const [trigger, setTrigger] = useState(0);
 	const [fetching, setFetching] = useState(true);
 	const user = JSON.parse(localStorage.getItem('userMain'));
@@ -27,6 +29,10 @@ export const Dashboard = () => {
 	const getExpenses = async (walletId) => {
 		const expenses = await GetExpenses(walletId);
 		setExpenses(expenses?.expenses);
+	};
+	const getIncomes = async (walletId) => {
+		const incomes = await GetAllIncomes(walletId);
+		setIncomes(incomes?.incomes);
 	};
 
 	function generateRandomNumbers() {
@@ -61,6 +67,7 @@ export const Dashboard = () => {
 		if (userData?.wallet?.wallet_id) {
 			const fetchExpensesAndDebts = async () => {
 				getExpenses(userData.wallet);
+				getIncomes(userData.wallet);
 			};
 
 			fetchExpensesAndDebts();
@@ -82,7 +89,33 @@ export const Dashboard = () => {
 				</div>
 			) : (
 				<div className='flex flex-col md:grid md:grid-cols-3 h-full pt-20 p-3 gap-3 dark:bg-black bg-white'>
+					{userData.wallet.available <= 0 && (
+						<Dialog defaultOpen>
+							<DialogContent className='md:w-1/3'>
+								<DialogHeader>
+									<DialogTitle className='text-lg font-semibold leading-none -tracking-tighter text-red-500'>¡Importante!</DialogTitle>
+									<span className='text-yellow-500'>Agrega tu saldo disponible</span>
+									<DialogDescription className='text-xl leading-7 tracking-wide text-white opacity-70 text-balance'>
+										Ten en cuenta que cuando empiezas a usar <span className='text-green-500'>Lukafi</span>, tu saldo disponible será de
+										cero
+										<br />
+										<span>Te recomendamos que como tu primer ingreso</span>
+										<span className='text-yellow-500'> agregues todo el dinero que tengas disponible en general</span>
+										<br />
+										<span>Esto puedes hacerlo en la sección de </span> <span className='text-yellow-500'> ingresos</span>
+									</DialogDescription>
+								</DialogHeader>
+							</DialogContent>
+						</Dialog>
+					)}
 					<section className='md:flex grid grid-cols-2 grid-rows-2 md:flex-nowrap w-full gap-3 md:col-span-3'>
+						<div className='col-span-2 w-full'>
+							<AddIncome
+								sendData={(e) => recibeResponseChild(e)}
+								className='w-full '
+								apiData={userData?.wallet}
+							/>
+						</div>
 						<AddExpense
 							className='w-full'
 							sendData={(e) => recibeResponseChild(e)}
@@ -93,42 +126,33 @@ export const Dashboard = () => {
 							className='w-full '
 							apiData={userData?.wallet}
 						/>
-						<div className='col-span-2 w-full'>
-							<AddIncome
-								sendData={(e) => recibeResponseChild(e)}
-								className='w-full '
-								apiData={userData?.wallet}
-							/>
-						</div>
 					</section>
 					<section className='flex md:col-span-3 md:row-span-8 flex-wrap md:flex-nowrap  gap-3 md:h-56'>
 						<article className=' w-full h-full  shadow-sm border-none  text-black  dark:text-white  md:grid md:grid-cols-3 gap-3 flex flex-col '>
 							<div className='border border-border dark:bg-dark_primary_color bg-zinc-200 p-3 rounded-md flex justify-center flex-col items-center h-48 md:h-full'>
-								<p>Reporte meta de ahorros</p>
-								
-								<div className='flex gap-3 items-center h-full'>
-								<p>
-									Meta: <span className='text-green-500'>{Number(userData?.wallet?.saving).toLocaleString()}</span>
-								</p>
-									<p>
-										Antes: <span className='text-green-500'>{Number(userData?.wallet?.salary).toLocaleString()}</span>
+								<p className='h-1/2 text-lg'>Reporte meta de ahorros</p>
+
+								<div className='flex gap-3 items-end h-full flex-col'>
+									<p className='flex items-start gap-2 '>
+										<span>Meta:</span>
+										<span className='text-green-500'>{Number(userData?.wallet?.saving).toLocaleString()} $</span>
 									</p>
-									<p>
-										Ahora:
+
+									<p className='flex items-center gap-2'>
+										{Number(userData?.wallet?.incomes) - Number(userData?.wallet?.variable_expenses) <= Number(userData?.wallet?.saving) ? (
+											<ArrowDown className='text-red-500' />
+										) : (
+											<ArrowUp className='text-green-500' />
+										)}
+										<span>Ahora:</span>
 										<span
 											className={`text-${
-												Number(userData?.wallet?.salary) - Number(userData?.wallet?.variable_expenses) <= Number(userData?.wallet?.saving)
+												Number(userData?.wallet?.incomes) - Number(userData?.wallet?.variable_expenses) <=
+												Number(userData?.wallet?.saving)
 													? 'red'
 													: 'green'
 											}-500 flex items-center gap-2`}>
-											{(Number(userData?.wallet?.salary) - Number(userData?.wallet?.variable_expenses)).toLocaleString()}
-
-											{Number(userData?.wallet?.salary) - Number(userData?.wallet?.variable_expenses) <=
-											Number(userData?.wallet?.saving) ? (
-												<ArrowDown className='text-red-500' />
-											) : (
-												<ArrowUp className='text-green-500' />
-											)}
+											{(Number(userData?.wallet?.incomes) - Number(userData?.wallet?.variable_expenses)).toLocaleString()} $
 										</span>
 									</p>
 								</div>
@@ -137,8 +161,11 @@ export const Dashboard = () => {
 								<ChartIncomes trigger={trigger} />
 							</div>
 							<div className='border border-border dark:bg-dark_primary_color bg-zinc-200  p-3 rounded-md flex justify-center flex-col items-center h-48 md:h-full'>
-								<p>Saldo disponible contando gastos fijos</p>
-								<p>{(Number(userData?.wallet?.salary) - Number(userData?.wallet?.fixed_expenses)).toLocaleString()}</p>
+								<p className='h-1/2 text-lg'>Saldo disponible contando gastos fijos</p>
+								<p className='text-xl text-green-500'>
+									{' '}
+									{(Number(userData?.wallet?.available) - Number(userData?.wallet?.fixed_expenses)).toLocaleString()} $
+								</p>
 							</div>
 						</article>
 						<article className=' text-white flex flex-col justify-between  bg-gradient-to-r  to-green-400  from-gray-700 w-full md:w-2/5 rounded-3xl p-8 shadow-xl shadow-zinc-900/90'>
@@ -148,9 +175,7 @@ export const Dashboard = () => {
 							</div>
 							<div className='flex flex-col'>
 								<p className=' font-semibold'>{t('dashboard.availableBalance')}</p>
-								<p className=' font-semibold text-3xl tracking-wider'>
-									{(Number(userData?.wallet?.available)).toLocaleString()}
-								</p>
+								<p className=' font-semibold text-3xl tracking-wider'>{Number(userData?.wallet?.available).toLocaleString()}</p>
 							</div>
 							<div className='flex justify-between '>
 								<p className='font-semibold'>{generateRandomNumbers()}</p>
@@ -204,7 +229,7 @@ export const Dashboard = () => {
 									</Button>
 								</div>
 							</div>
-							{expenses?.length > 0 ? (
+							{expenses?.length > 0 || incomes?.length > 0 ? (
 								<Chart trigger={trigger} />
 							) : (
 								<div className=' flex justify-center items-center gap-3   '>

@@ -181,12 +181,12 @@ export const SeeDebts = () => {
 								</article>
 							</section>
 
-							<div className='w-full h-96 overflow-auto overflow-x-hidden scrollbar-custom'>
+							<div className='w-full h-96   scrollbar-custom'>
 								{debts.length == 0 ? (
 									<p className='text-center text-lg mt-5 text-blue-500'>Actualmente no tienes ningún deuda</p>
 								) : (
 									<Table className='w-full'>
-										<TableBody className=' w-full overflow-auto  overflow-x-hidden   scrollbar-custom'>
+										<TableBody className=' w-full      scrollbar-custom'>
 											{debts?.map((d) => (
 												<TableRow key={d?.debt_id}>
 													<TableCell className='font-medium  w-full  hidden md:block'>
@@ -370,7 +370,7 @@ export const SeeDebts = () => {
 											<TableHead className='dark:text-white text-black'>Monto</TableHead>
 										</TableRow>
 									</TableHeader>
-									<TableBody className='overflow-auto pb-5 h-72 scrollbar-custom'>
+									<TableBody className=' pb-5 h-72 scrollbar-custom'>
 										{amountToSee.map((amount, i) => (
 											<TableRow
 												className='flex justify-between px-5'

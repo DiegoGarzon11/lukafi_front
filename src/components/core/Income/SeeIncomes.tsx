@@ -129,12 +129,12 @@ export const SeeIncomes = () => {
 								</article>
 							</section>
 
-							<div className='w-full h-96 overflow-auto overflow-x-hidden scrollbar-custom'>
+							<div className='w-full h-96   scrollbar-custom'>
 								{incomes.length == 0 ? (
 									<p className='text-center text-lg mt-5 text-blue-500'>Actualmente no tienes ningún ingreso registrado</p>
 								) : (
 									<Table className='w-full'>
-										<TableBody className=' w-full overflow-auto  overflow-x-hidden   scrollbar-custom'>
+										<TableBody className=' w-full      scrollbar-custom'>
 											{incomes?.map((i) => (
 												<TableRow key={i?.income_id}>
 													<TableCell className='font-medium  w-full  '>
@@ -195,7 +195,7 @@ export const SeeIncomes = () => {
 				onOpenChange={setOpenDeleteDialog}>
 				<DialogContent
 					aria-describedby={null}
-					className=' w-[95%] md:w-[500px] rounded-md '>
+					className=' w-full md:w-[500px] rounded-md '>
 					<DialogHeader>
 						<DialogTitle className='my-3'>
 							<p className='my-3 font-bold text-2xl'> {t('dashboard.confirmDelete')} </p>

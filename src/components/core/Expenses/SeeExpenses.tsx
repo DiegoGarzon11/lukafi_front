@@ -240,7 +240,7 @@ export const SeeExpenses = () => {
 								</article>
 							</section>
 
-							<div className='w-full h-52 overflow-auto overflow-x-hidden scrollbar-custom'>
+							<div className='w-full h-52   scrollbar-custom'>
 								<Table className='w-full'>
 									<TableBody>
 										{fixedExpenses?.map((f) => (
@@ -360,9 +360,9 @@ export const SeeExpenses = () => {
 								</article>
 							</section>
 
-							<div className='w-full h-52 overflow-auto overflow-x-hidden scrollbar-custom'>
+							<div className='w-full h-52   scrollbar-custom'>
 								<Table className='w-full'>
-									<TableBody className='  overflow-auto  overflow-x-hidden   scrollbar-custom'>
+									<TableBody className='       scrollbar-custom'>
 										{expenses?.map((e) =>
 											e.is_paid ? (
 												<TableRow key={e?.expense_id}>
@@ -416,7 +416,7 @@ export const SeeExpenses = () => {
 				onOpenChange={setOpenDeleteDialog}>
 				<DialogContent
 					aria-describedby={null}
-					className=' w-[95%] md:w-[500px] rounded-md '>
+					className=' w-full md:w-[500px] rounded-md '>
 					<DialogHeader>
 						<DialogTitle className='my-3'>
 							<p className='my-3 font-bold text-2xl'> {t('dashboard.confirmDelete')} </p>
@@ -448,7 +448,7 @@ export const SeeExpenses = () => {
 				onOpenChange={setOpenModalEditFixedExpenses}>
 				<DialogContent
 					aria-describedby={null}
-					className=' w-[95%] md:w-[500px] rounded-md '>
+					className=' w-full md:w-[500px] rounded-md '>
 					<DialogHeader>
 						<DialogTitle className='my-3'>
 							<p className='my-3 font-bold text-2xl text-center  py-3 dark:border-white border-black'>

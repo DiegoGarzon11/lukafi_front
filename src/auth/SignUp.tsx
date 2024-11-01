@@ -101,7 +101,7 @@ export default function SignUp({ isRegisterOk }) {
 			)}
 
 			<form
-				className=' h-screen mt-10 md:mt-0  w-full grid gap-5 p-8 bg-zinc-100 dark:bg-dark_primary_color rounded-2xl  '
+				className=' mt-5 md:mt-0  w-full grid gap-5 p-8 bg-zinc-100 dark:bg-dark_primary_color rounded-2xl  h-full '
 				onSubmit={handleSubmit}>
 				<h1 className='text-4xl mb-6 md:mt-10 font-semibold'>{t('form.field.signUp')}</h1>
 				<div className='flex gap-3'>
@@ -316,7 +316,7 @@ export default function SignUp({ isRegisterOk }) {
 				{data.password == data.confirmPassword ? '' : <p className='text-center text-red-500 text-lg'>Las contraseñas no coinciden</p>}
 				<Button
 					type='submit'
-					className='text-lg text-white bg-zinc-950 flex justify-center items-center  wf  '
+					className='text-lg text-white bg-zinc-950 flex justify-center items-center  py-5 '
 					disabled={
 						data.name == '' ||
 						data.lastName == '' ||

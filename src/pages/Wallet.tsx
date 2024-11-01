@@ -35,25 +35,25 @@ export const WalletComponent = () => {
 					</BreadcrumbItem>
 				</BreadcrumbList>
 			</Breadcrumb>
-			<div className='flex gap-3'>
-				<section className='w-6/12'>
-					<div className=' '>
-						<Card className='dark:bg-dark_primary_color p-10'>
+			<div className='md:flex gap-3'>
+				<section className='md:w-6/12'>
+					<div className='flex flex-col gap-3 md:block '>
+						<Card className='dark:bg-dark_primary_color md:p-10 p-5 order-2 my-3 md:my-0'>
 							<CardContent className='flex flex-col gap-3 '>
 								<p>Tu salario</p>
 
-								<p className='text-5xl '>$ 10.000.000 cop</p>
-								<p>Ultima actualización: 20/10/24</p>
+								<p className='md:text-5xl text-3xl '>$ 10.000.000 cop</p>
+								<p className='md:text-2xl text-xl '>Ultima actualización: 20/10/24</p>
 							</CardContent>
 						</Card>
-						<div className='flex  flex-col  justify-center items-center gap-3 mt-10 h-full'>
+						<div className='flex  flex-col  justify-center items-center gap-3 mt-10 h-full '>
 							<div className='relative inline-block my-5'>
 								<button className=' text-white font-medium py-2 px-6  rounded-full flex items-center space-x-2 shadow-inner shadow-green-600 hover:bg-green-600 transition-colors ease-in duration-300 '>
 									<span className='font-semibold'>Editar billetera</span>
 								</button>
-								<div className='absolute left-1/2  -translate-x-1/2 -bottom-2 w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-green-600'></div>
+							
 							</div>
-							<p className='font-semibold text-start w-1/2 underline'>Selecciona tipo de moneda</p>
+							<p className='font-semibold text-start md:w-1/2 underline'>Selecciona tipo de moneda</p>
 							<div className='flex justify-around mt-3 mb-6'>
 								{CURRENCIES.map((c) => (
 									<div
@@ -78,25 +78,25 @@ export const WalletComponent = () => {
 									</div>
 								))}
 							</div>
-							<div className='w-full flex justify-center items-center gap-3 px-10'>
+							<div className='w-full flex justify-center items-center gap-3 px-5 md:px-10'>
 								<div className='w-1/2'>
-									<p className='font-semibold text-start underline'>Modificar salario</p>
+									<p className='font-semibold text-start underline'> Salario</p>
 									<Input className='' />
 								</div>
 								<div className='w-1/2'>
-									<p className='font-semibold text-start underline'>Modificar meta a ahorrar</p>
+									<p className='font-semibold text-start underline'> Meta a ahorrar</p>
 									<Input className='' />
 								</div>
 							</div>
 
-							<div className='w-full flex justify-center items-end gap-3 px-10'>
+							<div className='w-full flex justify-center items-end gap-3  px-5 md:px-10'>
 								<button className='bg-green-500 text-white w-1/2 rounded-md py-2 font-semibold '>Guardar</button>
 								<button className='bg-red-500 text-white w-1/2 rounded-md py-2 font-semibold '>Eliminar billetera</button>
 							</div>
 						</div>
 					</div>
 				</section>
-				<section className='flex flex-col gap-3 w-6/12 h-full'>
+				<section className='flex flex-col gap-3 md:w-6/12 h-full'>
 					<div className='flex flex-col justify-between  rounded-xl  shadow-sm shadow-zinc-900/90  h-full dark:bg-dark_primary_color '>
 						<ChartFinance />
 					</div>

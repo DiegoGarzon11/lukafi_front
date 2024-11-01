@@ -62,7 +62,7 @@ export const AddIncome = ({ apiData, className, sendData }) => {
 					{t('addIncome.newIncome')} <PiggyBank />
 				</Button>
 			</DialogTrigger>
-			<DialogContent className=' w-11/12 md:w-[500px] rounded-md '>
+			<DialogContent className=' w-full md:w-[500px] rounded-md '>
 				<DialogHeader>
 					<DialogTitle>{t('addIncome.newIncome')}</DialogTitle>
 					<DialogDescription>{t('addIncome.instructions')}</DialogDescription>

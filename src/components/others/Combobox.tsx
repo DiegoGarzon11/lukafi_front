@@ -20,7 +20,7 @@ export function Combobox({ data, selected }) {
 			<PopoverTrigger asChild>
 				<Button
 					variant='ghost'
-					role='combobox'
+					role= 'combobox'
 					aria-expanded={open}
 					className='border dark:border-zinc-400 dark:bg-zinc-800/30 w-full h-9'>
 					{value ? JSON.parse(value).category_name : 'Select category...'}
@@ -33,7 +33,7 @@ export function Combobox({ data, selected }) {
 						placeholder='Buscar categoria...'
 						className='h-9'
 					/>
-					<CommandList  className=' scrollbar-custom'>
+					<CommandList  className=' scrollbar-custom  '>
 						<CommandEmpty>Categoria no encontrada.</CommandEmpty>
 						<CommandGroup className='  '>
 							{data.map((c) => (

@@ -41,8 +41,8 @@ const CustomTooltip = ({ payload }) => {
 
 	return (
 		<div className='bg-zinc-900 p-5 rounded-md'>
-			{payload.map((p) => (
-				<p>
+			{payload.map((p, i) => (
+				<p  key={i}>
 					{t('dashboard.chart')} {p.payload?.day}
 					<span className={`text-[${validateColor(p.name)}]`}> {validateName(p.name)} </span>
 					<span className={`text-[${validateColor(p.name)}]`}> {Number(p.value).toLocaleString()} </span>
@@ -155,11 +155,13 @@ export const ChartDonut = ({ trigger }) => {
 					fill={fill}
 				/>
 				<path
+					className='hidden md:block'
 					d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`}
 					stroke={fill}
 					fill='none'
 				/>
 				<circle
+					className='hidden md:block'
 					cx={ex}
 					cy={ey}
 					r={2}
@@ -167,6 +169,7 @@ export const ChartDonut = ({ trigger }) => {
 					stroke='none'
 				/>
 				<text
+					className='hidden md:block'
 					x={ex + (cos >= 0 ? 1 : -1) * 12}
 					y={ey}
 					textAnchor={textAnchor}
@@ -174,7 +177,28 @@ export const ChartDonut = ({ trigger }) => {
 					fontWeight={600}
 					fill='green'>{`${value.toLocaleString()}$`}</text>
 				<text
+					className='hidden md:block'
 					x={ex + (cos >= 0 ? 1 : -1) * 12}
+					y={ey}
+					dy={18}
+					textAnchor={textAnchor}
+					fontSize={16}
+					fontWeight={600}
+					fill='green'>
+					{`${(percent * 100).toFixed(2)}%`}
+				</text>
+
+				<text
+					className='block md:hidden'
+					x={90}
+					y={ey}
+					textAnchor={textAnchor}
+					fontSize={18}
+					fontWeight={600}
+					fill='green'>{`${value.toLocaleString()}$`}</text>
+				<text
+					className='block md:hidden'
+					x={90}
 					y={ey}
 					dy={18}
 					textAnchor={textAnchor}
@@ -297,18 +321,22 @@ export const ChartFinance = () => {
 					fill={fill}
 				/>
 				<path
+					className='hidden md:block'
 					d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`}
 					stroke={fill}
 					fill='none'
 				/>
 				<circle
+					className='hidden md:block'
 					cx={ex}
 					cy={ey}
 					r={2}
 					fill={fill}
 					stroke='none'
 				/>
+
 				<text
+					className='hidden md:block'
 					x={ex + (cos >= 0 ? 1 : -1) * 12}
 					y={ey}
 					textAnchor={textAnchor}
@@ -316,7 +344,28 @@ export const ChartFinance = () => {
 					fontWeight={600}
 					fill='green'>{`${value.toLocaleString()}$`}</text>
 				<text
+					className='hidden md:block'
 					x={ex + (cos >= 0 ? 1 : -1) * 12}
+					y={ey}
+					dy={18}
+					textAnchor={textAnchor}
+					fontSize={16}
+					fontWeight={600}
+					fill='green'>
+					{`${(percent * 100).toFixed(2)}%`}
+				</text>
+
+				<text
+					className='block md:hidden'
+					x={90}
+					y={ey}
+					textAnchor={textAnchor}
+					fontSize={18}
+					fontWeight={600}
+					fill='green'>{`${value.toLocaleString()}$`}</text>
+				<text
+					className='block md:hidden'
+					x={90}
 					y={ey}
 					dy={18}
 					textAnchor={textAnchor}

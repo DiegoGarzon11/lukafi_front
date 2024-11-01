@@ -76,7 +76,7 @@ export default function SignIn() {
 			)}
 
 			<form
-				className='mt-10 grid w-full h-3/4 gap-8 p-8 shadow-sm bg-zinc-100 dark:bg-dark_primary_color rounded-md'
+				className='grid w-full py-32 mt-5 md:mt-0   gap-8 p-8 shadow-sm bg-zinc-100 dark:bg-dark_primary_color rounded-md h-full'
 				onSubmit={handleSubmit}>
 				<h1 className='text-4xl mb-6 font-semibold'>{t('form.field.signIn')}</h1>
 				<div>
@@ -119,7 +119,7 @@ export default function SignIn() {
 				<div className='flex justify-center w-full items-center '>
 					<Button
 						disabled={!data.email || !data.password || loader}
-						className='w-full font-semibold bg-zinc-950 text-white text-lg flex justify-center items-center'
+						className='w-full font-semibold bg-zinc-950 text-white text-lg flex justify-center items-center py-5'
 						type='submit'>
 						{loader || statusCode?.status === 200 ? <LoaderApi color='white' /> : t('form.field.signIn')}
 					</Button>

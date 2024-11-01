@@ -1,8 +1,6 @@
-.scrollbar-custom::-webkit-scrollbar {
-	background: transparent;
-	width: 10px;
-}
-.scrollbar-custom::-webkit-scrollbar-thumb {
-	background: gray;
-	border-radius: 50px;
-}
+
+.scrollbar-custom {
+	overflow-y: scroll;
+	scrollbar-color: grey transparent;
+	scrollbar-width: thin;
+ }

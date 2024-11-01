@@ -27,7 +27,7 @@ export default function Auth() {
 			/>
 			<div className='grid grid-cols-1 lg:grid-cols-2 h-dvh justify-center lg:items-start  '>
 				<div className='mt-20  w-full  flex  items-center  flex-col md:flex-row    '>
-					<div className='flex flex-col md:flex-row  w-full items-end z-10  md:mb-10   '>
+					<div className='flex flex-col md:flex-row  w-full items-end z-10  md:mb-10 '>
 						<Link to='/'>
 							<button className='p-1 bg-zinc-300 dark:bg-dark_primary_color rounded-full mx-5 md:mx-20 flex items-center gap-1 px-5 mb-3 md:mb-0'>
 								<ArrowLeft /> <span className='text-lg '>{t('form.btn.back')}</span>
@@ -63,7 +63,7 @@ export default function Auth() {
 				</div>
 
 				<div className={` flex justify-center items-start lg:items-center w-full  ${view ? 'md:-order-1' : ''}  `}>
-					<section className='w-[98%]    flex justify-center items-center  h-screen '>
+					<section className='w-[98%]    flex justify-center items-center  md:h-screen  '>
 						{view ? <SignIn /> : <SignUp isRegisterOk={changueView} />}
 					</section>
 				</div>

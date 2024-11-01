@@ -70,7 +70,7 @@ export function SheetSide() {
 						defaultValue={btnSelected}
 						type='single'
 						collapsible
-						className='w-full px-2 flex flex-col gap-2 overflow-y-scroll scrollbar-custom md:h-[375px] h-80'>
+						className='w-full px-2 flex flex-col gap-2 scrollbar-custom md:h-[375px] h-80'>
 						<AccordionItem value='dashboard'>
 							<AccordionTrigger>
 								<div className='flex items-center gap-5'>

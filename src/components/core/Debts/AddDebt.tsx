@@ -87,7 +87,7 @@ export const AddDebt = ({ apiData,sendData, className }) => {
 					{t('addDebt.addDebt')} <HandCoins />
 				</Button>
 			</DialogTrigger>
-			<DialogContent className=' w-11/12 md:w-[500px] rounded-md '>
+			<DialogContent className=' w-full md:w-[500px] rounded-md '>
 				<DialogHeader>
 					<DialogTitle>{t('addDebt.newDebt')}</DialogTitle>
 					<DialogDescription>{t('addDebt.instructions')}</DialogDescription>
