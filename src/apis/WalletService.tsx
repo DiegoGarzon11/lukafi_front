@@ -67,3 +67,19 @@ export const GetDailyReport = async (data) => {
 	}
 	console.warn('datos no enviados');
 };
+
+export const GetMonthlyReport = async (data) => {
+	if (data) {
+		try {
+			const response = await fetch(`${API_HTTP}/wallet/get-monthly-report/${data}`, {
+				method: 'GET',
+			});
+
+			return await response.json();
+		} catch (error) {
+			console.error(error);
+		}
+		return;
+	}
+	console.warn('datos no enviados');
+};

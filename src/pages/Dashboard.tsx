@@ -15,12 +15,16 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { GetAllIncomes } from '@/apis/Income.service';
+import { LoaderApi } from '@/assets/icons/Svg';
 export const Dashboard = () => {
 	const [userData, setDataUser] = useState<ResponseWallet | undefined>(undefined);
 	const [expenses, setExpenses] = useState<Array<Expenses> | undefined>([]);
 	const [incomes, setIncomes] = useState<Array<Incomes> | undefined>([]);
 	const [trigger, setTrigger] = useState(0);
 	const [fetching, setFetching] = useState(true);
+	const [filter, setFilter] = useState('day');
+	const [changeFilter, setChangeFilter] = useState(false);
+	localStorage.setItem('filterChartBalance', filter);
 	const user = JSON.parse(localStorage.getItem('userMain'));
 
 	const { t, i18n } = useTranslation();
@@ -73,6 +77,15 @@ export const Dashboard = () => {
 			fetchExpensesAndDebts();
 		}
 	}, [userData, trigger]);
+
+	const handleFilterChartBalance = (e) => {
+		localStorage.setItem('filterChartBalance', e);
+		setFilter(e);
+		setChangeFilter(true);
+		setTimeout(() => {
+			setChangeFilter(false);
+		}, 2000);
+	};
 
 	if (fetching) {
 		return (
@@ -130,7 +143,7 @@ export const Dashboard = () => {
 					<section className='flex md:col-span-3 md:row-span-8 flex-wrap md:flex-nowrap  gap-3 md:h-56'>
 						<article className=' w-full h-full  shadow-sm border-none  text-black  dark:text-white  md:grid md:grid-cols-3 gap-3 flex flex-col '>
 							<div className='border border-border dark:bg-dark_primary_color bg-zinc-200 p-3 rounded-md flex justify-center flex-col items-center h-48 md:h-full'>
-								<p className='h-1/2 text-lg'>Reporte meta de ahorros</p>
+								<p className='h-1/2 text-lg'>Reporte meta de ahorros mensual</p>
 
 								<div className='flex gap-3 items-end h-full flex-col'>
 									<p className='flex items-start gap-2 '>
@@ -189,15 +202,21 @@ export const Dashboard = () => {
 							<div className='flex flex-col md:flex-row items-center justify-between p-5 gap-2'>
 								<p className='text-lg pb-5'>{t('dashboard.viewExpensesCategory')}</p>
 								<div className='flex gap-3 justify-end'>
-									<Button className=''>{t('dashboard.day')}</Button>
 									<Button
-										disabled
-										className=''>
-										{t('dashboard.month')}
+										variant='ghost'
+										className='shadow-inner shadow-green-500 '>
+										{t('dashboard.day')}
 									</Button>
 									<Button
 										disabled
-										className=''>
+										variant='ghost'
+										className=' border border-border'>
+										{t('dashboard.month')}
+									</Button>
+									<Button
+										variant='ghost'
+										disabled
+										className=' border border-border'>
 										{t('dashboard.year')}
 									</Button>
 								</div>
@@ -214,23 +233,58 @@ export const Dashboard = () => {
 
 						<div className='flex flex-col dark:bg-dark_primary_color rounded-md  bg-zinc-200 w-full h-auto py-10'>
 							<div className='flex flex-col md:flex-row justify-between items-center  p-5   gap-3'>
-								<p className='text-lg pb-5'>{t('dashboard.viewBalanceExpenses')}</p>
+								<div className='flex gap-3 items-center w-full flex-col md:flex-row'>
+									<p className='text-lg pb-5 flex  gap-10 items-center'>{t('dashboard.viewBalanceExpenses')}</p>
+									{localStorage.getItem('filterChartBalance') === 'day' ? (
+										<p className='text-lg pb-5 flex  gap-1 items-center'>
+											en el mes de
+											<span className='text-green-500'>{<p>{format(new Date(), 'MMMM')}</p>}</span>
+										</p>
+									) : (
+										''
+									)}
+								</div>
+
 								<div className='flex gap-3'>
-									<Button className=''>{t('dashboard.day')}</Button>
 									<Button
-										disabled
-										className=''>
+										disabled={filter === 'day'}
+										variant='ghost'
+										onClick={(_) => handleFilterChartBalance('day')}
+										className={filter === 'day' ? 'shadow-inner shadow-green-500 disabled:opacity-100 ' : ' border border-border '}>
+										{t('dashboard.day')}
+									</Button>
+									<Button
+										disabled={filter === 'month'}
+										variant='ghost'
+										onClick={(_) => handleFilterChartBalance('month')}
+										className={filter === 'month' ? 'shadow-inner shadow-green-500  disabled:opacity-100' : ' border border-border  '}>
 										{t('dashboard.month')}
 									</Button>
 									<Button
+										variant='ghost'
 										disabled
-										className=''>
+										onClick={(_) => handleFilterChartBalance('year')}
+										className={filter === 'year' ? 'shadow-inner shadow-green-500 ' : ' border border-border'}>
 										{t('dashboard.year')}
 									</Button>
 								</div>
 							</div>
 							{expenses?.length > 0 || incomes?.length > 0 ? (
-								<Chart trigger={trigger} />
+								<>
+									<div
+										className={` md:absolute bottom-52 left-0 right-0 flex justify-center items-center mt-10    ${
+											changeFilter ? '' : 'hidden'
+										}`}>
+										<LoaderApi color='white' />
+									</div>
+
+									<div className={changeFilter ? 'invisible' : ''}>
+										<Chart
+											trigger={trigger}
+											filter={filter}
+										/>
+									</div>
+								</>
 							) : (
 								<div className=' flex justify-center items-center gap-3   '>
 									<AlertTriangle className='text-yellow-500' />

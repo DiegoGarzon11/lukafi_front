@@ -1,7 +1,7 @@
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell, Sector, AreaChart, Area } from 'recharts';
 import { GetExpensesByCategory } from '@/apis/ExpenseService';
 import { useEffect, useState } from 'react';
-import { GetWalletUser, GetWalletValues, GetDailyReport } from '@/apis/WalletService';
+import { GetWalletUser, GetWalletValues, GetDailyReport, GetMonthlyReport } from '@/apis/WalletService';
 import { PieChart, Pie } from 'recharts';
 import { ExpensesByCategory, Incomes, wallet_values } from '@/interfaces/Wallet';
 import { useTranslation } from 'react-i18next';
@@ -21,7 +21,10 @@ const COLORS = [
 	'#186F65',
 	'#96C291',
 ];
-const CustomTooltip = ({ payload }) => {
+const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+const CustomTooltipDaily = ({ payload }) => {
+	console.log(payload);
+
 	const { t, i18n } = useTranslation();
 	i18n.changeLanguage();
 	function validateColor(name) {
@@ -42,8 +45,14 @@ const CustomTooltip = ({ payload }) => {
 	return (
 		<div className='bg-zinc-900 p-5 rounded-md'>
 			{payload.map((p, i) => (
-				<p  key={i}>
-					{t('dashboard.chart')} {p.payload?.day}
+				<p key={i}>
+					{localStorage.getItem('filterChartBalance') === 'day' ? (
+						<span className='text-green-500'>
+							{t('dashboard.chart')} {p.payload?.day}
+						</span>
+					) : (
+						<span className='text-green-500'>El mes de {months[Number(p.payload?.month - 1)]}</span>
+					)}
 					<span className={`text-[${validateColor(p.name)}]`}> {validateName(p.name)} </span>
 					<span className={`text-[${validateColor(p.name)}]`}> {Number(p.value).toLocaleString()} </span>
 				</p>
@@ -52,7 +61,7 @@ const CustomTooltip = ({ payload }) => {
 	);
 };
 
-export const Chart = ({ trigger }) => {
+export const Chart = ({ trigger, filter }) => {
 	const userInfo = JSON.parse(localStorage.userMain);
 	const [report, setReport] = useState();
 
@@ -60,10 +69,15 @@ export const Chart = ({ trigger }) => {
 		const getDailyFixed = async () => {
 			const wallet = await GetWalletUser(userInfo?.user_id);
 			const dailyReport = await GetDailyReport(wallet?.wallet?.wallet_id);
-			setReport(dailyReport.results);
+			const monthlyReport = await GetMonthlyReport(wallet?.wallet?.wallet_id);
+			if (filter === 'day') {
+				setReport(dailyReport.results);
+			} else if (filter === 'month') {
+				setReport(monthlyReport.results);
+			}
 		};
 		getDailyFixed();
-	}, [trigger]);
+	}, [trigger, filter]);
 
 	return (
 		<ResponsiveContainer height={330}>
@@ -80,7 +94,7 @@ export const Chart = ({ trigger }) => {
 				<CartesianGrid strokeDasharray=' 3 3' />
 				<XAxis dataKey='day' />
 				<YAxis />
-				<Tooltip content={CustomTooltip} />
+				<Tooltip content={CustomTooltipDaily} />
 				<Legend />
 				<Line
 					activeDot={{ r: 5 }}
@@ -190,7 +204,7 @@ export const ChartDonut = ({ trigger }) => {
 
 				<text
 					className='block md:hidden'
-					x={90}
+					x={ex + (cos >= 0 ? -35 : 35) * 1}
 					y={ey}
 					textAnchor={textAnchor}
 					fontSize={18}
@@ -198,7 +212,7 @@ export const ChartDonut = ({ trigger }) => {
 					fill='green'>{`${value.toLocaleString()}$`}</text>
 				<text
 					className='block md:hidden'
-					x={90}
+					x={ex + (cos >= 0 ? -35 : 35) * 1}
 					y={ey}
 					dy={18}
 					textAnchor={textAnchor}
@@ -357,7 +371,7 @@ export const ChartFinance = () => {
 
 				<text
 					className='block md:hidden'
-					x={90}
+					x={ex + (cos >= 0 ? -35 : 35) * 1}
 					y={ey}
 					textAnchor={textAnchor}
 					fontSize={18}
@@ -365,7 +379,7 @@ export const ChartFinance = () => {
 					fill='green'>{`${value.toLocaleString()}$`}</text>
 				<text
 					className='block md:hidden'
-					x={90}
+					x={ex + (cos >= 0 ? -35 : 35) * 1}
 					y={ey}
 					dy={18}
 					textAnchor={textAnchor}
@@ -440,7 +454,7 @@ export const ChartIncomes = ({ trigger }) => {
 						horizontal={false}
 						vertical={false}
 					/>
-					<Tooltip content={CustomTooltip} />
+					<Tooltip content={CustomTooltipDaily} />
 					<XAxis dataKey='day' />
 					<Area
 						type='monotone'

@@ -6,7 +6,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
 import '@/styles/Dashboard.css';
-import { format } from 'date-fns';
+import { format, formatISO } from 'date-fns';
 import { Edit, EllipsisVertical, Trash } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -38,7 +38,7 @@ export const SeeExpenses = () => {
 	const [fetching, setFetching] = useState(true);
 	const days = Array.from({ length: 31 }, (_, i) => i + 1);
 
-	const { t, i18n } = useTranslation(); 
+	const { t, i18n } = useTranslation();
 	i18n.changeLanguage();
 	const user = JSON.parse(localStorage.getItem('userMain'));
 
@@ -73,9 +73,8 @@ export const SeeExpenses = () => {
 		};
 		const response = await PayFixedExpense(params);
 		setTrigger((prev) => prev + 1);
-		
 
-		if(!response){
+		if (!response) {
 			return;
 		}
 		setVisibilityToast(true);
@@ -215,7 +214,6 @@ export const SeeExpenses = () => {
 			<section className=' shadow-sm  md:col-span-3 md:row-span-2 '>
 				<div className=' w-full  flex flex-col  justify-between gap-5 order-3 '>
 					<div className='dark:bg-dark_primary_color bg-zinc-200  p-3 w-full  rounded-xl border border-gray-600/50'>
-					
 						<div className='flex gap-3 flex-col items-start '>
 							<h5 className='text-2xl'> {t('dashboard.allFixedExpenses')} </h5>
 
@@ -367,7 +365,7 @@ export const SeeExpenses = () => {
 											e.is_paid ? (
 												<TableRow key={e?.expense_id}>
 													<TableCell className='font-medium  w-full'>
-														<p>{new Date(e?.created_in).toLocaleDateString()}</p>
+														<p>{format(new Date(e?.created_in), 'PP')}</p>
 													</TableCell>
 													<TableCell className='font-medium w-full hidden md:block'>
 														{e?.name.length >= 20 ? (
