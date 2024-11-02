@@ -6,7 +6,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
 import '@/styles/Dashboard.css';
-import { format, formatISO } from 'date-fns';
+import { format } from 'date-fns';
 import { Edit, EllipsisVertical, Trash } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
