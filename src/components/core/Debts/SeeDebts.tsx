@@ -411,7 +411,7 @@ export const SeeDebts = () => {
 						<DialogTitle className='my-3'>
 							<p className='my-3 font-bold text-2xl text-center  py-3 dark:border-white border-black'>Agrega el monto de la deuda</p>
 						</DialogTitle>
-						<DialogDescription className='flex flex-col justify-center gap-5 h-full '>
+						<div className='flex flex-col justify-center gap-5 h-full '>
 							<p className='text-white font-semibold text-base text-pretty'>
 								<span className='text-red-500 mx-2'>*</span>El monto a agregar no puede ser mayor a la deuda
 							</p>
@@ -434,7 +434,7 @@ export const SeeDebts = () => {
 							</div>
 
 							<Button onClick={submitAmount}>Confirmar</Button>
-						</DialogDescription>
+						</div>
 					</DialogHeader>
 				</DialogContent>
 			</Dialog>

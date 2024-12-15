@@ -54,8 +54,6 @@ export const addAmount = async (data) => {
 				},
 				body: formData,
 			});
-			console.log(data.amount);
-
 			return await response.json();
 		} catch (error) {
 			console.error(error);

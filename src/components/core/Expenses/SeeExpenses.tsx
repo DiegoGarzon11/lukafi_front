@@ -360,7 +360,7 @@ export const SeeExpenses = () => {
 
 							<div className='w-full h-52   scrollbar-custom'>
 								<Table className='w-full'>
-									<TableBody className='       scrollbar-custom'>
+									<TableBody className=' scrollbar-custom'>
 										{expenses?.map((e) =>
 											e.is_paid ? (
 												<TableRow key={e?.expense_id}>

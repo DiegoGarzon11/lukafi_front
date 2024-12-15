@@ -7,6 +7,7 @@ export function TooltipComponent({ message, content, className }: { message: str
 			<Tooltip>
 				<TooltipTrigger asChild>
 					<Button
+						onTouchEndCapture={() => console.log('hola')}
 						className='p-0  hover:bg-transparent'
 						variant='ghost'>
 						<span className={` ${className} `}>{message}</span>
@@ -15,7 +16,7 @@ export function TooltipComponent({ message, content, className }: { message: str
 				<TooltipContent
 					className='bg-slate-700 px-2 py-1 rounded-md'
 					side='bottom'>
-					<p>{content}</p>
+					<p className=''>{content}</p>
 				</TooltipContent>
 			</Tooltip>
 		</TooltipProvider>
