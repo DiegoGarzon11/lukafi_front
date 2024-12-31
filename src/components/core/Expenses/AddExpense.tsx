@@ -5,8 +5,7 @@ import { Combobox } from '@/components/others/Combobox';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { ApiResponse } from '@/interfaces/Api';
@@ -43,11 +42,6 @@ export const AddExpense = ({ apiData, sendData, className }) => {
 			setValue(formattedValue);
 		} else if (type === 'name') {
 			setName(e.target.value);
-		} else if (type === 'isFixed') {
-			if (isFixed === 'true') {
-				setDeadLine(0);
-			}
-			setIsFixed(e);
 		}
 	};
 	const handleDateFixedCost = (e) => {
@@ -64,7 +58,6 @@ export const AddExpense = ({ apiData, sendData, className }) => {
 	const submitExpense = async () => {
 		setLoader(true);
 		const sendIsFixed: boolean = isFixed === 'true';
-		
 
 		const params = {
 			wallet_id: apiData.wallet_id,
@@ -79,6 +72,7 @@ export const AddExpense = ({ apiData, sendData, className }) => {
 			category_id: selectedCategory?.category_id,
 			category_name: selectedCategory?.category_name,
 		};
+		console.log(params);
 
 		const response = await NewExpense(params);
 
@@ -129,7 +123,7 @@ export const AddExpense = ({ apiData, sendData, className }) => {
 							className='mb-2'>
 							{t('addExpense.nameExpense')} <span className='text-red-500'>*</span>
 							<Input
-								className='border dark:border-zinc-400 dark:bg-zinc-800/30'
+								className='border dark:border-zinc-400 dark:bg-dark_primary_color/30'
 								value={name}
 								onChange={(e) => handleValues(e, 'name')}
 								id='value_name'
@@ -143,7 +137,7 @@ export const AddExpense = ({ apiData, sendData, className }) => {
 							className='mb-2'>
 							{t('addExpense.amount')} $ <span className='text-red-500'>*</span>
 							<Input
-								className='border dark:border-zinc-400 dark:bg-zinc-800/30'
+								className='border dark:border-zinc-400 dark:bg-dark_primary_color/30'
 								value={value}
 								onChange={(e) => handleValues(e, 'value')}
 								id='value_value'
@@ -153,30 +147,32 @@ export const AddExpense = ({ apiData, sendData, className }) => {
 					</div>
 				</div>
 				<div className='flex w-full gap-3'>
-					<div className='flex justify-center items-center gap-5 flex-col w-full'>
+					<div className='flex justify-center items-center gap-2 flex-col w-full '>
 						<label>
 							{t('addExpense.fixedExpense')} <span className='text-red-500'>*</span>
 						</label>
-						<RadioGroup
-							className='flex items-center'
-							defaultValue={isFixed}
-							onValueChange={(e) => handleValues(e, 'isFixed')}>
-							<div className='flex items-center space-x-2'>
-								<RadioGroupItem
-									value='true'
-									id='true'
-								/>
-								<Label htmlFor='r1'> {t('addExpense.yes')} </Label>
-							</div>
-
-							<div className='flex items-center space-x-2'>
-								<RadioGroupItem
-									value='false'
-									id='false'
-								/>
-								<Label htmlFor='r2'>No</Label>
-							</div>
-						</RadioGroup>
+						<div className='flex justify-center items-center gap-5  w-full'>
+							<Button
+								onClick={() => {
+									setIsFixed('true');
+								}}
+								variant='ghost'
+								className={`${className} ${
+									isFixed == 'true' ? 'dark:bg-dark_primary_color bg-zinc-300' : ''
+								}   dark:hover:bg-hover_primary_color/40   hover:bg-zinc-400 text-black  dark:text-white flex items-center gap-3`}>
+								{t('addExpense.yes')}
+							</Button>
+							<Button
+								onClick={() => {
+									setIsFixed('false');
+								}}
+								variant='ghost'
+								className={`${className}  ${
+									isFixed == 'false' ? 'dark:bg-dark_primary_color bg-zinc-300' : ''
+								}   dark:hover:bg-hover_primary_color/40   hover:bg-zinc-400 text-black  dark:text-white flex items-center gap-3`}>
+								No
+							</Button>
+						</div>
 					</div>
 
 					<div className='w-full'>
@@ -189,7 +185,7 @@ export const AddExpense = ({ apiData, sendData, className }) => {
 				</div>
 
 				{isFixed === 'true' && (
-					<div className='flex flex-col w-full bg-zinc-100 dark:bg-zinc-800/50 rounded-md p-3'>
+					<div className='flex flex-col w-full bg-zinc-100 dark:bg-dark_primary_color rounded-md p-3'>
 						<label
 							htmlFor='value_value'
 							className='self-start mb-2'>
@@ -199,16 +195,16 @@ export const AddExpense = ({ apiData, sendData, className }) => {
 						<div className=' flex flex-wrap gap-x-3 items-center'>
 							<p className=''>{t('addExpense.paymentDayP')} </p>
 							<Select onValueChange={(e) => handleDateFixedCost(e)}>
-								<SelectTrigger className=' w-32 bg-zinc-200 dark:bg-zinc-800 dark:text-white text-black border border-green-500/50'>
+								<SelectTrigger className=' w-32 bg-zinc-200 dark:bg-dark_primary_color dark:text-white text-black border border-green-500/50'>
 									<SelectValue placeholder={`${t('dashboard.day')}`} />
 								</SelectTrigger>
-								<SelectContent className='dark:bg-zinc-700'>
+								<SelectContent className='dark:bg-primary-'>
 									<SelectGroup>
 										<SelectLabel className='text-lg'>{t('dashboard.day')}</SelectLabel>
 
 										{days.map((e, i) => (
 											<SelectItem
-												className='focus:dark:bg-zinc-800 focus:bg-zinc-200 cursor-pointer'
+												className='focus:dark:bg-dark_primary_color focus:bg-zinc-200 cursor-pointer'
 												key={i}
 												value={e.toString()}>
 												{e}

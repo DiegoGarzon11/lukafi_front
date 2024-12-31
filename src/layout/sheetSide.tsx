@@ -7,6 +7,7 @@ import { DollarSign, HandCoins, Headset, LogOut, LucideLineChart, Menu, Pencil, 
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarHeader } from '@/components/ui/sidebar';
 
 import '@/styles/Dashboard.css';
 export function SheetSide() {
@@ -23,19 +24,9 @@ export function SheetSide() {
 		window.location.href = '/';
 	}
 	return (
-		<Sheet open={sheetOpen}>
-			<SheetTrigger asChild>
-				<Button
-					onClick={() => setSheetOpen(true)}
-					className='border-none m-0 p-0 flex justify-center w-11 '
-					variant='black_outline'>
-					<Menu className='w-full h-9' />
-				</Button>
-			</SheetTrigger>
-			<SheetContent
-				className='dark:bg-dark_primary_color bg-zinc-200 w-60 md:w-72'
-				aria-describedby={undefined}
-				side='right'>
+		<Sidebar className='z-50  bg-zinc-200 '>
+			
+			<SidebarContent className='dark:bg-dark_primary_color bg-zinc-200 border border-border'>
 				<div className=' w-ful flex justify-between'>
 					<Button
 						variant='ghost'
@@ -44,13 +35,9 @@ export function SheetSide() {
 						}}>
 						<LogOut />
 					</Button>
-					<SheetClose
-						className='mr-3'
-						onClick={() => setSheetOpen(false)}>
-						<X />
-					</SheetClose>
+					
 				</div>
-				<SheetTitle className='hidden' />
+				
 				<div className='mt-10 flex flex-col h-full gap-3'>
 					<div className=' flex flex-col items-center mb-5 border-b pb-3 border-green-500 w-full'>
 						<div className='bg-white p-5 rounded-full flex justify-center items-center'>
@@ -182,7 +169,7 @@ export function SheetSide() {
 								</Link>
 							</AccordionContent>
 						</AccordionItem>
-						
+
 						<AccordionItem value='help'>
 							<AccordionTrigger>
 								<div className='flex items-center gap-5 '>
@@ -213,7 +200,23 @@ export function SheetSide() {
 						/>
 					</div>
 				</div>
-			</SheetContent>
+			</SidebarContent>
+		</Sidebar>
+	);
+	return (
+		<Sheet open={sheetOpen}>
+			<SheetTrigger asChild>
+				<Button
+					onClick={() => setSheetOpen(true)}
+					className='border-none m-0 p-0 flex justify-center w-11 '
+					variant='black_outline'>
+					<Menu className='w-full h-9' />
+				</Button>
+			</SheetTrigger>
+			<SheetContent
+				className='dark:bg-dark_primary_color bg-zinc-200 w-60 md:w-72'
+				aria-describedby={undefined}
+				side='right'></SheetContent>
 		</Sheet>
 	);
 }
