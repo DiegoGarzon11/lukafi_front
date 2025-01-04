@@ -1,19 +1,19 @@
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetClose, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet';
+
 import { useTranslation } from 'react-i18next';
 import dog from '@/assets/avatar/dog.webp';
 import logo from '/images/logo.png';
-import { DollarSign, HandCoins, Headset, LogOut, LucideLineChart, Menu, Pencil, PiggyBank, User, Wallet, X } from 'lucide-react';
+import { DollarSign, HandCoins, Headset, LogOut, LucideLineChart, Pencil, PiggyBank, User, Wallet } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarHeader } from '@/components/ui/sidebar';
+import { Sidebar, SidebarContent } from '@/components/ui/sidebar';
 
 import '@/styles/Dashboard.css';
 export function SheetSide() {
 	const { t, i18n } = useTranslation();
 	i18n.changeLanguage();
-	const [sheetOpen, setSheetOpen] = useState(false);
+	
 	const [btnSelected, setBtnSelected] = useState('dashboard');
 
 	const infoUser = localStorage.userMain ? JSON.parse(localStorage?.userMain) : '';
@@ -24,9 +24,9 @@ export function SheetSide() {
 		window.location.href = '/';
 	}
 	return (
-		<Sidebar className='z-50  bg-zinc-200 '>
+		<Sidebar className='z-50  bg-zinc-200  min-w-28'>
 			
-			<SidebarContent className='dark:bg-dark_primary_color bg-zinc-200 border border-border'>
+			<SidebarContent  className='dark:bg-dark_primary_color bg-zinc-200 border border-border'>
 				<div className=' w-ful flex justify-between'>
 					<Button
 						variant='ghost'
@@ -68,7 +68,7 @@ export function SheetSide() {
 							<AccordionContent className='flex flex-col gap-2 pl-5 mt-3'>
 								<Link
 									className='visited:dark:bg-red-500'
-									onClick={() => setSheetOpen(false)}
+									
 									to='dashboard'>
 									<Button
 										onClick={() => setBtnSelected('dashboard')}
@@ -91,7 +91,7 @@ export function SheetSide() {
 
 							<AccordionContent className='flex flex-col gap-2 pl-5 mt-3'>
 								<Link
-									onClick={() => setSheetOpen(false)}
+									
 									to='wallet/expenses'>
 									<Button
 										onClick={() => setBtnSelected('expenses')}
@@ -105,7 +105,7 @@ export function SheetSide() {
 							</AccordionContent>
 							<AccordionContent className='flex flex-col gap-2 pl-5'>
 								<Link
-									onClick={() => setSheetOpen(false)}
+									
 									to='wallet/debts'>
 									<Button
 										onClick={() => setBtnSelected('debts')}
@@ -119,7 +119,7 @@ export function SheetSide() {
 							</AccordionContent>
 							<AccordionContent className='flex flex-col gap-2 pl-5'>
 								<Link
-									onClick={() => setSheetOpen(false)}
+									
 									to='wallet/incomes'>
 									<Button
 										onClick={() => setBtnSelected('incomes')}
@@ -133,7 +133,7 @@ export function SheetSide() {
 							</AccordionContent>
 							<AccordionContent className='flex flex-col gap-2 pl-5'>
 								<Link
-									onClick={() => setSheetOpen(false)}
+									
 									to='wallet'>
 									<Button
 										onClick={() => setBtnSelected('wallet')}
@@ -157,7 +157,7 @@ export function SheetSide() {
 							<AccordionContent className='flex flex-col gap-2 pl-5 mt-3'>
 								<Link
 									to='/profile'
-									onClick={() => setSheetOpen(false)}>
+									>
 									<Button
 										onClick={() => setBtnSelected('profile')}
 										className={`w-full gap-4 justify-start py-6 bg-zinc-200 hover:bg-white dark:hover:bg-hover_primary_color text-black dark:text-white ${
@@ -180,7 +180,7 @@ export function SheetSide() {
 							<AccordionContent className='flex flex-col gap-2  pl-5 mt-3'>
 								<Link
 									to='/support/help'
-									onClick={() => setSheetOpen(false)}>
+									>
 									<Button
 										className={`w-full gap-4 justify-start py-6 bg-zinc-200 hover:bg-white dark:hover:bg-hover_primary_color text-black dark:text-white ${
 											btnSelected === 'help' ? 'bg-white bg-gradient-to-b dark:from-[#0e1a12] dark:to-[#1a862a]' : 'bg-transparent'
@@ -203,20 +203,5 @@ export function SheetSide() {
 			</SidebarContent>
 		</Sidebar>
 	);
-	return (
-		<Sheet open={sheetOpen}>
-			<SheetTrigger asChild>
-				<Button
-					onClick={() => setSheetOpen(true)}
-					className='border-none m-0 p-0 flex justify-center w-11 '
-					variant='black_outline'>
-					<Menu className='w-full h-9' />
-				</Button>
-			</SheetTrigger>
-			<SheetContent
-				className='dark:bg-dark_primary_color bg-zinc-200 w-60 md:w-72'
-				aria-describedby={undefined}
-				side='right'></SheetContent>
-		</Sheet>
-	);
+	
 }

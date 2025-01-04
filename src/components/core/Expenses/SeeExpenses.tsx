@@ -191,7 +191,7 @@ export const SeeExpenses = () => {
 		);
 	}
 	return (
-		<main className='pt-20 p-3 h-screen bg-dark_primary_color'>
+		<main className='pt-20 p-3 h-screen bg-black'>
 			<nav className='flex w-full justify-between items-center pb-5'>
 				<Breadcrumb>
 					<BreadcrumbList>

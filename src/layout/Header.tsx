@@ -5,9 +5,10 @@ import { Link, Outlet, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { SheetSide } from '@/layout/sheetSide';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
-export default function Header() {
+export default function Header({valueSide}) {
 	const location = useLocation();
 	const [isOpen, setIsOpen] = useState(false);
+	const [isSideOpen, setIsSideOpen] = useState(true);
 	const [theme, setTheme] = useState(() => {
 		const savedTheme = localStorage.getItem('theme');
 		return savedTheme || 'light';
@@ -54,17 +55,20 @@ export default function Header() {
 		}
 	}, []);
 
+	const handleSidebar = () => {
+		setIsSideOpen(!isSideOpen);
+		valueSide(!isSideOpen);
+	};
+
 	return (
 		<>
 			<header className='   z-50 absolute   gap-5  '>
 				<div className='flex justify-start gap-3 items-center'>
-					<SidebarProvider>
+					<SidebarProvider
+						open={isSideOpen}
+						onOpenChange={handleSidebar}>
 						<SheetSide />
-						{
-							localStorage.token && (
-								<SidebarTrigger className='z-50 mt-3 ml-3 sticky top-3' />
-							)
-						}
+						{localStorage.token && <SidebarTrigger className='z-50 mt-3 ml-3 sticky top-3' />}
 						<Button
 							variant='ghost'
 							className='z-50 mt-3 ml-3 text-lg  sticky top-3 cursor-default'>
