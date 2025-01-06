@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 
 function App() {
 	const [loaded, setLoaded] = useState(false);
-	const [isSideOpen, setIsSideOpen] = useState(true);	
+	const [isSideOpen, setIsSideOpen] = useState(true);
 	useEffect(() => {
 		const time = setTimeout(() => {
 			setLoaded(true);
@@ -15,17 +15,14 @@ function App() {
 		return () => clearTimeout(time);
 	}, []);
 	const handleSideValue = (value) => {
-		console.log(value,' value-------------------------------');
 		setIsSideOpen(value);
-		
-		
 	};
-	
+
 	return (
 		<div className={`app${loaded ? 'loaded' : ''}`}>
 			<BrowserRouter>
 				<Header valueSide={handleSideValue} />
-				<div className={`${isSideOpen ? 'md:ml-64' : ' '} transition-all duration-500 ease-in-out`}>
+				<div className={`${isSideOpen && localStorage.token ? 'md:ml-64' : ' '}  transition-all duration-500 ease-in-out`}>
 					<RoutesManager />
 				</div>
 			</BrowserRouter>

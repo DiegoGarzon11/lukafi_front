@@ -1,6 +1,6 @@
-
 .scrollbar-custom {
-	overflow-y: scroll;
+	overflow-y: auto;
 	scrollbar-color: grey transparent;
 	scrollbar-width: thin;
- }
+
+}

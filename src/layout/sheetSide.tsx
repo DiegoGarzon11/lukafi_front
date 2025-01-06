@@ -3,17 +3,25 @@ import { Button } from '@/components/ui/button';
 import { useTranslation } from 'react-i18next';
 import dog from '@/assets/avatar/dog.webp';
 import logo from '/images/logo.png';
-import { DollarSign, HandCoins, Headset, LogOut, LucideLineChart, Pencil, PiggyBank, User, Wallet } from 'lucide-react';
+import { ChevronDown, DollarSign, HandCoins, LogOut, LucideHelpCircle, LucideLineChart, LucidePencil, PiggyBank, User, Wallet } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { Sidebar, SidebarContent } from '@/components/ui/sidebar';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+
+import {
+	Sidebar,
+	SidebarContent,
+	SidebarGroup,
+	SidebarGroupLabel,
+	SidebarMenu,
+	SidebarMenuSub,
+} from '@/components/ui/sidebar';
 
 import '@/styles/Dashboard.css';
 export function SheetSide() {
 	const { t, i18n } = useTranslation();
 	i18n.changeLanguage();
-	
+
 	const [btnSelected, setBtnSelected] = useState('dashboard');
 
 	const infoUser = localStorage.userMain ? JSON.parse(localStorage?.userMain) : '';
@@ -23,11 +31,66 @@ export function SheetSide() {
 		localStorage.removeItem('userMain');
 		window.location.href = '/';
 	}
+	const pages = [
+		{
+			name: 'Dashboard',
+			icon: <LucideLineChart />,
+			path: '/dashboard',
+			children: [
+				{
+					name: 'Dashboard',
+					icon: <LucideLineChart />,
+					path: '/dashboard',
+				},
+			],
+		},
+		{
+			name: t('sheetside.wallet') as string,
+			icon: <Wallet />,
+			path: '/wallet',
+			children: [
+				{
+					name: t('sheetside.wallet.expenses') as string,
+					icon: <DollarSign />,
+					path: '/wallet/expenses',
+				},
+				{
+					name: t('sheetside.wallet.debts') as string,
+					icon: <HandCoins />,
+					path: '/wallet/debts',
+				},
+				{
+					name: t('sheetside.wallet.incomes') as string,
+					icon: <PiggyBank />,
+					path: '/wallet/incomes',
+				},
+				{
+					name: t('sheetside.wallet.editWallet') as string,
+					icon: <LucidePencil />,
+					path: '/wallet',
+				},
+			],
+		},
+
+		{
+			name: t('sheetside.suport') as string,
+			icon: <User />,
+			path: '/support/help',
+			children: [
+				{
+					name: t('sheetside.suport.help') as string,
+					icon: <LucideHelpCircle />,
+					path: '/help',
+				},
+			],
+		},
+	];
 	return (
-		<Sidebar className='z-50  bg-zinc-200  min-w-28'>
-			
-			<SidebarContent  className='dark:bg-dark_primary_color bg-zinc-200 border border-border'>
-				<div className=' w-ful flex justify-between'>
+		<Sidebar
+			variant='sidebar'
+			className={`z-50  bg-zinc-200  min-w-28 `}>
+			<SidebarContent className='dark:bg-dark_primary_color bg-zinc-200 border border-border'>
+				<div className=' w-ful flex justify-between mt-3'>
 					<Button
 						variant='ghost'
 						onClick={() => {
@@ -35,9 +98,8 @@ export function SheetSide() {
 						}}>
 						<LogOut />
 					</Button>
-					
 				</div>
-				
+
 				<div className='mt-10 flex flex-col h-full gap-3'>
 					<div className=' flex flex-col items-center mb-5 border-b pb-3 border-green-500 w-full'>
 						<div className='bg-white p-5 rounded-full flex justify-center items-center'>
@@ -52,146 +114,48 @@ export function SheetSide() {
 						<p className='capitalize text-lg font-semibold'>{infoUser.full_name}</p>
 						<p className='dark:text-white/55 text-black/60'>{infoUser.email}</p>
 					</div>
-
-					<Accordion
-						defaultValue={btnSelected}
-						type='single'
-						collapsible
-						className='w-full px-2 flex flex-col gap-2 scrollbar-custom md:h-[375px] h-80'>
-						<AccordionItem value='dashboard'>
-							<AccordionTrigger>
-								<div className='flex items-center gap-5'>
-									<LucideLineChart className='rotation-180' />
-									Dashboard
-								</div>
-							</AccordionTrigger>
-							<AccordionContent className='flex flex-col gap-2 pl-5 mt-3'>
-								<Link
-									className='visited:dark:bg-red-500'
-									
-									to='dashboard'>
-									<Button
-										onClick={() => setBtnSelected('dashboard')}
-										className={`w-full gap-4 justify-start py-6 bg-zinc-200 hover:bg-white dark:hover:bg-hover_primary_color text-black dark:text-white ${
-											btnSelected === 'dashboard' ? 'bg-white bg-gradient-to-b dark:from-[#0e1a12] dark:to-[#146c21]' : 'bg-transparent'
-										}`}>
-										<LucideLineChart className='rotation-180' />
-										Dashboard
-									</Button>
-								</Link>
-							</AccordionContent>
-						</AccordionItem>
-						<AccordionItem value='wallet'>
-							<AccordionTrigger>
-								<div className='flex items-center gap-5'>
-									<Wallet />
-									{t('sheetside.wallet')}
-								</div>
-							</AccordionTrigger>
-
-							<AccordionContent className='flex flex-col gap-2 pl-5 mt-3'>
-								<Link
-									
-									to='wallet/expenses'>
-									<Button
-										onClick={() => setBtnSelected('expenses')}
-										className={`w-full gap-4 justify-start py-6 bg-zinc-200 hover:bg-white dark:hover:bg-hover_primary_color text-black dark:text-white ${
-											btnSelected === 'expenses' ? 'bg-white bg-gradient-to-b dark:from-[#0e1a12] dark:to-[#1a862a]' : 'bg-transparent'
-										}`}>
-										<DollarSign />
-										{t('sheetside.wallet.expenses')}
-									</Button>
-								</Link>
-							</AccordionContent>
-							<AccordionContent className='flex flex-col gap-2 pl-5'>
-								<Link
-									
-									to='wallet/debts'>
-									<Button
-										onClick={() => setBtnSelected('debts')}
-										className={`w-full gap-4 justify-start py-6 bg-zinc-200 hover:bg-white dark:hover:bg-hover_primary_color text-black dark:text-white ${
-											btnSelected === 'debts' ? 'bg-white bg-gradient-to-b dark:from-[#0e1a12] dark:to-[#1a862a]' : 'bg-transparent'
-										}`}>
-										<HandCoins />
-										{t('sheetside.wallet.debts')}
-									</Button>
-								</Link>
-							</AccordionContent>
-							<AccordionContent className='flex flex-col gap-2 pl-5'>
-								<Link
-									
-									to='wallet/incomes'>
-									<Button
-										onClick={() => setBtnSelected('incomes')}
-										className={`w-full gap-4 justify-start py-6 bg-zinc-200 hover:bg-white dark:hover:bg-hover_primary_color text-black dark:text-white ${
-											btnSelected === 'incomes' ? 'bg-white bg-gradient-to-b dark:from-[#0e1a12] dark:to-[#1a862a]' : 'bg-transparent'
-										}`}>
-										<PiggyBank />
-										{t('sheetside.wallet.incomes')}
-									</Button>
-								</Link>
-							</AccordionContent>
-							<AccordionContent className='flex flex-col gap-2 pl-5'>
-								<Link
-									
-									to='wallet'>
-									<Button
-										onClick={() => setBtnSelected('wallet')}
-										className={`w-full gap-4 justify-start py-6 bg-zinc-200 hover:bg-white dark:hover:bg-hover_primary_color text-black dark:text-white ${
-											btnSelected === 'wallet' ? 'bg-white bg-gradient-to-b dark:from-[#0e1a12] dark:to-[#1a862a]' : 'bg-transparent'
-										}`}>
-										<Pencil />
-										{t('sheetside.wallet.editWallet')}
-									</Button>
-								</Link>
-							</AccordionContent>
-						</AccordionItem>
-						<AccordionItem value='profile'>
-							<AccordionTrigger>
-								<div className='flex items-center gap-5'>
-									<User />
-
-									{t('sheetside.account')}
-								</div>
-							</AccordionTrigger>
-							<AccordionContent className='flex flex-col gap-2 pl-5 mt-3'>
-								<Link
-									to='/profile'
-									>
-									<Button
-										onClick={() => setBtnSelected('profile')}
-										className={`w-full gap-4 justify-start py-6 bg-zinc-200 hover:bg-white dark:hover:bg-hover_primary_color text-black dark:text-white ${
-											btnSelected === 'profile' ? 'bg-white bg-gradient-to-b dark:from-[#0e1a12] dark:to-[#1a862a]' : 'bg-transparent'
-										}`}>
-										<User />
-										{t('sheetside.account.profile')}
-									</Button>
-								</Link>
-							</AccordionContent>
-						</AccordionItem>
-
-						<AccordionItem value='help'>
-							<AccordionTrigger>
-								<div className='flex items-center gap-5 '>
-									<User />
-									{t('sheetside.suport')}
-								</div>
-							</AccordionTrigger>
-							<AccordionContent className='flex flex-col gap-2  pl-5 mt-3'>
-								<Link
-									to='/support/help'
-									>
-									<Button
-										className={`w-full gap-4 justify-start py-6 bg-zinc-200 hover:bg-white dark:hover:bg-hover_primary_color text-black dark:text-white ${
-											btnSelected === 'help' ? 'bg-white bg-gradient-to-b dark:from-[#0e1a12] dark:to-[#1a862a]' : 'bg-transparent'
-										}`}>
-										<Headset />
-										{t('sheetside.suport.help')}
-									</Button>
-								</Link>
-							</AccordionContent>
-						</AccordionItem>
-					</Accordion>
+					<SidebarMenu className='w-full px-2 flex flex-col gap-2 scrollbar-custom  md:h-[375px] h-80'>
+						{pages.map((page, i) => (
+							<Collapsible
+								defaultOpen
+								className='group/collapsible'>
+								<SidebarGroup>
+									<SidebarGroupLabel asChild>
+										<CollapsibleTrigger>
+											<div className='flex items-center gap-5 '>
+												<p className='text-sm font-semibold'>{page.icon}</p>
+												<p className='text-sm font-semibold'>{page.name}</p>
+											</div>
+											<ChevronDown className='ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180' />
+										</CollapsibleTrigger>
+									</SidebarGroupLabel>
+									<CollapsibleContent
+										key={i}
+										className='flex flex-col gap-2 pl-5 mt-3'>
+										<SidebarMenuSub>
+											{page.children.map((child) => (
+												<Link
+													key={child.path}
+													className='visited:dark:bg-red-500'
+													to={child.path}>
+													<Button
+														onClick={() => setBtnSelected(child.path)}
+														className={`w-full gap-4 justify-start py-6 bg-zinc-200 hover:bg-white dark:hover:bg-hover_primary_color text-black dark:text-white ${
+															btnSelected === child.path
+																? 'bg-white bg-gradient-to-b dark:from-[#0e1a12] dark:to-[#146c21]'
+																: 'bg-transparent'
+														}`}>
+														{child.icon}
+														{child.name}
+													</Button>
+												</Link>
+											))}
+										</SidebarMenuSub>
+									</CollapsibleContent>
+								</SidebarGroup>
+							</Collapsible>
+						))}
+					</SidebarMenu>
 					<div className='flex items-start justify-center w-full   absolute -bottom-4'>
 						<img
 							className='w-28 md:h-auto h-28  '
@@ -203,5 +167,4 @@ export function SheetSide() {
 			</SidebarContent>
 		</Sidebar>
 	);
-	
 }

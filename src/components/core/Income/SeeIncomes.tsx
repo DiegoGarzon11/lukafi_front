@@ -39,7 +39,7 @@ export const SeeIncomes = () => {
 			const wallet = await GetWalletUser(userData?.user_id);
 			setWalletId(wallet.wallet.wallet_id);
 			getIncomes(wallet.wallet);
-			setFetching(false)
+			setFetching(false);
 		};
 
 		fetchData();
@@ -84,7 +84,7 @@ export const SeeIncomes = () => {
 		);
 	}
 	return (
-		<main className='pt-20 p-3 h-screen'>
+		<main className='pt-20 p-3 '>
 			<nav className='flex w-full justify-between items-center pb-5'>
 				<Breadcrumb>
 					<BreadcrumbList>
@@ -105,10 +105,10 @@ export const SeeIncomes = () => {
 				/>
 			</nav>
 
-			<section className=' shadow-sm md:col-span-3 row-span-9'>
-				<div className='  w-full  flex  justify-between gap-5 order-3'>
-					<div className='dark:bg-dark_primary_color bg-zinc-200 p-3 w-full rounded-xl border border-gray-600/50'>
-						<div className='flex gap-3 flex-col items-start '>
+			<section className=' shadow-sm md:col-span-3 row-span-9   '>
+				<div className='  w-full  flex  justify-between gap-5 order-3  '>
+					<div className='dark:bg-dark_primary_color bg-zinc-200 p-3 w-full rounded-xl border border-gray-600/50   '>
+						<div className='flex gap-3 flex-col items-start  '>
 							<h5 className='text-2xl'> Todos tus ingresos </h5>
 							<div className='w-9/12'>
 								<Input
@@ -119,8 +119,8 @@ export const SeeIncomes = () => {
 							</div>
 						</div>
 
-						<div className='w-full'>
-							<section className='w-full  '>
+						<div className='w-full  '>
+							<section className='w-full    '>
 								<article className=' flex text-base font-semibold py-4 dark:text-zinc-300 text-slate-500 border-b border-slate-500 mb-3'>
 									<p className='w-full   p'>{t('dashboard.date')}</p>
 									<p className='w-full '>{t('dashboard.name')}</p>
@@ -129,12 +129,12 @@ export const SeeIncomes = () => {
 								</article>
 							</section>
 
-							<div className='w-full h-96   scrollbar-custom'>
+							<div className='w-full   min-h-[25rem]    scrollbar-custom'>
 								{incomes.length == 0 ? (
 									<p className='text-center text-lg mt-5 text-blue-500'>Actualmente no tienes ningún ingreso registrado</p>
 								) : (
 									<Table className='w-full'>
-										<TableBody className=' w-full      scrollbar-custom'>
+										<TableBody className=' w-full scrollbar-custom'>
 											{incomes?.map((i) => (
 												<TableRow key={i?.income_id}>
 													<TableCell className='font-medium  w-full  '>

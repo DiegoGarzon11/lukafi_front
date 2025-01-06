@@ -7,7 +7,7 @@ export function TooltipComponent({ message, content, className }: { message: str
 			<Tooltip>
 				<TooltipTrigger asChild>
 					<Button
-						onTouchEndCapture={() => console.log('hola')}
+						
 						className='p-0  hover:bg-transparent'
 						variant='ghost'>
 						<span className={` ${className} `}>{message}</span>

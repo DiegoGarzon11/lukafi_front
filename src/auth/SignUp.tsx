@@ -2,42 +2,30 @@ import { UserRegister } from '@/apis/UserService';
 import { EyeClose, EyeOpen } from '@/assets/icons/Svg';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ResponseWallet } from '@/interfaces/Wallet';
-import { COUNTRIES } from '@/tools/countries';
 import { Toast } from '@/tools/Toast';
 import { LoaderApi } from '@/assets/icons/Svg';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { CreateWallet } from '@/apis/WalletService';
 
 export default function SignUp({ isRegisterOk }) {
 	const { t, i18n } = useTranslation();
 
 	i18n.changeLanguage();
-	const currentYear = new Date().getFullYear();
-	const years = Array.from({ length: currentYear - 1960 - 15 + 1 }, (_, i) => 1960 + i);
-	const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
-	const days = Array.from({ length: 31 }, (_, i) => i + 1);
 	const [showPassword, setShowPassword] = useState(false);
 	const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
 	const [statusCode, setStatusCode] = useState<ResponseWallet | undefined>(null);
 	const [loader, setLoader] = useState(false);
 	const [visibilytToast, setVisibilityToast] = useState(false);
 
-	const [date, setDate] = useState({
-		year: '',
-		month: '',
-		day: '',
-	});
 	const [data, setData] = useState({
 		name: '',
 		lastName: '',
 		password: '',
 		confirmPassword: '',
 		email: '',
-		age: null,
-		nacionality: '',
 	});
 
 	function handleChange(e) {
@@ -47,32 +35,30 @@ export default function SignUp({ isRegisterOk }) {
 			[name]: value,
 		}));
 	}
-	function handleDateChange(value, field) {
-		setDate((prevDate) => ({
-			...prevDate,
-			[field]: value,
-		}));
-	}
-	const handeleNacionality = (value) => {
-		setData((preData) => ({
-			...preData,
-			nacionality: value,
-		}));
-	};
 
 	async function handleSubmit(event) {
 		event.preventDefault();
 		setLoader(true);
 		setVisibilityToast(false);
-		const fecha = `${date.month}/${date.day}/${date.year}`;
 
 		const values = {
 			...data,
-			age: new Date(fecha),
 		};
 
 		try {
 			const infoRegister = await UserRegister(values);
+			const params = {
+				currency_type: 'cop',
+				salary: 0,
+				saving: 0,
+				user_id: infoRegister.users.user_id, 
+			};
+			;
+
+			
+			 await CreateWallet(params);
+			
+			
 			setStatusCode(infoRegister);
 			if (infoRegister?.status === 201) {
 				setLoader(true);
@@ -149,123 +135,6 @@ export default function SignUp({ isRegisterOk }) {
 						name='email'
 					/>
 				</div>
-				<div className='flex flex-col w-full'>
-					<label
-						htmlFor=''
-						className='text-lg'>
-						{t('form.field.nacionality')} <span className='text-red-500'>*</span>
-					</label>
-					<Select
-						onValueChange={(value) => handeleNacionality(value)}
-						value={data.nacionality}>
-						<SelectTrigger className='w-full border-gray-600/50 dark:bg-zinc-800/30	'>
-							<SelectValue />
-						</SelectTrigger>
-						<SelectContent className='dark:bg-zinc-900'>
-							<SelectGroup>
-								<SelectLabel>{t('form.label.countries')}</SelectLabel>
-								{COUNTRIES.map((e) => (
-									<SelectItem
-										className='focus:bg-zinc-300 focus:dark:bg-zinc-700 '
-										key={e.id}
-										value={e.name}>
-										{e.name}
-									</SelectItem>
-								))}
-							</SelectGroup>
-						</SelectContent>
-					</Select>
-				</div>
-				<div className='flex flex-col'>
-					<label
-						htmlFor=''
-						className='text-lg'>
-						{t('form.field.bth')}
-					</label>
-					<div className='flex gap-8'>
-						<div className='w-1/3'>
-							<label
-								className='text-sm'
-								htmlFor=''>
-								{t('form.field.year')}
-							</label>
-							<Select
-								onValueChange={(value) => handleDateChange(value, 'year')}
-								value={date.year}>
-								<SelectTrigger className='w-full border-gray-600/50 dark:bg-zinc-800/30'>
-									<SelectValue />
-								</SelectTrigger>
-								<SelectContent className='dark:bg-zinc-900'>
-									<SelectGroup>
-										<SelectLabel className='text-lg '>{t('form.field.year')}</SelectLabel>
-										{years.map((e, i) => (
-											<SelectItem
-												className='focus:bg-zinc-300 focus:dark:bg-zinc-700'
-												key={i}
-												value={(i + 1).toString()}>
-												{e}
-											</SelectItem>
-										))}
-									</SelectGroup>
-								</SelectContent>
-							</Select>
-						</div>
-						<div className='w-1/3'>
-							<label
-								className='text-sm'
-								htmlFor=''>
-								{t('form.field.month')}
-							</label>
-							<Select
-								onValueChange={(value) => handleDateChange(value, 'month')}
-								value={date.month}>
-								<SelectTrigger className='w-full border-gray-600/50 dark:bg-zinc-800/30'>
-									<SelectValue />
-								</SelectTrigger>
-								<SelectContent className='dark:bg-zinc-900'>
-									<SelectGroup>
-										<SelectLabel className='text-lg'>{t('form.field.month')}</SelectLabel>
-										{months.map((e, i) => (
-											<SelectItem
-												className='focus:bg-zinc-300 focus:dark:bg-zinc-700'
-												key={i}
-												value={e.toString()}>
-												{e}
-											</SelectItem>
-										))}
-									</SelectGroup>
-								</SelectContent>
-							</Select>
-						</div>
-						<div className='w-1/3'>
-							<label
-								className='text-sm'
-								htmlFor=''>
-								{t('form.field.day')}
-							</label>
-							<Select
-								onValueChange={(value) => handleDateChange(value, 'day')}
-								value={date.day}>
-								<SelectTrigger className='w-full border-gray-600/50 dark:bg-zinc-800/30'>
-									<SelectValue className='text-red-400' />
-								</SelectTrigger>
-								<SelectContent className='dark:bg-zinc-900'>
-									<SelectGroup>
-										<SelectLabel className='text-lg'>{t('form.field.day')}</SelectLabel>
-										{days.map((e, i) => (
-											<SelectItem
-												className='focus:bg-zinc-300 focus:dark:bg-zinc-700'
-												key={i}
-												value={e.toString()}>
-												{e}
-											</SelectItem>
-										))}
-									</SelectGroup>
-								</SelectContent>
-							</Select>
-						</div>
-					</div>
-				</div>
 
 				<div className='flex justify-between flex-col lg:flex-row gap-5'>
 					<div className='relative w-full'>
@@ -318,13 +187,7 @@ export default function SignUp({ isRegisterOk }) {
 					type='submit'
 					className='text-lg text-white bg-zinc-950 flex justify-center items-center  py-5 '
 					disabled={
-						data.name == '' ||
-						data.lastName == '' ||
-						date == null ||
-						data.password == '' ||
-						data.confirmPassword == '' ||
-						data.nacionality == '' ||
-						data.password != data.confirmPassword
+						data.name == '' || data.lastName == '' || data.password == '' || data.confirmPassword == '' || data.password != data.confirmPassword
 					}>
 					{loader || statusCode?.status === 201 ? <LoaderApi color='white' /> : t('form.field.signUp')}
 				</Button>

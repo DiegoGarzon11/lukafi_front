@@ -5,7 +5,7 @@ import { Link, Outlet, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { SheetSide } from '@/layout/sheetSide';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
-export default function Header({valueSide}) {
+export default function Header({ valueSide }) {
 	const location = useLocation();
 	const [isOpen, setIsOpen] = useState(false);
 	const [isSideOpen, setIsSideOpen] = useState(true);
@@ -62,12 +62,14 @@ export default function Header({valueSide}) {
 
 	return (
 		<>
-			<header className='   z-50 absolute   gap-5  '>
-				<div className='flex justify-start gap-3 items-center'>
+			<header className='   z-50 absolute   gap-5 w-0 '>
+				<div className={`flex justify-start gap-3 items-center `}>
 					<SidebarProvider
 						open={isSideOpen}
 						onOpenChange={handleSidebar}>
-						<SheetSide />
+						<section className={`${localStorage.token ? '' : 'hidden'}  transition-all duration-500 ease-in-out`}>
+							<SheetSide />
+						</section>
 						{localStorage.token && <SidebarTrigger className='z-50 mt-3 ml-3 sticky top-3' />}
 						<Button
 							variant='ghost'

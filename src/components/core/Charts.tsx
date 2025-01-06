@@ -23,7 +23,7 @@ const COLORS = [
 ];
 const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 const CustomTooltipDaily = ({ payload }) => {
-	console.log(payload);
+	
 
 	const { t, i18n } = useTranslation();
 	i18n.changeLanguage();

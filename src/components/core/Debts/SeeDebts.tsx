@@ -129,8 +129,8 @@ export const SeeDebts = () => {
 		);
 	}
 	return (
-		<main className='pt-20 p-3 h-screen'>
-			<nav className='flex w-full justify-between items-center pb-5'>
+		<main className='pt-[4.5rem] p-3 bg-black '>
+			<nav className='flex w-full justify-between items-center pb-3'>
 				<Breadcrumb>
 					<BreadcrumbList>
 						<BreadcrumbItem>
@@ -151,7 +151,7 @@ export const SeeDebts = () => {
 			</nav>
 			<section className=' shadow-sm md:col-span-3 row-span-9'>
 				<div className='  w-full  flex  justify-between gap-5 order-3'>
-					<div className='dark:bg-dark_primary_color bg-zinc-200 p-3 w-full rounded-xl border border-gray-600/50'>
+					<div className='dark:bg-dark_primary_color bg-zinc-200 p-2.5 w-full rounded-xl border border-gray-600/50'>
 						<div className='flex gap-3 flex-col items-start '>
 							<h5 className='text-2xl'> {t('dashboard.allDebts')} </h5>
 							<div className='w-9/12'>
@@ -181,7 +181,7 @@ export const SeeDebts = () => {
 								</article>
 							</section>
 
-							<div className='w-full h-96   scrollbar-custom'>
+							<div className='w-full  min-h-96   scrollbar-custom'>
 								{debts.length == 0 ? (
 									<p className='text-center text-lg mt-5 text-blue-500'>Actualmente no tienes ningún deuda</p>
 								) : (

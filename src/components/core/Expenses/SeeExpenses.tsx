@@ -191,7 +191,7 @@ export const SeeExpenses = () => {
 		);
 	}
 	return (
-		<main className='pt-20 p-3 h-screen bg-black'>
+		<main className='pt-20 p-3  bg-black'>
 			<nav className='flex w-full justify-between items-center pb-5'>
 				<Breadcrumb>
 					<BreadcrumbList>
@@ -238,7 +238,7 @@ export const SeeExpenses = () => {
 								</article>
 							</section>
 
-							<div className='w-full h-52   scrollbar-custom'>
+							<div className='w-full  min-h-[25rem]   scrollbar-custom'>
 								<Table className='w-full'>
 									<TableBody>
 										{fixedExpenses?.map((f) => (
@@ -358,7 +358,7 @@ export const SeeExpenses = () => {
 								</article>
 							</section>
 
-							<div className='w-full h-52   scrollbar-custom'>
+							<div className='w-full  min-h-[25rem]   scrollbar-custom'>
 								<Table className='w-full'>
 									<TableBody className=' scrollbar-custom'>
 										{expenses?.map((e) =>

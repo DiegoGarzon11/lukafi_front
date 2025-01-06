@@ -72,7 +72,7 @@ export const AddExpense = ({ apiData, sendData, className }) => {
 			category_id: selectedCategory?.category_id,
 			category_name: selectedCategory?.category_name,
 		};
-		console.log(params);
+		
 
 		const response = await NewExpense(params);
 
