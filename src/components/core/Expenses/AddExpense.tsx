@@ -72,7 +72,6 @@ export const AddExpense = ({ apiData, sendData, className }) => {
 			category_id: selectedCategory?.category_id,
 			category_name: selectedCategory?.category_name,
 		};
-		
 
 		const response = await NewExpense(params);
 
@@ -98,7 +97,9 @@ export const AddExpense = ({ apiData, sendData, className }) => {
 
 	return (
 		<Dialog>
-			<DialogTrigger asChild>
+			<DialogTrigger
+				asChild
+				className=''>
 				<Button
 					onClick={() => {
 						setDeadLine(0);
@@ -110,7 +111,7 @@ export const AddExpense = ({ apiData, sendData, className }) => {
 					{t('addExpense.addExpense')} <DollarSign />
 				</Button>
 			</DialogTrigger>
-			<DialogContent className=' w-[95%] md:w-[500px] rounded-md '>
+			<DialogContent className=' w-[95%] md:w-[500px] rounded-md   '>
 				<DialogHeader>
 					<DialogTitle>{t('addExpense.newExpense')}</DialogTitle>
 					<DialogDescription> {t('addExpense.completeFields')} </DialogDescription>
@@ -186,12 +187,6 @@ export const AddExpense = ({ apiData, sendData, className }) => {
 
 				{isFixed === 'true' && (
 					<div className='flex flex-col w-full bg-zinc-100 dark:bg-dark_primary_color rounded-md p-3'>
-						<label
-							htmlFor='value_value'
-							className='self-start mb-2'>
-							{t('addExpense.paymentDay')} <span className='text-red-500'>*</span>
-						</label>
-
 						<div className=' flex flex-wrap gap-x-3 items-center'>
 							<p className=''>{t('addExpense.paymentDayP')} </p>
 							<Select onValueChange={(e) => handleDateFixedCost(e)}>
@@ -214,6 +209,7 @@ export const AddExpense = ({ apiData, sendData, className }) => {
 								</SelectContent>
 							</Select>
 							<p> {t('dashboard.ofEachMonth')} </p>
+							<span className='text-red-500'>*</span>
 						</div>
 
 						{deadLine !== 0 && deadLine < new Date().getDate() ? (

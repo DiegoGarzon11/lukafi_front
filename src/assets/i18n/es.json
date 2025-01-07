@@ -48,7 +48,7 @@
 	"addExpense.yes": "Si",
 	"addExpense.typeExpense": "Tipo de gasto",
 	"addExpense.paymentDay": "Fecha a pagar",
-	"addExpense.paymentDayP": "El gasto fijo se debe pagar el dia",
+	"addExpense.paymentDayP": "Paga el",
 	"addExpense.sentFixedExpense": "El gasto fijo se enviara como gasto ya pago",
 
 	"addDebt.addDebt": "Agregar deuda",

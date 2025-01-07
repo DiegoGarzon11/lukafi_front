@@ -50,7 +50,7 @@
 	"addExpense.yes": "Yes",
 	"addExpense.typeExpense": "Type of expense",
 	"addExpense.paymentDay": "Payment day",
-	"addExpense.paymentDayP": "The fixed expense must be paid on the day",
+	"addExpense.paymentDayP": "Pay on",
 	"addExpense.sentFixedExpense": "The fixed expense will be sent as an already paid expense.",
 
 	"addDebt.addDebt": "Add debt",

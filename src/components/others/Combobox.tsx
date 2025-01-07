@@ -28,17 +28,17 @@ export function Combobox({ data, selected }) {
 				</Button>
 			</PopoverTrigger>
 			<PopoverContent
-				align='start'
+				align='end'
 				side='bottom'
 				className='w-full p-0'
-				sideOffset={10}
-				sticky='always'>
+				
+				>
 				<Command className='bg-zinc-200 dark:bg-dark_primary_color   '>
 					<CommandInput
 						placeholder='Buscar categoria...'
 						className='h-9'
 					/>
-					<CommandList className=' scrollbar-custom  '>
+					<CommandList className=' '>
 						<CommandEmpty>Categoria no encontrada.</CommandEmpty>
 						<CommandGroup className='  '>
 							{data.map((c) => (
