@@ -5,11 +5,21 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { Input } from '@/components/ui/input';
 import { useState, useEffect } from 'react';
 import { CURRENCIES } from '@/tools/currencies';
+import { EditSavingGoal, GetWalletUser } from '@/apis/WalletService';
+import { ResponseWallet } from '@/interfaces/Wallet';
+import { Toast } from '@/tools/Toast';
+import { ApiResponse } from '@/interfaces/Api';
 
 export const WalletComponent = () => {
 	const [api, setApi] = useState<CarouselApi>();
 	const [current, setCurrent] = useState(0);
 	const [count, setCount] = useState(0);
+	const [userData, setDataUser] = useState<ResponseWallet | undefined>(undefined);
+	const [ApiResponse, setApiResponse] = useState<ApiResponse | undefined>(null);
+	const [amount, setAmount] = useState('');
+	const [visibilityToast, setVisibilityToast] = useState(false);
+
+	const user = JSON.parse(localStorage.getItem('userMain'));
 	useEffect(() => {
 		if (!api) {
 			return;
@@ -22,6 +32,45 @@ export const WalletComponent = () => {
 			setCurrent(api.selectedScrollSnap() + 1);
 		});
 	}, [api]);
+	const handleValues = (e) => {
+		let value = e.target.value.replace(/[^0-9.]/g, '');
+		if (value === '') {
+			value = 0;
+		}
+
+		const floatValue = parseFloat(value);
+		const formattedValue = floatValue.toLocaleString();
+
+		setAmount(formattedValue);
+		return;
+	};
+	useEffect(() => {
+		const fetchData = async () => {
+			const dataUser = await GetWalletUser(user?.user_id);
+			setDataUser(dataUser);
+		};
+
+		fetchData();
+	}, []);
+
+	const saveSavingGoal = async () => {
+		const params = {
+			wallet_id: userData?.wallet.wallet_id,
+			user_id: userData?.wallet?.user_id,
+			amount: amount == '' ? userData?.wallet?.saving : amount.replace(/,/g, ''),
+		};
+
+		const response = await EditSavingGoal(params);
+		if (response) {
+			setApiResponse(response);
+			setVisibilityToast(true);
+		}
+		setTimeout(() => {
+			setVisibilityToast(false);
+			setApiResponse(null);
+		}, 1000);
+	};
+
 	return (
 		<main className='  h-screen pt-16 p-3 font-thin bg-black  gap-3'>
 			<Breadcrumb className='flex w-full mb-3  '>
@@ -51,7 +100,6 @@ export const WalletComponent = () => {
 								<button className=' text-white font-medium py-2 px-6  rounded-full flex items-center space-x-2 shadow-inner shadow-green-600 hover:bg-green-600 transition-colors ease-in duration-300 '>
 									<span className='font-semibold'>Editar billetera</span>
 								</button>
-							
 							</div>
 							<p className='font-semibold text-start md:w-1/2 underline'>Selecciona tipo de moneda</p>
 							<div className='flex justify-around mt-3 mb-6'>
@@ -79,18 +127,23 @@ export const WalletComponent = () => {
 								))}
 							</div>
 							<div className='w-full flex justify-center items-center gap-3 px-5 md:px-10'>
-								<div className='w-1/2'>
-									<p className='font-semibold text-start underline'> Salario</p>
-									<Input className='' />
-								</div>
-								<div className='w-1/2'>
-									<p className='font-semibold text-start underline'> Meta a ahorrar</p>
-									<Input className='' />
+								<div className='w-full'>
+									<p className='font-semibold text-start '> Meta a ahorrar</p>
+									<Input
+										className=''
+										onChange={handleValues}
+										value={amount || userData?.wallet?.saving.toLocaleString()}
+									/>
 								</div>
 							</div>
 
 							<div className='w-full flex justify-center items-end gap-3  px-5 md:px-10'>
-								<button className='bg-green-500 text-white w-1/2 rounded-md py-2 font-semibold '>Guardar</button>
+								<button
+									onClick={saveSavingGoal}
+									disabled={amount === ''}
+									className='bg-green-500 text-white w-1/2 rounded-md py-2 font-semibold  disabled:bg-zinc-500 disabled:text-white disabled:opacity-40'>
+									Guardar
+								</button>
 								<button className='bg-red-500 text-white w-1/2 rounded-md py-2 font-semibold '>Eliminar billetera</button>
 							</div>
 						</div>
@@ -140,6 +193,13 @@ export const WalletComponent = () => {
 					</div>
 				</section>
 			</div>
+			{visibilityToast && (
+				<Toast
+					visibility={visibilityToast}
+					severity={ApiResponse.success == true ? 'success' : 'error'}
+					message={ApiResponse.message}
+				/>
+			)}
 		</main>
 	);
 };
