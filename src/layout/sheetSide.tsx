@@ -32,7 +32,6 @@ import {
 	DropdownMenuLabel,
 	DropdownMenuTrigger,
 } from '@radix-ui/react-dropdown-menu';
-import { DropdownMenuShortcut } from '@/components/ui/dropdown-menu';
 export function SheetSide() {
 	const { t, i18n } = useTranslation();
 	i18n.changeLanguage();
