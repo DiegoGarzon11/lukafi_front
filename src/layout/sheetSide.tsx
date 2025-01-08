@@ -1,6 +1,6 @@
-import { Button } from '@/components/ui/button';
+import {Button} from '@/components/ui/button';
 
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 import dog from '@/assets/avatar/dog.webp';
 import logo from '/images/logo.png';
 import {
@@ -17,11 +17,11 @@ import {
 	UserCog,
 	UserRoundPen,
 } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import {Link} from 'react-router-dom';
+import {useState} from 'react';
+import {Collapsible, CollapsibleContent, CollapsibleTrigger} from '@/components/ui/collapsible';
 
-import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuSub } from '@/components/ui/sidebar';
+import {Sidebar, SidebarContent, SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuSub} from '@/components/ui/sidebar';
 
 import '@/styles/Dashboard.css';
 import {
@@ -33,7 +33,7 @@ import {
 	DropdownMenuTrigger,
 } from '@radix-ui/react-dropdown-menu';
 export function SheetSide() {
-	const { t, i18n } = useTranslation();
+	const {t, i18n} = useTranslation();
 	i18n.changeLanguage();
 
 	const [btnSelected, setBtnSelected] = useState('dashboard');
@@ -100,10 +100,8 @@ export function SheetSide() {
 		},
 	];
 	return (
-		<Sidebar
-			variant='sidebar'
-			className={`z-50  bg-zinc-200  min-w-28 `}>
-			<SidebarContent className='dark:bg-dark_primary_color bg-zinc-200 border border-border'>
+		<Sidebar variant='sidebar' className={`z-50  bg-zinc-200  min-w-28 `}>
+			<SidebarContent className='dark:bg-dark_primary_color bg-zinc-200 '>
 				<div className=' w-full flex justify-end mt-3'>
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
@@ -111,17 +109,19 @@ export function SheetSide() {
 								<UserCog />
 							</Button>
 						</DropdownMenuTrigger>
-						<DropdownMenuContent className='p-2 w-36  dark:bg-dark_primary_color border border-border rounded-md  '>
-							<DropdownMenuLabel className='flex items-center font-bold h-9 border-b-2 border-zinc-500 '>My Account</DropdownMenuLabel>
+						<DropdownMenuContent className='p-2 w-36 bg-zinc-300 dark:bg-dark_primary_color border rounded-md  '>
+							<DropdownMenuLabel className='flex items-center font-bold h-9 border-b-2 border-zinc-500 '>
+								My Account
+							</DropdownMenuLabel>
 							<DropdownMenuGroup>
-								<DropdownMenuItem className='flex w-full   rounded-sm pl-2 my-1 items-center h-9  hover:dark:bg-zinc-900 cursor-pointer'>
+								<DropdownMenuItem className='flex w-full rounded-sm pl-2 my-1 items-center h-9  hover:dark:bg-zinc-800 hover:bg-zinc-400 cursor-pointer'>
 									<UserRoundPen className='mr-2' />
 									Profile
 								</DropdownMenuItem>
 							</DropdownMenuGroup>
 							<DropdownMenuItem
 								onClick={() => closeSession()}
-								className=' flex w-full   rounded-sm pl-2 my-1 items-center h-9  hover:dark:bg-zinc-900 cursor-pointer'>
+								className=' flex w-full rounded-sm pl-2 my-1 items-center h-9 hover:bg-zinc-400 hover:dark:bg-zinc-800 cursor-pointer'>
 								<LogOut className='mr-2' />
 								Log out
 							</DropdownMenuItem>
@@ -132,12 +132,7 @@ export function SheetSide() {
 				<div className='mt-10 flex flex-col h-full gap-3'>
 					<div className=' flex flex-col items-center mb-5 border-b pb-3 border-green-500 w-full'>
 						<div className='bg-white p-5 rounded-full flex justify-center items-center'>
-							<img
-								className=''
-								src={dog}
-								width={50}
-								alt=''
-							/>
+							<img className='' src={dog} width={50} alt='' />
 						</div>
 
 						<p className='capitalize text-lg font-semibold'>{infoUser.full_name}</p>
@@ -156,15 +151,10 @@ export function SheetSide() {
 											<ChevronDown className='ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180' />
 										</CollapsibleTrigger>
 									</SidebarGroupLabel>
-									<CollapsibleContent
-										key={i}
-										className='flex flex-col gap-2 pl-5 mt-3'>
+									<CollapsibleContent key={i} className='flex flex-col gap-2 pl-5 mt-3'>
 										<SidebarMenuSub>
 											{page.children.map((child) => (
-												<Link
-													key={child.path}
-													className='visited:dark:bg-red-500'
-													to={child.path}>
+												<Link key={child.path} className='visited:dark:bg-red-500' to={child.path}>
 													<Button
 														onClick={() => setBtnSelected(child.path)}
 														className={`w-full gap-4 justify-start py-6 bg-zinc-200 hover:bg-white dark:hover:bg-hover_primary_color text-black dark:text-white ${
@@ -184,11 +174,7 @@ export function SheetSide() {
 						))}
 					</SidebarMenu>
 					<div className='flex items-start justify-center w-full   absolute -bottom-4'>
-						<img
-							className='w-28 md:h-auto h-28  '
-							src={logo}
-							alt=''
-						/>
+						<img className='w-28 md:h-auto h-28  ' src={logo} alt='' />
 					</div>
 				</div>
 			</SidebarContent>
