@@ -9,6 +9,7 @@ import { EditSavingGoal, GetWalletUser } from '@/apis/WalletService';
 import { ResponseWallet } from '@/interfaces/Wallet';
 import { Toast } from '@/tools/Toast';
 import { ApiResponse } from '@/interfaces/Api';
+import { LoaderComponent } from '@/components/others/Loader';
 
 export const WalletComponent = () => {
 	const [api, setApi] = useState<CarouselApi>();
@@ -18,7 +19,7 @@ export const WalletComponent = () => {
 	const [ApiResponse, setApiResponse] = useState<ApiResponse | undefined>(null);
 	const [amount, setAmount] = useState('');
 	const [visibilityToast, setVisibilityToast] = useState(false);
-
+const [fetching, setFetching] = useState(true);
 	const user = JSON.parse(localStorage.getItem('userMain'));
 	useEffect(() => {
 		if (!api) {
@@ -48,6 +49,7 @@ export const WalletComponent = () => {
 		const fetchData = async () => {
 			const dataUser = await GetWalletUser(user?.user_id);
 			setDataUser(dataUser);
+			setFetching(false);
 		};
 
 		fetchData();
@@ -70,9 +72,16 @@ export const WalletComponent = () => {
 			setApiResponse(null);
 		}, 1000);
 	};
+	if (fetching) {
+			return (
+				<div className='h-screen flex justify-center pt-20 flex-col items-center gap-3 dark:bg-dark_primary_color bg-zinc-200'>
+					<LoaderComponent />
+				</div>
+			);
+		}
 
 	return (
-		<main className='  h-screen pt-16 p-3 font-thin bg-black  gap-3'>
+		<main className='  h-screen pt-16 p-3 font-thin dark:bg-dark_primary_color bg-zinc-200 gap-3'>
 			<Breadcrumb className='flex w-full mb-3  '>
 				<BreadcrumbList>
 					<BreadcrumbItem>

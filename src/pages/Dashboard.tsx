@@ -15,6 +15,7 @@ import { useTranslation } from 'react-i18next';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { GetAllIncomes } from '@/apis/Income.service';
 import { LoaderApi } from '@/assets/icons/Svg';
+import { Link } from 'react-router-dom';
 export const Dashboard = () => {
 	const [userData, setDataUser] = useState<ResponseWallet | undefined>(undefined);
 	const [expenses, setExpenses] = useState<Array<Expenses> | undefined>([]);
@@ -87,7 +88,7 @@ export const Dashboard = () => {
 
 	if (fetching) {
 		return (
-			<div className='h-screen flex justify-center pt-20 flex-col items-center gap-3 bg-dark_primary_color'>
+			<div className='h-screen flex justify-center pt-20 flex-col items-center gap-3 dark:bg-dark_primary_color bg-zinc-200'>
 				<LoaderComponent />
 			</div>
 		);
@@ -100,14 +101,14 @@ export const Dashboard = () => {
 						<DialogContent className='md:w-1/3'>
 							<DialogHeader>
 								<DialogTitle className='text-lg font-semibold leading-none -tracking-tighter text-red-500'>¡Importante!</DialogTitle>
-								<span className='text-yellow-500'>Agrega tu saldo disponible</span>
-								<DialogDescription className='text-xl leading-7 tracking-wide text-white opacity-70 text-balance'>
-									Ten en cuenta que cuando empiezas a usar <span className='text-green-500'>Lukafi</span>, tu saldo disponible será de cero
+								<span className='text-yellow-00'>Agrega tu saldo disponible</span>
+								<DialogDescription className='text-xl leading-7 tracking-wide dark:text-white text-black   opacity-70 text-balance'>
+									Ten en cuenta que cuando empiezas a usar <span className='text-green-500'>Lukafi</span>, tu saldo disponible será  cero
 									<br />
 									<span>Te recomendamos que como tu primer ingreso</span>
-									<span className='text-yellow-500'> agregues todo el dinero que tengas disponible en general</span>
+									<span className='text-green-500'> agregues todo el dinero que tengas disponible en general</span>
 									<br />
-									<span>Esto puedes hacerlo en la sección de </span> <span className='text-yellow-500'> ingresos</span>
+									<span>Esto puedes hacerlo en la sección de </span> <span className='text-green-500 underline cursor-pointer'> <Link to='/wallet/incomes'>ingresos</Link></span>
 								</DialogDescription>
 							</DialogHeader>
 						</DialogContent>

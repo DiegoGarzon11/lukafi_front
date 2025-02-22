@@ -2,7 +2,7 @@ import { LoaderPage } from '@/assets/icons/Svg';
 
 export const LoaderComponent = () => {
 	return (
-		<div className='h-screen flex justify-center flex-col items-center bg '>
+		<div className='h-screen flex justify-center flex-col items-center  '>
 			<LoaderPage />
 			<p className='text-6xl font-semibold tracking-wider font-mono'>
 				<span className='dark:text-green-500 text-green-500'>L</span>

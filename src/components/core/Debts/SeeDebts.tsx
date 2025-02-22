@@ -123,13 +123,13 @@ export const SeeDebts = () => {
 	};
 	if (fetching) {
 		return (
-			<div className='h-screen flex justify-center pt-20 flex-col items-center gap-3 bg-dark_primary_color'>
+			<div className='h-screen flex justify-center pt-20 flex-col items-center gap-3 dark:bg-dark_primary_color bg-zinc-200'>
 				<LoaderComponent />
 			</div>
 		);
 	}
 	return (
-		<main className='pt-[4.5rem] p-3 bg-black '>
+		<main className='pt-20 p-3  dark:bg-black bg-white'>
 			<nav className='flex w-full justify-between items-center pb-3'>
 				<Breadcrumb>
 					<BreadcrumbList>
@@ -149,7 +149,7 @@ export const SeeDebts = () => {
 					apiData={userData?.wallet}
 				/>
 			</nav>
-			<section className=' shadow-sm md:col-span-3 row-span-9'>
+			<section className=' shadow-sm md:col-span-3 row-span-9 '>
 				<div className='  w-full  flex  justify-between gap-5 order-3'>
 					<div className='dark:bg-dark_primary_color bg-zinc-200 p-2.5 w-full rounded-xl border border-gray-600/50'>
 						<div className='flex gap-3 flex-col items-start '>

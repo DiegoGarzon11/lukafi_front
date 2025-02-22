@@ -78,7 +78,7 @@ export const SeeIncomes = () => {
 	};
 	if (fetching) {
 		return (
-			<div className='h-screen flex justify-center pt-20 flex-col items-center gap-3 bg-dark_primary_color'>
+			<div className='h-screen flex justify-center pt-20 flex-col items-center gap-3 dark:bg-dark_primary_color bg-zinc-200'>
 				<LoaderComponent />
 			</div>
 		);
@@ -119,7 +119,7 @@ export const SeeIncomes = () => {
 							</div>
 						</div>
 
-						<div className='w-full  '>
+						<div className='w-full h-3/4 '>
 							<section className='w-full    '>
 								<article className=' flex text-base font-semibold py-4 dark:text-zinc-300 text-slate-500 border-b border-slate-500 mb-3'>
 									<p className='w-full   p'>{t('dashboard.date')}</p>
@@ -129,15 +129,15 @@ export const SeeIncomes = () => {
 								</article>
 							</section>
 
-							<div className='w-full   min-h-[25rem]    scrollbar-custom'>
+							<div className='w-full  min-h-96    scrollbar-custom'>
 								{incomes.length == 0 ? (
 									<p className='text-center text-lg mt-5 text-blue-500'>Actualmente no tienes ningún ingreso registrado</p>
 								) : (
 									<Table className='w-full'>
 										<TableBody className=' w-full scrollbar-custom'>
 											{incomes?.map((i) => (
-												<TableRow key={i?.income_id}>
-													<TableCell className='font-medium  w-full  '>
+												<TableRow key={i?.income_id} className='h-16'>
+													<TableCell className='font-medium  w-full '>
 														<p>{new Date(i?.date).toLocaleDateString()}</p>
 													</TableCell>
 													<TableCell className='font-medium w-full  '>

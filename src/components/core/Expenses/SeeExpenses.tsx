@@ -185,14 +185,14 @@ export const SeeExpenses = () => {
 	}
 	if (fetching) {
 		return (
-			<div className='h-screen flex justify-center pt-20 flex-col items-center gap-3 bg-dark_primary_color'>
+			<div className='h-screen flex justify-center pt-20 flex-col items-center gap-3 dark:bg-dark_primary_color bg-zinc-200'>
 				<LoaderComponent />
 			</div>
 		);
 	}
 	return (
-		<main className='pt-20 p-3  bg-black'>
-			<nav className='flex w-full justify-between items-center pb-5'>
+		<main className='pt-20 p-3  dark:bg-black bg-white'>
+			<nav className='flex w-full justify-between items-center pb-3'>
 				<Breadcrumb>
 					<BreadcrumbList>
 						<BreadcrumbItem>
@@ -238,7 +238,7 @@ export const SeeExpenses = () => {
 								</article>
 							</section>
 
-							<div className='w-full  min-h-[25rem]   scrollbar-custom'>
+							<div className='w-full  min-h-96   scrollbar-custom'>
 								<Table className='w-full'>
 									<TableBody>
 										{fixedExpenses?.map((f) => (
@@ -358,7 +358,7 @@ export const SeeExpenses = () => {
 								</article>
 							</section>
 
-							<div className='w-full  min-h-[25rem]   scrollbar-custom'>
+							<div className='w-full  min-h-96   scrollbar-custom'>
 								<Table className='w-full'>
 									<TableBody className=' scrollbar-custom'>
 										{expenses?.map((e) =>

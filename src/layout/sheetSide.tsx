@@ -111,17 +111,17 @@ export function SheetSide() {
 								<UserCog />
 							</Button>
 						</DropdownMenuTrigger>
-						<DropdownMenuContent className='p-2 w-36  dark:bg-dark_primary_color border border-border rounded-md  '>
+						<DropdownMenuContent className='p-2 w-36  dark:bg-dark_primary_color border border-border rounded-md   bg-zinc-200'>
 							<DropdownMenuLabel className='flex items-center font-bold h-9 border-b-2 border-zinc-500 '>My Account</DropdownMenuLabel>
 							<DropdownMenuGroup>
-								<DropdownMenuItem className='flex w-full   rounded-sm pl-2 my-1 items-center h-9  hover:dark:bg-zinc-900 cursor-pointer'>
+								<DropdownMenuItem className='flex w-full   rounded-sm pl-2 my-1 items-center h-9  hover:dark:bg-zinc-900 cursor-pointer hover:bg-zinc-100'>
 									<UserRoundPen className='mr-2' />
 									Profile
 								</DropdownMenuItem>
 							</DropdownMenuGroup>
 							<DropdownMenuItem
 								onClick={() => closeSession()}
-								className=' flex w-full   rounded-sm pl-2 my-1 items-center h-9  hover:dark:bg-zinc-900 cursor-pointer'>
+								className=' flex w-full   rounded-sm pl-2 my-1 items-center h-9  hover:bg-zinc-100 hover:dark:bg-zinc-900 cursor-pointer'>
 								<LogOut className='mr-2' />
 								Log out
 							</DropdownMenuItem>
@@ -129,7 +129,7 @@ export function SheetSide() {
 					</DropdownMenu>
 				</div>
 
-				<div className='mt-10 flex flex-col h-full gap-3'>
+				<div className='mt-10 flex flex-col h-full gap-3 overflow-hidden'>
 					<div className=' flex flex-col items-center mb-5 border-b pb-3 border-green-500 w-full'>
 						<div className='bg-white p-5 rounded-full flex justify-center items-center'>
 							<img
@@ -143,7 +143,7 @@ export function SheetSide() {
 						<p className='capitalize text-lg font-semibold'>{infoUser.full_name}</p>
 						<p className='dark:text-white/55 text-black/60'>{infoUser.email}</p>
 					</div>
-					<SidebarMenu className='w-full px-2 flex flex-col gap-2 scrollbar-custom  h-[400px] '>
+					<SidebarMenu className='w-full px-2 flex flex-col gap-2 scrollbar-custom  h-3/5  overflow-y-auto'>
 						{pages.map((page, i) => (
 							<Collapsible className='group/collapsible'>
 								<SidebarGroup>
@@ -183,9 +183,9 @@ export function SheetSide() {
 							</Collapsible>
 						))}
 					</SidebarMenu>
-					<div className='flex items-start justify-center w-full   absolute -bottom-4'>
+					<div className='flex items-start justify-center w-full   absolute -bottom-4 opacity-30'>
 						<img
-							className='w-28 md:h-auto h-28  '
+							className='w-28 md:h-auto h-28 pt-2 '
 							src={logo}
 							alt=''
 						/>
