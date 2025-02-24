@@ -177,7 +177,7 @@ export const WalletComponent = () => {
 											</div>
 											<div className='flex justify-between '>
 												<p className='font-semibold'>123123-123-12312-122</p>
-												<p>23/02/25</p>
+												<p>25/02/25</p>
 											</div>
 										</article>
 									</CarouselItem>
