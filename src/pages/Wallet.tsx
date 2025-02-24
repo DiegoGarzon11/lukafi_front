@@ -197,6 +197,6 @@ export const WalletComponent = () => {
 					message={ApiResponse.message}
 				/>
 			)}
-		</main>
+		</main> 
 	);
 };
