@@ -54,7 +54,7 @@ export const UserDefault = async () => {
 		} catch (error) {
 			console.error(error);
 		}
-	} 
+	}
 };
 export const RestorePassword = async (data) => {
 	const dataForm = new URLSearchParams();
@@ -84,6 +84,24 @@ export const GenerateNewPassword = async (password, token) => {
 				'Content-Type': 'application/x-www-form-urlencoded',
 			},
 			body: dataForm,
+		});
+		return await response.json();
+	} catch (error) {
+		console.error(error);
+	}
+};
+
+// !espera del back para eliminar usuario con token
+export const DeleteUser = async (data) => {
+	const { email, password, token } = data;
+	try {
+		const response = await fetch(`${API_HTTP}/user/sign-out`, {
+			method: 'DELETE',
+			body: JSON.stringify({ email, password }),
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: token,
+			},
 		});
 		return await response.json();
 	} catch (error) {
