@@ -1,5 +1,5 @@
-import {useRef} from 'react';
-import {Link} from 'react-router-dom';
+import { useRef } from 'react';
+
 
 export const PageNotFound = () => {
 	const audioRef = useRef(new Audio('/audio/pig.mp3'));
@@ -39,11 +39,6 @@ export const PageNotFound = () => {
 					<p className='dark:text-white text-2xl text-balance my-10 text-center xl:text-end'>
 						Parece que te desviaste mientras intentabas ahorrar. Volvamos y cuidemos mejor tu dinero.
 					</p>
-					<Link to='/auth'>
-						<button className='bg-slate-950 text-white border border-slate-900 dark:border-white p-3 rounded-xl hover:scale-110 ease-in duration-150'>
-							Volver al inicio
-						</button>
-					</Link>
 				</div>
 			</div>
 		</main>
