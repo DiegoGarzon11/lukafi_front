@@ -109,13 +109,13 @@ export function SheetSide() {
 			token: localStorage.token,
 		};
 		const response = await DeleteUser(data);
-	
+
 		console.log(response);
 	};
 	return (
 		<Sidebar
 			variant='sidebar'
-			className={`z-50  bg-zinc-200  min-w-28 `}>
+			className={`z-50  bg-zinc-200  min-w-28  `}>
 			<SidebarContent className='dark:bg-dark_primary_color bg-zinc-200 '>
 				<div className=' w-full flex justify-end mt-3'>
 					<DropdownMenu>
@@ -164,7 +164,10 @@ export function SheetSide() {
 					</div>
 					<SidebarMenu className='w-full px-2 flex flex-col gap-2 scrollbar-custom  h-3/5  overflow-y-auto'>
 						{pages.map((page, i) => (
-							<Collapsible className='group/collapsible'>
+							<Collapsible 
+							key={i}
+								className='group/collapsible'
+								defaultOpen={localStorage.route_name.includes(page.path)}>
 								<SidebarGroup>
 									<SidebarGroupLabel asChild>
 										<CollapsibleTrigger>
@@ -187,7 +190,7 @@ export function SheetSide() {
 													<Button
 														onClick={() => setBtnSelected(child.path)}
 														className={`w-full gap-4 justify-start py-6 bg-zinc-200 hover:bg-white dark:hover:bg-hover_primary_color text-black dark:text-white ${
-															btnSelected === child.path
+															localStorage.route_name === child.path
 																? 'bg-white bg-gradient-to-b dark:from-[#0e1a12] dark:to-[#146c21]'
 																: 'bg-transparent'
 														}`}>

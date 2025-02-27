@@ -5,10 +5,11 @@ import { Link, Outlet, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { SheetSide } from '@/layout/sheetSide';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
-export default function Header({ valueSide, valueUrl }) {
+export default function Header({ valueSide }) {
 	const location = useLocation();
 	const [isOpen, setIsOpen] = useState(false);
 	const [isSideOpen, setIsSideOpen] = useState(true);
+	const [allowSidebar, setAllowSidebar] = useState(true);
 	const [theme, setTheme] = useState(() => {
 		const savedTheme = localStorage.getItem('theme');
 		return savedTheme || 'light';
@@ -61,7 +62,14 @@ export default function Header({ valueSide, valueUrl }) {
 	};
 
 	const linksNotSidebar = ['/profile/delete-account'];
-	
+	const currentRoute = localStorage.route_name;
+	useEffect(() => {
+		if (linksNotSidebar.includes(currentRoute)) {
+			setAllowSidebar(false);
+		} else {
+			setAllowSidebar(true);
+		}
+	}, [currentRoute]);
 	return (
 		<>
 			<header className='z-50 absolute gap-5 w-0'>
@@ -70,7 +78,7 @@ export default function Header({ valueSide, valueUrl }) {
 						open={isSideOpen}
 						onOpenChange={handleSidebar}>
 						<section className={`${localStorage.token ? '' : 'hidden'}  transition-all duration-500 ease-in-out`}>
-							{linksNotSidebar.map((link) => (link === valueUrl ? '' : <SheetSide />))}
+							{allowSidebar && <SheetSide />}
 						</section>
 						{localStorage.token && <SidebarTrigger className='z-50 mt-3 ml-3 sticky top-3' />}
 						<Button
