@@ -18,7 +18,7 @@ import {
 	UserRoundPen,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuSub } from '@/components/ui/sidebar';
@@ -38,7 +38,7 @@ export function SheetSide() {
 	const { t, i18n } = useTranslation();
 	i18n.changeLanguage();
 
-	const [btnSelected, setBtnSelected] = useState('dashboard');
+	
 
 	const infoUser = localStorage.userMain ? JSON.parse(localStorage?.userMain) : '';
 
@@ -188,7 +188,7 @@ export function SheetSide() {
 													className='visited:dark:bg-red-500'
 													to={child.path}>
 													<Button
-														onClick={() => setBtnSelected(child.path)}
+														
 														className={`w-full gap-4 justify-start py-6 bg-zinc-200 hover:bg-white dark:hover:bg-hover_primary_color text-black dark:text-white ${
 															localStorage.route_name === child.path
 																? 'bg-white bg-gradient-to-b dark:from-[#0e1a12] dark:to-[#146c21]'
