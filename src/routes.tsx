@@ -11,6 +11,7 @@ import { SeeDebts } from './components/core/Debts/SeeDebts';
 import { SeeIncomes } from './components/core/Income/SeeIncomes';
 
 const isAuthenticated = localStorage.token;
+
 const RoutesManager = () => (
 	<Routes>
 		<Route

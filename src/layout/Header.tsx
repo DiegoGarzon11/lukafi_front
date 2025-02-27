@@ -1,11 +1,11 @@
-import {Col, Usa, Moon, Sun} from '@/assets/icons/Svg';
-import {useTranslation} from 'react-i18next';
-import {useEffect, useState} from 'react';
-import {Link, Outlet, useLocation} from 'react-router-dom';
-import {Button} from '@/components/ui/button';
-import {SheetSide} from '@/layout/sheetSide';
-import {SidebarProvider, SidebarTrigger} from '@/components/ui/sidebar';
-export default function Header({valueSide}) {
+import { Col, Usa, Moon, Sun } from '@/assets/icons/Svg';
+import { useTranslation } from 'react-i18next';
+import { useEffect, useState } from 'react';
+import { Link, Outlet, useLocation } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SheetSide } from '@/layout/sheetSide';
+import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+export default function Header({ valueSide, valueUrl }) {
 	const location = useLocation();
 	const [isOpen, setIsOpen] = useState(false);
 	const [isSideOpen, setIsSideOpen] = useState(true);
@@ -14,7 +14,7 @@ export default function Header({valueSide}) {
 		return savedTheme || 'light';
 	});
 
-	const {t, i18n} = useTranslation();
+	const { t, i18n } = useTranslation();
 	const onChangeLanguage = (e) => {
 		i18n.changeLanguage(e);
 		if (e === 'es') {
@@ -60,16 +60,22 @@ export default function Header({valueSide}) {
 		valueSide(!isSideOpen);
 	};
 
+	const linksNotSidebar = ['/profile/delete-account'];
+	
 	return (
 		<>
 			<header className='z-50 absolute gap-5 w-0'>
 				<div className={`flex justify-start gap-3 items-center `}>
-					<SidebarProvider open={isSideOpen} onOpenChange={handleSidebar}>
+					<SidebarProvider
+						open={isSideOpen}
+						onOpenChange={handleSidebar}>
 						<section className={`${localStorage.token ? '' : 'hidden'}  transition-all duration-500 ease-in-out`}>
-							<SheetSide />
+							{linksNotSidebar.map((link) => (link === valueUrl ? '' : <SheetSide />))}
 						</section>
 						{localStorage.token && <SidebarTrigger className='z-50 mt-3 ml-3 sticky top-3' />}
-						<Button variant='ghost' className='z-50 mt-3 ml-3 text-lg  sticky top-3 cursor-default'>
+						<Button
+							variant='ghost'
+							className='z-50 mt-3 ml-3 text-lg  sticky top-3 cursor-default'>
 							Lukafi
 						</Button>
 						<div className=' w-full fixed flex justify-end shadow-sm shadow-z-700 rounded-full p-3 z-10 bg-gradient-to-b dark:from-zinc-950 dark:to-dark_primary_color from-zinc-100 to-zinc-300 border-b border-gray-600/50 '>
@@ -84,7 +90,9 @@ export default function Header({valueSide}) {
 									</div>
 								)}
 
-								<button onClick={() => setIsOpen(!isOpen)} className=''>
+								<button
+									onClick={() => setIsOpen(!isOpen)}
+									className=''>
 									{localStorage.lang == 'en' ? <Usa /> : <Col />}
 								</button>
 								{isOpen && (
@@ -115,11 +123,15 @@ export default function Header({valueSide}) {
 									</div>
 								)}
 								{theme === 'dark' ? (
-									<button className='dark:bg-transparent dark:hover:bg-transparent p-0' onClick={handleTheme}>
+									<button
+										className='dark:bg-transparent dark:hover:bg-transparent p-0'
+										onClick={handleTheme}>
 										<Moon />
 									</button>
 								) : (
-									<button className='bg-transparent hover:bg-transparent p-0' onClick={handleTheme}>
+									<button
+										className='bg-transparent hover:bg-transparent p-0'
+										onClick={handleTheme}>
 										<Sun />
 									</button>
 								)}
