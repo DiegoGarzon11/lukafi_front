@@ -1,8 +1,8 @@
-import { BrowserRouter, useLocation } from 'react-router-dom';
+import {BrowserRouter, useLocation} from 'react-router-dom';
 import Header from './layout/Header';
 import RoutesManager from './routes';
 import '@/styles/App.css';
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 
 function App() {
 	const [loaded, setLoaded] = useState(false);
@@ -19,10 +19,9 @@ function App() {
 		setIsSideOpen(value);
 	};
 
-	const Layout = ({ children }) => {
+	const Layout = ({children}) => {
 		const location = useLocation();
 		setUrl(location.pathname);
-		useEffect(() => {}, [location.pathname]);
 
 		return <>{children}</>;
 	};
@@ -31,11 +30,7 @@ function App() {
 		<div className={`app${loaded ? 'loaded' : ''}`}>
 			<BrowserRouter>
 				<Layout>
-					<Header
-						valueSide={handleSideValue}
-						valueUrl={url}
-					/>
-
+					<Header valueUrl={url} valueSide={handleSideValue} />
 					<div className={`${isSideOpen && localStorage.token ? 'md:ml-64' : ' '}  transition-all duration-500 ease-in-out`}>
 						<RoutesManager />
 					</div>
