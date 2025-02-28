@@ -1,11 +1,14 @@
-import { API_HTTP } from '@/tools/router';
+
+const API_URL = import.meta.env.VITE_API_URL;
+
 
 export const GetAllCategories = async () => {
 	try {
-		const response = await fetch(`${API_HTTP}/category/get-all-categories`, {
+		const response = await fetch(`${API_URL}/category/get-all-categories`, {
 			method: 'GET',
 		});
-
+		
+		
 		return await response.json();
 	} catch (error) {
 		console.error(error);

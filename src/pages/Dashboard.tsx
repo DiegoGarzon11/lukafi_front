@@ -62,6 +62,7 @@ export const Dashboard = () => {
 	}, [trigger]);
 
 	const recibeResponseChild = async (e: string) => {
+		console.log(e);
 		
 		if (e) return setTrigger((prev) => prev + 1);
 	};

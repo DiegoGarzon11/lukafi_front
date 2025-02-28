@@ -1,4 +1,4 @@
-import { API_HTTP } from '@/tools/router';
+const API_URL = import.meta.env.VITE_API_URL;
 export const UserRegister = async (data) => {
 	const formData = new URLSearchParams();
 	formData.append('name', data.name);
@@ -9,7 +9,7 @@ export const UserRegister = async (data) => {
 	formData.append('password', data.password);
 
 	try {
-		const response = await fetch(`${API_HTTP}/user/sign-up`, {
+		const response = await fetch(`${API_URL}/user/sign-up`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded',
@@ -28,7 +28,7 @@ export const UserSignIn = async (data) => {
 	dataForm.append('password', data.password);
 
 	try {
-		const response = await fetch(`${API_HTTP}/user/sign-in`, {
+		const response = await fetch(`${API_URL}/user/sign-in`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded',
@@ -44,7 +44,7 @@ export const UserDefault = async () => {
 	const token = localStorage.token;
 	if (token) {
 		try {
-			const response = await fetch(`${API_HTTP}/user/default-user`, {
+			const response = await fetch(`${API_URL}/user/default-user`, {
 				method: 'GET',
 				headers: {
 					Authorization: token,
@@ -61,7 +61,7 @@ export const RestorePassword = async (data) => {
 	dataForm.append('email', data);
 
 	try {
-		const response = await fetch(`${API_HTTP}/user/restore-password`, {
+		const response = await fetch(`${API_URL}/user/restore-password`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded',
@@ -78,7 +78,7 @@ export const GenerateNewPassword = async (password, token) => {
 	dataForm.append('newPassword', password);
 
 	try {
-		const response = await fetch(`${API_HTTP}/user/generate-new-password/${token}`, {
+		const response = await fetch(`${API_URL}/user/generate-new-password/${token}`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded',
@@ -95,7 +95,7 @@ export const GenerateNewPassword = async (password, token) => {
 export const DeleteUser = async (data) => {
 	const { email, password, token } = data;
 	try {
-		const response = await fetch(`${API_HTTP}/user/sign-out`, {
+		const response = await fetch(`${API_URL}/user/sign-out`, {
 			method: 'DELETE',
 			body: JSON.stringify({ email, password }),
 			headers: {
