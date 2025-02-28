@@ -37,7 +37,7 @@ export const PageNotFound = () => {
 				<div className='flex flex-col xl:items-end items-center'>
 					<p className='text-end font-semibold dark:text-white md:text-9xl text-7xl'>Oops!</p>
 					<p className='dark:text-white text-2xl text-balance my-10 text-center xl:text-end'>
-						Parece que te desviaste mientras intentabas ahorrar. Volvamos y cuidemos mejor tu dinero. Volver
+						Parece que te desviaste mientras intentabas ahorrar. Volvamos y cuidemos mejor tu dinero
 					</p>
 				</div>
 			</div>
