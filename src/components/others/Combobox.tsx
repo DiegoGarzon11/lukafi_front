@@ -41,7 +41,7 @@ export function Combobox({ data, selected }) {
 					<CommandList className=' '>
 						<CommandEmpty>Categoria no encontrada.</CommandEmpty>
 						<CommandGroup className='  '>
-							{data.map((c) => (
+							{data?.map((c) => (
 								<CommandItem
 									className='cursor-pointer hover:bg-zinc-300 dark:hover:bg-zinc-700'
 									key={c.category_id}

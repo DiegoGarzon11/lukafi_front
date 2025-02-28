@@ -1,9 +1,9 @@
-import { API_HTTP } from '@/tools/router';
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const GetWalletUser = async (user_id: string) => {
 	if (user_id) {
 		try {
-			const response = await fetch(`${API_HTTP}/wallet/get-wallet/${user_id}`, {
+			const response = await fetch(`${API_URL}/wallet/get-wallet/${user_id}`, {
 				method: 'GET',
 			});
 
@@ -18,7 +18,7 @@ export const GetWalletUser = async (user_id: string) => {
 export const GetWalletValues = async (wallet_id: string) => {
 	if (wallet_id) {
 		try {
-			const response = await fetch(`${API_HTTP}/wallet/get-wallet-values/${wallet_id}`, {
+			const response = await fetch(`${API_URL}/wallet/get-wallet-values/${wallet_id}`, {
 				method: 'GET',
 			});
 			return await response.json();
@@ -37,7 +37,7 @@ export const CreateWallet = async (data) => {
 		formData.append('saving', data.saving);
 		formData.append('user_id', data.user_id);
 		try {
-			const response = await fetch(`${API_HTTP}/wallet/new-wallet`, {
+			const response = await fetch(`${API_URL}/wallet/new-wallet`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/x-www-form-urlencoded',
@@ -55,7 +55,7 @@ export const CreateWallet = async (data) => {
 export const GetDailyReport = async (data) => {
 	if (data) {
 		try {
-			const response = await fetch(`${API_HTTP}/wallet/get-daily-report/${data}`, {
+			const response = await fetch(`${API_URL}/wallet/get-daily-report/${data}`, {
 				method: 'GET',
 			});
 
@@ -71,7 +71,7 @@ export const GetDailyReport = async (data) => {
 export const GetMonthlyReport = async (data) => {
 	if (data) {
 		try {
-			const response = await fetch(`${API_HTTP}/wallet/get-monthly-report/${data}`, {
+			const response = await fetch(`${API_URL}/wallet/get-monthly-report/${data}`, {
 				method: 'GET',
 			});
 
@@ -90,7 +90,7 @@ export const EditSavingGoal = async (data) => {
 		formData.append('wallet_id', data.wallet_id);
 		formData.append('wallet_id', data.user_id);
 		try {
-			const response = await fetch(`${API_HTTP}/wallet/edit-saving-goal/${data.wallet_id}/${data.user_id}`, {
+			const response = await fetch(`${API_URL}/wallet/edit-saving-goal/${data.wallet_id}/${data.user_id}`, {
 				method: 'PATCH',
 				headers: {
 					'Content-Type': 'application/x-www-form-urlencoded',

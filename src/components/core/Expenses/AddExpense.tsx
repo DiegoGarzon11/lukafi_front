@@ -47,10 +47,12 @@ export const AddExpense = ({ apiData, sendData, className }) => {
 	const handleDateFixedCost = (e) => {
 		setDeadLine(e);
 	};
-
+	
+	
 	async function fetchCategories() {
 		const getAllCategories = await GetAllCategories();
 		setCategories(getAllCategories);
+		
 	}
 	const handleCategory = (e) => {
 		setSelectedCategory(e);

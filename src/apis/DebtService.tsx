@@ -1,4 +1,4 @@
-import { API_HTTP } from '@/tools/router';
+const API_URL = import.meta.env.VITE_API_URL;
 const MAIN_ROUTE = '/debt/';
 
 export const NewDebt = async (data) => {
@@ -13,7 +13,7 @@ export const NewDebt = async (data) => {
 	formData.append('debt_type', data.debtType);
 
 	try {
-		const response = await fetch(`${API_HTTP + MAIN_ROUTE}new-debt/${data.wallet_id}/${data.user_id}`, {
+		const response = await fetch(`${API_URL + MAIN_ROUTE}new-debt/${data.wallet_id}/${data.user_id}`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded',
@@ -30,7 +30,7 @@ export const NewDebt = async (data) => {
 export const GetDebts = async (data) => {
 	if (data) {
 		try {
-			const response = await fetch(`${API_HTTP + MAIN_ROUTE}get-debts/${data.wallet_id}`, {
+			const response = await fetch(`${API_URL + MAIN_ROUTE}get-debts/${data.wallet_id}`, {
 				method: 'GET',
 			});
 
@@ -47,7 +47,7 @@ export const addAmount = async (data) => {
 		try {
 			const formData = new URLSearchParams();
 			formData.append('amount', data.amount);
-			const response = await fetch(`${API_HTTP + MAIN_ROUTE}add-amount/${data.wallet_id}/${data.debt_id}`, {
+			const response = await fetch(`${API_URL + MAIN_ROUTE}add-amount/${data.wallet_id}/${data.debt_id}`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/x-www-form-urlencoded',
@@ -65,7 +65,7 @@ export const addAmount = async (data) => {
 export const GetDebtToHistory = async (data) => {
 	if (data) {
 		try {
-			const response = await fetch(`${API_HTTP + MAIN_ROUTE}get-histories/${data.debt_id}`, {
+			const response = await fetch(`${API_URL + MAIN_ROUTE}get-histories/${data.debt_id}`, {
 				method: 'GET',
 			});
 
@@ -81,7 +81,7 @@ export const GetDebtToHistory = async (data) => {
 export const DeleteDebt = async (data) => {
 	if (data) {
 		try {
-			const response = await fetch(`${API_HTTP + MAIN_ROUTE}delete-debt/${data.wallet_id}/${data.debt_id}`, {
+			const response = await fetch(`${API_URL + MAIN_ROUTE}delete-debt/${data.wallet_id}/${data.debt_id}`, {
 				method: 'DELETE',
 			});
 			return await response.json();

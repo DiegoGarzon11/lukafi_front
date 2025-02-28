@@ -1,4 +1,5 @@
-import { API_HTTP } from '@/tools/router';
+const API_URL = import.meta.env.VITE_API_URL;
+
 
 const MAIN_ROUTE = '/income/';
 
@@ -12,7 +13,7 @@ export const AddNewIncome = async (data) => {
 	formData.append('wallet_id', data.wallet_id);
 
 	try {
-		const response = await fetch(`${API_HTTP + MAIN_ROUTE}new-income/${data.wallet_id}/${data.user_id}`, {
+		const response = await fetch(`${API_URL + MAIN_ROUTE}new-income/${data.wallet_id}/${data.user_id}`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded',
@@ -29,7 +30,7 @@ export const AddNewIncome = async (data) => {
 export const GetAllIncomes = async (data) => {
 	if (data) {
 		try {
-			const response = await fetch(`${API_HTTP + MAIN_ROUTE}get-all-incomes/${data.wallet_id}`, {
+			const response = await fetch(`${API_URL + MAIN_ROUTE}get-all-incomes/${data.wallet_id}`, {
 				method: 'GET',
 			});
 
@@ -45,7 +46,7 @@ export const GetAllIncomes = async (data) => {
 export const GetDailyIncomes = async (data) => {
 	if (data) {
 		try {
-			const response = await fetch(`${API_HTTP + MAIN_ROUTE}get-daily-incomes/${data}`, {
+			const response = await fetch(`${API_URL + MAIN_ROUTE}get-daily-incomes/${data}`, {
 				method: 'GET',
 			});
 
@@ -61,7 +62,7 @@ export const GetDailyIncomes = async (data) => {
 export const DeleteIncome = async (data) => {
 	if (data) {
 		try {
-			const response = await fetch(`${API_HTTP + MAIN_ROUTE}delete-income/${data.wallet_id}/${data.income_id}`, {
+			const response = await fetch(`${API_URL + MAIN_ROUTE}delete-income/${data.wallet_id}/${data.income_id}`, {
 				method: 'DELETE',
 			});
 			return await response.json();

@@ -1,4 +1,4 @@
-import { API_HTTP } from '@/tools/router';
+const API_URL = import.meta.env.VITE_API_URL;
 const MAIN_ROUTE = '/expense/';
 export const NewExpense = async (data) => {
 	if (!data) {
@@ -18,7 +18,7 @@ export const NewExpense = async (data) => {
 	formData.append('category_name', data.category_name);
 
 	try {
-		const response = await fetch(`${API_HTTP + MAIN_ROUTE}new-expense/${data.wallet_id}/${data.user_id}`, {
+		const response = await fetch(`${API_URL + MAIN_ROUTE}new-expense/${data.wallet_id}/${data.user_id}`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded',
@@ -35,7 +35,7 @@ export const NewExpense = async (data) => {
 export const GetExpenses = async (data) => {
 	if (data) {
 		try {
-			const response = await fetch(`${API_HTTP + MAIN_ROUTE}get-expenses/${data.wallet_id}`, {
+			const response = await fetch(`${API_URL + MAIN_ROUTE}get-expenses/${data.wallet_id}`, {
 				method: 'GET',
 			});
 
@@ -50,7 +50,7 @@ export const GetExpenses = async (data) => {
 export const GetFixedExpenses = async (data) => {
 	if (data) {
 		try {
-			const response = await fetch(`${API_HTTP + MAIN_ROUTE}get-fixed-expenses/${data.wallet_id}`, {
+			const response = await fetch(`${API_URL + MAIN_ROUTE}get-fixed-expenses/${data.wallet_id}`, {
 				method: 'GET',
 			});
 
@@ -65,7 +65,7 @@ export const GetFixedExpenses = async (data) => {
 export const PayFixedExpense = async (data) => {
 	if (data) {
 		try {
-			const response = await fetch(`${API_HTTP + MAIN_ROUTE}pay-expense/${data.wallet_id}/${data.expense_id}`, {
+			const response = await fetch(`${API_URL + MAIN_ROUTE}pay-expense/${data.wallet_id}/${data.expense_id}`, {
 				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json',
@@ -82,7 +82,7 @@ export const PayFixedExpense = async (data) => {
 export const ResetDeadLine = async (data) => {
 	if (data) {
 		try {
-			const response = await fetch(`${API_HTTP + MAIN_ROUTE}reset-deadline/${data.wallet_id}/${data.expense_id}`, {
+			const response = await fetch(`${API_URL + MAIN_ROUTE}reset-deadline/${data.wallet_id}/${data.expense_id}`, {
 				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json',
@@ -99,7 +99,7 @@ export const ResetDeadLine = async (data) => {
 export const DeleteFixedExpense = async (data) => {
 	if (data) {
 		try {
-			const response = await fetch(`${API_HTTP + MAIN_ROUTE}delete-fixed-expense/${data.wallet_id}/${data.expense_id}`, {
+			const response = await fetch(`${API_URL + MAIN_ROUTE}delete-fixed-expense/${data.wallet_id}/${data.expense_id}`, {
 				method: 'DELETE',
 			});
 			return await response.json();
@@ -114,7 +114,7 @@ export const DeleteFixedExpense = async (data) => {
 export const GetExpensesByCategory = async (data) => {
 	if (data) {
 		try {
-			const response = await fetch(`${API_HTTP + MAIN_ROUTE}get-expenses-by-category/${data}`, {
+			const response = await fetch(`${API_URL + MAIN_ROUTE}get-expenses-by-category/${data}`, {
 				method: 'GET',
 			});
 
@@ -130,7 +130,7 @@ export const GetExpensesByCategory = async (data) => {
 export const EditFixedExpenses = async (data) => {
 	if (data) {
 		try {
-			const response = await fetch(`${API_HTTP + MAIN_ROUTE}update-fixed-expenses/${data.expense_id}/${data.wallet_id}`, {
+			const response = await fetch(`${API_URL + MAIN_ROUTE}update-fixed-expenses/${data.expense_id}/${data.wallet_id}`, {
 				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json',
