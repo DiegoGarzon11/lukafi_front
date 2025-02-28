@@ -96,7 +96,7 @@ export const Dashboard = () => {
 	}
 	return (
 		<main>
-			<div className='flex flex-col md:grid md:grid-cols-3 h-full pt-20 p-3 gap-3 dark:bg-red-500 bg-white'>
+			<div className='flex flex-col md:grid md:grid-cols-3 h-full pt-20 p-3 gap-3 dark:bg-blackbg-white'>
 				{userData.wallet.available <= 0 && (
 					<Dialog defaultOpen>
 						<DialogContent className='md:w-1/3'>
