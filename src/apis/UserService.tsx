@@ -1,4 +1,6 @@
 const API_URL = import.meta.env.VITE_API_URL;
+console.log(API_URL);
+
 export const UserRegister = async (data) => {
 	const formData = new URLSearchParams();
 	formData.append('name', data.name);
