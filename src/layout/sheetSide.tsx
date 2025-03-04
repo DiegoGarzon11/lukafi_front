@@ -105,7 +105,7 @@ export function SheetSide() {
 	const signOut = async () => {
 		const data = {
 			email: infoUser.email,
-			password: 'admin123',
+			password: '123',
 			token: localStorage.token,
 		};
 		const response = await DeleteUser(data);

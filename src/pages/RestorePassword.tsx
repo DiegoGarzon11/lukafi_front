@@ -40,6 +40,8 @@ export const ForgetPassword = () => {
 		e.preventDefault();
 		setLoader(true);
 		setVisibilityToast(false);
+		console.log(confirmPassword);
+		
 		try {
 			const response = await GenerateNewPassword(confirmPassword, token);
 			if (response) {

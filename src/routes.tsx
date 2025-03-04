@@ -10,6 +10,7 @@ import {SeeExpenses} from './components/core/Expenses/SeeExpenses';
 import {SeeDebts} from './components/core/Debts/SeeDebts';
 import {SeeIncomes} from './components/core/Income/SeeIncomes';
 import DeleteAccount from './pages/DeleteAccount';
+import RestoreAccountPage from './pages/RestoreAccount';
 
 const isAuthenticated = localStorage.token;
 
@@ -24,6 +25,7 @@ const RoutesManager = () => (
 		<Route path='/wallet/incomes' element={isAuthenticated ? <SeeIncomes /> : <Navigate to='/auth' />} />
 		<Route path='/profile' element={isAuthenticated ? <Profile /> : <Navigate to='/auth' />} />
 		<Route path='/profile/delete-account' element={isAuthenticated ? <DeleteAccount /> : <Navigate to='/auth' />} />
+		<Route path='/restore-account' element={isAuthenticated ? <RestoreAccountPage /> : <Navigate to='/auth' />} />
 		<Route path='/auth/restore-password' element={isAuthenticated ? <Dashboard /> : <ForgetPassword />} />
 		<Route path='*' element={<PageNotFound />} />
 	</Routes>
