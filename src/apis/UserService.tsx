@@ -95,6 +95,7 @@ export const GenerateNewPassword = async (password, token) => {
 
 // !espera del back para eliminar usuario con token
 export const DeleteUser = async (data) => {
+	
 	const { email, password, token } = data;
 	try {
 		const response = await fetch(`${API_URL}/user/sign-out`, {
@@ -104,6 +105,24 @@ export const DeleteUser = async (data) => {
 				'Content-Type': 'application/json',
 				Authorization: token,
 			},
+		});
+		return await response.json();
+	} catch (error) {
+		console.error(error);
+	}
+};
+
+export const RestoreAccount = async () => {
+	
+	
+
+	try {
+		const response = await fetch(`${API_URL}/user/restore-account`, {
+			method: 'POST',
+			headers: {
+				Authorization: localStorage.token,
+			},
+			
 		});
 		return await response.json();
 	} catch (error) {

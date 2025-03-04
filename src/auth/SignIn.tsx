@@ -50,7 +50,10 @@ export default function SignIn() {
 				const userDefault = await UserDefault();
 
 				localStorage.setItem('userMain', JSON.stringify(userDefault?.users));
-				return (window.location.href = '/dashboard');
+				console.log(userDefault);
+				return userDefault?.users.deleted_in == null ? (window.location.href = '/dashboard') : (window.location.href = '/restore-account');
+				
+				
 			}
 			console.warn('user not found');
 		} catch (error) {
