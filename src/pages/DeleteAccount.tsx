@@ -11,7 +11,7 @@ const DeleteAccount = () => {
 					<img
 						src='/images/dontgo.webp'
 						alt='Forgot password'
-						className='w-56 h-56 object-cover rounded-full dark:bg-zinc-700/20 bg-zinc-100 self-center'
+						className='w-56 h-56 object-cover rounded-full bg-white'
 					/>
 					<p className='font-bold'>{t('delete.account.confirmPassword')}</p>
 					<p className='font-semibold opacity-30 text-sm text-center'>{t('delete.account.text')}</p>

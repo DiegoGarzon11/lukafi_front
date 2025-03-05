@@ -32,13 +32,10 @@ import {
 	DropdownMenuLabel,
 	DropdownMenuTrigger,
 } from '@radix-ui/react-dropdown-menu';
-import { DeleteUser } from '@/apis/UserService';
 
 export function SheetSide() {
 	const { t, i18n } = useTranslation();
 	i18n.changeLanguage();
-
-	
 
 	const infoUser = localStorage.userMain ? JSON.parse(localStorage?.userMain) : '';
 
@@ -102,16 +99,7 @@ export function SheetSide() {
 		},
 	];
 
-	const signOut = async () => {
-		const data = {
-			email: infoUser.email,
-			password: '123',
-			token: localStorage.token,
-		};
-		const response = await DeleteUser(data);
-
-		console.log(response);
-	};
+	
 	return (
 		<Sidebar
 			variant='sidebar'
@@ -127,10 +115,14 @@ export function SheetSide() {
 						<DropdownMenuContent className='p-2 w-36  dark:bg-dark_primary_color border border-border rounded-md   bg-zinc-200'>
 							<DropdownMenuLabel className='flex items-center font-bold h-9 border-b-2 border-zinc-500 '>My Account</DropdownMenuLabel>
 							<DropdownMenuGroup>
-								<DropdownMenuItem className='flex w-full   rounded-sm pl-2 my-1 items-center h-9  hover:dark:bg-zinc-900 cursor-pointer hover:bg-zinc-100'>
-									<UserRoundPen className='mr-2' />
-									Profile
-								</DropdownMenuItem>
+								<Link
+									className=''
+									to='/profile'>
+									<DropdownMenuItem className='flex w-full   rounded-sm pl-2 my-1 items-center h-9  hover:dark:bg-zinc-900 cursor-pointer hover:bg-zinc-100'>
+										<UserRoundPen className='mr-2' />
+										Profile
+									</DropdownMenuItem>
+								</Link>
 							</DropdownMenuGroup>
 							<DropdownMenuItem
 								onClick={() => closeSession()}
@@ -138,12 +130,7 @@ export function SheetSide() {
 								<LogOut className='mr-2' />
 								Log out
 							</DropdownMenuItem>
-							<DropdownMenuItem
-								onClick={() => signOut()}
-								className=' flex w-full   rounded-sm pl-2 my-1 items-center h-9  hover:bg-zinc-100 hover:dark:bg-zinc-900 cursor-pointer'>
-								<LogOut className='mr-2' />
-								Eliminar cuenta
-							</DropdownMenuItem>
+							
 						</DropdownMenuContent>
 					</DropdownMenu>
 				</div>
@@ -164,8 +151,8 @@ export function SheetSide() {
 					</div>
 					<SidebarMenu className='w-full px-2 flex flex-col gap-2 scrollbar-custom  h-3/5  overflow-y-auto'>
 						{pages.map((page, i) => (
-							<Collapsible 
-							key={i}
+							<Collapsible
+								key={i}
 								className='group/collapsible'
 								defaultOpen={localStorage.route_name.includes(page.path)}>
 								<SidebarGroup>
@@ -188,7 +175,6 @@ export function SheetSide() {
 													className='visited:dark:bg-red-500'
 													to={child.path}>
 													<Button
-														
 														className={`w-full gap-4 justify-start py-6 bg-zinc-200 hover:bg-white dark:hover:bg-hover_primary_color text-black dark:text-white ${
 															localStorage.route_name === child.path
 																? 'bg-white bg-gradient-to-b dark:from-[#0e1a12] dark:to-[#146c21]'
