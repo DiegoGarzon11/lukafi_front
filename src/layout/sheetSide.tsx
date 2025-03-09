@@ -23,7 +23,6 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuSub } from '@/components/ui/sidebar';
 
-import '@/styles/Dashboard.css';
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -118,7 +117,7 @@ export function SheetSide() {
 								<Link
 									className=''
 									to='/profile'>
-									<DropdownMenuItem className='flex w-full   rounded-sm pl-2 my-1 items-center h-9  hover:dark:bg-zinc-900 cursor-pointer hover:bg-zinc-100'>
+									<DropdownMenuItem className='flex w-full   rounded-sm pl-2 my-1 items-center h-9  dark:hover:bg-zinc-900 cursor-pointer hover:bg-zinc-100'>
 										<UserRoundPen className='mr-2' />
 										Profile
 									</DropdownMenuItem>
@@ -126,7 +125,7 @@ export function SheetSide() {
 							</DropdownMenuGroup>
 							<DropdownMenuItem
 								onClick={() => closeSession()}
-								className=' flex w-full   rounded-sm pl-2 my-1 items-center h-9  hover:bg-zinc-100 hover:dark:bg-zinc-900 cursor-pointer'>
+								className=' flex w-full   rounded-sm pl-2 my-1 items-center h-9  hover:bg-zinc-100 dark:hover:bg-zinc-900 cursor-pointer'>
 								<LogOut className='mr-2' />
 								Log out
 							</DropdownMenuItem>
@@ -172,12 +171,12 @@ export function SheetSide() {
 											{page.children.map((child) => (
 												<Link
 													key={child.path}
-													className='visited:dark:bg-red-500'
+													className='dark:visited:bg-red-500'
 													to={child.path}>
 													<Button
 														className={`w-full gap-4 justify-start py-6 bg-zinc-200 hover:bg-white dark:hover:bg-hover_primary_color text-black dark:text-white ${
 															localStorage.route_name === child.path
-																? 'bg-white bg-gradient-to-b dark:from-[#0e1a12] dark:to-[#146c21]'
+																? 'bg-white bg-linear-to-b dark:from-[#0e1a12] dark:to-[#146c21]'
 																: 'bg-transparent'
 														}`}>
 														{child.icon}

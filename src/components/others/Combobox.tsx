@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { useState } from 'react';
-import '@/styles/Dashboard.css';
 
 export function Combobox({ data, selected }) {
 	const [open, setOpen] = useState(false);

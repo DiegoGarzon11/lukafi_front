@@ -89,7 +89,7 @@ export const ForgetPassword = () => {
 			{token ? (
 				<>
 					{isRedirect && response.success == true ? (
-						<div className='shadow shadow-green-500  rounded-md  p-5 flex flex-col justify-center gap-3 items-center'>
+						<div className='shadow-sm shadow-green-500  rounded-md  p-5 flex flex-col justify-center gap-3 items-center'>
 							<h3 className='font-semibold text-xl my-3 flex items-center gap-2'>
 								Contraseña actualizada <BadgeCheck className='text-green-500' />
 							</h3>
@@ -99,7 +99,7 @@ export const ForgetPassword = () => {
 					) : (
 						''
 					)}
-					<div className='shadow dark:shadow-zinc-700  rounded-md  p-5  w-11/12 md:w-[500px]'>
+					<div className='shadow-sm dark:shadow-zinc-700  rounded-md  p-5  w-11/12 md:w-[500px]'>
 						<h3 className='font-semibold text-xl my-3'>Crear nueva contraseña</h3>
 						<p className='opacity-50'>Por tu seguridad te pedimos que tu nueva contraseña sea distintas a las anteriores</p>
 						<form
@@ -180,7 +180,7 @@ export const ForgetPassword = () => {
 					</div>
 				</>
 			) : (
-				<div className='shadow dark:shadow-zinc-700   p-5 w-11/12 md:w-[500px] rounded-md'>
+				<div className='shadow-sm dark:shadow-zinc-700   p-5 w-11/12 md:w-[500px] rounded-md'>
 					<div className='flex justify-center flex-col items-center gap-5 mt-3'>
 						<img
 							src='/images/forgot-password.webp'
@@ -199,7 +199,7 @@ export const ForgetPassword = () => {
 								onChange={(e) => setEmail(e.target.value)}
 								type='email'
 								placeholder='Correo electrónico'
-								className='w-full rounded-md p-2 border-gray-600/50 dark:border-zinc-700 border-solid border outline-none text-black'
+								className='w-full rounded-md p-2 border-gray-600/50 dark:border-zinc-700 border-solid border outline-hidden text-black'
 							/>
 							<button
 								disabled={!email || loader}

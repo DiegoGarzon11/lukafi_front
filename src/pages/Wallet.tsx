@@ -151,7 +151,7 @@ export const WalletComponent = () => {
 					</div>
 				</section>
 				<section className='flex flex-col gap-3 md:w-6/12 h-full'>
-					<div className='flex flex-col justify-between  rounded-xl  shadow-sm shadow-zinc-900/90  h-full dark:bg-dark_primary_color '>
+					<div className='flex flex-col justify-between  rounded-xl  shadow-xs shadow-zinc-900/90  h-full dark:bg-dark_primary_color '>
 						<ChartFinance />
 					</div>
 					<div className='dark:bg-dark_primary_color rounded-xl flex flex-col items-center justify-center p-3 h-full  '>
@@ -166,7 +166,7 @@ export const WalletComponent = () => {
 							<CarouselContent>
 								{Array.from({length: 5}).map((_, index) => (
 									<CarouselItem className='flex justify-center' key={index}>
-										<article className=' text-white flex flex-col justify-between  bg-gradient-to-r  to-green-400  from-gray-700  rounded-3xl p-8 shadow-xl shadow-zinc-900/90 min-w-80 '>
+										<article className=' text-white flex flex-col justify-between  bg-linear-to-r  to-green-400  from-gray-700  rounded-3xl p-8 shadow-xl shadow-zinc-900/90 min-w-80 '>
 											<div className='flex justify-between'>
 												<p className='text-xl font-bold'>diego</p>
 												<p className='text-5xl font-bold tracking-widest  '>LUFI</p>

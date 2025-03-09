@@ -21,7 +21,7 @@ export default function Auth() {
 			<img
 				className={`absolute transition-transform ease-in-out ${
 					view ? 'translate-x-full ease-in-out' : ''
-				} hidden lg:block md:h-full opacity-80 dark:opacity-35 aspect-square lg:p-3 rounded-3xl md:w-2/4 lg:object-fill`}
+				} hidden lg:block md:h-full opacity-80  aspect-square lg:p-3 rounded-3xl md:w-2/4 lg:object-fill`}
 				src='/images/init.webp'
 				alt=''
 			/>
@@ -30,7 +30,7 @@ export default function Auth() {
 					<div className='flex flex-col md:flex-row  w-full items-end z-10  md:mb-10 '>
 						<Link to='/'>
 							<button className='p-1 bg-zinc-300 dark:bg-dark_primary_color rounded-full mx-5 md:mx-20 flex items-center gap-1 px-5 mb-3 md:mb-0'>
-								<ArrowLeft /> <span className='text-lg '>{t('form.btn.back')}</span>
+								<ArrowLeft className='text-black dark:text-white' /> <span className='text-lg text-black dark:text-white '>{t('form.btn.back')}</span>
 							</button>
 						</Link>
 

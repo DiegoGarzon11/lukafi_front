@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { ApiResponse } from '@/interfaces/Api';
 import { Debt, DebtsHistory, ResponseWallet } from '@/interfaces/Wallet';
-import '@/styles/Dashboard.css';
+
 import { Toast } from '@/tools/Toast';
 import { format } from 'date-fns';
 import { EllipsisVertical, NotebookPen, ScrollText, Trash2 } from 'lucide-react';
@@ -149,7 +149,7 @@ export const SeeDebts = () => {
 					apiData={userData?.wallet}
 				/>
 			</nav>
-			<section className=' shadow-sm md:col-span-3 row-span-9 '>
+			<section className=' shadow-xs md:col-span-3 row-span-9 '>
 				<div className='  w-full  flex  justify-between gap-5 order-3'>
 					<div className='dark:bg-dark_primary_color bg-zinc-200 p-2.5 w-full rounded-xl border border-gray-600/50'>
 						<div className='flex gap-3 flex-col items-start '>
@@ -265,7 +265,7 @@ export const SeeDebts = () => {
 																		setDebtToAddAmount(d);
 																		setOpenAddAmountDialog(true);
 																	}}
-																	className='hover:dark:bg-zinc-700 cursor-pointer flex justify-between'>
+																	className='dark:hover:bg-zinc-700 cursor-pointer flex justify-between'>
 																	<p className='dark:text-slate-300text-slate-700 font-semibold'>{t('dashboard.debt.addAmount')}</p>
 
 																	<NotebookPen className='dark:text-slate-300text-slate-700' />
@@ -276,7 +276,7 @@ export const SeeDebts = () => {
 
 																		setOpenAmountDialog(true);
 																	}}
-																	className='hover:dark:bg-zinc-700 cursor-pointer flex justify-between'>
+																	className='dark:hover:bg-zinc-700 cursor-pointer flex justify-between'>
 																	<p className='dark:text-slate-300text-slate-700 font-semibold'>{t('dashboard.debt.seeAmount')}</p>
 
 																	<ScrollText className='dark:text-slate-300text-slate-700' />
@@ -287,7 +287,7 @@ export const SeeDebts = () => {
 																		setDebtToDelete(d);
 																		setOpenDeleteDialog(true);
 																	}}
-																	className='hover:dark:bg-zinc-700 cursor-pointer flex justify-between'>
+																	className='dark:hover:bg-zinc-700 cursor-pointer flex justify-between'>
 																	<p className='dark:text-slate-300text-slate-700 font-semibold'>{t('dashboard.delete')}</p>
 
 																	<Trash2 className='dark:text-slate-300text-slate-700' />

@@ -27,7 +27,7 @@ const Profile = () => {
 							type='text'
 							id='name'
 							autoComplete='name'
-							className='w-full rounded-md p-2 border-gray-600/50 dark:bg-primary-foreground dark:text-white dark:border-zinc-700 border-solid border outline-none text-black'
+							className='w-full rounded-md p-2 border-gray-600/50 dark:bg-primary-foreground dark:text-white dark:border-zinc-700 border-solid border outline-hidden text-black'
 						/>
 					</div>
 					<div className='w-full'>
@@ -39,7 +39,7 @@ const Profile = () => {
 						<input
 							type='text'
 							id='lastname'
-							className='w-full rounded-md p-2 border-gray-600/50 dark:bg-primary-foreground dark:text-white dark:border-zinc-700 border-solid border outline-none text-black'
+							className='w-full rounded-md p-2 border-gray-600/50 dark:bg-primary-foreground dark:text-white dark:border-zinc-700 border-solid border outline-hidden text-black'
 						/>
 					</div>
 				</section>
@@ -54,7 +54,7 @@ const Profile = () => {
 							type='text'
 							id='name'
 							autoComplete='name'
-							className='w-full rounded-md p-2 border-gray-600/50 dark:bg-primary-foreground dark:text-white dark:border-zinc-700 border-solid border outline-none text-black'
+							className='w-full rounded-md p-2 border-gray-600/50 dark:bg-primary-foreground dark:text-white dark:border-zinc-700 border-solid border outline-hidden text-black'
 						/>
 					</div>
 					<div className=' w-full '>

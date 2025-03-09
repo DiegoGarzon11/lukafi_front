@@ -105,7 +105,7 @@ export const SeeIncomes = () => {
 				/>
 			</nav>
 
-			<section className=' shadow-sm md:col-span-3 row-span-9   '>
+			<section className=' shadow-xs md:col-span-3 row-span-9   '>
 				<div className='  w-full  flex  justify-between gap-5 order-3  '>
 					<div className='dark:bg-dark_primary_color bg-zinc-200 p-3 w-full rounded-xl border border-gray-600/50   '>
 						<div className='flex gap-3 flex-col items-start  '>
@@ -165,7 +165,7 @@ export const SeeIncomes = () => {
 																		setIncomeToDelete(i);
 																		setOpenDeleteDialog(true);
 																	}}
-																	className='hover:dark:bg-zinc-700 cursor-pointer flex justify-between'>
+																	className='dark:hover:bg-zinc-700 cursor-pointer flex justify-between'>
 																	<p className='dark:text-slate-300text-slate-700 font-semibold'>{t('dashboard.delete')}</p>
 
 																	<Trash2 className='dark:text-slate-300text-slate-700 cursor-pointer' />

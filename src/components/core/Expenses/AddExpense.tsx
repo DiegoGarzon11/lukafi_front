@@ -201,7 +201,7 @@ export const AddExpense = ({ apiData, sendData, className }) => {
 
 										{days.map((e, i) => (
 											<SelectItem
-												className='focus:dark:bg-dark_primary_color focus:bg-zinc-200 cursor-pointer'
+												className='dark:focus:bg-dark_primary_color focus:bg-zinc-200 cursor-pointer'
 												key={i}
 												value={e.toString()}>
 												{e}
@@ -247,7 +247,7 @@ export const AddExpense = ({ apiData, sendData, className }) => {
 				<Button
 					disabled={loader || name === '' || value === '0' || selectedCategory === null || (isFixed === 'true' && !deadLine)}
 					onClick={submitExpense}
-					className={`disabled:text-zinc-200  bg-zinc-700 hover:bg-zinc-500 dark:bg-zinc-500 text-white rounded-md hover:dark:bg-zinc-600 flex justify-center`}>
+					className={`disabled:text-zinc-200  bg-zinc-700 hover:bg-zinc-500 dark:bg-zinc-500 text-white rounded-md dark:hover:bg-zinc-600 flex justify-center`}>
 					{loader ? <LoaderApi color='black' /> : 'Confirmar'}
 				</Button>
 			</DialogContent>

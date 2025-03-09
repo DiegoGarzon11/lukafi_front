@@ -6,7 +6,7 @@ const DeleteAccount = () => {
 
 	return (
 		<section className='flex flex-col items-center justify-center h-screen pt-20 p-5 gap-5 dark:bg-dark_primary_color bg-white font-thin -ml-64'>
-			<div className='shadow dark:shadow-zinc-700   p-5 w-11/12 md:w-[500px] rounded-md'>
+			<div className='shadow-sm dark:shadow-zinc-700   p-5 w-11/12 md:w-[500px] rounded-md'>
 				<div className='flex justify-center flex-col items-center gap-5 mt-3'>
 					<img
 						src='/images/dontgo.webp'
@@ -20,7 +20,7 @@ const DeleteAccount = () => {
 							value=''
 							type='password'
 							placeholder={t('delete.account.password')}
-							className='w-full rounded-md p-2 border-gray-600/50 dark:border-zinc-700 border-solid border outline-none text-black'
+							className='w-full rounded-md p-2 border-gray-600/50 dark:border-zinc-700 border-solid border outline-hidden text-black'
 						/>
 						<button
 							type='submit'

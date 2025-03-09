@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
-import '@/styles/Dashboard.css';
 import { format } from 'date-fns';
 import { Edit, EllipsisVertical, Trash } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -211,7 +210,7 @@ export const SeeExpenses = () => {
 					apiData={userData?.wallet}
 				/>
 			</nav>
-			<section className=' shadow-sm  md:col-span-3 md:row-span-2 '>
+			<section className=' shadow-xs  md:col-span-3 md:row-span-2 '>
 				<div className=' w-full  flex flex-col  justify-between gap-5 order-3 '>
 					<div className='dark:bg-dark_primary_color bg-zinc-200  p-3 w-full  rounded-xl border border-gray-600/50'>
 						<div className='flex gap-3 flex-col items-start '>
@@ -305,7 +304,7 @@ export const SeeExpenses = () => {
 																	setOpenModalEditFixedExpenses(true);
 																	setFixedExpenseToEdit(f);
 																}}
-																className='hover:dark:bg-zinc-700 cursor-pointer'>
+																className='dark:hover:bg-zinc-700 cursor-pointer'>
 																<p>{t('dashboard.edit')}</p>
 																<Button
 																	variant='ghost'
@@ -318,7 +317,7 @@ export const SeeExpenses = () => {
 																	setOpenDeleteDialog(true);
 																	setExpenseToDelete(f);
 																}}
-																className='hover:dark:bg-zinc-700 cursor-pointer'>
+																className='dark:hover:bg-zinc-700 cursor-pointer'>
 																<p>{t('dashboard.delete')}</p>
 																<Button
 																	variant='ghost'
@@ -475,7 +474,7 @@ export const SeeExpenses = () => {
 											<SelectLabel className='text-lg'>{t('dashboard.day')}</SelectLabel>
 											{days.map((e, i) => (
 												<SelectItem
-													className='focus:dark:bg-zinc-800 focus:bg-zinc-200'
+													className='dark:focus:bg-zinc-800 focus:bg-zinc-200'
 													key={i}
 													value={e.toString()}>
 													{e}

@@ -7,7 +7,6 @@ import { AddIncome } from '@/components/core/Income/AddIncome';
 import { LoaderComponent } from '@/components/others/Loader';
 import { Button } from '@/components/ui/button';
 import { Expenses, Incomes, ResponseWallet } from '@/interfaces/Wallet';
-import '@/styles/Dashboard.css';
 import { format } from 'date-fns';
 import { AlertTriangle, ArrowDown, ArrowUp } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -135,7 +134,7 @@ export const Dashboard = () => {
 					/>
 				</section>
 				<section className='flex md:col-span-3 md:row-span-8 flex-wrap md:flex-nowrap  gap-3 md:h-56'>
-					<article className=' w-full h-full  shadow-sm border-none  text-black  dark:text-white  md:grid md:grid-cols-3 gap-3 flex flex-col '>
+					<article className=' w-full h-full  shadow-xs border-none  text-black  dark:text-white  md:grid md:grid-cols-3 gap-3 flex flex-col '>
 						<div className='border border-border dark:bg-dark_primary_color bg-zinc-200 p-3 rounded-md flex justify-center flex-col items-center h-48 md:h-full'>
 							<p className='h-1/2 text-lg'>Reporte meta de ahorros mensual</p>
 
@@ -174,7 +173,7 @@ export const Dashboard = () => {
 							</p>
 						</div>
 					</article>
-					<article className=' text-white flex flex-col justify-between  bg-gradient-to-r  to-green-400  from-gray-700 w-full md:w-2/5 rounded-3xl p-8 shadow-xl shadow-zinc-900/90'>
+					<article className=' text-white flex flex-col justify-between  bg-linear-to-r  to-green-400  from-gray-700 w-full md:w-2/5 rounded-3xl p-8 shadow-xl shadow-zinc-900/90'>
 						<div className='flex justify-between'>
 							<p className='text-xl font-bold'>{user.full_name}</p>
 							<p className='text-5xl font-bold tracking-widest  '>LUFI</p>

@@ -79,9 +79,9 @@ export default function SignIn() {
 			)}
 
 			<form
-				className='grid w-full py-32 mt-5 md:mt-0   gap-8 p-8 shadow-sm bg-zinc-100 dark:bg-dark_primary_color rounded-md h-full'
+				className='grid w-full py-32 mt-5 md:mt-0   gap-8 p-8 shadow-xs bg-zinc-100 dark:bg-dark_primary_color  rounded-md h-full'
 				onSubmit={handleSubmit}>
-				<h1 className='text-4xl mb-6 font-semibold'>{t('form.field.signIn')}</h1>
+				<h1 className='text-4xl mb-6 font-semibold text-white dark'>{t('form.field.signIn')}</h1>
 				<div>
 					<label
 						htmlFor=''

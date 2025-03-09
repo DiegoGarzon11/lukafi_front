@@ -82,7 +82,7 @@ export default function Header({valueSide}) {
 						<Button variant='ghost' className='z-50 mt-3 ml-3 text-lg  sticky top-3 cursor-default'>
 							Lukafi
 						</Button>
-						<div className=' w-full fixed flex justify-end shadow-sm shadow-z-700 rounded-full p-3 z-10 bg-gradient-to-b dark:from-zinc-950 dark:to-dark_primary_color from-zinc-100 to-zinc-300 border-b border-gray-600/50 '>
+						<div className=' w-full fixed flex justify-end shadow-xs shadow-z-700 rounded-full p-3 z-10 bg-linear-to-b dark:from-zinc-950 dark:to-dark_primary_color from-zinc-100 to-zinc-300 border-b border-gray-600/50 '>
 							<div className='flex items-center gap-5'>
 								{!localStorage.token && location.pathname === '/' && (
 									<div>
@@ -98,7 +98,7 @@ export default function Header({valueSide}) {
 									{localStorage.lang == 'en' ? <Usa /> : <Col />}
 								</button>
 								{isOpen && (
-									<div className='absolute dark:text-white dark:bg-zinc-900 bg-white  rounded-lg shadow w-36 right-20 top-12 '>
+									<div className='absolute dark:text-white dark:bg-zinc-900 bg-white  rounded-lg shadow-sm w-36 right-20 top-12 '>
 										<div className='p-2 flex flex-col gap-3'>
 											<button
 												className='hover:scale-105'

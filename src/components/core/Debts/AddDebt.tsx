@@ -170,7 +170,7 @@ export const AddDebt = ({ apiData,sendData, className }) => {
 					className={` py-2 rounded-md text-zinc-100 flex justify-center ${
 						debtType === null || person === '' || reason === '' || value === '' || value === '0'
 							? 'bg-gray-300 '
-							: ' bg-zinc-700 hover:bg-zinc-500 hover:dark:bg-zinc-600 dark:bg-zinc-500'
+							: ' bg-zinc-700 hover:bg-zinc-500 dark:hover:bg-zinc-600 dark:bg-zinc-500'
 					}`}>
 					{loader ? <LoaderApi color='black' /> : `${t('dashboard.confirm')}`}
 				</Button>
