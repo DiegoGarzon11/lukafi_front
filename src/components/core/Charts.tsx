@@ -1,4 +1,20 @@
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell, Sector, AreaChart, Area } from 'recharts';
+import {
+	LineChart,
+	Line,
+	XAxis,
+	YAxis,
+	CartesianGrid,
+	Tooltip,
+	Legend,
+	ResponsiveContainer,
+	Cell,
+	Sector,
+	AreaChart,
+	Area,
+	Bar,
+	Rectangle,
+	BarChart,
+} from 'recharts';
 import { GetExpensesByCategory } from '@/apis/ExpenseService';
 import { useEffect, useState } from 'react';
 import { GetWalletUser, GetWalletValues, GetDailyReport, GetMonthlyReport } from '@/apis/WalletService';
@@ -532,5 +548,87 @@ export const ChartExample = () => {
 				strokeWidth={3}
 			/>
 		</LineChart>
+	);
+};
+
+export const ChartExampleTwo = () => {
+	const datos = [
+		{
+			name: 'Enero',
+			ahorro: 1000,
+			deudas: 3000,
+		},
+		{
+			name: 'Febrero',
+			ahorro: 2000,
+			deudas: 1800,
+		},
+		{
+			name: 'Marzo',
+			ahorro: 2400,
+			deudas: 2000,
+		},
+		{
+			name: 'Abril',
+			ahorro: 2200,
+			deudas: 1800,
+		},
+		{
+			name: 'Mayo',
+			ahorro: 3000,
+			deudas: 900,
+		},
+		{
+			name: 'Junio',
+			ahorro: 3400,
+			deudas: 200,
+		},
+		{
+			name: 'Julio',
+			ahorro: 4000,
+			deudas: 100,
+		},
+	];
+
+	return (
+		<BarChart
+			width={600}
+			height={300}
+			data={datos}
+			margin={{
+				top: 5,
+				right: 30,
+				left: 20,
+				bottom: 5,
+			}}>
+			<CartesianGrid
+				strokeDasharray='3 3 '
+				opacity={0.2}
+			/>
+
+			<XAxis dataKey='name' />
+			<YAxis />
+			<Legend />
+			<Bar
+				dataKey='deudas'
+				fill='#fe337c'
+				activeBar={
+					<Rectangle
+						fill='pink'
+						stroke='blue'
+					/>
+				}
+			/>
+			<Bar
+				dataKey='ahorro'
+				fill='#7fbd0c'
+				activeBar={
+					<Rectangle
+						fill='gold'
+						stroke='purple'
+					/>
+				}
+			/>
+		</BarChart>
 	);
 };
