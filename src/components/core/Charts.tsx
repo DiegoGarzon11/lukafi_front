@@ -23,8 +23,6 @@ const COLORS = [
 ];
 const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 const CustomTooltipDaily = ({ payload }) => {
-	
-
 	const { t, i18n } = useTranslation();
 	i18n.changeLanguage();
 	function validateColor(name) {
@@ -466,5 +464,73 @@ export const ChartIncomes = ({ trigger }) => {
 				</AreaChart>
 			</ResponsiveContainer>
 		</>
+	);
+};
+
+export const ChartExample = () => {
+	const data = [
+		{
+			name: 'Enero',
+			ingresos: 500,
+			deudas: 800,
+		},
+		{
+			name: 'Febrero',
+			ingresos: 1000,
+			deudas: 200,
+		},
+		{
+			name: 'Marzo',
+			ingresos: 2200,
+			deudas: 700,
+		},
+		{
+			name: 'Abril',
+			ingresos: 1500,
+			deudas: 1300,
+		},
+		{
+			name: 'Mayo',
+			ingresos: 2500,
+			deudas: 1100,
+		},
+		{
+			name: 'Abril',
+			ingresos: 2600,
+			deudas: 700,
+		},
+	];
+	return (
+		<LineChart
+			width={500}
+			height={300}
+			data={data}
+			margin={{
+				top: 5,
+				right: 30,
+				left: 20,
+				bottom: 5,
+			}}>
+			<CartesianGrid
+				strokeDasharray=' 3 3'
+				opacity={0.2}
+			/>
+			<XAxis dataKey='name' />
+			<YAxis />
+			<Legend />
+
+			<Line
+				type='bump'
+				dataKey='ingresos'
+				stroke='#a8fa0a'
+				strokeWidth={3}
+			/>
+			<Line
+				type='bump'
+				dataKey='deudas'
+				stroke='#8884d8'
+				strokeWidth={3}
+			/>
+		</LineChart>
 	);
 };
