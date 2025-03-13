@@ -40,7 +40,6 @@ export const ForgetPassword = () => {
 		e.preventDefault();
 		setLoader(true);
 		setVisibilityToast(false);
-		console.log(confirmPassword);
 		
 		try {
 			const response = await GenerateNewPassword(confirmPassword, token);
@@ -211,7 +210,7 @@ export const ForgetPassword = () => {
 						<p className='font-semibold'>
 							¿Recordaste tu contraseña?
 							<Link
-								to='/auth'
+								to='/'
 								className='text-blue-500 underline mx-2'>
 								Ingresa aquí
 							</Link>
