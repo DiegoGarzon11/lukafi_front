@@ -544,7 +544,7 @@ export const ChartExample = () => {
 			<Line
 				type='bump'
 				dataKey='deudas'
-				stroke='#8884d8'
+				stroke='#fe337c'
 				strokeWidth={3}
 			/>
 		</LineChart>

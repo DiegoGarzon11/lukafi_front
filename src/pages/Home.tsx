@@ -114,6 +114,6 @@ export const Home = () => {
 					</footer>
 				</section>
 			</main>
-		</div>
+ 		</div>
 	);
 };

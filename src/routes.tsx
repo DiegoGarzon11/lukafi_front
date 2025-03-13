@@ -62,7 +62,7 @@ const RoutesManager = () => (
 		/>
 		<Route
 			path='/auth/change-password'
-			element={isAuthenticated ? <ForgetPassword /> : <Navigate to='/auth' />}
+			element={isAuthenticated ? <ForgetPassword /> : <Navigate to='/' />}
 		/>
 		<Route
 			path='*'

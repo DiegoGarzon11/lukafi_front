@@ -4,14 +4,13 @@
 	--color-dark_primary_color: #141514;
 	--color-dark_secondary_color: #1f201f;
 	--color-dark_foreground: #131413;
-	
+
+	--color-alternative_color: #fe337c;
+
 	--color-light_primary_color: #aaaaaa;
 	--color-light_secondary_color: #f5f5f5;
 
 	--color-hover_primary_color: #17181b;
-
 }
 
-
 @custom-variant dark (&:where(.dark, .dark *));
-
