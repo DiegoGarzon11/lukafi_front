@@ -5,6 +5,7 @@ import { EyeClose, EyeOpen, LoaderApi } from '@/assets/icons/Svg';
 import { Input } from '@/components/ui/input';
 import { Link } from 'react-router-dom';
 import { BadgeCheck } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 export const ForgetPassword = () => {
 	const [email, setEmail] = useState('');
 	const [token, setToken] = useState(null);
@@ -40,7 +41,7 @@ export const ForgetPassword = () => {
 		e.preventDefault();
 		setLoader(true);
 		setVisibilityToast(false);
-		
+
 		try {
 			const response = await GenerateNewPassword(confirmPassword, token);
 			if (response) {
@@ -88,9 +89,9 @@ export const ForgetPassword = () => {
 			{token ? (
 				<>
 					{isRedirect && response.success == true ? (
-						<div className='shadow-sm shadow-green-500  rounded-md  p-5 flex flex-col justify-center gap-3 items-center'>
+						<div className='shadow-sm shadow-lime-500  rounded-md  p-5 flex flex-col justify-center gap-3 items-center'>
 							<h3 className='font-semibold text-xl my-3 flex items-center gap-2'>
-								Contraseña actualizada <BadgeCheck className='text-green-500' />
+								Contraseña actualizada <BadgeCheck className='text-lime-500' />
 							</h3>
 							<p className='opacity-80'>Tu contraseña ha sido actualizada con éxito</p>
 							<p className='text-lg'>Serás redirigido en {numero} segundos</p>
@@ -98,9 +99,17 @@ export const ForgetPassword = () => {
 					) : (
 						''
 					)}
-					<div className='shadow-sm dark:shadow-zinc-700  rounded-md  p-5  w-11/12 md:w-[500px]'>
-						<h3 className='font-semibold text-xl my-3'>Crear nueva contraseña</h3>
-						<p className='opacity-50'>Por tu seguridad te pedimos que tu nueva contraseña sea distintas a las anteriores</p>
+					<div className='  rounded-md  p-5  w-11/12 md:w-[500px]'>
+						<div className='flex justify-center items-center'>
+							<img
+								src='/images/img.restore-pssw.webp'
+								alt='Forgot password'
+								className='w-56 h-56 object-cover rounded-full dark:bg-zinc-700/20 bg-zinc-100 self-center'
+							/>
+						</div>
+						<p className='opacity-50 dark:text-white text-black text-xl font-semibold'>
+							Por tu seguridad te pedimos que tu nueva contraseña sea distintas a las anteriores
+						</p>
 						<form
 							onSubmit={newPassword}
 							className='flex flex-col gap-3 w-full my-5'>
@@ -111,26 +120,22 @@ export const ForgetPassword = () => {
 									checked={password.length >= 5}
 									readOnly
 								/>
-								<p className='font-semibold'>
+								<p className='font-semibold dark:text-white text-black text-lg'>
 									Debe tener al menos 5 caracteres <span className='text-red-500'>*</span>
 								</p>
 							</div>
 							<div className='relative'>
-								<label
-									htmlFor=''
-									className='text-lg'>
-									Nueva contraseña <span className='text-red-500'>*</span>
-								</label>
 								<Input
 									value={password}
 									onChange={(e) => setPassword(e.target.value)}
-									className='dark:text-white border-gray-600/50 dark:bg-dark_primary_color/30 text-black'
+									className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
 									autoComplete='new-password'
+									placeholder='Nueva contraseña'
 									type={showPassword ? 'text' : 'password'}
 									name='password'
 								/>
 								<div
-									className='absolute right-2 top-8 cursor-pointer'
+									className='absolute right-2 top-2 cursor-pointer'
 									onClick={() => {
 										setshowPassword((prevIcon) => !prevIcon);
 									}}>
@@ -138,21 +143,17 @@ export const ForgetPassword = () => {
 								</div>
 							</div>
 							<div className='relative'>
-								<label
-									htmlFor=''
-									className='text-lg'>
-									Confirmar contraseña <span className='text-red-500'>*</span>
-								</label>
 								<Input
-									className='dark:text-white border-gray-600/50 dark:bg-dark_primary_color/30 text-black'
+									className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
 									autoComplete='new-password'
 									value={confirmPassword}
+									placeholder='Confirmar contraseña '
 									onChange={(e) => setConfirmPassword(e.target.value)}
 									type={showPasswordConfirm ? 'text' : 'password'}
 									name='password'
 								/>
 								<div
-									className='absolute right-2 top-8 cursor-pointer'
+									className='absolute right-2 top-2 cursor-pointer'
 									onClick={() => {
 										setshowPasswordConfirm((prevIcon) => !prevIcon);
 									}}>
@@ -163,12 +164,12 @@ export const ForgetPassword = () => {
 							{isRedirect ? (
 								''
 							) : (
-								<button
+								<Button
 									disabled={!email || loader || password.length <= 5 || password !== confirmPassword}
 									type='submit'
-									className='w-full rounded-md p-2 bg-zinc-300 dark:bg-zinc-700 text-white font-semibold flex justify-center'>
+									className='w-full font-semibold bg-alternative_color text-white text-lg flex justify-center items-center py-5 cursor-pointer'>
 									{loader ? <LoaderApi color='white' /> : 'Enviar'}
-								</button>
+								</Button>
 							)}
 						</form>
 						{password == confirmPassword ? (
@@ -179,39 +180,39 @@ export const ForgetPassword = () => {
 					</div>
 				</>
 			) : (
-				<div className='shadow-sm dark:shadow-zinc-700   p-5 w-11/12 md:w-[500px] rounded-md'>
+				<div className=' p-5 w-11/12 md:w-[500px] rounded-md '>
 					<div className='flex justify-center flex-col items-center gap-5 mt-3'>
 						<img
 							src='/images/forgot-password.webp'
 							alt='Forgot password'
 							className='w-56 h-56 object-cover rounded-full dark:bg-zinc-700/20 bg-zinc-100 self-center'
 						/>
-						<p className='font-bold'>¿Olvidaste tu contraseña?</p>
-						<p className='font-semibold opacity-30 text-sm text-center'>
+						<p className='font-bold dark:text-white text-black text-xl'>¿Olvidaste tu contraseña?</p>
+						<p className='font-semibold opacity-30 text-md text-center dark:text-white text-black'>
 							Ingresa tu correo electrónico abajo para recibir instrucciones para recuperar tu contraseña.
 						</p>
 						<form
 							onSubmit={submitEmail}
 							className='flex flex-col gap-3 w-full'>
-							<input
+							<Input
 								value={email}
 								onChange={(e) => setEmail(e.target.value)}
 								type='email'
-								placeholder='Correo electrónico'
-								className='w-full rounded-md p-2 border-gray-600/50 dark:border-zinc-700 border-solid border outline-hidden text-black'
+								placeholder='Email'
+								className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
 							/>
-							<button
+							<Button
 								disabled={!email || loader}
 								type='submit'
-								className='w-full rounded-md p-2 bg-zinc-300 dark:bg-zinc-700 text-white font-semibold flex justify-center'>
+								className='w-full font-semibold bg-alternative_color text-white text-lg flex justify-center items-center py-5 cursor-pointer'>
 								{loader ? <LoaderApi color='white' /> : 'Enviar'}
-							</button>
+							</Button>
 						</form>
-						<p className='font-semibold'>
+						<p className='font-semibold dark:text-white text-black text-lg'>
 							¿Recordaste tu contraseña?
 							<Link
 								to='/'
-								className='text-blue-500 underline mx-2'>
+								className='text-lime-500 underline mx-2'>
 								Ingresa aquí
 							</Link>
 						</p>
