@@ -1,20 +1,20 @@
-import { GetExpenses } from '@/apis/ExpenseService';
-import { GetWalletUser } from '@/apis/WalletService';
-import { Chart, ChartDonut, ChartIncomes } from '@/components/core/Charts';
-import { AddDebt } from '@/components/core/Debts/AddDebt';
-import { AddExpense } from '@/components/core/Expenses/AddExpense';
-import { AddIncome } from '@/components/core/Income/AddIncome';
-import { LoaderComponent } from '@/components/others/Loader';
-import { Button } from '@/components/ui/button';
-import { Expenses, Incomes, ResponseWallet } from '@/interfaces/Wallet';
-import { format } from 'date-fns';
-import { AlertTriangle, ArrowDown, ArrowUp } from 'lucide-react';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { GetAllIncomes } from '@/apis/Income.service';
-import { LoaderApi } from '@/assets/icons/Svg';
-import { Link } from 'react-router-dom';
+import {GetExpenses} from '@/apis/ExpenseService';
+import {GetWalletUser} from '@/apis/WalletService';
+import {Chart, ChartDonut, ChartIncomes} from '@/components/core/Charts';
+import {AddDebt} from '@/components/core/Debts/AddDebt';
+import {AddExpense} from '@/components/core/Expenses/AddExpense';
+import {AddIncome} from '@/components/core/Income/AddIncome';
+import {LoaderComponent} from '@/components/others/Loader';
+import {Button} from '@/components/ui/button';
+import {Expenses, Incomes, ResponseWallet} from '@/interfaces/Wallet';
+import {format} from 'date-fns';
+import {AlertTriangle, ArrowDown, ArrowUp} from 'lucide-react';
+import {useEffect, useState} from 'react';
+import {useTranslation} from 'react-i18next';
+import {Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle} from '@/components/ui/dialog';
+import {GetAllIncomes} from '@/apis/Income.service';
+import {LoaderApi} from '@/assets/icons/Svg';
+import {Link} from 'react-router-dom';
 export const Dashboard = () => {
 	const [userData, setDataUser] = useState<ResponseWallet | undefined>(undefined);
 	const [expenses, setExpenses] = useState<Array<Expenses> | undefined>([]);
@@ -26,7 +26,7 @@ export const Dashboard = () => {
 	localStorage.setItem('filterChartBalance', filter);
 	const user = JSON.parse(localStorage.getItem('userMain'));
 
-	const { t, i18n } = useTranslation();
+	const {t, i18n} = useTranslation();
 	i18n.changeLanguage();
 
 	const getExpenses = async (walletId) => {
@@ -62,7 +62,7 @@ export const Dashboard = () => {
 
 	const recibeResponseChild = async (e: string) => {
 		console.log(e);
-		
+
 		if (e) return setTrigger((prev) => prev + 1);
 	};
 
@@ -100,15 +100,22 @@ export const Dashboard = () => {
 					<Dialog defaultOpen>
 						<DialogContent className='md:w-1/3'>
 							<DialogHeader>
-								<DialogTitle className='text-lg font-semibold leading-none -tracking-tighter text-red-500'>¡Importante!</DialogTitle>
+								<DialogTitle className='text-lg font-semibold leading-none -tracking-tighter text-red-500'>
+									¡Importante!
+								</DialogTitle>
 								<span className='text-yellow-00'>Agrega tu saldo disponible</span>
 								<DialogDescription className='text-xl leading-7 tracking-wide dark:text-white text-black   opacity-70 text-balance'>
-									Ten en cuenta que cuando empiezas a usar <span className='text-green-500'>Lukafi</span>, tu saldo disponible será  cero
+									Ten en cuenta que cuando empiezas a usar <span className='text-green-500'>Lukafi</span>, tu saldo disponible será
+									cero
 									<br />
 									<span>Te recomendamos que como tu primer ingreso</span>
 									<span className='text-green-500'> agregues todo el dinero que tengas disponible en general</span>
 									<br />
-									<span>Esto puedes hacerlo en la sección de </span> <span className='text-green-500 underline cursor-pointer'> <Link to='/wallet/incomes'>ingresos</Link></span>
+									<span>Esto puedes hacerlo en la sección de </span>{' '}
+									<span className='text-green-500 underline cursor-pointer'>
+										{' '}
+										<Link to='/wallet/incomes'>ingresos</Link>
+									</span>
 								</DialogDescription>
 							</DialogHeader>
 						</DialogContent>
@@ -116,22 +123,10 @@ export const Dashboard = () => {
 				)}
 				<section className='md:flex grid grid-cols-2 grid-rows-2 md:flex-nowrap w-full gap-3 md:col-span-3'>
 					<div className='col-span-2 w-full'>
-						<AddIncome
-							sendData={(e) => recibeResponseChild(e)}
-							className='w-full '
-							apiData={userData?.wallet}
-						/>
+						<AddIncome sendData={(e) => recibeResponseChild(e)} className='w-full ' apiData={userData?.wallet} />
 					</div>
-					<AddExpense
-						className='w-full'
-						sendData={(e) => recibeResponseChild(e)}
-						apiData={userData?.wallet}
-					/>
-					<AddDebt
-						sendData={(e) => recibeResponseChild(e)}
-						className='w-full '
-						apiData={userData?.wallet}
-					/>
+					<AddExpense className='w-full' sendData={(e) => recibeResponseChild(e)} apiData={userData?.wallet} />
+					<AddDebt sendData={(e) => recibeResponseChild(e)} className='w-full ' apiData={userData?.wallet} />
 				</section>
 				<section className='flex md:col-span-3 md:row-span-8 flex-wrap md:flex-nowrap  gap-3 md:h-56'>
 					<article className=' w-full h-full  shadow-xs border-none  text-black  dark:text-white  md:grid md:grid-cols-3 gap-3 flex flex-col '>
@@ -145,7 +140,8 @@ export const Dashboard = () => {
 								</p>
 
 								<p className='flex items-center gap-2'>
-									{Number(userData?.wallet?.incomes) - Number(userData?.wallet?.variable_expenses) <= Number(userData?.wallet?.saving) ? (
+									{Number(userData?.wallet?.incomes) - Number(userData?.wallet?.variable_expenses) <=
+									Number(userData?.wallet?.saving) ? (
 										<ArrowDown className='text-red-500' />
 									) : (
 										<ArrowUp className='text-green-500' />
@@ -153,7 +149,8 @@ export const Dashboard = () => {
 									<span>Ahora:</span>
 									<span
 										className={`text-${
-											Number(userData?.wallet?.incomes) - Number(userData?.wallet?.variable_expenses) <= Number(userData?.wallet?.saving)
+											Number(userData?.wallet?.incomes) - Number(userData?.wallet?.variable_expenses) <=
+											Number(userData?.wallet?.saving)
 												? 'red'
 												: 'green'
 										}-500 flex items-center gap-2`}>
@@ -194,21 +191,13 @@ export const Dashboard = () => {
 						<div className='flex flex-col md:flex-row items-center justify-between p-5 gap-2'>
 							<p className='text-lg pb-5'>{t('dashboard.viewExpensesCategory')}</p>
 							<div className='flex gap-3 justify-end'>
-								<Button
-									variant='ghost'
-									className='shadow-inner shadow-green-500 '>
+								<Button variant='ghost' className='shadow-inner shadow-green-500 '>
 									{t('dashboard.day')}
 								</Button>
-								<Button
-									disabled
-									variant='ghost'
-									className=' border border-border'>
+								<Button disabled variant='ghost' className=' border border-border'>
 									{t('dashboard.month')}
 								</Button>
-								<Button
-									variant='ghost'
-									disabled
-									className=' border border-border'>
+								<Button variant='ghost' disabled className=' border border-border'>
 									{t('dashboard.year')}
 								</Button>
 							</div>
@@ -249,7 +238,9 @@ export const Dashboard = () => {
 									disabled={filter === 'month'}
 									variant='ghost'
 									onClick={(_) => handleFilterChartBalance('month')}
-									className={filter === 'month' ? 'shadow-inner shadow-green-500  disabled:opacity-100' : ' border border-border  '}>
+									className={
+										filter === 'month' ? 'shadow-inner shadow-green-500  disabled:opacity-100' : ' border border-border  '
+									}>
 									{t('dashboard.month')}
 								</Button>
 								<Button
@@ -271,10 +262,7 @@ export const Dashboard = () => {
 								</div>
 
 								<div className={changeFilter ? 'invisible' : ''}>
-									<Chart
-										trigger={trigger}
-										filter={filter}
-									/>
+									<Chart trigger={trigger} filter={filter} />
 								</div>
 							</>
 						) : (

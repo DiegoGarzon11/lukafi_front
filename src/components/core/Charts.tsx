@@ -15,12 +15,12 @@ import {
 	Rectangle,
 	BarChart,
 } from 'recharts';
-import { GetExpensesByCategory } from '@/apis/ExpenseService';
-import { useEffect, useState } from 'react';
-import { GetWalletUser, GetWalletValues, GetDailyReport, GetMonthlyReport } from '@/apis/WalletService';
-import { PieChart, Pie } from 'recharts';
-import { ExpensesByCategory, Incomes, wallet_values } from '@/interfaces/Wallet';
-import { useTranslation } from 'react-i18next';
+import {GetExpensesByCategory} from '@/apis/ExpenseService';
+import {useEffect, useState} from 'react';
+import {GetWalletUser, GetWalletValues, GetDailyReport, GetMonthlyReport} from '@/apis/WalletService';
+import {PieChart, Pie} from 'recharts';
+import {ExpensesByCategory, Incomes, wallet_values} from '@/interfaces/Wallet';
+import {useTranslation} from 'react-i18next';
 
 const COLORS = [
 	'#00FF9C',
@@ -37,9 +37,22 @@ const COLORS = [
 	'#186F65',
 	'#96C291',
 ];
-const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-const CustomTooltipDaily = ({ payload }) => {
-	const { t, i18n } = useTranslation();
+const months = [
+	'Enero',
+	'Febrero',
+	'Marzo',
+	'Abril',
+	'Mayo',
+	'Junio',
+	'Julio',
+	'Agosto',
+	'Septiembre',
+	'Octubre',
+	'Noviembre',
+	'Diciembre',
+];
+const CustomTooltipDaily = ({payload}) => {
+	const {t, i18n} = useTranslation();
 	i18n.changeLanguage();
 	function validateColor(name) {
 		if (name === 'expenses') {
@@ -75,7 +88,7 @@ const CustomTooltipDaily = ({ payload }) => {
 	);
 };
 
-export const Chart = ({ trigger, filter }) => {
+export const Chart = ({trigger, filter}) => {
 	const userInfo = JSON.parse(localStorage.userMain);
 	const [report, setReport] = useState();
 
@@ -110,25 +123,13 @@ export const Chart = ({ trigger, filter }) => {
 				<YAxis />
 				<Tooltip content={CustomTooltipDaily} />
 				<Legend />
-				<Line
-					activeDot={{ r: 5 }}
-					strokeWidth={3}
-					type='bump'
-					dataKey='expenses'
-					stroke='#15B392'
-				/>
-				<Line
-					strokeWidth={3}
-					activeDot={{ r: 5 }}
-					type='bump'
-					dataKey='incomes'
-					stroke='#9BEC00'
-				/>
+				<Line activeDot={{r: 5}} strokeWidth={3} type='bump' dataKey='expenses' stroke='#15B392' />
+				<Line strokeWidth={3} activeDot={{r: 5}} type='bump' dataKey='incomes' stroke='#9BEC00' />
 			</LineChart>
 		</ResponsiveContainer>
 	);
 };
-export const ChartDonut = ({ trigger }) => {
+export const ChartDonut = ({trigger}) => {
 	const userInfo = JSON.parse(localStorage.userMain);
 	const [expensesByCategory, setExpensesByCategory] = useState<Array<ExpensesByCategory>>([]);
 
@@ -143,7 +144,7 @@ export const ChartDonut = ({ trigger }) => {
 
 	const showName = (props) => {
 		const RADIAN = Math.PI / 180;
-		const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, percent, value } = props;
+		const {cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, percent, value} = props;
 		const sin = Math.sin(-RADIAN * midAngle);
 		const cos = Math.cos(-RADIAN * midAngle);
 		const sx = cx + (outerRadius + 10) * cos;
@@ -156,12 +157,7 @@ export const ChartDonut = ({ trigger }) => {
 
 		return (
 			<g>
-				<text
-					x={cx}
-					y={cy}
-					dy={8}
-					textAnchor='middle'
-					fill={fill}>
+				<text x={cx} y={cy} dy={8} textAnchor='middle' fill={fill}>
 					{payload.category_name || payload.name}
 				</text>
 				<Sector
@@ -182,20 +178,8 @@ export const ChartDonut = ({ trigger }) => {
 					outerRadius={outerRadius + 10}
 					fill={fill}
 				/>
-				<path
-					className='hidden md:block'
-					d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`}
-					stroke={fill}
-					fill='none'
-				/>
-				<circle
-					className='hidden md:block'
-					cx={ex}
-					cy={ey}
-					r={2}
-					fill={fill}
-					stroke='none'
-				/>
+				<path className='hidden md:block' d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill='none' />
+				<circle className='hidden md:block' cx={ex} cy={ey} r={2} fill={fill} stroke='none' />
 				<text
 					className='hidden md:block'
 					x={ex + (cos >= 0 ? 1 : -1) * 12}
@@ -241,9 +225,7 @@ export const ChartDonut = ({ trigger }) => {
 
 	return (
 		<ResponsiveContainer height={330}>
-			<PieChart
-				width={600}
-				height={400}>
+			<PieChart width={600} height={400}>
 				<Pie
 					activeShape={showName}
 					data={expensesByCategory}
@@ -254,10 +236,7 @@ export const ChartDonut = ({ trigger }) => {
 					fill='#8884d8'
 					dataKey='value'>
 					{expensesByCategory?.map((e, i) => (
-						<Cell
-							key={e.expense_id}
-							fill={COLORS[i % COLORS.length]}
-						/>
+						<Cell key={e.expense_id} fill={COLORS[i % COLORS.length]} />
 					))}
 				</Pie>
 
@@ -309,7 +288,7 @@ export const ChartFinance = () => {
 	];
 	const showName = (props) => {
 		const RADIAN = Math.PI / 180;
-		const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, value, percent } = props;
+		const {cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, value, percent} = props;
 		const sin = Math.sin(-RADIAN * midAngle);
 		const cos = Math.cos(-RADIAN * midAngle);
 		const sx = cx + (outerRadius + 10) * cos;
@@ -322,12 +301,7 @@ export const ChartFinance = () => {
 
 		return (
 			<g>
-				<text
-					x={cx}
-					y={cy}
-					dy={8}
-					textAnchor='middle'
-					fill={fill}>
+				<text x={cx} y={cy} dy={8} textAnchor='middle' fill={fill}>
 					{payload.category_name || payload.name}
 				</text>
 				<Sector
@@ -348,20 +322,8 @@ export const ChartFinance = () => {
 					outerRadius={outerRadius + 10}
 					fill={fill}
 				/>
-				<path
-					className='hidden md:block'
-					d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`}
-					stroke={fill}
-					fill='none'
-				/>
-				<circle
-					className='hidden md:block'
-					cx={ex}
-					cy={ey}
-					r={2}
-					fill={fill}
-					stroke='none'
-				/>
+				<path className='hidden md:block' d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill='none' />
+				<circle className='hidden md:block' cx={ex} cy={ey} r={2} fill={fill} stroke='none' />
 
 				<text
 					className='hidden md:block'
@@ -408,9 +370,7 @@ export const ChartFinance = () => {
 
 	return (
 		<ResponsiveContainer height={310}>
-			<PieChart
-				width={600}
-				height={400}>
+			<PieChart width={600} height={400}>
 				<Pie
 					activeShape={showName}
 					data={percentageData}
@@ -421,10 +381,7 @@ export const ChartFinance = () => {
 					fill='#8884d8'
 					dataKey='value'>
 					{percentageData?.map((e) => (
-						<Cell
-							key={e.name}
-							fill={e.color}
-						/>
+						<Cell key={e.name} fill={e.color} />
 					))}
 				</Pie>
 
@@ -434,7 +391,7 @@ export const ChartFinance = () => {
 	);
 };
 
-export const ChartIncomes = ({ trigger }) => {
+export const ChartIncomes = ({trigger}) => {
 	const userInfo = JSON.parse(localStorage.userMain);
 	const [incomes, setIncomes] = useState<Array<Incomes>>([]);
 
@@ -451,9 +408,7 @@ export const ChartIncomes = ({ trigger }) => {
 		<>
 			<p>Registros de ingresos</p>
 
-			<ResponsiveContainer
-				width='100%'
-				height='85%'>
+			<ResponsiveContainer width='100%' height='85%'>
 				<AreaChart
 					width={500}
 					height={400}
@@ -464,19 +419,10 @@ export const ChartIncomes = ({ trigger }) => {
 						left: 0,
 						bottom: 0,
 					}}>
-					<CartesianGrid
-						horizontal={false}
-						vertical={false}
-					/>
+					<CartesianGrid horizontal={false} vertical={false} />
 					<Tooltip content={CustomTooltipDaily} />
 					<XAxis dataKey='day' />
-					<Area
-						type='monotone'
-						dataKey='incomes'
-						stroke='green'
-						fill='green'
-						fillOpacity={1}
-					/>
+					<Area type='monotone' dataKey='incomes' stroke='green' fill='green' fillOpacity={1} />
 				</AreaChart>
 			</ResponsiveContainer>
 		</>
@@ -518,7 +464,7 @@ export const ChartExample = () => {
 	];
 	return (
 		<LineChart
-			width={500}
+			width={350}
 			height={300}
 			data={data}
 			margin={{
@@ -527,10 +473,7 @@ export const ChartExample = () => {
 				left: 20,
 				bottom: 5,
 			}}>
-			<CartesianGrid
-				strokeDasharray=' 3 3'
-				opacity={0.2}
-			/>
+			<CartesianGrid strokeDasharray=' 3 3' opacity={0.2} />
 			<XAxis dataKey='name' />
 			<YAxis />
 			<Legend />
@@ -592,7 +535,7 @@ export const ChartExampleTwo = () => {
 
 	return (
 		<BarChart
-			width={600}
+			width={380}
 			height={300}
 			data={datos}
 			margin={{
@@ -601,34 +544,13 @@ export const ChartExampleTwo = () => {
 				left: 20,
 				bottom: 5,
 			}}>
-			<CartesianGrid
-				strokeDasharray='3 3 '
-				opacity={0.2}
-			/>
+			<CartesianGrid strokeDasharray='3 3 ' opacity={0.2} />
 
 			<XAxis dataKey='name' />
 			<YAxis />
 			<Legend />
-			<Bar
-				dataKey='deudas'
-				fill='#fe337c'
-				activeBar={
-					<Rectangle
-						fill='pink'
-						stroke='blue'
-					/>
-				}
-			/>
-			<Bar
-				dataKey='ahorro'
-				fill='#7fbd0c'
-				activeBar={
-					<Rectangle
-						fill='gold'
-						stroke='purple'
-					/>
-				}
-			/>
+			<Bar dataKey='deudas' fill='#fe337c' activeBar={<Rectangle fill='pink' stroke='blue' />} />
+			<Bar dataKey='ahorro' fill='#7fbd0c' activeBar={<Rectangle fill='gold' stroke='purple' />} />
 		</BarChart>
 	);
 };
