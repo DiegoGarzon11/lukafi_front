@@ -24,10 +24,10 @@ const toastVariants = cva(
 	{
 		variants: {
 			variant: {
-				success: 'bg-green-500',
-				error: 'bg-red-500',
-				warning: 'bg-yellow-500',
-				information: 'bg-blue-500',
+				success: 'bg-lime-700 text-white',
+				error: 'bg-red-700 text-white',
+				warning: 'bg-yellow-700  text-white',
+				information: 'bg-blue-700 text-white',
 			},
 		},
 	}

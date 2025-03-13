@@ -8,8 +8,9 @@ import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { ApiResponse } from '@/interfaces/Api';
-import { UserDefault, UserSignIn } from '@/apis/UserService';
+import { UserDefault, UserRegister, UserSignIn } from '@/apis/UserService';
 import { Toast } from '@/tools/Toast';
+import { CreateWallet } from '@/apis/WalletService';
 export default function Header({ valueSide }) {
 	const location = useLocation();
 	const [isOpen, setIsOpen] = useState(false);
@@ -17,7 +18,7 @@ export default function Header({ valueSide }) {
 	const [allowSidebar, setAllowSidebar] = useState(true);
 	const [isAuthOpen, setIsAuthOpen] = useState(false);
 	const [loader, setLoader] = useState(false);
-	const [flipped, setFlipped] = useState(true);
+	const [flipped, setFlipped] = useState(false);
 	const [statusCode, setStatusCode] = useState<ApiResponse | undefined>(null);
 	const [visibilytToast, setVisibilityToast] = useState(false);
 	const [showPassword, setShowPassword] = useState(false);
@@ -86,8 +87,12 @@ export default function Header({ valueSide }) {
 	};
 
 	const [data, setData] = useState({
-		password: '',
+		newPassword: '',
+		newEmail: '',
+		newName: '',
+		newLastName: '',
 		email: '',
+		password: '',
 	});
 	function handleChange(e) {
 		const { name, value } = e.target;
@@ -118,6 +123,43 @@ export default function Header({ valueSide }) {
 		} finally {
 			setLoader(false);
 			setVisibilityToast(true);
+		}
+	}
+	async function handleSubmitSignUp(event) {
+		event.preventDefault();
+		setLoader(true);
+		setVisibilityToast(false);
+
+		const values = {
+			email: data.newEmail,
+			password: data.newPassword,
+			name: data.newName,
+			last_name: data.newLastName,
+		};
+
+		try {
+			const infoRegister = await UserRegister(values);
+			if (infoRegister.status === 201) {
+				const params = {
+					currency_type: 'cop',
+					salary: 0,
+					saving: 0,
+					user_id: infoRegister.users.user_id,
+				};
+				await CreateWallet(params);
+
+				setStatusCode(infoRegister);
+				setFlipped(false);
+				setLoader(false);
+			} else {
+				setStatusCode(infoRegister);
+				setVisibilityToast(true);
+			}
+		} catch (error) {
+			console.error(error);
+		} finally {
+			setVisibilityToast(true);
+			setLoader(false);
 		}
 	}
 
@@ -204,14 +246,11 @@ export default function Header({ valueSide }) {
 				onOpenChange={setIsAuthOpen}>
 				<DialogContent
 					aria-describedby={null}
-					className=' w-[95%] md:w-[400px] h-[500px] dark:bg-dark_primary_color bg-light_primary_color rounded-4xl '>
+					className=' w-[95%] md:w-[400px] h-[500px] dark:bg-dark_primary_color bg-light_primary_color'>
 					<div className='relative w-full h-full [perspective:1000px]'>
 						<div
-							className={`absolute w-full h-full transition-transform duration-1000 [transform-style:preserve-3d] ${
-								flipped ? 'rotate-y-180' : ''
-							}`}>
-							{/* Formulario de Iniciar Sesión */}
-							<div className='absolute w-full h-full flex flex-col justify-center items-center [backface-visibility:hidden]'>
+							className={`absolute w-full h-full transition-all duration-1000 [transform-style:preserve-3d] ${flipped ? 'rotate-y-180' : ''}`}>
+							<div className='absolute w-full h-full flex flex-col justify-center items-center [backface-visibility:hidden] '>
 								<DialogHeader className='flex flex-col justify-around w-full'>
 									<DialogTitle className='my-3 dark:text-white text-black text-center absolute top-0 '>Bienvenido de vuelta</DialogTitle>
 									<DialogDescription>
@@ -229,6 +268,7 @@ export default function Header({ valueSide }) {
 													autoComplete='new-password'
 													type={showPassword ? 'text' : 'password'}
 													className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
+													placeholder='Password'
 													onChange={handleChange}
 													value={data.password}
 													name='password'
@@ -241,8 +281,8 @@ export default function Header({ valueSide }) {
 													{showPassword ? <EyeOpen className='text-zinc-500' /> : <EyeClose className='text-zinc-500' />}
 												</button>
 											</div>
-											<p className='dark:text-white text-black text-center text-lg'>
-												Olvidaste tu contraseña?
+											<p className='dark:text-white text-black text-center text-base'>
+												¿Olvidaste tu contraseña?
 												<Link
 													to='/auth/restore-password'
 													className='text-lime-500 underline ml-2'>
@@ -263,7 +303,7 @@ export default function Header({ valueSide }) {
 														e.preventDefault();
 														setFlipped(true);
 													}}
-													className='text-lime-500 underline ml-2'>
+													className='text-lime-500 underline ml-2 cursor-pointer'>
 													Registrarse
 												</button>
 											</p>
@@ -272,54 +312,76 @@ export default function Header({ valueSide }) {
 								</DialogHeader>
 							</div>
 
-							{/* Formulario de Registro */}
 							<div className='absolute w-full h-full flex flex-col justify-center items-center rotate-y-180 [backface-visibility:hidden]'>
 								<DialogHeader className='flex flex-col justify-around w-full'>
-									<DialogTitle className='my-3 dark:text-white text-black text-center'>Crear cuenta</DialogTitle>
+									<DialogTitle className='my-3 dark:text-white text-black text-center absolute top-0 '>Crear Cuenta</DialogTitle>
+									<p className='dark:text-white text-black text-center mb-10 self-start text-lg'>
+										¿Ya tienes cuenta?
+										<button
+											onClick={(e) => {
+												e.preventDefault();
+												setFlipped(false);
+											}}
+											className='text-lime-500 underline ml-2 cursor-pointer'>
+											Iniciar sesión
+										</button>
+									</p>
 									<DialogDescription>
-										<form className='flex flex-col gap-5 w-full'>
+										<form
+											className='flex flex-col gap-5 w-full'
+											onSubmit={handleSubmitSignUp}>
+											<div className='flex  gap-3'>
+												<Input
+													type='text'
+													onChange={handleChange}
+													value={data.newName}
+													placeholder='Nombre'
+													name='newName'
+													className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
+												/>
+												<Input
+													type='text'
+													onChange={handleChange}
+													value={data.newLastName}
+													placeholder='Last Name'
+													name='newLastName'
+													className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
+												/>
+											</div>
 											<Input
 												type='email'
 												onChange={handleChange}
-												value={data.email}
+												value={data.newEmail}
 												placeholder='Email'
-												name='email'
-												className='border-b dark:bg-dark_secondary_color border-none dark:text-white text-black placeholder:text-gray-300 w-full'
+												name='newEmail'
+												className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
 											/>
-											<Input
-												type='password'
-												onChange={handleChange}
-												value={data.password}
-												name='password'
-												placeholder='Contraseña'
-												className='border-b dark:bg-dark_secondary_color border-none dark:text-white text-black placeholder:text-gray-300'
-											/>
-											<p className='dark:text-white text-black text-center'>
-												Olvidaste tu contraseña?
-												<Link
-													to='/auth/restore-password'
-													className='text-lime-500 underline ml-2'>
-													Recuperar
-												</Link>
-											</p>
-											<Button
-												disabled={!data.email || !data.password || loader}
-												onClick={handleSubmit}
-												className='w-full font-semibold bg-alternative_color text-white text-lg flex justify-center items-center py-5 cursor-pointer'
-												type='submit'>
-												{loader || statusCode?.status === 200 ? <LoaderApi color='white' /> : 'Registrarse'}
-											</Button>
-											<p className='dark:text-white text-black text-center mt-10'>
-												¿Ya tienes cuenta?
+											<div className='relative w-full'>
+												<Input
+													autoComplete='new-password'
+													type={showPassword ? 'text' : 'password'}
+													className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
+													onChange={handleChange}
+													placeholder='Password'
+													value={data.newPassword}
+													name='newPassword'
+												/>
+												<span className='text-alternative_color opacity-90'>Por favor verifique su contraseña</span>
 												<button
+													className='absolute right-2 top-1 cursor-pointer'
 													onClick={(e) => {
-														e.preventDefault();
-														setFlipped(false);
-													}}
-													className='text-lime-500 underline ml-2'>
-													Iniciar sesión
+														e.preventDefault(), setShowPassword((prev) => !prev);
+													}}>
+													{showPassword ? <EyeOpen className='text-zinc-500' /> : <EyeClose className='text-zinc-500' />}
 												</button>
-											</p>
+											</div>
+
+											<Button
+												type='submit'
+												className='w-full font-semibold bg-alternative_color text-white text-lg flex justify-center items-center py-5 cursor-pointer'
+												disabled={data.newName == '' || data.newLastName == '' || data.newPassword == ''}>
+												{loader ? <LoaderApi color='white' /> : t('form.field.signUp')}
+											</Button>
 										</form>
 									</DialogDescription>
 								</DialogHeader>
@@ -332,8 +394,8 @@ export default function Header({ valueSide }) {
 			{visibilytToast ? (
 				<Toast
 					visibility={visibilytToast}
-					message={statusCode?.status === 401 ? 'Credenciales invalidas' : 'Incio de sesion correcto'}
-					severity={statusCode?.status === 401 ? 'error' : 'success'}
+					message={statusCode.message}
+					severity={statusCode?.status === 201 ? 'success' : 'error'}
 				/>
 			) : (
 				''

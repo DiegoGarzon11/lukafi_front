@@ -20,7 +20,7 @@ export function Toast({ visibility, severity, message }: { visibility: boolean; 
 	return (
 		<Button
 			ref={btn}
-			className='hidden'
+			className='hidden '
 			variant='outline'
 			onClick={() => {
 				toast({

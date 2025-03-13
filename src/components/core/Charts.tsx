@@ -464,7 +464,7 @@ export const ChartExample = () => {
 	];
 	return (
 		<LineChart
-			width={350}
+			width={500}
 			height={300}
 			data={data}
 			margin={{
@@ -535,7 +535,7 @@ export const ChartExampleTwo = () => {
 
 	return (
 		<BarChart
-			width={380}
+			width={600}
 			height={300}
 			data={datos}
 			margin={{

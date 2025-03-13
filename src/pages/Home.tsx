@@ -53,7 +53,7 @@ export const Home = () => {
 						<div className='dark:bg-dark_primary_color bg-light_primary_color dark:text-white text-black rounded-2xl p-3 mt-10 w-full flex flex-col gap-3 items-center   '>
 							<p className='dark:text-white text-black font-semibold text-4xl text-balance text-center '>Tus finanzas con lukafi</p>
 							<p className='text-center opacity-50'>¿Como se veran tus finanzas cuando empiezas con lukafi?</p>
-							<div className='dark:bg-dark_secondary_color flex justify-center items-center flex-col md:w-xl p-8 rounded-4xl m-8 w-full md:w-min'>
+							<div className='dark:bg-dark_secondary_color flex justify-center items-center flex-col p-8 rounded-4xl m-8 w-full '>
 								<div className='flex justify-between items-center mx-20 mb-5 '>
 									<p className='text-3xl font-extrabold dark:text-white text-black'>Estadisticas</p>
 									<button className='dark:bg-dark_foreground rounded-4xl px-3 dark:text-white text-black py-1'>Ahorros</button>
