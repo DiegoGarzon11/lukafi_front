@@ -1,12 +1,22 @@
+<<<<<<< HEAD
 import {useTranslation} from 'react-i18next';
 import {Card} from '@/components/others/Card';
 // import {Click} from '@/assets/icons/Svg';
 import {ArrowDown, CornerDownRight, Mail, MousePointerClick, Phone, Star} from 'lucide-react';
 import {ChartExample, ChartExampleTwo} from '@/components/core/Charts';
 import {Button} from '@/components/ui/button';
+=======
+import { useTranslation } from 'react-i18next';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/others/Card';
+// import {Click} from '@/assets/icons/Svg';
+import { ArrowDown, CornerDownRight, Mail, MousePointerClick, Phone, Star } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { ChartExample, ChartExampleTwo } from '@/components/core/Charts';
+>>>>>>> 8adf13b2f69e77c88c9c28149811e975193bc9ba
 
 export const Home = () => {
-	const {t, i18n} = useTranslation();
+	const { t, i18n } = useTranslation();
 	i18n.changeLanguage();
 	return (
 		<div className='dark:bg-black h-full '>
@@ -17,6 +27,7 @@ export const Home = () => {
 							{t('home.phrase1.text1')} Lukafi {t('home.phrase1.text2')}
 						</p>
 						<h2 className='text-black text-center dark:text-white'>{t('home.phrase2.text1')}</h2>
+<<<<<<< HEAD
 
 						<div className='relative flex overflow-hidden rounded-md p-[1.3px]'>
 							<span className='absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-white bg-[conic-gradient(from_90deg_at_50%_50%,#fe337c_0%,#971d4a_50%,#ff3361_100%)]'></span>
@@ -24,6 +35,17 @@ export const Home = () => {
 								<MousePointerClick />
 								{t('home.button1')}
 							</Button>
+=======
+						<div className='mt-2 relative '>
+							<Link to='/'>
+								<Button className='border  dark:text-white text-black px-20 cursor-pointer'>
+									{t('home.button1')}
+									<span className='absolute right-48 '>
+										<MousePointerClick />
+									</span>
+								</Button>
+							</Link>
+>>>>>>> 8adf13b2f69e77c88c9c28149811e975193bc9ba
 						</div>
 
 						<p className='text-balance text-center dark:text-white text-black opacity-50 md:w-8/12'>{t('home.phrase3.text1')}</p>
@@ -52,8 +74,13 @@ export const Home = () => {
 						<div className='dark:bg-dark_primary_color bg-light_primary_color dark:text-white text-black rounded-2xl p-3 mt-10 w-full flex flex-col gap-3 items-center   '>
 							<p className='dark:text-white text-black font-semibold text-4xl text-balance text-center '>Tus finanzas con lukafi</p>
 							<p className='text-center opacity-50'>¿Como se veran tus finanzas cuando empiezas con lukafi?</p>
+<<<<<<< HEAD
 							<div className='dark:bg-dark_secondary_color flex justify-center items-center flex-col py-8  md:px-20 rounded-4xl m-8 w-full '>
 								<div className='flex justify-between items-center mx-10 mb-5  w-full px-10  '>
+=======
+							<div className='dark:bg-dark_secondary_color flex justify-center items-center flex-col p-8 rounded-4xl m-8 w-full '>
+								<div className='flex justify-between items-center mx-20 mb-5  w-full  '>
+>>>>>>> 8adf13b2f69e77c88c9c28149811e975193bc9ba
 									<p className='md:text-3xl text-xl font-extrabold dark:text-white text-black'>Estadisticas</p>
 									<button className='dark:bg-dark_foreground rounded-4xl px-3 dark:text-white text-black py-1'>Ahorros</button>
 								</div>
@@ -61,11 +88,35 @@ export const Home = () => {
 							</div>
 						</div>
 					</div>
+<<<<<<< HEAD
 					<div className='md:flex justify-between md:flex-col md:items-end  md:w-2/4'>
 						<Card img={'images/growUp.svg'} title={t('home.card1.title')} info={t('home.card1.text')} />
 						<Card img={'images/saving.svg'} title={t('home.card2.title')} info={t('home.card2.text')} />
 						<Card img={'images/loans.svg'} title={t('home.card3.title')} info={t('home.card3.text')} />
 						<Card img={'images/loans.svg'} title={t('home.card3.title')} info={t('home.card3.text')} />
+=======
+					<div className='md:flex justify-between md:flex-col md:items-end  md:w-2/4 '>
+						<Card
+							img={'images/growUp.svg'}
+							title={t('home.card1.title')}
+							info={t('home.card1.text')}
+						/>
+						<Card
+							img={'images/saving.svg'}
+							title={t('home.card2.title')}
+							info={t('home.card2.text')}
+						/>
+						<Card
+							img={'images/loans.svg'}
+							title={t('home.card3.title')}
+							info={t('home.card3.text')}
+						/>
+						<Card
+							img={'images/loans.svg'}
+							title={t('home.card3.title')}
+							info={t('home.card3.text')}
+						/>
+>>>>>>> 8adf13b2f69e77c88c9c28149811e975193bc9ba
 					</div>
 				</section>
 				<section className='flex md:flex-row flex-col justify-between w-full gap-5'>

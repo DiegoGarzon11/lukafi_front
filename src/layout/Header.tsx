@@ -128,6 +128,7 @@ export default function Header({ valueSide }) {
 	async function handleSubmitSignUp(event) {
 		event.preventDefault();
 		setLoader(true);
+
 		setVisibilityToast(false);
 
 		const values = {
@@ -159,6 +160,9 @@ export default function Header({ valueSide }) {
 			console.error(error);
 		} finally {
 			setVisibilityToast(true);
+			setTimeout(() => {
+				setVisibilityToast(false);
+			}, 2000);
 			setLoader(false);
 		}
 	}
@@ -173,6 +177,7 @@ export default function Header({ valueSide }) {
 						<section className={`${localStorage.token ? '' : 'hidden'}  transition-all duration-500 ease-in-out`}>
 							{allowSidebar && <SheetSide />}
 						</section>
+<<<<<<< HEAD
 						{localStorage.token && allowSidebar && <SidebarTrigger className='z-50 mt-3 ml-3 sticky top-3 cursor-pointer dark:text-white text-black' />}
 						<Button
 							variant='ghost'
@@ -180,6 +185,16 @@ export default function Header({ valueSide }) {
 							Lukafi
 						</Button>
 						<div className=' w-full fixed flex justify-end shadow-xs shadow-z-700 rounded-full p-3 z-10 bg-linear-to-b dark:from-zinc-950 dark:to-dark_primary_color from-zinc-100 to-zinc-300 border-b border-gray-600/50 '>
+=======
+						{localStorage.token && allowSidebar && <SidebarTrigger className='z-50 mt-3 ml-3 sticky top-3' />}
+
+						<div className=' w-full fixed flex justify-end shadow-xs shadow-z-700 rounded-full p-3 z-10 bg-linear-to-b dark:from-zinc-950 dark:to-dark_primary_color from-zinc-100 to-zinc-300 border-b border-gray-600/50  items-center '>
+							<Button
+								variant='ghost'
+								className='z-50   text-md md:text-lg top-3    cursor-default dark:text-white text-black w-full flex justify-start '>
+								Lukafi
+							</Button>
+>>>>>>> 8adf13b2f69e77c88c9c28149811e975193bc9ba
 							<div className='flex items-center gap-5 dark:text-white text-black'>
 								{!localStorage.token && location.pathname === '/' && (
 									<Button
@@ -284,6 +299,7 @@ export default function Header({ valueSide }) {
 											<p className='dark:text-white text-black text-center text-base'>
 												¿Olvidaste tu contraseña?
 												<Link
+													onClick={() => setIsAuthOpen(false)}
 													to='/auth/restore-password'
 													className='text-lime-500 underline ml-2'>
 													Recuperar
@@ -395,7 +411,11 @@ export default function Header({ valueSide }) {
 				<Toast
 					visibility={visibilytToast}
 					message={statusCode.message}
+<<<<<<< HEAD
 					severity={statusCode?.status === 201 || statusCode?.status === 200 ? 'success' : 'error'}
+=======
+					severity={statusCode?.status === 200 ? 'success' : 'error'}
+>>>>>>> 8adf13b2f69e77c88c9c28149811e975193bc9ba
 				/>
 			) : (
 				''

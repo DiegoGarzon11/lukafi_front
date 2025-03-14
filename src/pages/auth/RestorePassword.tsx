@@ -41,7 +41,11 @@ export const ForgetPassword = () => {
 		e.preventDefault();
 		setLoader(true);
 		setVisibilityToast(false);
+<<<<<<< HEAD
 
+=======
+		
+>>>>>>> 8adf13b2f69e77c88c9c28149811e975193bc9ba
 		try {
 			const response = await GenerateNewPassword(confirmPassword, token);
 			if (response) {
@@ -212,7 +216,11 @@ export const ForgetPassword = () => {
 							¿Recordaste tu contraseña?
 							<Link
 								to='/'
+<<<<<<< HEAD
 								className='text-lime-500 underline mx-2'>
+=======
+								className='text-blue-500 underline mx-2'>
+>>>>>>> 8adf13b2f69e77c88c9c28149811e975193bc9ba
 								Ingresa aquí
 							</Link>
 						</p>
