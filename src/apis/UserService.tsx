@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_BACK_TEST || import.meta.env.VITE_API_URL;
 console.log(API_URL);
 
 export const UserRegister = async (data) => {
@@ -95,12 +95,11 @@ export const GenerateNewPassword = async (password, token) => {
 
 // !espera del back para eliminar usuario con token
 export const DeleteUser = async (data) => {
-	
-	const { email, password, token } = data;
+	const {email, password, token} = data;
 	try {
 		const response = await fetch(`${API_URL}/user/sign-out`, {
 			method: 'DELETE',
-			body: JSON.stringify({ email, password }),
+			body: JSON.stringify({email, password}),
 			headers: {
 				'Content-Type': 'application/json',
 				Authorization: token,
@@ -113,16 +112,12 @@ export const DeleteUser = async (data) => {
 };
 
 export const RestoreAccount = async () => {
-	
-	
-
 	try {
 		const response = await fetch(`${API_URL}/user/restore-account`, {
 			method: 'POST',
 			headers: {
 				Authorization: localStorage.token,
 			},
-			
 		});
 		return await response.json();
 	} catch (error) {

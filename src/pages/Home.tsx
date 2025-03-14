@@ -1,12 +1,12 @@
-import { useTranslation } from 'react-i18next';
-import { Card } from '@/components/others/Card';
+import {useTranslation} from 'react-i18next';
+import {Card} from '@/components/others/Card';
 // import {Click} from '@/assets/icons/Svg';
-import { ArrowDown, CornerDownRight, Mail, MousePointerClick, Phone, Star } from 'lucide-react';
-import { ChartExample, ChartExampleTwo } from '@/components/core/Charts';
-import { Button } from '@/components/ui/button';
+import {ArrowDown, CornerDownRight, Mail, MousePointerClick, Phone, Star} from 'lucide-react';
+import {ChartExample, ChartExampleTwo} from '@/components/core/Charts';
+import {Button} from '@/components/ui/button';
 
 export const Home = () => {
-	const { t, i18n } = useTranslation();
+	const {t, i18n} = useTranslation();
 	i18n.changeLanguage();
 	return (
 		<div className='dark:bg-black h-full '>
@@ -61,27 +61,11 @@ export const Home = () => {
 							</div>
 						</div>
 					</div>
-					<div className='md:flex justify-between md:flex-col md:items-end  md:w-2/4 '>
-						<Card
-							img={'images/growUp.svg'}
-							title={t('home.card1.title')}
-							info={t('home.card1.text')}
-						/>
-						<Card
-							img={'images/saving.svg'}
-							title={t('home.card2.title')}
-							info={t('home.card2.text')}
-						/>
-						<Card
-							img={'images/loans.svg'}
-							title={t('home.card3.title')}
-							info={t('home.card3.text')}
-						/>
-						<Card
-							img={'images/loans.svg'}
-							title={t('home.card3.title')}
-							info={t('home.card3.text')}
-						/>
+					<div className='md:flex justify-between md:flex-col md:items-end  md:w-2/4'>
+						<Card img={'images/growUp.svg'} title={t('home.card1.title')} info={t('home.card1.text')} />
+						<Card img={'images/saving.svg'} title={t('home.card2.title')} info={t('home.card2.text')} />
+						<Card img={'images/loans.svg'} title={t('home.card3.title')} info={t('home.card3.text')} />
+						<Card img={'images/loans.svg'} title={t('home.card3.title')} info={t('home.card3.text')} />
 					</div>
 				</section>
 				<section className='flex md:flex-row flex-col justify-between w-full gap-5'>
