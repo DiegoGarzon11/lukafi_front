@@ -37,11 +37,8 @@ const COLORS = [
 	'#186F65',
 	'#96C291',
 ];
-<<<<<<< HEAD
 const MAIN_COLOR = '#7fbd0c';
 const SECOND_COLOR = '#fe337c';
-=======
->>>>>>> 8adf13b2f69e77c88c9c28149811e975193bc9ba
 const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 const CustomTooltipDaily = ({ payload }) => {
 	const { t, i18n } = useTranslation();
@@ -115,7 +112,6 @@ export const Chart = ({ trigger, filter }) => {
 				<Tooltip content={CustomTooltipDaily} />
 				<Legend />
 				<Line
-<<<<<<< HEAD
 					strokeWidth={3}
 					activeDot={{ r: 5 }}
 					type='bump'
@@ -123,24 +119,11 @@ export const Chart = ({ trigger, filter }) => {
 					stroke={MAIN_COLOR}
 				/>
 				<Line
-=======
->>>>>>> 8adf13b2f69e77c88c9c28149811e975193bc9ba
 					activeDot={{ r: 5 }}
 					strokeWidth={3}
 					type='bump'
 					dataKey='expenses'
-<<<<<<< HEAD
 					stroke={SECOND_COLOR}
-=======
-					stroke='#15B392'
-				/>
-				<Line
-					strokeWidth={3}
-					activeDot={{ r: 5 }}
-					type='bump'
-					dataKey='incomes'
-					stroke='#9BEC00'
->>>>>>> 8adf13b2f69e77c88c9c28149811e975193bc9ba
 				/>
 			</LineChart>
 		</ResponsiveContainer>
@@ -535,13 +518,7 @@ export const ChartExample = () => {
 		},
 	];
 	return (
-<<<<<<< HEAD
 		<ResponsiveContainer height={250}>
-=======
-		<ResponsiveContainer
-			
-			height={250} >
->>>>>>> 8adf13b2f69e77c88c9c28149811e975193bc9ba
 			<LineChart
 				width={500}
 				height={200}
@@ -617,13 +594,7 @@ export const ChartExampleTwo = () => {
 	];
 
 	return (
-<<<<<<< HEAD
 		<ResponsiveContainer height={250}>
-=======
-		<ResponsiveContainer
-			
-		height={250} >
->>>>>>> 8adf13b2f69e77c88c9c28149811e975193bc9ba
 			<BarChart
 				width={600}
 				height={300}
