@@ -259,7 +259,7 @@ export const Dashboard = () => {
 										Number(userData?.wallet?.variable_expenses) +
 										Number(userData?.wallet?.fixed_expenses) +
 										Number(userData?.wallet?.debts))) *
-									100).toFixed(1)}
+									100).toFixed(2)}
 								%
 							</p>
 							<p>de tu dinero esta libre</p>
