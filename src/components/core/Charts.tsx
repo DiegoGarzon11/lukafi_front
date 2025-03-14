@@ -37,22 +37,18 @@ const COLORS = [
 	'#186F65',
 	'#96C291',
 ];
+const MAIN_COLOR = '#7fbd0c';
+const SECOND_COLOR = '#fe337c';
 const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 const CustomTooltipDaily = ({ payload }) => {
 	const { t, i18n } = useTranslation();
 	i18n.changeLanguage();
-	function validateColor(name) {
-		if (name === 'expenses') {
-			return '#9BEC00';
-		} else if (name === 'incomes') {
-			return 'red';
-		}
-	}
+
 	function validateName(name) {
 		if (name === 'expenses') {
-			return 'gastaste ';
+			return 'gasto';
 		} else if (name === 'incomes') {
-			return 'ingresaste ';
+			return 'ingreso';
 		}
 	}
 
@@ -61,14 +57,16 @@ const CustomTooltipDaily = ({ payload }) => {
 			{payload.map((p, i) => (
 				<p key={i}>
 					{localStorage.getItem('filterChartBalance') === 'day' ? (
-						<span className='text-green-500'>
-							{t('dashboard.chart')} {p.payload?.day}
+						<span className='dark:text-white text-black'>
+							{t('dashboard.chart')} <span className='font-bold'>{p.payload?.day}</span>
 						</span>
 					) : (
-						<span className='text-green-500'>El mes de {months[Number(p.payload?.month - 1)]}</span>
+						<span className='dark:text-white text-black'>El mes de {months[Number(p.payload?.month - 1)]}</span>
 					)}
-					<span className={`text-[${validateColor(p.name)}]`}> {validateName(p.name)} </span>
-					<span className={`text-[${validateColor(p.name)}]`}> {Number(p.value).toLocaleString()} </span>
+					<span className={`${validateName(p?.name) === 'gasto' ? 'text-alternative_color' : 'text-lime-500'} mx-2`}>{validateName(p?.name)}</span>
+					<span className={`${validateName(p?.name) === 'gasto' ? 'text-alternative_color ' : '  text-lime-500 '} font-bold`}>
+						{Number(p.value).toLocaleString()}
+					</span>
 				</p>
 			))}
 		</div>
@@ -105,24 +103,27 @@ export const Chart = ({ trigger, filter }) => {
 					left: 20,
 					bottom: 5,
 				}}>
-				<CartesianGrid strokeDasharray=' 3 3' />
+				<CartesianGrid
+					strokeDasharray=' 3 3'
+					opacity={0.2}
+				/>
 				<XAxis dataKey='day' />
 				<YAxis />
 				<Tooltip content={CustomTooltipDaily} />
 				<Legend />
 				<Line
-					activeDot={{ r: 5 }}
-					strokeWidth={3}
-					type='bump'
-					dataKey='expenses'
-					stroke='#15B392'
-				/>
-				<Line
 					strokeWidth={3}
 					activeDot={{ r: 5 }}
 					type='bump'
 					dataKey='incomes'
-					stroke='#9BEC00'
+					stroke={MAIN_COLOR}
+				/>
+				<Line
+					activeDot={{ r: 5 }}
+					strokeWidth={3}
+					type='bump'
+					dataKey='expenses'
+					stroke={SECOND_COLOR}
 				/>
 			</LineChart>
 		</ResponsiveContainer>
@@ -517,9 +518,7 @@ export const ChartExample = () => {
 		},
 	];
 	return (
-		<ResponsiveContainer
-			
-			height={250} >
+		<ResponsiveContainer height={250}>
 			<LineChart
 				width={500}
 				height={200}
@@ -595,9 +594,7 @@ export const ChartExampleTwo = () => {
 	];
 
 	return (
-		<ResponsiveContainer
-			
-		height={250} >
+		<ResponsiveContainer height={250}>
 			<BarChart
 				width={600}
 				height={300}

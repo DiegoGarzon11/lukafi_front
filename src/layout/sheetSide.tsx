@@ -98,7 +98,6 @@ export function SheetSide() {
 		},
 	];
 
-	
 	return (
 		<Sidebar
 			variant='sidebar'
@@ -108,16 +107,16 @@ export function SheetSide() {
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
 							<Button variant='ghost'>
-								<UserCog />
+								<UserCog className='dark:text-white text-black cursor-pointer' />
 							</Button>
 						</DropdownMenuTrigger>
-						<DropdownMenuContent className='p-2 w-36  dark:bg-dark_primary_color border border-border rounded-md   bg-zinc-200'>
+						<DropdownMenuContent className='p-2 w-36  dark:bg-dark_foreground  rounded-md dark:text-white text-black '>
 							<DropdownMenuLabel className='flex items-center font-bold h-9 border-b-2 border-zinc-500 '>My Account</DropdownMenuLabel>
 							<DropdownMenuGroup>
 								<Link
 									className=''
 									to='/profile'>
-									<DropdownMenuItem className='flex w-full   rounded-sm pl-2 my-1 items-center h-9  dark:hover:bg-zinc-900 cursor-pointer hover:bg-zinc-100'>
+									<DropdownMenuItem className='flex w-full   rounded-sm pl-2 my-1 items-center h-9  dark:hover:bg-dark_secondary_color cursor-pointer hover:bg-zinc-100'>
 										<UserRoundPen className='mr-2' />
 										Profile
 									</DropdownMenuItem>
@@ -125,17 +124,16 @@ export function SheetSide() {
 							</DropdownMenuGroup>
 							<DropdownMenuItem
 								onClick={() => closeSession()}
-								className=' flex w-full   rounded-sm pl-2 my-1 items-center h-9  hover:bg-zinc-100 dark:hover:bg-zinc-900 cursor-pointer'>
+								className=' flex w-full   rounded-sm pl-2 my-1 items-center h-9  hover:bg-zinc-100 dark:hover:bg-dark_secondary_color cursor-pointer'>
 								<LogOut className='mr-2' />
 								Log out
 							</DropdownMenuItem>
-							
 						</DropdownMenuContent>
 					</DropdownMenu>
 				</div>
 
 				<div className='mt-10 flex flex-col h-full gap-3 overflow-hidden'>
-					<div className=' flex flex-col items-center mb-5 border-b pb-3 border-green-500 w-full'>
+					<div className=' flex flex-col items-center mb-5 border-b pb-3 border-lime-500 w-full'>
 						<div className='bg-white p-5 rounded-full flex justify-center items-center'>
 							<img
 								className=''
@@ -145,7 +143,7 @@ export function SheetSide() {
 							/>
 						</div>
 
-						<p className='capitalize text-lg font-semibold'>{infoUser.full_name}</p>
+						<p className='capitalize text-lg font-semibold dark:text-white text-black'>{infoUser.full_name}</p>
 						<p className='dark:text-white/55 text-black/60'>{infoUser.email}</p>
 					</div>
 					<SidebarMenu className='w-full px-2 flex flex-col gap-2 scrollbar-custom  h-3/5  overflow-y-auto'>
@@ -157,11 +155,11 @@ export function SheetSide() {
 								<SidebarGroup>
 									<SidebarGroupLabel asChild>
 										<CollapsibleTrigger>
-											<div className='flex items-center gap-5 '>
-												<p className='text-sm font-semibold'>{page.icon}</p>
-												<p className='text-sm font-semibold'>{page.name}</p>
+											<div className='flex items-center gap-5 cursor-pointer '>
+												<p className='text-sm font-semibold dark:text-white text-black opacity-50'>{page.icon}</p>
+												<p className='text-sm font-semibold dark:text-white text-black opacity-50'>{page.name}</p>
 											</div>
-											<ChevronDown className='ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180' />
+											<ChevronDown className='ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180 dark:text-white text-black cursor-pointer' />
 										</CollapsibleTrigger>
 									</SidebarGroupLabel>
 									<CollapsibleContent
@@ -171,13 +169,12 @@ export function SheetSide() {
 											{page.children.map((child) => (
 												<Link
 													key={child.path}
-													className='dark:visited:bg-red-500'
 													to={child.path}>
 													<Button
-														className={`w-full gap-4 justify-start py-6 bg-zinc-200 hover:bg-white dark:hover:bg-hover_primary_color text-black dark:text-white ${
+														className={`w-full gap-4 justify-start py-6 bg-zinc-200  text-black dark:text-white cursor-pointer ${
 															localStorage.route_name === child.path
-																? 'bg-white bg-linear-to-b dark:from-[#0e1a12] dark:to-[#146c21]'
-																: 'bg-transparent'
+																? 'bg-alternative_color '
+																: 'bg-transparent dark:hover:bg-dark_secondary_color'
 														}`}>
 														{child.icon}
 														{child.name}

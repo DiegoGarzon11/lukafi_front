@@ -56,11 +56,25 @@
 			scroll-behavior: smooth !important;
 			scrollbar-width: thin;
 			scrollbar-color: grey transparent;
+			
+		}
+		.dark{
+			background: black;
+		}
+		.light{
+			background: white;
 		}
 	</style>
 	<script>
 		window.addEventListener('DOMContentLoaded', () => {
-			document.body.classList.add('loaded');
+			const tema = localStorage.getItem('theme');
+			if (tema === 'dark') {
+				document.documentElement.classList.add('dark');
+				document.documentElement.classList.remove('light');
+			} else {
+				document.documentElement.classList.remove('dark');
+				document.documentElement.classList.add('light');
+			}
 		});
 	</script>
 </html>

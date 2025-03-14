@@ -3,6 +3,7 @@ export interface ResponseWallet extends ApiResponse {
 	wallet: {
 		created_in: string;
 		available: number;
+		currency_type : string
 		salary: number;
 		saving: number;
 		fixed_expenses: number;
@@ -11,6 +12,7 @@ export interface ResponseWallet extends ApiResponse {
 		variable_expenses: number;
 		user_id: string;
 		wallet_id: string;
+		modify_in: string;
 	};
 }
 export interface Debt extends ApiResponse {

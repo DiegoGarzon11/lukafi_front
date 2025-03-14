@@ -173,7 +173,7 @@ export default function Header({ valueSide }) {
 						<section className={`${localStorage.token ? '' : 'hidden'}  transition-all duration-500 ease-in-out`}>
 							{allowSidebar && <SheetSide />}
 						</section>
-						{localStorage.token && allowSidebar && <SidebarTrigger className='z-50 mt-3 ml-3 sticky top-3' />}
+						{localStorage.token && allowSidebar && <SidebarTrigger className='z-50 mt-3 ml-3 sticky top-3 cursor-pointer dark:text-white text-black' />}
 						<Button
 							variant='ghost'
 							className='z-50 mt-3 ml-3 text-lg  sticky top-3 cursor-default dark:text-white text-black'>
