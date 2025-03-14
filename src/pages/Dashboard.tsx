@@ -254,12 +254,15 @@ export const Dashboard = () => {
 					<article className=' text-white flex flex-col justify-between dark:bg-dark_primary_color bg-zinc-200 w-full md:w-2/5 rounded-md p-5 shadow-xl '>
 						<div className='flex flex-col items-center justify-center'>
 							<p className='text-3xl font-bold text-lime-500'>
-								+{((Number(userData?.wallet?.available) /
-									(Number(userData?.wallet?.incomes) +
-										Number(userData?.wallet?.variable_expenses) +
-										Number(userData?.wallet?.fixed_expenses) +
-										Number(userData?.wallet?.debts))) *
-									100).toFixed(2)}
+								+
+								{(
+									(Number(userData?.wallet?.available) /
+										(Number(userData?.wallet?.incomes) +
+											Number(userData?.wallet?.variable_expenses) +
+											Number(userData?.wallet?.fixed_expenses) +
+											Number(userData?.wallet?.debts))) *
+									100
+								).toFixed(2)}
 								%
 							</p>
 							<p>de tu dinero esta libre</p>
@@ -286,7 +289,7 @@ export const Dashboard = () => {
 								</div>
 							</div>
 						</div>
-						<p className='text-center mt-5 opacity-50'>Ultima actualizacion: 28/01/2026  {userData?.wallet?.modify_in}</p>
+						<p className='text-center mt-5 opacity-50'>Ultima actualizacion: <span className='font-bold'>{format(userData?.wallet?.modify_in, 'PP - HH:mm')}</span></p>
 					</article>
 				</section>
 
