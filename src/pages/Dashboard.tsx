@@ -38,8 +38,6 @@ export const Dashboard = () => {
 		setIncomes(incomes?.incomes);
 	};
 
-
-
 	useEffect(() => {
 		const fetchData = async () => {
 			const dataUser = await GetWalletUser(user?.user_id);
@@ -88,7 +86,7 @@ export const Dashboard = () => {
 			<div className='flex flex-col md:grid md:grid-cols-3  h-full pt-20 p-3 gap-3 dark:bg-black bg-white'>
 				{userData.wallet.available <= 0 && (
 					<Dialog defaultOpen>
-					<DialogContent className=' w-full md:w-[500px] rounded-md dark:bg-dark_primary_color dark:text-white text-black '>
+						<DialogContent className=' w-full md:w-[500px] rounded-md dark:bg-dark_primary_color dark:text-white text-black '>
 							<DialogHeader>
 								<DialogTitle className='text-lg font-semibold leading-none -tracking-tighter text-red-500'>¡Importante!</DialogTitle>
 								<span className='text-yellow-00'>Agrega tu saldo disponible</span>
@@ -243,7 +241,8 @@ export const Dashboard = () => {
 							</div>
 						</div>
 						<p className='text-center mt-5 opacity-50'>
-							Ultima actualizacion: <span className='font-bold'>{format(userData?.wallet?.modify_in, 'PP - HH:mm')}</span>
+							Ultima actualizacion:{' '}
+							<span className='font-bold'>{userData.wallet.modify_in && format(userData?.wallet?.modify_in, 'PP - HH:mm')}</span>
 						</p>
 					</article>
 				</section>
