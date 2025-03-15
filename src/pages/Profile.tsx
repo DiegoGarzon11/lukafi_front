@@ -1,11 +1,14 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogDescription, DialogHeader } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { UserIconUpdate } from '@/apis/UserService';
 import { Toast } from '@/tools/Toast';
 import { ApiResponse } from '@/interfaces/Api';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { Pencil1Icon } from '@radix-ui/react-icons';
+import { format } from 'date-fns';
+import { Input } from '@/components/ui/input';
 const Profile = () => {
 	const user = JSON.parse(localStorage.getItem('userMain'));
 	const ICONS = {
@@ -23,20 +26,19 @@ const Profile = () => {
 	const [responseApi, setresponseApi] = useState<ApiResponse | undefined>(undefined);
 	const [visibilytToast, setVisibilityToast] = useState(false);
 	const [avatar, setAvatar] = useState('');
+	const [tab, setTab] = useState('account');
 	const navigate = useNavigate();
-	const handleUpdateIcon = async (e) => {
+	const handleUpdateIcon = async () => {
 		setVisibilityToast(false);
 		const response = await UserIconUpdate({
 			icon: avatar,
 			user_id: user.user_id,
 		});
 		if (response) {
-			const user = JSON.parse(localStorage.getItem('userMain'));
 			user.icon = avatar;
 			localStorage.setItem('userMain', JSON.stringify(user));
 			setresponseApi(response);
 			setVisibilityToast(true);
-			setAvatarCategory(e.target.value);
 
 			setDialogAvatar(false);
 			navigate('/profile');
@@ -44,85 +46,99 @@ const Profile = () => {
 	};
 
 	return (
-		<div className='h-full pt-20 p-3 gap-3 dark:bg-black bg-white'>
-			<main className='flex   flex-col justify-center items-center gap-5 w-full pt-40'>
-				<section className='flex gap-3 w-1/2   items-center justify-start'>
-					<div>
-						<img
-							src={user.icon}
-							alt='avatar'
-							className='w-28 h-28 rounded-full'
-						/>
-						<p className='text-xl font-bold'>{user.full_name}</p>
-						<p className='text-sm'>{user.email}</p>
-					</div>
-					<div>
+		<main className='h-full pt-20 p-3 '>
+			<section className='w-full  dark:bg-dark_primary_color rounded-md px-10 pt-10 pb-6  h-full col-span-3'>
+				<div className='dark:text-white text-black flex flex-col items-center'>
+					<div className='flex justify-around items-center gap-3'>
+						<div className='flex flex-col items-start justify-center '>
+							<img
+								src={user.icon}
+								alt='avatar'
+								className='w-28 h-28 rounded-full'
+							/>
+							<div className='mt-5'>
+								<p className='text-xl font-bold'>{user.full_name}</p>
+								<p className='text-sm opacity-50'>{user.email}</p>
+							</div>
+						</div>
+
 						<button
 							onClick={() => setDialogAvatar(true)}
-							className='bg-alternative_color text-white p-2 rounded-xl'>
-							Selecionar Avatar
+							className='bg-alternative_color text-white p-2 rounded-xl cursor-pointer flex items-center gap-2'>
+							<Pencil1Icon />
+							Editar Avatar
 						</button>
 					</div>
-				</section>
-				<section className='flex gap-20 items-center justify-between  w-1/2  '>
-					<div className='w-full'>
-						<label
-							htmlFor='name'
-							className='text-lg font-semibold'>
-							Name
-						</label>
-						<input
-							type='text'
-							id='name'
-							autoComplete='name'
-							className='w-full rounded-md p-2 border-gray-600/50 dark:bg-primary-foreground dark:text-white dark:border-zinc-700 border-solid border outline-hidden text-black'
-						/>
-					</div>
-					<div className='w-full'>
-						<label
-							htmlFor='lastname'
-							className='text-lg font-semibold'>
-							Apellido
-						</label>
-						<input
-							type='text'
-							id='lastname'
-							className='w-full rounded-md p-2 border-gray-600/50 dark:bg-primary-foreground dark:text-white dark:border-zinc-700 border-solid border outline-hidden text-black'
-						/>
-					</div>
-				</section>
-				<section className='flex gap-20 items-end justify-between  w-1/2  '>
-					<div className='w-full'>
-						<label
-							htmlFor='name'
-							className='text-lg font-semibold'>
-							Email
-						</label>
-						<input
-							type='text'
-							id='name'
-							autoComplete='name'
-							className='w-full rounded-md p-2 border-gray-600/50 dark:bg-primary-foreground dark:text-white dark:border-zinc-700 border-solid border outline-hidden text-black'
-						/>
-					</div>
-					<div className=' w-full '>
-						<button className='bg-green-500 rounded-md py-2  w-full'>Guardar cambios</button>
-					</div>
-				</section>
-
-				<div className='flex gap-20 items-center justify-center  w-1/2  '>
-					<Link
-						to='/auth/change-password'
-						className=' w-full'>
-						Cambiar contraseña
-					</Link>
-					<Link
-						to='delete-account'
-						className='w-full'>
-						Eliminar cuenta
-					</Link>
 				</div>
-			</main>
+				<div className='flex flex-col dark:text-white text-black'>
+					<p className='opacity-50'>Usuario desde</p>
+					<p className='text-lg font-semibold'>{format(user?.created_in, 'PP')}</p>
+				</div>
+				<Tabs
+					defaultValue='account'
+					className=''>
+					<TabsList className='flex  bg-dark_secondary_color w-full mt-5'>
+						<TabsTrigger
+							className={`${
+								tab === 'account' ? 'bg-alternative_color' : ' dark:bg-dark_foreground'
+							} dark:text-white text-black cursor-pointer`}
+							value='account'
+							onClick={() => setTab('account')}>
+							Editar perfil
+						</TabsTrigger>
+						<TabsTrigger
+							value='password'
+							className={`${tab === 'wallet' ? 'bg-alternative_color' : ' dark:bg-dark_foreground'} dark:text-white text-black cursor-pointer`}
+							onClick={() => setTab('wallet')}>
+							Editar Billetera
+						</TabsTrigger>
+					</TabsList>
+					<TabsContent value='account'>
+						<div className='flex gap-10 mt-10'>
+							<Input
+								className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full mt-2 placeholder:opacity-30'
+								id='name'
+								placeholder='Nombre'
+								type='text'
+							/>
+							<Input
+								className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full mt-2 placeholder:opacity-30'
+								id='lastname'
+								placeholder='Apellido'
+								type='text'
+							/>
+						</div>
+						<Input
+							className='border-b dark:bg-dark_secondary_color border-none text-lg mt-10 dark:text-white text-black placeholder:text-gray-300 w-full  placeholder:opacity-30'
+							id='email'
+							placeholder='Email'
+							type='email'
+						/>
+						<div className='flex gap-10 mt-10'>
+							<div className='w-full flex flex-col gap-5'>
+								<Button>
+									<Link
+										to='/auth/change-password'
+										className=' w-full font-semibold  text-white text-lg flex justify-center items-center py-1 rounded-lg cursor-pointer border border-alternative_color '>
+										Cambiar contraseña
+									</Link>
+								</Button>
+
+								<Link
+									to='/auth/delete-account'
+									className='dark:text-white text-black underline self-center'>
+									Eliminar Cuenta
+								</Link>
+							</div>
+							<Button className=' w-full font-semibold  text-white text-lg flex justify-center items-center py-5 cursor-pointer bg-alternative_color '>
+								Guardar cambios
+							</Button>
+						</div>
+					</TabsContent>
+					<TabsContent value='password'>Change your password here.</TabsContent>
+				</Tabs>
+			</section>
+
 			<Dialog
 				open={dialogAvatar}
 				onOpenChange={setDialogAvatar}>
@@ -200,7 +216,7 @@ const Profile = () => {
 					message={responseApi?.message}
 				/>
 			)}
-		</div>
+		</main>
 	);
 };
 

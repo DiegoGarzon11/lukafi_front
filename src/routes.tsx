@@ -48,7 +48,7 @@ const RoutesManager = () => (
 			element={isAuthenticated ? <Profile /> : <Navigate to='/' />}
 		/>
 		<Route
-			path='/profile/delete-account'
+			path='/auth/delete-account'
 			element={isAuthenticated ? <DeleteAccount /> : <Navigate to='/' />}
 		/>
 		<Route
