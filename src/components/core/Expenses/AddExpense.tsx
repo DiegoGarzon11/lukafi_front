@@ -113,10 +113,10 @@ export const AddExpense = ({ apiData, sendData, className }) => {
 					{t('addExpense.addExpense')} <DollarSign />
 				</Button>
 			</DialogTrigger>
-			<DialogContent className=' w-[95%] md:w-[500px] rounded-md   '>
+			<DialogContent className=' w-full md:w-[500px] rounded-md dark:bg-dark_primary_color dark:text-white text-black '>
 				<DialogHeader>
 					<DialogTitle>{t('addExpense.newExpense')}</DialogTitle>
-					<DialogDescription> {t('addExpense.completeFields')} </DialogDescription>
+					<DialogDescription className='opacity-50'> {t('addExpense.completeFields')} </DialogDescription>
 				</DialogHeader>
 
 				<div className='flex gap-3 items-center justify-center'>
@@ -126,10 +126,11 @@ export const AddExpense = ({ apiData, sendData, className }) => {
 							className='mb-2'>
 							{t('addExpense.nameExpense')} <span className='text-red-500'>*</span>
 							<Input
-								className='border dark:border-zinc-400 dark:bg-dark_primary_color/30'
+								className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full mt-2 placeholder:opacity-30'
 								value={name}
 								onChange={(e) => handleValues(e, 'name')}
 								id='value_name'
+								placeholder='Ej Gimnasio'
 								type='text'
 							/>
 						</label>
@@ -140,7 +141,7 @@ export const AddExpense = ({ apiData, sendData, className }) => {
 							className='mb-2'>
 							{t('addExpense.amount')} $ <span className='text-red-500'>*</span>
 							<Input
-								className='border dark:border-zinc-400 dark:bg-dark_primary_color/30'
+								className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full mt-2 placeholder:opacity-30'
 								value={value}
 								onChange={(e) => handleValues(e, 'value')}
 								id='value_value'
@@ -161,8 +162,8 @@ export const AddExpense = ({ apiData, sendData, className }) => {
 								}}
 								variant='ghost'
 								className={`${className} ${
-									isFixed == 'true' ? 'dark:bg-dark_primary_color bg-zinc-300' : ''
-								}   dark:hover:bg-hover_primary_color/40   hover:bg-zinc-400 text-black  dark:text-white flex items-center gap-3`}>
+									isFixed == 'true' ? 'dark:bg-dark_foreground ' : ''
+								}  `}>
 								{t('addExpense.yes')}
 							</Button>
 							<Button
@@ -171,8 +172,8 @@ export const AddExpense = ({ apiData, sendData, className }) => {
 								}}
 								variant='ghost'
 								className={`${className}  ${
-									isFixed == 'false' ? 'dark:bg-dark_primary_color bg-zinc-300' : ''
-								}   dark:hover:bg-hover_primary_color/40   hover:bg-zinc-400 text-black  dark:text-white flex items-center gap-3`}>
+									isFixed == 'false' ? 'dark:bg-dark_foreground ' : ''
+								}    `}>
 								No
 							</Button>
 						</div>
@@ -192,16 +193,16 @@ export const AddExpense = ({ apiData, sendData, className }) => {
 						<div className=' flex flex-wrap gap-x-3 items-center'>
 							<p className=''>{t('addExpense.paymentDayP')} </p>
 							<Select onValueChange={(e) => handleDateFixedCost(e)}>
-								<SelectTrigger className=' w-32 bg-zinc-200 dark:bg-dark_primary_color dark:text-white text-black border border-green-500/50'>
+								<SelectTrigger className=' w-32 bg-zinc-200 dark:bg-dark_secondary_color dark:text-white text-black border border-alternative_color'> 
 									<SelectValue placeholder={`${t('dashboard.day')}`} />
 								</SelectTrigger>
-								<SelectContent className='dark:bg-primary-'>
+								<SelectContent className='dark:bg-dark_primary_color dark:text-white text-black'>
 									<SelectGroup>
 										<SelectLabel className='text-lg'>{t('dashboard.day')}</SelectLabel>
 
 										{days.map((e, i) => (
 											<SelectItem
-												className='dark:focus:bg-dark_primary_color focus:bg-zinc-200 cursor-pointer'
+												className='dark:focus:bg-dark_secondary_color focus:bg-zinc-200 cursor-pointer'
 												key={i}
 												value={e.toString()}>
 												{e}
@@ -214,34 +215,7 @@ export const AddExpense = ({ apiData, sendData, className }) => {
 							<span className='text-red-500'>*</span>
 						</div>
 
-						{deadLine !== 0 && deadLine < new Date().getDate() ? (
-							<div className='text-center mt-3 font-semibold flex justify-center '>
-								<p className=' text-blue-400'> {t('addExpense.sentFixedExpense')} </p>
-								<TooltipProvider>
-									<Tooltip>
-										<TooltipTrigger asChild>
-											<Button
-												variant='ghost'
-												className='px-1'>
-												<Info className='text-blue-400 ' />
-											</Button>
-										</TooltipTrigger>
-										<TooltipContent
-											side='bottom'
-											className='  z-50   flex  justify-center hover:bg-transparent '>
-											<div className='flex  dark:bg-zinc-900 bg-zinc-300  w-2/5 rounded-md'>
-												<p className='text-balance tracking-wider font-semibold'>
-													Se mostrara como ya pago, ya que la fecha a pagar es anterior a la fecha actual. Por lo cual la proxima fecha a
-													pagar sera el mes siguienete al actual.
-												</p>
-											</div>
-										</TooltipContent>
-									</Tooltip>
-								</TooltipProvider>
-							</div>
-						) : (
-							' '
-						)}
+						
 					</div>
 				)}
 				<Button

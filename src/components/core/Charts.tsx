@@ -91,7 +91,7 @@ export const Chart = ({ trigger, filter }) => {
 					left: 20,
 					bottom: 5,
 				}}>
-					<CartesianGrid
+				<CartesianGrid
 					strokeDasharray='5 5'
 					vertical={false}
 					strokeLinecap='square'
@@ -455,12 +455,12 @@ export const ChartIncomes = ({ trigger }) => {
 						left: 0,
 						bottom: 0,
 					}}>
-						<CartesianGrid
-					strokeDasharray='5 5'
-					vertical={false}
-					strokeLinecap='square'
-					opacity={0.2}
-				/>
+					<CartesianGrid
+						strokeDasharray='5 5'
+						vertical={false}
+						strokeLinecap='square'
+						opacity={0.2}
+					/>
 					<Tooltip content={CustomTooltipDaily} />
 					<XAxis dataKey='day' />
 					<Area
@@ -522,7 +522,7 @@ export const ChartExample = () => {
 					left: 20,
 					bottom: 5,
 				}}>
-					<CartesianGrid
+				<CartesianGrid
 					strokeDasharray='5 5'
 					vertical={false}
 					strokeLinecap='square'
@@ -558,10 +558,56 @@ export const ChartExampleTwo = ({ trigger = false }) => {
 		},
 		{
 			name: 'Febrero',
-			ahorro: 2000,
+			ahorro: 5000,
 			deudas: 1800,
 		},
 	];
+	if (!localStorage.token) {
+		return (
+			<ResponsiveContainer height={300}>
+				<BarChart
+					width={500}
+					height={300}
+					data={dataExample}
+					margin={{
+						top: 5,
+						right: 30,
+						left: 20,
+						bottom: 5,
+					}}>
+					<CartesianGrid
+						strokeDasharray='5 5'
+						vertical={false}
+						strokeLinecap='square'
+						opacity={0.2}
+					/>
+					<XAxis dataKey='name' />
+					<YAxis />
+					<Legend />
+					<Bar
+						dataKey='ahorro'
+						fill={MAIN_COLOR}
+						activeBar={
+							<Rectangle
+								fill='pink'
+								stroke='blue'
+							/>
+						}
+					/>
+					<Bar
+						dataKey='deudas'
+						fill={SECOND_COLOR}
+						activeBar={
+							<Rectangle
+								fill='gold'
+								stroke='purple'
+							/>
+						}
+					/>
+				</BarChart>
+			</ResponsiveContainer>
+		);
+	}
 
 	const userInfo = JSON.parse(localStorage.userMain);
 	const [goalValue, setGoalValue] = useState<wallet_values>();
@@ -579,15 +625,11 @@ export const ChartExampleTwo = ({ trigger = false }) => {
 		{
 			name: 'saving',
 			saving: goalValue?.saving,
-			color: COLORS[4],
-		},
-		{
-			name: 'available',
 			available: goalValue?.available,
-			color: COLORS[0],
+			
 		},
 	];
-	
+
 	return (
 		<ResponsiveContainer height={300}>
 			<BarChart
@@ -606,26 +648,36 @@ export const ChartExampleTwo = ({ trigger = false }) => {
 					strokeLinecap='square'
 					opacity={0.2}
 				/>
-				<XAxis
-					dataKey='name'
-					style={{ fontSize: '18px' }}
-					tickMargin={10}
-				/>
+				
 				<YAxis />
-
-				{percentageData.map((e, i) => (
-					<Bar
-						key={i}
-						dataKey={e.name}
-						fill={e.color}
-						activeBar={
-							<Rectangle
-								fill='gold'
-								stroke='purple'
-							/>
-						}
-					/>
-				))}
+				<Legend />
+				{localStorage.token && (
+					<>
+						
+						<Bar
+							dataKey='saving'
+							fill={SECOND_COLOR}
+							
+							activeBar={
+								<Rectangle
+									fill='#0ef9e2'
+									stroke='purple'
+								/>
+							}
+						/>
+						<Bar
+							dataKey='available'
+							fill={MAIN_COLOR}
+							
+							activeBar={
+								<Rectangle
+									fill='#ff654e'
+									stroke='purple'
+								/>
+							}
+						/>
+					</>
+				)}
 			</BarChart>
 		</ResponsiveContainer>
 	);

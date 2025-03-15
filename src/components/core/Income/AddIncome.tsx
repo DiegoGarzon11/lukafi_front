@@ -24,7 +24,7 @@ export const AddIncome = ({ apiData, className, sendData }) => {
 		const floatValue = parseFloat(value);
 		const formattedValue = floatValue.toLocaleString();
 
-		setValue(formattedValue);
+		setValue(formattedValue === 'NaN' ? '0' : formattedValue);
 	};
 
 	const submitIncome = async () => {
@@ -62,13 +62,13 @@ export const AddIncome = ({ apiData, className, sendData }) => {
 					{t('addIncome.newIncome')} <PiggyBank />
 				</Button>
 			</DialogTrigger>
-			<DialogContent className=' w-full md:w-[500px] rounded-md '>
+			<DialogContent className=' w-full md:w-[500px] rounded-md dark:bg-dark_primary_color dark:text-white text-black '>
 				<DialogHeader>
 					<DialogTitle>{t('addIncome.newIncome')}</DialogTitle>
-					<DialogDescription>{t('addIncome.instructions')}</DialogDescription>
+					<DialogDescription className='opacity-50'>{t('addIncome.instructions')}</DialogDescription>
 				</DialogHeader>
 
-				<div className='flex gap-5 items-center'>
+				<div className='flex gap-5 items-center '>
 					<div>
 						<label htmlFor=''>
 							{t('addIncome.name')} <span className='text-red-500'>*</span>
@@ -76,7 +76,8 @@ export const AddIncome = ({ apiData, className, sendData }) => {
 						<Input
 							onChange={(e) => setName(e.target.value)}
 							value={name}
-							className='border dark:border-zinc-400 dark:bg-zinc-800/30'
+							className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full mt-2 placeholder:opacity-30'
+							placeholder='Ej Salario'
 						/>
 					</div>
 					<div>
@@ -87,7 +88,7 @@ export const AddIncome = ({ apiData, className, sendData }) => {
 							id='value_income'
 							onChange={(e) => handleValues(e)}
 							value={value}
-							className='border dark:border-zinc-400 dark:bg-zinc-800/30'
+							className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full mt-2 placeholder:opacity-30'
 							type='text'
 						/>
 					</div>
@@ -96,11 +97,7 @@ export const AddIncome = ({ apiData, className, sendData }) => {
 				<Button
 					disabled={loader || name === '' || value === '0'}
 					onClick={submitIncome}
-					className={` py-2 rounded-md text-zinc-100 flex justify-center ${
-						name === null || value === '' || value === '0'
-							? 'bg-gray-300 '
-							: ' bg-zinc-700 hover:bg-zinc-500 dark:hover:bg-zinc-600 dark:bg-zinc-500'
-					}`}>
+					className=' w-full font-semibold  text-white text-lg flex justify-center items-center py-5 cursor-pointer bg-alternative_color '>
 					{loader ? <LoaderApi color='black' /> : `${t('dashboard.confirm')}`}
 				</Button>
 			</DialogContent>

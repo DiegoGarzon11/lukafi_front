@@ -21,7 +21,7 @@ export function Combobox({ data, selected }) {
 					variant='ghost'
 					role='combobox'
 					aria-expanded={open}
-					className='border dark:border-zinc-400 dark:bg-dark_primary_color w-full h-9'>
+					className='border dark:border-zinc-400 dark:bg-dark_secondary_color w-full h-9'>
 					{value ? JSON.parse(value).category_name : 'Select category...'}
 					<CaretSortIcon className='ml-2 h-4 w-4 shrink-0 opacity-50' />
 				</Button>
@@ -32,10 +32,10 @@ export function Combobox({ data, selected }) {
 				className='w-full p-0'
 				
 				>
-				<Command className='bg-zinc-200 dark:bg-dark_primary_color   '>
+				<Command className='bg-zinc-200 dark:bg-dark_secondary_color dark:text-white text-black   '>
 					<CommandInput
 						placeholder='Buscar categoria...'
-						className='h-9'
+						className='h-9 dark:text-white text-black'
 					/>
 					<CommandList className=' '>
 						<CommandEmpty>Categoria no encontrada.</CommandEmpty>
