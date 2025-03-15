@@ -1,11 +1,11 @@
-import { RestorePassword, GenerateNewPassword } from '@/apis/UserService';
-import { useEffect, useState } from 'react';
-import { Toast } from '@/tools/Toast';
-import { EyeClose, EyeOpen, LoaderApi } from '@/assets/icons/Svg';
-import { Input } from '@/components/ui/input';
-import { Link } from 'react-router-dom';
-import { BadgeCheck } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import {RestorePassword, GenerateNewPassword} from '@/apis/UserService';
+import {useEffect, useState} from 'react';
+import {Toast} from '@/tools/Toast';
+import {EyeClose, EyeOpen, LoaderApi} from '@/assets/icons/Svg';
+import {Input} from '@/components/ui/input';
+import {Link} from 'react-router-dom';
+import {BadgeCheck} from 'lucide-react';
+import {Button} from '@/components/ui/button';
 export const ForgetPassword = () => {
 	const [email, setEmail] = useState('');
 	const [token, setToken] = useState(null);
@@ -109,16 +109,9 @@ export const ForgetPassword = () => {
 						<p className='opacity-50 dark:text-white text-black text-xl font-semibold'>
 							Por tu seguridad te pedimos que tu nueva contraseña sea distintas a las anteriores
 						</p>
-						<form
-							onSubmit={newPassword}
-							className='flex flex-col gap-3 w-full my-5'>
+						<form onSubmit={newPassword} className='flex flex-col gap-3 w-full my-5'>
 							<div className='flex items-center gap-3 '>
-								<Input
-									type='checkbox'
-									className='w-4'
-									checked={password.length >= 5}
-									readOnly
-								/>
+								<Input type='checkbox' className='w-4' checked={password.length >= 5} readOnly />
 								<p className='font-semibold dark:text-white text-black text-lg'>
 									Debe tener al menos 5 caracteres <span className='text-red-500'>*</span>
 								</p>
@@ -190,15 +183,13 @@ export const ForgetPassword = () => {
 						<p className='font-semibold opacity-30 text-md text-center dark:text-white text-black'>
 							Ingresa tu correo electrónico abajo para recibir instrucciones para recuperar tu contraseña.
 						</p>
-						<form
-							onSubmit={submitEmail}
-							className='flex flex-col gap-3 w-full'>
+						<form onSubmit={submitEmail} className='flex flex-col gap-3 w-full'>
 							<Input
 								value={email}
 								onChange={(e) => setEmail(e.target.value)}
 								type='email'
 								placeholder='Email'
-								className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
+								className=' dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
 							/>
 							<Button
 								disabled={!email || loader}
@@ -209,9 +200,7 @@ export const ForgetPassword = () => {
 						</form>
 						<p className='font-semibold dark:text-white text-black text-lg'>
 							¿Recordaste tu contraseña?
-							<Link
-								to='/'
-								className='text-lime-500 underline mx-2'>
+							<Link to='/' className='text-lime-500 underline mx-2'>
 								Ingresa aquí
 							</Link>
 						</p>
@@ -219,11 +208,7 @@ export const ForgetPassword = () => {
 				</div>
 			)}
 			{visibilityToast && (
-				<Toast
-					visibility={visibilityToast}
-					severity={response.success == true ? 'success' : 'error'}
-					message={response.message}
-				/>
+				<Toast visibility={visibilityToast} severity={response.success == true ? 'success' : 'error'} message={response.message} />
 			)}
 		</section>
 	);
