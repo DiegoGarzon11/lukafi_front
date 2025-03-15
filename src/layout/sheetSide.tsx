@@ -1,7 +1,6 @@
 import { Button } from '@/components/ui/button';
 
 import { useTranslation } from 'react-i18next';
-import dog from '@/assets/avatar/dog.webp';
 import logo from '/images/logo.png';
 import {
 	ChevronDown,
@@ -134,12 +133,11 @@ export function SheetSide() {
 
 				<div className='mt-10 flex flex-col h-full gap-3 overflow-hidden'>
 					<div className=' flex flex-col items-center mb-5 border-b pb-3 border-lime-500 w-full'>
-						<div className='bg-white p-5 rounded-full flex justify-center items-center'>
+						<div className=' rounded-full flex justify-center items-center'>
 							<img
-								className=''
-								src={dog}
-								width={50}
-								alt=''
+								src={infoUser.icon}
+								alt='avatar'
+								className='w-28 h-28 rounded-full'
 							/>
 						</div>
 
@@ -154,17 +152,17 @@ export function SheetSide() {
 								defaultOpen={localStorage.route_name.includes(page.path)}>
 								<SidebarGroup>
 									<SidebarGroupLabel asChild>
-										<CollapsibleTrigger>
-											<div className='flex items-center gap-5 cursor-pointer '>
+										<CollapsibleTrigger className='cursor-pointer'>
+											<div className='flex items-center gap-5  '>
 												<p className='text-sm font-semibold dark:text-white text-black opacity-50'>{page.icon}</p>
 												<p className='text-sm font-semibold dark:text-white text-black opacity-50'>{page.name}</p>
 											</div>
-											<ChevronDown className='ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180 dark:text-white text-black cursor-pointer' />
+											<ChevronDown className='ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180 dark:text-white text-black ' />
 										</CollapsibleTrigger>
 									</SidebarGroupLabel>
 									<CollapsibleContent
 										key={i}
-										className='flex flex-col gap-2 pl-5 mt-3'>
+										className='flex flex-col gap-2 mt-3'>
 										<SidebarMenuSub>
 											{page.children.map((child) => (
 												<Link

@@ -58,6 +58,24 @@ export const UserDefault = async () => {
 		}
 	}
 };
+export const UserIconUpdate = async (data) => {
+	const dataForm = new URLSearchParams();
+	dataForm.append('icon', data.icon);
+	dataForm.append('user_id', data.user_id);
+
+	try {
+		const response = await fetch(`${API_URL}/user/update-icon`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+			},
+			body: dataForm,
+		});
+		return await response.json();
+	} catch (error) {
+		console.error(error);
+	}
+};
 export const RestorePassword = async (data) => {
 	const dataForm = new URLSearchParams();
 	dataForm.append('email', data);
@@ -95,11 +113,11 @@ export const GenerateNewPassword = async (password, token) => {
 
 // !espera del back para eliminar usuario con token
 export const DeleteUser = async (data) => {
-	const {email, password, token} = data;
+	const { email, password, token } = data;
 	try {
 		const response = await fetch(`${API_URL}/user/sign-out`, {
 			method: 'DELETE',
-			body: JSON.stringify({email, password}),
+			body: JSON.stringify({ email, password }),
 			headers: {
 				'Content-Type': 'application/json',
 				Authorization: token,

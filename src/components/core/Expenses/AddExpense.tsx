@@ -7,11 +7,10 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Input } from '@/components/ui/input';
 
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { ApiResponse } from '@/interfaces/Api';
 import { Category } from '@/interfaces/Category';
 import { Toast } from '@/tools/Toast';
-import { DollarSign, Info } from 'lucide-react';
+import { DollarSign } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -221,7 +220,7 @@ export const AddExpense = ({ apiData, sendData, className }) => {
 				<Button
 					disabled={loader || name === '' || value === '0' || selectedCategory === null || (isFixed === 'true' && !deadLine)}
 					onClick={submitExpense}
-					className={`disabled:text-zinc-200  bg-zinc-700 hover:bg-zinc-500 dark:bg-zinc-500 text-white rounded-md dark:hover:bg-zinc-600 flex justify-center`}>
+					className=' w-full font-semibold  text-white text-lg flex justify-center items-center py-5 cursor-pointer bg-alternative_color '>
 					{loader ? <LoaderApi color='black' /> : 'Confirmar'}
 				</Button>
 			</DialogContent>

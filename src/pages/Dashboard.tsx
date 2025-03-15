@@ -1,6 +1,6 @@
 import { GetExpenses } from '@/apis/ExpenseService';
 import { GetWalletUser } from '@/apis/WalletService';
-import { Chart, ChartDonut, ChartExampleTwo, ChartIncomes } from '@/components/core/Charts';
+import { Chart, ChartDonut, ChartExampleTwo } from '@/components/core/Charts';
 import { AddDebt } from '@/components/core/Debts/AddDebt';
 import { AddExpense } from '@/components/core/Expenses/AddExpense';
 import { AddIncome } from '@/components/core/Income/AddIncome';
@@ -8,7 +8,7 @@ import { LoaderComponent } from '@/components/others/Loader';
 import { Button } from '@/components/ui/button';
 import { Expenses, Incomes, ResponseWallet } from '@/interfaces/Wallet';
 import { format } from 'date-fns';
-import { AlertTriangle, ArrowDown, ArrowUp } from 'lucide-react';
+import { AlertTriangle } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
@@ -38,17 +38,7 @@ export const Dashboard = () => {
 		setIncomes(incomes?.incomes);
 	};
 
-	function generateRandomNumbers() {
-		let result = '';
-		result += Math.floor(Math.random() * 9) + 1;
-		for (let i = 1; i < 16; i++) {
-			result += Math.floor(Math.random() * 10);
-			if ((i + 1) % 4 === 0 && i !== 15) {
-				result += '-';
-			}
-		}
-		return result;
-	}
+
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -98,7 +88,7 @@ export const Dashboard = () => {
 			<div className='flex flex-col md:grid md:grid-cols-3  h-full pt-20 p-3 gap-3 dark:bg-black bg-white'>
 				{userData.wallet.available <= 0 && (
 					<Dialog defaultOpen>
-						<DialogContent className='md:w-1/3'>
+					<DialogContent className=' w-full md:w-[500px] rounded-md dark:bg-dark_primary_color dark:text-white text-black '>
 							<DialogHeader>
 								<DialogTitle className='text-lg font-semibold leading-none -tracking-tighter text-red-500'>¡Importante!</DialogTitle>
 								<span className='text-yellow-00'>Agrega tu saldo disponible</span>

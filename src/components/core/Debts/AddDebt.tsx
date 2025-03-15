@@ -10,7 +10,7 @@ import { HandCoins } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-export const AddDebt = ({ apiData,sendData, className }) => {
+export const AddDebt = ({ apiData, sendData, className }) => {
 	const [person, setPerson] = useState('');
 	const [value, setValue] = useState('');
 	const [reason, setReason] = useState('');
@@ -87,10 +87,10 @@ export const AddDebt = ({ apiData,sendData, className }) => {
 					{t('addDebt.addDebt')} <HandCoins />
 				</Button>
 			</DialogTrigger>
-			<DialogContent className=' w-full md:w-[500px] rounded-md '>
+			<DialogContent className=' w-full md:w-[500px] rounded-md dark:bg-dark_primary_color dark:text-white text-black '>
 				<DialogHeader>
 					<DialogTitle>{t('addDebt.newDebt')}</DialogTitle>
-					<DialogDescription>{t('addDebt.instructions')}</DialogDescription>
+					<DialogDescription className='opacity-50'>{t('addDebt.instructions')}</DialogDescription>
 				</DialogHeader>
 				<p>
 					{t('addDebt.selectTypeDebt')} <span className='text-red-500'>*</span>
@@ -98,12 +98,12 @@ export const AddDebt = ({ apiData,sendData, className }) => {
 				<div className='flex justify-evenly gap-5'>
 					<div
 						onClick={() => setDebtType(1)}
-						className={`border  p-5 rounded-xl w-1/2 cursor-pointer ${debtType === 1 ? 'border-green-300' : 'border-gray-200/50'}`}>
+						className={`border  p-5 rounded-xl w-1/2 cursor-pointer ${debtType === 1 ? 'border-lime-500' : 'border-gray-200/50'}`}>
 						<div className='flex justify-center flex-col items-center gap-2 '>
-							<Income color={`${debtType === 1 ? 'green' : 'gray'}`} />
+							<Income color={`${debtType === 1 ? 'lime' : 'gray'}`} />
 
 							<label
-								className={`${debtType === 1 ? 'text-green-500' : 'opacity-15'} cursor-pointer`}
+								className={`${debtType === 1 ? 'text-lime-500' : 'opacity-15'} cursor-pointer`}
 								htmlFor=''>
 								{t('addDebt.owesYou')}...
 							</label>
@@ -111,11 +111,11 @@ export const AddDebt = ({ apiData,sendData, className }) => {
 					</div>
 					<div
 						onClick={() => setDebtType(0)}
-						className={`border  p-5 rounded-xl w-1/2 cursor-pointer ${debtType === 0 ? 'border-red-300' : 'border-gray-200/50'}`}>
+						className={`border  p-5 rounded-xl w-1/2 cursor-pointer ${debtType === 0 ? 'border-alternative_color' : 'border-gray-200/50'}`}>
 						<div className='flex justify-center flex-col items-center gap-2'>
-							<Expense color={`${debtType === 0 ? 'red' : 'gray'}`} />
+							<Expense color={`${debtType === 0 ? '#f53278' : 'gray'}`} />
 							<label
-								className={`${debtType === 0 ? 'text-red-500' : 'opacity-15'} cursor-pointer`}
+								className={`${debtType === 0 ? 'text-alternative_color' : 'opacity-15'} cursor-pointer`}
 								htmlFor=''>
 								{t('addDebt.youOwe')} ...
 							</label>
@@ -129,7 +129,7 @@ export const AddDebt = ({ apiData,sendData, className }) => {
 						</label>
 						<Input
 							value={person}
-							className='border dark:border-zinc-400 dark:bg-zinc-800/30 '
+							className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full mt-2 placeholder:opacity-30'
 							onChange={(e) => handleValues(e, 'name')}
 						/>
 					</div>
@@ -139,7 +139,7 @@ export const AddDebt = ({ apiData,sendData, className }) => {
 						</label>
 						<Input
 							id='value_income'
-							className='border dark:border-zinc-400 dark:bg-zinc-800/30 '
+							className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full mt-2 placeholder:opacity-30'
 							type='text'
 							value={value}
 							onChange={(e) => handleValues(e, 'money')}
@@ -153,7 +153,7 @@ export const AddDebt = ({ apiData,sendData, className }) => {
 					<Input
 						id='value_income'
 						type='text'
-						className='border dark:border-zinc-400 dark:bg-zinc-800/30'
+						className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full mt-2 placeholder:opacity-30'
 						value={reason}
 						onChange={(e) => handleValues(e, 'reason')}
 					/>
@@ -167,11 +167,7 @@ export const AddDebt = ({ apiData,sendData, className }) => {
 				<Button
 					disabled={debtType === null || person === '' || reason === '' || value === '' || value === '0'}
 					onClick={submitDebt}
-					className={` py-2 rounded-md text-zinc-100 flex justify-center ${
-						debtType === null || person === '' || reason === '' || value === '' || value === '0'
-							? 'bg-gray-300 '
-							: ' bg-zinc-700 hover:bg-zinc-500 dark:hover:bg-zinc-600 dark:bg-zinc-500'
-					}`}>
+					className=' w-full font-semibold  text-white text-lg flex justify-center items-center py-5 cursor-pointer bg-alternative_color '>
 					{loader ? <LoaderApi color='black' /> : `${t('dashboard.confirm')}`}
 				</Button>
 			</DialogContent>
