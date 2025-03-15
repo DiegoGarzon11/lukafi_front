@@ -142,3 +142,23 @@ export const RestoreAccount = async () => {
 		console.error(error);
 	}
 };
+export const EditUser = async (data) => {
+	const dataForm = new URLSearchParams();
+	dataForm.append('name', data.name);
+	dataForm.append('last_name', data.lastName);
+	dataForm.append('email', data.email);
+	dataForm.append('user_id', data.user);
+
+	try {
+		const response = await fetch(`${API_URL}/user/update-user`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+			},
+			body: dataForm,
+		});
+		return await response.json();
+	} catch (error) {
+		console.error(error);
+	}
+};

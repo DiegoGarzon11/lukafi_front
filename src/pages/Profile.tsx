@@ -2,13 +2,14 @@ import { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogDescription, DialogHeader } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { UserIconUpdate } from '@/apis/UserService';
+import { EditUser, UserIconUpdate } from '@/apis/UserService';
 import { Toast } from '@/tools/Toast';
 import { ApiResponse } from '@/interfaces/Api';
 import { Link, useNavigate } from 'react-router-dom';
 import { Pencil1Icon } from '@radix-ui/react-icons';
 import { format } from 'date-fns';
 import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 const Profile = () => {
 	const user = JSON.parse(localStorage.getItem('userMain'));
 	const ICONS = {
@@ -44,13 +45,44 @@ const Profile = () => {
 			navigate('/profile');
 		}
 	};
+	const [name, setName] = useState(user.name);
+	const [lastname, setLastname] = useState(user.last_name);
+	const [email, setEmail] = useState(user.email);
+	const handleUpdateUser = async () => {
+		setVisibilityToast(false);
+		setresponseApi(undefined);
+		const response = await EditUser({
+			name: name,
+			lastName: lastname,
+			email: email,
+			user: user.user_id,
+		});
+		try {
+			if (response) {
+				setVisibilityToast(true);
+				setresponseApi(response);
+				user.full_name = `${name} ${lastname}`;
+				user.last_name = lastname;
+				user.email = email;
+				localStorage.setItem('userMain', JSON.stringify(user));
+
+				setDialogAvatar(false);
+				navigate('/profile');
+			}
+		} catch (error) {
+			console.error(error);
+		} finally {
+			setVisibilityToast(true);
+			setresponseApi(response);
+		}
+	};
 
 	return (
 		<main className='h-full pt-20 p-3 '>
-			<section className='w-full  dark:bg-dark_primary_color rounded-md px-10 pt-10 pb-6  h-full col-span-3'>
-				<div className='dark:text-white text-black flex flex-col items-center'>
-					<div className='flex justify-around items-center gap-3'>
-						<div className='flex flex-col items-start justify-center '>
+			<section className='w-full  dark:bg-dark_primary_color rounded-md px-3 md:px-10 pt-5 pb-6  h-full col-span-3'>
+				<div className='dark:text-white text-black flex flex-col items-center justify-center'>
+					<div className='flex justify-center items-center gap-3'>
+						<div className='flex flex-col items-start justify-center  '>
 							<img
 								src={user.icon}
 								alt='avatar'
@@ -61,16 +93,14 @@ const Profile = () => {
 								<p className='text-sm opacity-50'>{user.email}</p>
 							</div>
 						</div>
-
 						<button
 							onClick={() => setDialogAvatar(true)}
-							className='bg-alternative_color text-white p-2 rounded-xl cursor-pointer flex items-center gap-2'>
-							<Pencil1Icon />
-							Editar Avatar
+							className='bg-alternative_color text-white  p-2 rounded-full cursor-pointer flex items-center gap-2 absolute right-34 md:relative md:right-14'>
+							<Pencil1Icon className='w-5 h-5 font-semibold' />
 						</button>
 					</div>
 				</div>
-				<div className='flex flex-col dark:text-white text-black'>
+				<div className='flex flex-col dark:text-white text-black mt-5'>
 					<p className='opacity-50'>Usuario desde</p>
 					<p className='text-lg font-semibold'>{format(user?.created_in, 'PP')}</p>
 				</div>
@@ -94,28 +124,44 @@ const Profile = () => {
 						</TabsTrigger>
 					</TabsList>
 					<TabsContent value='account'>
-						<div className='flex gap-10 mt-10'>
+						<div className='flex md:gap-10 gap-3 mt-5 '>
+							<div className='flex flex-col w-full'>
+								<Label className='text-lg dark:text-white text-black opacity-50'>Nombre</Label>
+								<Input
+									className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full mt-2 placeholder:opacity-30'
+									id='name'
+									value={name}
+									onChange={(e) => setName(e.target.value)}
+									placeholder='Nombre'
+									type='text'
+								/>
+							</div>
+							<div className='flex flex-col  w-full'>
+								<Label className='text-lg dark:text-white text-black opacity-50'>Apellido</Label>
+								<Input
+									className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full mt-2 placeholder:opacity-30'
+									id='lastname'
+									value={lastname}
+									onChange={(e) => setLastname(e.target.value)}
+									placeholder='Apellido'
+									type='text'
+								/>
+							</div>
+						</div>
+						<div className='flex flex-col mt-5'>
+							<Label className='text-lg dark:text-white text-black opacity-50'>Correo electrónico</Label>
 							<Input
-								className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full mt-2 placeholder:opacity-30'
-								id='name'
-								placeholder='Nombre'
-								type='text'
-							/>
-							<Input
-								className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full mt-2 placeholder:opacity-30'
-								id='lastname'
-								placeholder='Apellido'
-								type='text'
+								className='border-b dark:bg-dark_secondary_color border-none text-lg  dark:text-white text-black placeholder:text-gray-300 w-full  placeholder:opacity-30'
+								id='email'
+								value={email}
+								onChange={(e) => setEmail(e.target.value)}
+								placeholder='Email'
+								type='email'
 							/>
 						</div>
-						<Input
-							className='border-b dark:bg-dark_secondary_color border-none text-lg mt-10 dark:text-white text-black placeholder:text-gray-300 w-full  placeholder:opacity-30'
-							id='email'
-							placeholder='Email'
-							type='email'
-						/>
-						<div className='flex gap-10 mt-10'>
-							<div className='w-full flex flex-col gap-5'>
+
+						<div className='flex flex-col-reverse md:flex-row md:gap-10 mt-8'>
+							<div className='w-full flex flex-col gap-5 mt-8 md:mt-0'>
 								<Button>
 									<Link
 										to='/auth/change-password'
@@ -126,11 +172,14 @@ const Profile = () => {
 
 								<Link
 									to='/auth/delete-account'
-									className='dark:text-white text-black underline self-center'>
+									className='dark:text-white text-black underline self-center '>
 									Eliminar Cuenta
 								</Link>
 							</div>
-							<Button className=' w-full font-semibold  text-white text-lg flex justify-center items-center py-5 cursor-pointer bg-alternative_color '>
+							<Button
+								onClick={handleUpdateUser}
+								disabled={name === '' || lastname === '' || email === ''}
+								className=' w-full font-semibold  text-white text-lg flex justify-center items-center py-5 cursor-pointer bg-alternative_color '>
 								Guardar cambios
 							</Button>
 						</div>

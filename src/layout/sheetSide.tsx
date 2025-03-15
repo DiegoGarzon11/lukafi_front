@@ -185,13 +185,6 @@ export function SheetSide() {
 							</Collapsible>
 						))}
 					</SidebarMenu>
-					<div className='flex items-start justify-center w-full   absolute -bottom-4 opacity-30'>
-						<img
-							className='w-28 md:h-auto h-28 pt-2 '
-							src={logo}
-							alt=''
-						/>
-					</div>
 				</div>
 			</SidebarContent>
 		</Sidebar>
