@@ -1,6 +1,6 @@
 import { GetExpenses } from '@/apis/ExpenseService';
 import { GetWalletUser } from '@/apis/WalletService';
-import { Chart, ChartDonut, ChartIncomes } from '@/components/core/Charts';
+import { Chart, ChartDonut, ChartExampleTwo, ChartIncomes } from '@/components/core/Charts';
 import { AddDebt } from '@/components/core/Debts/AddDebt';
 import { AddExpense } from '@/components/core/Expenses/AddExpense';
 import { AddIncome } from '@/components/core/Income/AddIncome';
@@ -95,7 +95,7 @@ export const Dashboard = () => {
 	}
 	return (
 		<main>
-			<div className='flex flex-col md:grid md:grid-cols-3 h-full pt-20 p-3 gap-3 dark:bg-black bg-white'>
+			<div className='flex flex-col md:grid md:grid-cols-3  h-full pt-20 p-3 gap-3 dark:bg-black bg-white'>
 				{userData.wallet.available <= 0 && (
 					<Dialog defaultOpen>
 						<DialogContent className='md:w-1/3'>
@@ -142,13 +142,13 @@ export const Dashboard = () => {
 					<div className='flex flex-col dark:bg-dark_primary_color rounded-md  bg-zinc-200 w-full h-full '>
 						<div className='flex flex-col md:flex-row justify-between items-center  p-5   gap-3'>
 							<div className='flex gap-1.5 items-center w-full flex-col md:flex-row '>
-								<p className='text-lg pb-5 md:pb-0 flex  gap-10 items-center dark:text-white text-black'>
+								<p className='text-xl font-semibold pb-5 md:pb-0 flex  gap-10 items-center dark:text-white text-black'>
 									{t('dashboard.viewBalanceExpenses')}
 								</p>
 								{localStorage.getItem('filterChartBalance') === 'day' ? (
-									<p className='text-lg pb-5 md:pb-0  flex  gap-2 items-center dark:text-white text-black '>
+									<p className='text-xl font-semibold pb-5 md:pb-0  flex  gap-2 items-center dark:text-white text-black '>
 										en el mes de
-										<span className='text-lime-500 font-semibold'>{<span>{format(new Date(), 'MMMM')}</span>}</span>
+										<span className='text-lime-500 font-semibold text-xl'>{<span>{format(new Date(), 'MMMM')}</span>}</span>
 									</p>
 								) : (
 									''
@@ -162,7 +162,7 @@ export const Dashboard = () => {
 									onClick={(_) => handleFilterChartBalance('day')}
 									className={`${
 										filter === 'day' ? 'border border-alternative_color ' : ' opacity-50 '
-									} dark:text-white text-black cursor-pointer disabled:opacity-100`}>
+									} dark:text-white text-black cursor-pointer disabled:opacity-100 text-lg`}>
 									{t('dashboard.day')}
 								</Button>
 								<Button
@@ -171,7 +171,7 @@ export const Dashboard = () => {
 									onClick={(_) => handleFilterChartBalance('month')}
 									className={`${
 										filter === 'month' ? 'border border-alternative_color ' : 'opacity-50  '
-									} dark:text-white text-black cursor-pointer  disabled:opacity-100`}>
+									} dark:text-white text-black cursor-pointer  disabled:opacity-100 text-lg`}>
 									{t('dashboard.month')}
 								</Button>
 								<Button
@@ -180,7 +180,7 @@ export const Dashboard = () => {
 									onClick={(_) => handleFilterChartBalance('year')}
 									className={`${
 										filter === 'year' ? 'border border-alternative_color ' : 'opacity-50 '
-									} dark:text-white text-black cursor-pointer   `}>
+									} dark:text-white text-black cursor-pointer  text-lg `}>
 									{t('dashboard.year')}
 								</Button>
 							</div>
@@ -213,44 +213,7 @@ export const Dashboard = () => {
 							</div>
 						)}
 					</div>
-					{/* <article className=' w-full h-full  shadow-xs border-none  text-black  dark:text-white  md:grid md:grid-cols-3 gap-3 flex flex-col '>
-						<div className='border border-border dark:bg-dark_primary_color bg-zinc-200 p-3 rounded-md flex justify-center flex-col items-center h-48 md:h-full'>
-							<p className='h-1/2 text-lg'>Reporte meta de ahorros mensual</p>
 
-							<div className='flex gap-3 items-end h-full flex-col'>
-								<p className='flex items-start gap-2 '>
-									<span>Meta:</span>
-									<span className='text-green-500'>{Number(userData?.wallet?.saving).toLocaleString()} $</span>
-								</p>
-
-								<p className='flex items-center gap-2'>
-									{Number(userData?.wallet?.incomes) - Number(userData?.wallet?.variable_expenses) <= Number(userData?.wallet?.saving) ? (
-										<ArrowDown className='text-red-500' />
-									) : (
-										<ArrowUp className='text-green-500' />
-									)}
-									<span>Ahora:</span>
-									<span
-										className={`text-${
-											Number(userData?.wallet?.incomes) - Number(userData?.wallet?.variable_expenses) <= Number(userData?.wallet?.saving)
-												? 'red'
-												: 'green'
-										}-500 flex items-center gap-2`}>
-										{(Number(userData?.wallet?.incomes) - Number(userData?.wallet?.variable_expenses)).toLocaleString()} $
-									</span>
-								</p>
-							</div>
-						</div>
-						<div className='border border-border dark:bg-dark_primary_color bg-zinc-200  p-3 rounded-md flex justify-center flex-col items-center h-48 md:h-full'>
-							<ChartIncomes trigger={trigger} />
-						</div>
-						<div className='border border-border dark:bg-dark_primary_color bg-zinc-200  p-3 rounded-md flex justify-center flex-col items-center h-48 md:h-full'>
-							<p className='h-1/2 text-lg'>Saldo disponible contando gastos fijos</p>
-							<p className='text-xl text-green-500'>
-								{(Number(userData?.wallet?.available) - Number(userData?.wallet?.fixed_expenses)).toLocaleString()} $
-							</p>
-						</div>
-					</article> */}
 					<article className=' text-white flex flex-col justify-between dark:bg-dark_primary_color bg-zinc-200 w-full md:w-2/5 rounded-md p-5 shadow-xl '>
 						<div className='flex flex-col items-center justify-center'>
 							<p className='text-3xl font-bold text-lime-500'>
@@ -289,30 +252,45 @@ export const Dashboard = () => {
 								</div>
 							</div>
 						</div>
-						<p className='text-center mt-5 opacity-50'>Ultima actualizacion: <span className='font-bold'>{format(userData?.wallet?.modify_in, 'PP - HH:mm')}</span></p>
+						<p className='text-center mt-5 opacity-50'>
+							Ultima actualizacion: <span className='font-bold'>{format(userData?.wallet?.modify_in, 'PP - HH:mm')}</span>
+						</p>
 					</article>
 				</section>
 
-				<section className='  md:col-span-3 md:row-span-6  flex flex-col justify-around gap-3 h-screen'>
-					<div className='flex flex-col dark:bg-dark_primary_color rounded-md  bg-zinc-200 w-full h-full py-10'>
-						<div className='flex flex-col md:flex-row items-center justify-between p-5 gap-2'>
-							<p className='text-lg pb-5'>{t('dashboard.viewExpensesCategory')}</p>
+				<section className='  md:col-span-3   flex flex-col-reverse md:flex-row justify-end items-end gap-3 w-full '>
+					<div className='dark:bg-dark_primary_color  w-full md:w-3/6 pt-10 rounded-md  text-center md:text-start md:px-5  h-full'>
+						<p className='   pb-5 dark:text-white text-black text-center md:text-start text-2xl font-semibold '>Oberva tus metas mensuales</p>
+						<p className='dark:text-white text-black text-lg '>
+							Estas a{' '}
+							<span className='font-semibold text-lime-500'>
+								{Number(userData?.wallet?.saving - userData?.wallet?.available).toLocaleString()}$
+							</span>{' '}
+							de alcanzar tu meta! animo🫡
+						</p>
+						<div className='flex justify-center items-center mt-8 '>
+							<ChartExampleTwo />
+						</div>
+					</div>
+					<div className='flex flex-col dark:bg-dark_primary_color rounded-md w-full  md:w-3/4 h-full py-10 md:px-5 '>
+						<div className='flex flex-col md:flex-row items-center justify-between  gap-2'>
+							<p className=' pb-5 dark:text-white text-black text-2xl font-semibold '>{t('dashboard.viewExpensesCategory')}</p>
 							<div className='flex gap-3 justify-end'>
 								<Button
 									variant='ghost'
-									className='shadow-inner shadow-green-500 '>
+									className='shadow-inner border border-alternative_color dark:text-white text-black  text-lg'>
 									{t('dashboard.day')}
 								</Button>
 								<Button
 									disabled
 									variant='ghost'
-									className=' border border-border'>
+									className=' dark:text-white text-black opacity-50 text-lg'>
 									{t('dashboard.month')}
 								</Button>
 								<Button
 									variant='ghost'
 									disabled
-									className=' border border-border'>
+									className=' dark:text-white text-black opacity-50  text-lg'>
 									{t('dashboard.year')}
 								</Button>
 							</div>
@@ -331,3 +309,43 @@ export const Dashboard = () => {
 		</main>
 	);
 };
+{
+	/* <article className=' w-full h-full  shadow-xs border-none  text-black  dark:text-white  md:grid md:grid-cols-3 gap-3 flex flex-col '>
+						<div className='border border-border dark:bg-dark_primary_color bg-zinc-200 p-3 rounded-md flex justify-center flex-col items-center h-48 md:h-full'>
+							<p className='h-1/2 text-lg'>Reporte meta de ahorros mensual</p>
+
+							<div className='flex gap-3 items-end h-full flex-col'>
+								<p className='flex items-start gap-2 '>
+									<span>Meta:</span>
+									<span className='text-green-500'>{Number(userData?.wallet?.saving).toLocaleString()} $</span>
+								</p>
+
+								<p className='flex items-center gap-2'>
+									{Number(userData?.wallet?.incomes) - Number(userData?.wallet?.variable_expenses) <= Number(userData?.wallet?.saving) ? (
+										<ArrowDown className='text-red-500' />
+									) : (
+										<ArrowUp className='text-green-500' />
+									)}
+									<span>Ahora:</span>
+									<span
+										className={`text-${
+											Number(userData?.wallet?.incomes) - Number(userData?.wallet?.variable_expenses) <= Number(userData?.wallet?.saving)
+												? 'red'
+												: 'green'
+										}-500 flex items-center gap-2`}>
+										{(Number(userData?.wallet?.incomes) - Number(userData?.wallet?.variable_expenses)).toLocaleString()} $
+									</span>
+								</p>
+							</div>
+						</div>
+						<div className='border border-border dark:bg-dark_primary_color bg-zinc-200  p-3 rounded-md flex justify-center flex-col items-center h-48 md:h-full'>
+							<ChartIncomes trigger={trigger} />
+						</div>
+						<div className='border border-border dark:bg-dark_primary_color bg-zinc-200  p-3 rounded-md flex justify-center flex-col items-center h-48 md:h-full'>
+							<p className='h-1/2 text-lg'>Saldo disponible contando gastos fijos</p>
+							<p className='text-xl text-green-500'>
+								{(Number(userData?.wallet?.available) - Number(userData?.wallet?.fixed_expenses)).toLocaleString()} $
+							</p>
+						</div>
+					</article> */
+}

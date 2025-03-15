@@ -22,21 +22,7 @@ import { PieChart, Pie } from 'recharts';
 import { ExpensesByCategory, Incomes, wallet_values } from '@/interfaces/Wallet';
 import { useTranslation } from 'react-i18next';
 
-const COLORS = [
-	'#00FF9C',
-	'#72BF78',
-	'#06D001',
-	'#15B392',
-	'#399918',
-	'#9BEC00',
-	'#81A263',
-	'#C3FF93',
-	'#0A6847',
-	'#12372A',
-	'#739072',
-	'#186F65',
-	'#96C291',
-];
+const COLORS = ['#7fbd0c', '#fe337c', '#ff654e', '#fe337c', '#0af9e2'];
 const MAIN_COLOR = '#7fbd0c';
 const SECOND_COLOR = '#fe337c';
 const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
@@ -63,7 +49,9 @@ const CustomTooltipDaily = ({ payload }) => {
 					) : (
 						<span className='dark:text-white text-black'>El mes de {months[Number(p.payload?.month - 1)]}</span>
 					)}
-					<span className={`${validateName(p?.name) === 'gasto' ? 'text-alternative_color' : 'text-lime-500'} mx-2`}>{validateName(p?.name)}</span>
+					<span className={`${validateName(p?.name) === 'gasto' ? 'text-alternative_color' : 'text-lime-500'} mx-2`}>
+						{validateName(p?.name)}
+					</span>
 					<span className={`${validateName(p?.name) === 'gasto' ? 'text-alternative_color ' : '  text-lime-500 '} font-bold`}>
 						{Number(p.value).toLocaleString()}
 					</span>
@@ -103,8 +91,10 @@ export const Chart = ({ trigger, filter }) => {
 					left: 20,
 					bottom: 5,
 				}}>
-				<CartesianGrid
-					strokeDasharray=' 3 3'
+					<CartesianGrid
+					strokeDasharray='5 5'
+					vertical={false}
+					strokeLinecap='square'
 					opacity={0.2}
 				/>
 				<XAxis dataKey='day' />
@@ -202,18 +192,18 @@ export const ChartDonut = ({ trigger }) => {
 					x={ex + (cos >= 0 ? 1 : -1) * 12}
 					y={ey}
 					textAnchor={textAnchor}
-					fontSize={18}
+					fontSize={20}
 					fontWeight={600}
-					fill='green'>{`${value.toLocaleString()}$`}</text>
+					fill={`${localStorage.theme === 'dark' ? 'white' : 'black'}`}>{`${value.toLocaleString()}$`}</text>
 				<text
 					className='hidden md:block'
 					x={ex + (cos >= 0 ? 1 : -1) * 12}
 					y={ey}
 					dy={18}
 					textAnchor={textAnchor}
-					fontSize={16}
+					fontSize={18}
 					fontWeight={600}
-					fill='green'>
+					fill='grey'>
 					{`${(percent * 100).toFixed(2)}%`}
 				</text>
 
@@ -224,7 +214,7 @@ export const ChartDonut = ({ trigger }) => {
 					textAnchor={textAnchor}
 					fontSize={18}
 					fontWeight={600}
-					fill='green'>{`${value.toLocaleString()}$`}</text>
+					fill={`${localStorage.theme === 'dark' ? 'white' : 'black'}`}>{`${value.toLocaleString()}$`}</text>
 				<text
 					className='block md:hidden'
 					x={ex + (cos >= 0 ? -35 : 35) * 1}
@@ -233,7 +223,7 @@ export const ChartDonut = ({ trigger }) => {
 					textAnchor={textAnchor}
 					fontSize={16}
 					fontWeight={600}
-					fill='green'>
+					fill='grey'>
 					{`${(percent * 100).toFixed(2)}%`}
 				</text>
 			</g>
@@ -303,7 +293,7 @@ export const ChartFinance = () => {
 			color: COLORS[3],
 		},
 		{
-			name: 'Ingresos',
+			name: 'Ingresosss',
 			value: values?.incomes,
 			color: COLORS[4],
 		},
@@ -465,10 +455,12 @@ export const ChartIncomes = ({ trigger }) => {
 						left: 0,
 						bottom: 0,
 					}}>
-					<CartesianGrid
-						horizontal={false}
-						vertical={false}
-					/>
+						<CartesianGrid
+					strokeDasharray='5 5'
+					vertical={false}
+					strokeLinecap='square'
+					opacity={0.2}
+				/>
 					<Tooltip content={CustomTooltipDaily} />
 					<XAxis dataKey='day' />
 					<Area
@@ -517,6 +509,7 @@ export const ChartExample = () => {
 			deudas: 700,
 		},
 	];
+
 	return (
 		<ResponsiveContainer height={250}>
 			<LineChart
@@ -529,8 +522,10 @@ export const ChartExample = () => {
 					left: 20,
 					bottom: 5,
 				}}>
-				<CartesianGrid
-					strokeDasharray=' 3 3'
+					<CartesianGrid
+					strokeDasharray='5 5'
+					vertical={false}
+					strokeLinecap='square'
 					opacity={0.2}
 				/>
 				<XAxis dataKey='name' />
@@ -554,8 +549,8 @@ export const ChartExample = () => {
 	);
 };
 
-export const ChartExampleTwo = () => {
-	const datos = [
+export const ChartExampleTwo = ({ trigger = false }) => {
+	const dataExample = [
 		{
 			name: 'Enero',
 			ahorro: 1000,
@@ -566,39 +561,39 @@ export const ChartExampleTwo = () => {
 			ahorro: 2000,
 			deudas: 1800,
 		},
-		{
-			name: 'Marzo',
-			ahorro: 2400,
-			deudas: 2000,
-		},
-		{
-			name: 'Abril',
-			ahorro: 2200,
-			deudas: 1800,
-		},
-		{
-			name: 'Mayo',
-			ahorro: 3000,
-			deudas: 900,
-		},
-		{
-			name: 'Junio',
-			ahorro: 3400,
-			deudas: 200,
-		},
-		{
-			name: 'Julio',
-			ahorro: 4000,
-			deudas: 100,
-		},
 	];
 
+	const userInfo = JSON.parse(localStorage.userMain);
+	const [goalValue, setGoalValue] = useState<wallet_values>();
+
+	useEffect(() => {
+		const getGoalValue = async () => {
+			const wallet = await GetWalletUser(userInfo?.user_id);
+
+			setGoalValue(wallet.wallet);
+			console.log(goalValue);
+		};
+		getGoalValue();
+	}, [trigger]);
+	const percentageData = [
+		{
+			name: 'saving',
+			saving: goalValue?.saving,
+			color: COLORS[4],
+		},
+		{
+			name: 'available',
+			available: goalValue?.available,
+			color: COLORS[0],
+		},
+	];
+	
 	return (
-		<ResponsiveContainer height={250}>
+		<ResponsiveContainer height={300}>
 			<BarChart
 				width={600}
 				height={300}
-				data={datos}
+				data={localStorage.token ? percentageData : dataExample}
 				margin={{
 					top: 5,
 					right: 30,
@@ -606,33 +601,31 @@ export const ChartExampleTwo = () => {
 					bottom: 5,
 				}}>
 				<CartesianGrid
-					strokeDasharray='3 3 '
+					strokeDasharray='5 5'
+					vertical={false}
+					strokeLinecap='square'
 					opacity={0.2}
 				/>
-
-				<XAxis dataKey='name' />
+				<XAxis
+					dataKey='name'
+					style={{ fontSize: '18px' }}
+					tickMargin={10}
+				/>
 				<YAxis />
-				<Legend />
-				<Bar
-					dataKey='deudas'
-					fill='#fe337c'
-					activeBar={
-						<Rectangle
-							fill='pink'
-							stroke='blue'
-						/>
-					}
-				/>
-				<Bar
-					dataKey='ahorro'
-					fill='#7fbd0c'
-					activeBar={
-						<Rectangle
-							fill='gold'
-							stroke='purple'
-						/>
-					}
-				/>
+
+				{percentageData.map((e, i) => (
+					<Bar
+						key={i}
+						dataKey={e.name}
+						fill={e.color}
+						activeBar={
+							<Rectangle
+								fill='gold'
+								stroke='purple'
+							/>
+						}
+					/>
+				))}
 			</BarChart>
 		</ResponsiveContainer>
 	);
