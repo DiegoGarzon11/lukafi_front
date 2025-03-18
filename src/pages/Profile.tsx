@@ -1,15 +1,15 @@
-import { useState } from 'react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Dialog, DialogContent, DialogDescription, DialogHeader } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { EditUser, UserIconUpdate } from '@/apis/UserService';
-import { Toast } from '@/tools/Toast';
-import { ApiResponse } from '@/interfaces/Api';
-import { Link, useNavigate } from 'react-router-dom';
-import { Pencil1Icon } from '@radix-ui/react-icons';
-import { format } from 'date-fns';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import {useState} from 'react';
+import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs';
+import {Dialog, DialogContent, DialogDescription, DialogHeader} from '@/components/ui/dialog';
+import {Button} from '@/components/ui/button';
+import {EditUser, UserIconUpdate} from '@/apis/UserService';
+import {Toast} from '@/tools/Toast';
+import {ApiResponse} from '@/interfaces/Api';
+import {Link, useNavigate} from 'react-router-dom';
+import {Pencil1Icon} from '@radix-ui/react-icons';
+import {format} from 'date-fns';
+import {Input} from '@/components/ui/input';
+import {Label} from '@/components/ui/label';
 const Profile = () => {
 	const user = JSON.parse(localStorage.getItem('userMain'));
 	const ICONS = {
@@ -29,6 +29,7 @@ const Profile = () => {
 	const [avatar, setAvatar] = useState('');
 	const [tab, setTab] = useState('account');
 	const navigate = useNavigate();
+
 	const handleUpdateIcon = async () => {
 		setVisibilityToast(false);
 		const response = await UserIconUpdate({
@@ -48,6 +49,16 @@ const Profile = () => {
 	const [name, setName] = useState(user.name);
 	const [lastname, setLastname] = useState(user.last_name);
 	const [email, setEmail] = useState(user.email);
+	const [salary, setSalary] = useState('');
+	const [goal, setGoal] = useState('');
+
+	const handleSalary = (e) => {
+		setSalary(e.target.value);
+	};
+	const handleGoal = (e) => {
+		setGoal(e.target.value);
+	};
+
 	const handleUpdateUser = async () => {
 		setVisibilityToast(false);
 		setresponseApi(undefined);
@@ -83,11 +94,7 @@ const Profile = () => {
 				<div className='dark:text-white text-black flex flex-col items-center justify-center'>
 					<div className='flex justify-center items-center gap-3'>
 						<div className='flex flex-col items-start justify-center  '>
-							<img
-								src={user.icon}
-								alt='avatar'
-								className='w-28 h-28 rounded-full'
-							/>
+							<img src={user.icon} alt='avatar' className='w-28 h-28 rounded-full' />
 							<div className='mt-5'>
 								<p className='text-xl font-bold'>{user.full_name}</p>
 								<p className='text-sm opacity-50'>{user.email}</p>
@@ -104,9 +111,7 @@ const Profile = () => {
 					<p className='opacity-50'>Usuario desde</p>
 					<p className='text-lg font-semibold'>{format(user?.created_in, 'PP')}</p>
 				</div>
-				<Tabs
-					defaultValue='account'
-					className=''>
+				<Tabs defaultValue='account' className=''>
 					<TabsList className='flex  bg-dark_secondary_color w-full mt-5'>
 						<TabsTrigger
 							className={`${
@@ -118,7 +123,9 @@ const Profile = () => {
 						</TabsTrigger>
 						<TabsTrigger
 							value='password'
-							className={`${tab === 'wallet' ? 'bg-alternative_color' : ' dark:bg-dark_foreground'} dark:text-white text-black cursor-pointer`}
+							className={`${
+								tab === 'wallet' ? 'bg-alternative_color' : ' dark:bg-dark_foreground'
+							} dark:text-white text-black cursor-pointer`}
 							onClick={() => setTab('wallet')}>
 							Editar Billetera
 						</TabsTrigger>
@@ -170,9 +177,7 @@ const Profile = () => {
 									</Link>
 								</Button>
 
-								<Link
-									to='/auth/delete-account'
-									className='dark:text-white text-black underline self-center '>
+								<Link to='/auth/delete-account' className='dark:text-white text-black underline self-center '>
 									Eliminar Cuenta
 								</Link>
 							</div>
@@ -184,13 +189,69 @@ const Profile = () => {
 							</Button>
 						</div>
 					</TabsContent>
-					<TabsContent value='password'>Change your password here.</TabsContent>
+					<TabsContent value='password'>
+						<div className='flex md:gap-10 gap-3 mt-5 '>
+							<div className='flex flex-col w-full p'>
+								<Label className='text-lg dark:text-white text-black opacity-50'>Salario</Label>
+								<Input
+									className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full mt-2 placeholder:opacity-30'
+									id='name'
+									value={salary}
+									onChange={handleSalary}
+									placeholder=''
+									type='number'
+								/>
+							</div>
+							<div className='flex flex-col w-full'>
+								<h2 className='text-lg dark:text-white text-black opacity-50'>Tipo de moneda</h2>
+								<div className='pl-16 mt-5 flex flex-col gap-1'>
+									<Label className='text-md dark:text-white text-black opacity-50 flex items-center '>
+										<span>Cop</span>
+										<Input
+											className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full placeholder:opacity-30 h-5 mr-8'
+											id='cop'
+											value='Peso colombiano(Cop)'
+											name='cop'
+											type='checkbox'
+										/>
+									</Label>
+									<Label className='text-lg dark:text-white text-black opacity-50 flex items-center'>
+										<span>usd</span>
+										<Input
+											className='border-b dark:bg-dark_secondary_color border-none  dark:text-white text-black placeholder:text-gray-300 w-full  placeholder:opacity-30 h-5 mr-8'
+											id='usd'
+											name='usd'
+											value={'fdsafsda'}
+											type='checkbox'
+										/>
+									</Label>
+								</div>
+							</div>
+						</div>
+						<div className='flex flex-col mt-5'>
+							<Label className='text-lg dark:text-white text-black opacity-50'>Meta a ahorrar</Label>
+							<Input
+								className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full placeholder:opacity-30'
+								id='goal'
+								value={goal}
+								onChange={handleGoal}
+								type='number'
+							/>
+						</div>
+
+						<div className='flex flex-col-reverse md:flex-row md:gap-10 mt-8'>
+							<Button
+								onClick={handleUpdateUser}
+								disabled={name === '' || lastname === '' || email === ''}
+								className=' w-full font-semibold  text-white text-lg flex justify-center items-center py-5 cursor-pointer bg-alternative_color '>
+								Guardar cambios
+							</Button>
+						</div>
+					</TabsContent>
 				</Tabs>
 			</section>
 
-			<Dialog
-				open={dialogAvatar}
-				onOpenChange={setDialogAvatar}>
+			<Dialog open={dialogAvatar} onOpenChange={setDialogAvatar}>
 				<DialogContent className=' w-full md:w-[500px] rounded-md dark:bg-dark_primary_color dark:text-white text-black '>
 					<div className='flex flex-col items-center space-y-4'>
 						<h2 className='text-xl font-semibold'>Selecciona tu avatar</h2>
@@ -259,11 +320,7 @@ const Profile = () => {
 				</DialogContent>
 			</Dialog>
 			{visibilytToast && (
-				<Toast
-					visibility={visibilytToast}
-					severity={responseApi?.status == 200 ? 'success' : 'error'}
-					message={responseApi?.message}
-				/>
+				<Toast visibility={visibilytToast} severity={responseApi?.status == 200 ? 'success' : 'error'} message={responseApi?.message} />
 			)}
 		</main>
 	);
