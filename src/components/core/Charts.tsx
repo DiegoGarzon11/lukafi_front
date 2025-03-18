@@ -615,9 +615,7 @@ export const ChartExampleTwo = ({ trigger = false }) => {
 	useEffect(() => {
 		const getGoalValue = async () => {
 			const wallet = await GetWalletUser(userInfo?.user_id);
-
 			setGoalValue(wallet.wallet);
-			console.log(goalValue);
 		};
 		getGoalValue();
 	}, [trigger]);
@@ -626,7 +624,6 @@ export const ChartExampleTwo = ({ trigger = false }) => {
 			name: 'saving',
 			saving: goalValue?.saving,
 			available: goalValue?.available,
-			
 		},
 	];
 
@@ -648,16 +645,14 @@ export const ChartExampleTwo = ({ trigger = false }) => {
 					strokeLinecap='square'
 					opacity={0.2}
 				/>
-				
+
 				<YAxis />
 				<Legend />
 				{localStorage.token && (
 					<>
-						
 						<Bar
 							dataKey='saving'
 							fill={SECOND_COLOR}
-							
 							activeBar={
 								<Rectangle
 									fill='#0ef9e2'
@@ -668,7 +663,6 @@ export const ChartExampleTwo = ({ trigger = false }) => {
 						<Bar
 							dataKey='available'
 							fill={MAIN_COLOR}
-							
 							activeBar={
 								<Rectangle
 									fill='#ff654e'

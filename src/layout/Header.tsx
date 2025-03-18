@@ -73,10 +73,13 @@ export default function Header({ valueSide }) {
 		valueSide(!isSideOpen);
 	};
 
-	const linksNotSidebar = ['/profile/delete-account', '/restore-account'];
+	
+	const userDeleted = localStorage.getItem('userMain') ? JSON.parse(localStorage.getItem('userMain'))?.deleted_in : null;
 	const currentRoute = localStorage.route_name;
+	console.log(currentRoute);
+
 	useEffect(() => {
-		if (linksNotSidebar.includes(currentRoute)) {
+		if (userDeleted != null) {
 			setAllowSidebar(false);
 		} else {
 			setAllowSidebar(true);
@@ -177,7 +180,9 @@ export default function Header({ valueSide }) {
 						<section className={`${localStorage.token ? '' : 'hidden'}  transition-all duration-500 ease-in-out`}>
 							{allowSidebar && <SheetSide />}
 						</section>
-						{localStorage.token && allowSidebar && <SidebarTrigger className='z-50 mt-3 ml-3 sticky top-3 cursor-pointer dark:text-white text-black' />}
+						{localStorage.token && allowSidebar && (
+							<SidebarTrigger className='z-50 mt-3 ml-3 sticky top-3 cursor-pointer dark:text-white text-black' />
+						)}
 						<Button
 							variant='ghost'
 							className='z-50 mt-3 ml-3 text-lg  sticky top-3 cursor-default dark:text-white text-black'>

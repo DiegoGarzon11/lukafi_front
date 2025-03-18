@@ -96,9 +96,8 @@ export const Dashboard = () => {
 									<span>Te recomendamos que como tu primer ingreso</span>
 									<span className='text-green-500'> agregues todo el dinero que tengas disponible en general</span>
 									<br />
-									<span>Esto puedes hacerlo en la sección de </span>{' '}
+									<span>Esto puedes hacerlo en la sección de </span>
 									<span className='text-green-500 underline cursor-pointer'>
-										{' '}
 										<Link to='/wallet/incomes'>ingresos</Link>
 									</span>
 								</DialogDescription>

@@ -1,9 +1,9 @@
-import {useTranslation} from 'react-i18next';
-import {Card} from '@/components/others/Card';
+import { useTranslation } from 'react-i18next';
+import { Card } from '@/components/others/Card';
 // import {Click} from '@/assets/icons/Svg';
-import {ArrowDown, CornerDownRight, Mail, MousePointerClick, Phone, Star} from 'lucide-react';
-import {ChartExample, ChartExampleTwo} from '@/components/core/Charts';
-import {Button} from '@/components/ui/button';
+import { ArrowDown, CornerDownRight, Mail, MousePointerClick, Phone, Star } from 'lucide-react';
+import { ChartExample, ChartExampleTwo } from '@/components/core/Charts';
+import { Button } from '@/components/ui/button';
 
 export const Home = () => {
 	const { t, i18n } = useTranslation();
@@ -44,7 +44,7 @@ export const Home = () => {
 				</section>
 				<section className='flex md:flex-row flex-col justify-between w-full mt-5 md:gap-5'>
 					<div className='flex justify-start flex-col-reverse md:flex-col items-center md:w-4/6  '>
-						<div className=' w-full flex flex-col md:items-end items-center mt-8  '>
+						<div className=' w-full flex flex-col md:items-center items-center mt-8  '>
 							<p className='text-2xl font-semibold dark:text-white text-black'>{t('home.phrase4.text1')}</p>
 							<CornerDownRight className='text-lime-500 w-20 h-20 brightness-150 hidden md:block ' />
 							<ArrowDown className='text-lime-500 w-20 h-20 brightness-150 my-3 block md:hidden' />
@@ -62,10 +62,26 @@ export const Home = () => {
 						</div>
 					</div>
 					<div className='md:flex justify-between md:flex-col md:items-end  md:w-2/4'>
-						<Card img={'images/growUp.svg'} title={t('home.card1.title')} info={t('home.card1.text')} />
-						<Card img={'images/saving.svg'} title={t('home.card2.title')} info={t('home.card2.text')} />
-						<Card img={'images/loans.svg'} title={t('home.card3.title')} info={t('home.card3.text')} />
-						<Card img={'images/loans.svg'} title={t('home.card3.title')} info={t('home.card3.text')} />
+						<Card
+							img={'images/growUp.svg'}
+							title={t('home.card1.title')}
+							info={t('home.card1.text')}
+						/>
+						<Card
+							img={'images/saving.svg'}
+							title={t('home.card2.title')}
+							info={t('home.card2.text')}
+						/>
+						<Card
+							img={'images/loans.svg'}
+							title={t('home.card3.title')}
+							info={t('home.card3.text')}
+						/>
+						<Card
+							img={'images/loans.svg'}
+							title={t('home.card3.title')}
+							info={t('home.card3.text')}
+						/>
 					</div>
 				</section>
 				<section className='flex md:flex-row flex-col justify-between w-full gap-5'>

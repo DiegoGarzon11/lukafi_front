@@ -11,62 +11,63 @@ import { SeeIncomes } from './components/core/Income/SeeIncomes';
 import DeleteAccount from './pages/auth/DeleteAccount';
 import RestoreAccountPage from './pages/auth/RestoreAccount';
 
-const isAuthenticated = localStorage.token;
+const isAuthenticated = localStorage?.token;
+const userDeleted = localStorage.getItem('userMain') ? JSON.parse(localStorage.getItem('userMain'))?.deleted_in : null;
+console.log(userDeleted);
 
 const RoutesManager = () => (
 	<Routes>
-		<Route
-			path='/'
-			element={isAuthenticated ? <Navigate to='/dashboard' /> : <Home />}
-		/>
-		<Route
-			path='auth'
-			element={isAuthenticated ? <Navigate to='/dashboard' /> : <Home />}
-		/>
-		<Route
-			path='dashboard'
-			element={isAuthenticated ? <Dashboard /> : <Navigate to='/' />}
-		/>
-		<Route
-			path='/wallet'
-			element={isAuthenticated ? <WalletComponent /> : <Navigate to='/' />}
-		/>
-		<Route
-			path='/wallet/expenses'
-			element={isAuthenticated ? <SeeExpenses /> : <Navigate to='/' />}
-		/>
-		<Route
-			path='/wallet/debts'
-			element={isAuthenticated ? <SeeDebts /> : <Navigate to='/' />}
-		/>
-		<Route
-			path='/wallet/incomes'
-			element={isAuthenticated ? <SeeIncomes /> : <Navigate to='/' />}
-		/>
-		<Route
-			path='/profile'
-			element={isAuthenticated ? <Profile /> : <Navigate to='/' />}
-		/>
-		<Route
-			path='/auth/delete-account'
-			element={isAuthenticated ? <DeleteAccount /> : <Navigate to='/' />}
-		/>
-		<Route
-			path='/restore-account'
-			element={isAuthenticated ? <RestoreAccountPage /> : <Navigate to='/' />}
-		/>
-		<Route
-			path='/auth/restore-password'
-			element={isAuthenticated ? <Dashboard /> : <ForgetPassword />}
-		/>
-		<Route
-			path='/auth/change-password'
-			element={isAuthenticated ? <ForgetPassword /> : <Navigate to='/' />}
-		/>
-		<Route
-			path='*'
-			element={<PageNotFound />}
-		/>
+		<Route element={userDeleted != null ? <RestoreAccountPage/>  : ''}>
+			<Route
+				path='/'
+				element={isAuthenticated ? <Navigate to='/dashboard' /> : <Home />}
+			/>
+			<Route
+				path='auth'
+				element={isAuthenticated ? <Navigate to='/dashboard' /> : <Home />}
+			/>
+			<Route
+				path='dashboard'
+				element={isAuthenticated ? <Dashboard /> : <Navigate to='/' />}
+			/>
+			<Route
+				path='/wallet'
+				element={isAuthenticated ? <WalletComponent /> : <Navigate to='/' />}
+			/>
+			<Route
+				path='/wallet/expenses'
+				element={isAuthenticated ? <SeeExpenses /> : <Navigate to='/' />}
+			/>
+			<Route
+				path='/wallet/debts'
+				element={isAuthenticated ? <SeeDebts /> : <Navigate to='/' />}
+			/>
+			<Route
+				path='/wallet/incomes'
+				element={isAuthenticated ? <SeeIncomes /> : <Navigate to='/' />}
+			/>
+			<Route
+				path='/profile'
+				element={isAuthenticated ? <Profile /> : <Navigate to='/' />}
+			/>
+			<Route
+				path='/auth/delete-account'
+				element={isAuthenticated ? <DeleteAccount /> : <Navigate to='/' />}
+			/>
+		
+			<Route
+				path='/auth/restore-password'
+				element={isAuthenticated ? <Dashboard /> : <ForgetPassword />}
+			/>
+			<Route
+				path='/auth/change-password'
+				element={isAuthenticated ? <ForgetPassword /> : <Navigate to='/' />}
+			/>
+			<Route
+				path='*'
+				element={<PageNotFound />}
+			/>
+		</Route>
 	</Routes>
 );
 

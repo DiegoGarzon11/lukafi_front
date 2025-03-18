@@ -47,7 +47,7 @@ const DeleteAccount = () => {
 	};
 
 	return (
-		<section className='flex flex-col items-center justify-center h-screen pt-20 p-5 gap-5 dark:bg-dark_primary_color bg-white font-thin -ml-64'>
+		<section className='flex flex-col items-center justify-center h-screen pt-20 p-5 gap-5 dark:bg-dark_primary_color bg-white font-thin'>
 			<div className='p-5 w-11/12 md:w-[500px] rounded-md'>
 				<div className='flex justify-center flex-col items-center gap-5 mt-3'>
 					<img
