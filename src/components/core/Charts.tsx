@@ -39,7 +39,7 @@ const CustomTooltipDaily = ({ payload }) => {
 	}
 
 	return (
-		<div className='bg-zinc-900 p-5 rounded-md'>
+		<div className='dark:bg-dark_secondary_color bg-light_secondary_color p-5 rounded-md'>
 			{payload.map((p, i) => (
 				<p key={i}>
 					{localStorage.getItem('filterChartBalance') === 'day' ? (

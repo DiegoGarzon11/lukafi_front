@@ -201,7 +201,7 @@ export const Dashboard = () => {
 						)}
 					</div>
 
-					<article className=' dark:text-white text-black flex flex-col justify-between dark:bg-dark_primary_color bg-light_primary_color w-full md:w-2/5 rounded-md p-5 shadow-xl '>
+					<article className=' dark:text-white text-black flex flex-col justify-between dark:bg-dark_primary_color bg-light_primary_color w-full md:w-2/5 rounded-md p-5 '>
 						<div className='flex flex-col items-center justify-center'>
 							<p className='text-3xl font-bold text-main_color'>
 								+
@@ -240,7 +240,7 @@ export const Dashboard = () => {
 							</div>
 						</div>
 						<p className='text-center mt-5 opacity-50'>
-							Ultima actualizacion:{' '}
+							Ultima actualizacion:
 							<span className='font-bold'>{userData.wallet.modify_in && format(userData?.wallet?.modify_in, 'PP - HH:mm')}</span>
 						</p>
 					</article>
@@ -250,10 +250,10 @@ export const Dashboard = () => {
 					<div className='dark:bg-dark_primary_color bg-light_primary_color  w-full md:w-3/6 pt-10 rounded-md  text-center md:text-start md:px-5  h-full'>
 						<p className='   pb-5 dark:text-white text-black text-center md:text-start text-2xl font-semibold '>Oberva tus metas mensuales</p>
 						<p className='dark:text-white text-black text-lg '>
-							Estas a{' '}
+							Estas a
 							<span className='font-semibold text-main_color'>
 								{Number(userData?.wallet?.saving - userData?.wallet?.available).toLocaleString()}$
-							</span>{' '}
+							</span>
 							de alcanzar tu meta! animo🫡
 						</p>
 						<div className='flex justify-center items-center mt-8 '>

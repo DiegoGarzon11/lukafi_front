@@ -171,8 +171,8 @@ export default function Header({ valueSide }) {
 
 	return (
 		<>
-			<header className='z-50 absolute gap-5 w-0'>
-				<div className={`flex justify-start gap-3 items-center `}>
+			<header className='z-50 absolute gap-5 '>
+				<div className={`flex justify-start gap-3 items-center  `}>
 					<SidebarProvider
 						open={isSideOpen}
 						onOpenChange={handleSidebar}>
@@ -181,19 +181,22 @@ export default function Header({ valueSide }) {
 						</section>
 						{localStorage.token && allowSidebar && (
 							<SidebarTrigger
-								className={`z-50 mt-3 ml-3 fixed  transition-all duration-500 ease-in-out  ${
+								className={`z-50 mt-3 ml-6 fixed  transition-all duration-500 ease-in-out  ${
 									isSideOpen ? ' md:left-64' : 'md:left-0 '
 								}  top-1 cursor-pointer dark:text-white text-black`}
 							/>
 						)}
 						<Button
 							variant='ghost'
-							className={`z-50 mt-3 ml-3 text-lg transition-all duration-500 ease-in-out ${
+							className={`z-50 mt-3 ml-6 text-lg transition-all duration-500 ease-in-out ${
 								localStorage.token && allowSidebar && isSideOpen ? ' md:left-72 left-6 ' : 'md:left-6  '
 							} fixed  top-1 cursor-default dark:text-white text-black`}>
 							Lukafi
 						</Button>
-						<div className=' w-full fixed flex justify-end rounded-full p-3 z-10 bg-linear-to-t dark:from-dark_primary_color dark:to-dark_secondary_color from-light_primary_color to-light_secondary_color  '>
+						<div
+							className={` transition-all duration-500 ease-in-out ${
+								localStorage.token && allowSidebar && isSideOpen ? 'md:ml-[260px]  md:w-[82.5%] w-full' : 'w-full'
+							} fixed flex justify-end rounded-full p-3 z-10 bg-linear-to-t dark:from-dark_primary_color dark:to-dark_secondary_color from-light_primary_color to-light_secondary_color `}>
 							<div className='flex items-center gap-5 dark:text-white text-black'>
 								{!localStorage.token && location.pathname === '/' && (
 									<Button
@@ -210,7 +213,7 @@ export default function Header({ valueSide }) {
 									{localStorage.lang == 'en' ? <Usa /> : <Col />}
 								</button>
 								{isOpen && (
-									<div className='absolute dark:text-white dark:bg-zinc-900 bg-white  rounded-lg shadow-sm w-36 right-20 top-12 '>
+									<div className='absolute dark:text-white dark:bg-dark_secondary_color bg-light_secondary_color  rounded-lg shadow-sm w-36 right-20 top-12 '>
 										<div className='p-2 flex flex-col gap-3'>
 											<button
 												className='hover:scale-105 cursor-pointer'
