@@ -83,11 +83,11 @@ export const AddDebt = ({ apiData, sendData, className }) => {
 			<DialogTrigger asChild>
 				<Button
 					variant='ghost'
-					className={` ${className} py-6 dark:hover:bg-hover_primary_color dark:bg-dark_primary_color bg-zinc-300 text-black dark:text-white hover:bg-zinc-400 flex items-center gap-3`}>
+					className={` ${className} py-6 dark:hover:bg-dark_secondary_color hover:bg-light_secondary_color dark:bg-dark_primary_color bg-light_primary_color text-black dark:text-white  flex items-center gap-3`}>
 					{t('addDebt.addDebt')} <HandCoins />
 				</Button>
 			</DialogTrigger>
-			<DialogContent className=' w-full md:w-[500px] rounded-md dark:bg-dark_primary_color dark:text-white text-black '>
+			<DialogContent className=' w-full md:w-[500px] rounded-md dark:bg-dark_primary_color bg-light_primary_color dark:text-white text-black '>
 				<DialogHeader>
 					<DialogTitle>{t('addDebt.newDebt')}</DialogTitle>
 					<DialogDescription className='opacity-50'>{t('addDebt.instructions')}</DialogDescription>
@@ -98,12 +98,12 @@ export const AddDebt = ({ apiData, sendData, className }) => {
 				<div className='flex justify-evenly gap-5'>
 					<div
 						onClick={() => setDebtType(1)}
-						className={`border  p-5 rounded-xl w-1/2 cursor-pointer ${debtType === 1 ? 'border-lime-500' : 'border-gray-200/50'}`}>
+						className={`border  p-5 rounded-xl w-1/2 cursor-pointer ${debtType === 1 ? 'border-main_color' : 'border-gray-200/50'}`}>
 						<div className='flex justify-center flex-col items-center gap-2 '>
-							<Income color={`${debtType === 1 ? 'lime' : 'gray'}`} />
+							<Income color={`${debtType === 1 ? '#7fbd0c' : 'gray'}`} />
 
 							<label
-								className={`${debtType === 1 ? 'text-lime-500' : 'opacity-15'} cursor-pointer`}
+								className={`${debtType === 1 ? 'text-main_color border-main_color' : 'opacity-15'} cursor-pointer`}
 								htmlFor=''>
 								{t('addDebt.owesYou')}...
 							</label>
@@ -129,7 +129,7 @@ export const AddDebt = ({ apiData, sendData, className }) => {
 						</label>
 						<Input
 							value={person}
-							className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full mt-2 placeholder:opacity-30'
+							className='border-b dark:bg-dark_secondary_color bg-light_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full mt-2 placeholder:opacity-30'
 							onChange={(e) => handleValues(e, 'name')}
 						/>
 					</div>
@@ -139,7 +139,7 @@ export const AddDebt = ({ apiData, sendData, className }) => {
 						</label>
 						<Input
 							id='value_income'
-							className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full mt-2 placeholder:opacity-30'
+							className='border-b dark:bg-dark_secondary_color bg-light_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full mt-2 placeholder:opacity-30'
 							type='text'
 							value={value}
 							onChange={(e) => handleValues(e, 'money')}
@@ -153,7 +153,7 @@ export const AddDebt = ({ apiData, sendData, className }) => {
 					<Input
 						id='value_income'
 						type='text'
-						className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full mt-2 placeholder:opacity-30'
+						className='border-b dark:bg-dark_secondary_color bg-light_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full mt-2 placeholder:opacity-30'
 						value={reason}
 						onChange={(e) => handleValues(e, 'reason')}
 					/>

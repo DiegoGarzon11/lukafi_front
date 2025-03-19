@@ -73,7 +73,6 @@ export default function Header({ valueSide }) {
 		valueSide(!isSideOpen);
 	};
 
-	
 	const userDeleted = localStorage.getItem('userMain') ? JSON.parse(localStorage.getItem('userMain'))?.deleted_in : null;
 	const currentRoute = localStorage.route_name;
 	console.log(currentRoute);
@@ -172,8 +171,8 @@ export default function Header({ valueSide }) {
 
 	return (
 		<>
-			<header className='z-50 absolute gap-5 w-0'>
-				<div className={`flex justify-start gap-3 items-center `}>
+			<header className='z-50 absolute gap-5 '>
+				<div className={`flex justify-start gap-3 items-center  `}>
 					<SidebarProvider
 						open={isSideOpen}
 						onOpenChange={handleSidebar}>
@@ -181,20 +180,29 @@ export default function Header({ valueSide }) {
 							{allowSidebar && <SheetSide />}
 						</section>
 						{localStorage.token && allowSidebar && (
-							<SidebarTrigger className='z-50 mt-3 ml-3 sticky top-3 cursor-pointer dark:text-white text-black' />
+							<SidebarTrigger
+								className={`z-50 mt-3 ml-6 fixed  transition-all duration-500 ease-in-out  ${
+									isSideOpen ? ' md:left-64' : 'md:left-0 '
+								}  top-1 cursor-pointer dark:text-white text-black`}
+							/>
 						)}
 						<Button
 							variant='ghost'
-							className='z-50 mt-3 ml-3 text-lg  sticky top-3 cursor-default dark:text-white text-black'>
+							className={`z-50 mt-3 ml-6 text-lg transition-all duration-500 ease-in-out ${
+								localStorage.token && allowSidebar && isSideOpen ? ' md:left-72 left-6 ' : 'md:left-6  '
+							} fixed  top-1 cursor-default dark:text-white text-black`}>
 							Lukafi
 						</Button>
-						<div className=' w-full fixed flex justify-end shadow-xs shadow-z-700 rounded-full p-3 z-10 bg-linear-to-b dark:from-zinc-950 dark:to-dark_primary_color from-zinc-100 to-zinc-300 border-b border-gray-600/50 '>
+						<div
+							className={` transition-all duration-500 ease-in-out ${
+								localStorage.token && allowSidebar && isSideOpen ? 'md:ml-[260px]  md:w-[82.5%] w-full' : 'w-full'
+							} fixed flex justify-end rounded-full p-3 z-10 bg-linear-to-t dark:from-dark_primary_color dark:to-dark_secondary_color from-light_primary_color to-light_secondary_color `}>
 							<div className='flex items-center gap-5 dark:text-white text-black'>
 								{!localStorage.token && location.pathname === '/' && (
 									<Button
 										onClick={handleAuth}
 										variant='ghost'
-										className='cursor-pointer rounded-4xl dark:bg-dark_foreground bg-light_primary_color px-3 py-1 border border-gray-800'>
+										className='cursor-pointer rounded-4xl dark:bg-dark_foreground bg-light_foreground  px-3 py-1 border border-gray-800'>
 										{t('header.signIn')} / {t('form.field.signUp')}
 									</Button>
 								)}
@@ -205,7 +213,7 @@ export default function Header({ valueSide }) {
 									{localStorage.lang == 'en' ? <Usa /> : <Col />}
 								</button>
 								{isOpen && (
-									<div className='absolute dark:text-white dark:bg-zinc-900 bg-white  rounded-lg shadow-sm w-36 right-20 top-12 '>
+									<div className='absolute dark:text-white dark:bg-dark_secondary_color bg-light_secondary_color  rounded-lg shadow-sm w-36 right-20 top-12 '>
 										<div className='p-2 flex flex-col gap-3'>
 											<button
 												className='hover:scale-105 cursor-pointer'
@@ -264,19 +272,30 @@ export default function Header({ valueSide }) {
 									<DialogTitle className='my-3 dark:text-white text-black text-center absolute top-0 '>Bienvenido de vuelta</DialogTitle>
 									<DialogDescription>
 										<form className='flex flex-col gap-5 w-full'>
+											<p className='dark:text-white text-black self-start text-base font-semibold'>
+												¿No tienes cuenta?
+												<button
+													onClick={(e) => {
+														e.preventDefault();
+														setFlipped(true);
+													}}
+													className='text-main_color underline ml-2 cursor-pointer'>
+													Registrarse
+												</button>
+											</p>
 											<Input
 												type='email'
 												onChange={handleChange}
 												value={data.email}
 												placeholder='Email'
 												name='email'
-												className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
+												className='border-b dark:bg-dark_secondary_color bg-light_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
 											/>
 											<div className='relative w-full'>
 												<Input
 													autoComplete='new-password'
 													type={showPassword ? 'text' : 'password'}
-													className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
+													className='border-b dark:bg-dark_secondary_color bg-light_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
 													placeholder='Password'
 													onChange={handleChange}
 													value={data.password}
@@ -290,12 +309,12 @@ export default function Header({ valueSide }) {
 													{showPassword ? <EyeOpen className='text-zinc-500' /> : <EyeClose className='text-zinc-500' />}
 												</button>
 											</div>
-											<p className='dark:text-white text-black text-center text-base'>
+											<p className='dark:text-white text-black text-center text-base font-semibold'>
 												¿Olvidaste tu contraseña?
 												<Link
 													onClick={() => setIsAuthOpen(false)}
 													to='/auth/restore-password'
-													className='text-lime-500 underline ml-2'>
+													className='text-main_color underline ml-2'>
 													Recuperar
 												</Link>
 											</p>
@@ -306,17 +325,6 @@ export default function Header({ valueSide }) {
 												type='submit'>
 												{loader || statusCode?.status === 200 ? <LoaderApi color='white' /> : 'Iniciar sesión'}
 											</Button>
-											<p className='dark:text-white text-black text-center  text-lg absolute bottom-0 '>
-												¿No tienes cuenta?
-												<button
-													onClick={(e) => {
-														e.preventDefault();
-														setFlipped(true);
-													}}
-													className='text-lime-500 underline ml-2 cursor-pointer'>
-													Registrarse
-												</button>
-											</p>
 										</form>
 									</DialogDescription>
 								</DialogHeader>
@@ -325,21 +333,22 @@ export default function Header({ valueSide }) {
 							<div className='absolute w-full h-full flex flex-col justify-center items-center rotate-y-180 [backface-visibility:hidden]'>
 								<DialogHeader className='flex flex-col justify-around w-full'>
 									<DialogTitle className='my-3 dark:text-white text-black text-center absolute top-0 '>Crear Cuenta</DialogTitle>
-									<p className='dark:text-white text-black text-center mb-10 self-start text-lg'>
-										¿Ya tienes cuenta?
-										<button
-											onClick={(e) => {
-												e.preventDefault();
-												setFlipped(false);
-											}}
-											className='text-lime-500 underline ml-2 cursor-pointer'>
-											Iniciar sesión
-										</button>
-									</p>
+
 									<DialogDescription>
 										<form
 											className='flex flex-col gap-5 w-full'
 											onSubmit={handleSubmitSignUp}>
+											<p className='dark:text-white text-black text-center self-start text-base font-semibold'>
+												¿Ya tienes cuenta?
+												<button
+													onClick={(e) => {
+														e.preventDefault();
+														setFlipped(false);
+													}}
+													className='text-main_color underline ml-2 cursor-pointer'>
+													Iniciar sesión
+												</button>
+											</p>
 											<div className='flex  gap-3'>
 												<Input
 													type='text'
@@ -347,7 +356,7 @@ export default function Header({ valueSide }) {
 													value={data.newName}
 													placeholder='Nombre'
 													name='newName'
-													className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
+													className='border-b dark:bg-dark_secondary_color bg-light_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
 												/>
 												<Input
 													type='text'
@@ -355,7 +364,7 @@ export default function Header({ valueSide }) {
 													value={data.newLastName}
 													placeholder='Last Name'
 													name='newLastName'
-													className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
+													className='border-b dark:bg-dark_secondary_color bg-light_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
 												/>
 											</div>
 											<Input
@@ -364,13 +373,13 @@ export default function Header({ valueSide }) {
 												value={data.newEmail}
 												placeholder='Email'
 												name='newEmail'
-												className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
+												className='border-b dark:bg-dark_secondary_color bg-light_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
 											/>
 											<div className='relative w-full'>
 												<Input
 													autoComplete='new-password'
 													type={showPassword ? 'text' : 'password'}
-													className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
+													className='border-b dark:bg-dark_secondary_color bg-light_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
 													onChange={handleChange}
 													placeholder='Password'
 													value={data.newPassword}

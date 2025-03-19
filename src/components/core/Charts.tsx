@@ -39,7 +39,7 @@ const CustomTooltipDaily = ({ payload }) => {
 	}
 
 	return (
-		<div className='bg-zinc-900 p-5 rounded-md'>
+		<div className='dark:bg-dark_secondary_color bg-light_secondary_color p-5 rounded-md'>
 			{payload.map((p, i) => (
 				<p key={i}>
 					{localStorage.getItem('filterChartBalance') === 'day' ? (
@@ -49,10 +49,10 @@ const CustomTooltipDaily = ({ payload }) => {
 					) : (
 						<span className='dark:text-white text-black'>El mes de {months[Number(p.payload?.month - 1)]}</span>
 					)}
-					<span className={`${validateName(p?.name) === 'gasto' ? 'text-alternative_color' : 'text-lime-500'} mx-2`}>
+					<span className={`${validateName(p?.name) === 'gasto' ? 'text-alternative_color' : 'text-main_color'} mx-2`}>
 						{validateName(p?.name)}
 					</span>
-					<span className={`${validateName(p?.name) === 'gasto' ? 'text-alternative_color ' : '  text-lime-500 '} font-bold`}>
+					<span className={`${validateName(p?.name) === 'gasto' ? 'text-alternative_color ' : '  text-main_color '} font-bold`}>
 						{Number(p.value).toLocaleString()}
 					</span>
 				</p>
@@ -509,7 +509,7 @@ export const ChartExample = () => {
 			deudas: 700,
 		},
 	];
-
+	
 	return (
 		<ResponsiveContainer height={250}>
 			<LineChart
@@ -530,12 +530,13 @@ export const ChartExample = () => {
 				/>
 				<XAxis dataKey='name' />
 				<YAxis />
-				<Legend />
+				<Legend iconType='star'  />
 
 				<Line
 					type='bump'
 					dataKey='ingresos'
-					stroke='#a8fa0a'
+					
+					stroke={MAIN_COLOR}
 					strokeWidth={3}
 				/>
 				<Line

@@ -100,8 +100,8 @@ export function SheetSide() {
 	return (
 		<Sidebar
 			variant='sidebar'
-			className={`z-50  bg-zinc-200  min-w-28  `}>
-			<SidebarContent className='dark:bg-dark_primary_color bg-zinc-200 '>
+			className={`z-50  min-w-28  `}>
+			<SidebarContent className='dark:bg-dark_primary_color bg-light_primary_color ml-3 rounded-4xl  my-2'>
 				<div className=' w-full flex justify-end mt-3'>
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
@@ -169,10 +169,10 @@ export function SheetSide() {
 													key={child.path}
 													to={child.path}>
 													<Button
-														className={`w-full gap-4 justify-start py-6 bg-zinc-200  text-black dark:text-white cursor-pointer ${
+														className={`w-full gap-4 justify-start py-6 dark:text-white text-black cursor-pointer ${
 															localStorage.route_name === child.path
-																? 'bg-alternative_color '
-																: 'bg-transparent dark:hover:bg-dark_secondary_color'
+																? 'bg-alternative_color text-white '
+																: 'bg-transparent dark:hover:bg-dark_secondary_color hover:bg-light_secondary_color'
 														}`}>
 														{child.icon}
 														{child.name}

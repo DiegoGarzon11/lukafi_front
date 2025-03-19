@@ -73,9 +73,9 @@ const RestoreAccountPage = () => {
 						className='w-56 h-56  rounded-full '
 					/>
 					<p className={`font-bold text-xl text-black dark:text-white text-center ${dialog ? 'hidden' : 'block'}`}>
-						Tu cuenta completara su eliminación en <span className='text-lime-500'>{diasRestantes}</span> dias
+						Tu cuenta completara su eliminación en <span className='text-main_color'>{diasRestantes}</span> dias
 					</p>
-					<p className={`font-semibold text-md text-lime-500   text-center  ${dialog ? 'hidden' : 'block'}`}>¿Te gustaria reactivarla?</p>
+					<p className={`font-semibold text-md text-main_color   text-center  ${dialog ? 'hidden' : 'block'}`}>¿Te gustaria reactivarla?</p>
 				</div>
 				<div className={` ${dialog ? 'hidden' : 'flex'} justify-center gap-5 mt-5 flex-col items-center `}>
 					<Button
@@ -93,7 +93,7 @@ const RestoreAccountPage = () => {
 					className={` ${
 						dialog ? 'flex' : 'hidden'
 					} shadow-sm shadow-alternative_color  rounded-md  p-5 flex-col justify-center gap-3 items-center`}>
-					<h3 className='font-semibold text-xl my-3 flex items-center gap-2 text-lime-500'>
+					<h3 className='font-semibold text-xl my-3 flex items-center gap-2 text-main_color'>
 						Cuenta restaurada <BadgeCheck className='text-alternative_color' />
 					</h3>
 					<p className='text-lg dark:text-white text-black'>Serás redirigido en {numero} segundos para que Inicie sesión</p>

@@ -90,7 +90,7 @@ export const ForgetPassword = () => {
 					{isRedirect && response.success == true ? (
 						<div className='shadow-sm shadow-lime-500  rounded-md  p-5 flex flex-col justify-center gap-3 items-center'>
 							<h3 className='font-semibold text-xl my-3 flex items-center gap-2'>
-								Contraseña actualizada <BadgeCheck className='text-lime-500' />
+								Contraseña actualizada <BadgeCheck className='text-main_color' />
 							</h3>
 							<p className='opacity-80'>Tu contraseña ha sido actualizada con éxito</p>
 							<p className='text-lg'>Serás redirigido en {numero} segundos</p>
@@ -200,7 +200,7 @@ export const ForgetPassword = () => {
 						</form>
 						<p className='font-semibold dark:text-white text-black text-lg'>
 							¿Recordaste tu contraseña?
-							<Link to='/' className='text-lime-500 underline mx-2'>
+							<Link to='/' className='text-main_color underline mx-2'>
 								Ingresa aquí
 							</Link>
 						</p>

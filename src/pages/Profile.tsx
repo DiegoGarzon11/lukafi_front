@@ -324,7 +324,7 @@ const Profile = () => {
 						</DialogDescription>
 						{selectedAvatar && (
 							<p className='mt-4 text-lg'>
-								Seleccionaste: <b className='text-lime-500'>{selectedAvatar}</b>
+								Seleccionaste: <b className='text-main_color'>{selectedAvatar}</b>
 							</p>
 						)}
 						<Button

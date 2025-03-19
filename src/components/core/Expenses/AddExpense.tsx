@@ -46,12 +46,10 @@ export const AddExpense = ({ apiData, sendData, className }) => {
 	const handleDateFixedCost = (e) => {
 		setDeadLine(e);
 	};
-	
-	
+
 	async function fetchCategories() {
 		const getAllCategories = await GetAllCategories();
 		setCategories(getAllCategories);
-		
 	}
 	const handleCategory = (e) => {
 		setSelectedCategory(e);
@@ -108,11 +106,11 @@ export const AddExpense = ({ apiData, sendData, className }) => {
 						setSelectedCategory(null);
 					}}
 					variant='ghost'
-					className={`${className} py-6 dark:hover:bg-hover_primary_color  dark:bg-dark_primary_color bg-zinc-300 hover:bg-zinc-400 text-black  dark:text-white flex items-center gap-3`}>
+					className={`${className} py-6 dark:hover:bg-dark_secondary_color hover:bg-light_secondary_color  dark:bg-dark_primary_color bg-light_primary_color  text-black  dark:text-white flex items-center gap-3`}>
 					{t('addExpense.addExpense')} <DollarSign />
 				</Button>
 			</DialogTrigger>
-			<DialogContent className=' w-full md:w-[500px] rounded-md dark:bg-dark_primary_color dark:text-white text-black '>
+			<DialogContent className=' w-full md:w-[500px] rounded-md dark:bg-dark_primary_color bg-light_primary_color dark:text-white text-black '>
 				<DialogHeader>
 					<DialogTitle>{t('addExpense.newExpense')}</DialogTitle>
 					<DialogDescription className='opacity-50'> {t('addExpense.completeFields')} </DialogDescription>
@@ -125,7 +123,7 @@ export const AddExpense = ({ apiData, sendData, className }) => {
 							className='mb-2'>
 							{t('addExpense.nameExpense')} <span className='text-red-500'>*</span>
 							<Input
-								className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full mt-2 placeholder:opacity-30'
+								className='border-b dark:bg-dark_secondary_color bg-light_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full mt-2 dark:placeholder:opacity-30'
 								value={name}
 								onChange={(e) => handleValues(e, 'name')}
 								id='value_name'
@@ -140,7 +138,7 @@ export const AddExpense = ({ apiData, sendData, className }) => {
 							className='mb-2'>
 							{t('addExpense.amount')} $ <span className='text-red-500'>*</span>
 							<Input
-								className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full mt-2 placeholder:opacity-30'
+								className='border-b dark:bg-dark_secondary_color bg-light_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full mt-2 placeholder:opacity-30'
 								value={value}
 								onChange={(e) => handleValues(e, 'value')}
 								id='value_value'
@@ -160,9 +158,7 @@ export const AddExpense = ({ apiData, sendData, className }) => {
 									setIsFixed('true');
 								}}
 								variant='ghost'
-								className={`${className} ${
-									isFixed == 'true' ? 'dark:bg-dark_foreground ' : ''
-								}  `}>
+								className={`${className} ${isFixed == 'true' ? 'dark:bg-dark_foreground bg-light_foreground ' : ''}  `}>
 								{t('addExpense.yes')}
 							</Button>
 							<Button
@@ -170,9 +166,7 @@ export const AddExpense = ({ apiData, sendData, className }) => {
 									setIsFixed('false');
 								}}
 								variant='ghost'
-								className={`${className}  ${
-									isFixed == 'false' ? 'dark:bg-dark_foreground ' : ''
-								}    `}>
+								className={`${className}  ${isFixed == 'false' ? 'dark:bg-dark_foreground  bg-light_foreground' : ''}    `}>
 								No
 							</Button>
 						</div>
@@ -192,16 +186,16 @@ export const AddExpense = ({ apiData, sendData, className }) => {
 						<div className=' flex flex-wrap gap-x-3 items-center'>
 							<p className=''>{t('addExpense.paymentDayP')} </p>
 							<Select onValueChange={(e) => handleDateFixedCost(e)}>
-								<SelectTrigger className=' w-32 bg-zinc-200 dark:bg-dark_secondary_color dark:text-white text-black border border-alternative_color'> 
+								<SelectTrigger className=' w-32 bg-zinc-200 dark:bg-dark_secondary_color dark:text-white text-black border border-alternative_color'>
 									<SelectValue placeholder={`${t('dashboard.day')}`} />
 								</SelectTrigger>
-								<SelectContent className='dark:bg-dark_primary_color dark:text-white text-black'>
+								<SelectContent className='dark:bg-dark_primary_color bg-light_primary_color dark:text-white text-black'>
 									<SelectGroup>
 										<SelectLabel className='text-lg'>{t('dashboard.day')}</SelectLabel>
 
 										{days.map((e, i) => (
 											<SelectItem
-												className='dark:focus:bg-dark_secondary_color focus:bg-zinc-200 cursor-pointer'
+												className='dark:focus:bg-dark_secondary_color focus:bg-light_secondary_color cursor-pointer'
 												key={i}
 												value={e.toString()}>
 												{e}
@@ -213,8 +207,6 @@ export const AddExpense = ({ apiData, sendData, className }) => {
 							<p> {t('dashboard.ofEachMonth')} </p>
 							<span className='text-red-500'>*</span>
 						</div>
-
-						
 					</div>
 				)}
 				<Button
