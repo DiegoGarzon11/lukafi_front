@@ -1,17 +1,22 @@
-import {useState} from 'react';
-import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs';
-import {Dialog, DialogContent, DialogDescription, DialogHeader} from '@/components/ui/dialog';
-import {Button} from '@/components/ui/button';
 import {EditUser, UserIconUpdate} from '@/apis/UserService';
-import {Toast} from '@/tools/Toast';
-import {ApiResponse} from '@/interfaces/Api';
-import {Link, useNavigate} from 'react-router-dom';
-import {Pencil1Icon} from '@radix-ui/react-icons';
-import {format} from 'date-fns';
+import {Button} from '@/components/ui/button';
+import {Dialog, DialogContent, DialogDescription, DialogHeader} from '@/components/ui/dialog';
 import {Input} from '@/components/ui/input';
 import {Label} from '@/components/ui/label';
+import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
+import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs';
+import {ApiResponse} from '@/interfaces/Api';
+import {Toast} from '@/tools/Toast';
+import {Pencil1Icon} from '@radix-ui/react-icons';
+import {format} from 'date-fns';
+import {useEffect, useState} from 'react';
+import {Link, useNavigate} from 'react-router-dom';
+import {GetWalletUser} from '@/apis/WalletService';
+import {User} from '@/interfaces/User';
+import {ResponseWallet} from '@/interfaces/Wallet';
+
 const Profile = () => {
-	const user = JSON.parse(localStorage.getItem('userMain'));
+	const user: User = JSON.parse(localStorage.getItem('userMain'));
 	const ICONS = {
 		adventurer: ['John', 'Alice', 'Bob', 'Charlie', 'David', 'Eve', 'Frank', 'Grace'],
 		avataaars: ['Christopher', 'Sawyer', 'Oliver', 'Ryker', 'Valentina', 'Avery', 'Nolan', 'Liliana'],
@@ -28,6 +33,12 @@ const Profile = () => {
 	const [visibilytToast, setVisibilityToast] = useState(false);
 	const [avatar, setAvatar] = useState('');
 	const [tab, setTab] = useState('account');
+	const [name, setName] = useState(user.name);
+	const [lastname, setLastname] = useState(user.last_name);
+	const [email, setEmail] = useState(user.email);
+	const [valueSalary, setValueSalary] = useState('0');
+	const [valueGoal, setValueGoal] = useState('0');
+	const [dataWallet, setDataWallet] = useState<ResponseWallet | undefined>(undefined);
 	const navigate = useNavigate();
 
 	const handleUpdateIcon = async () => {
@@ -46,17 +57,29 @@ const Profile = () => {
 			navigate('/profile');
 		}
 	};
-	const [name, setName] = useState(user.name);
-	const [lastname, setLastname] = useState(user.last_name);
-	const [email, setEmail] = useState(user.email);
-	const [salary, setSalary] = useState('');
-	const [goal, setGoal] = useState('');
 
-	const handleSalary = (e) => {
-		setSalary(e.target.value);
+	// useEffect(() => {
+	// 	const fetchData = async () => {
+	// 		const response = await GetWalletUser(user.user_id);
+	// 		setDataWallet(response.wallet);
+	// 		console.log(dataWallet);
+	// 	};
+	// 	fetchData();
+	// }, []);
+
+	const handleValueSalary = (e) => {
+		let value = e.target.value.replace(/[^0-9.]/g, '');
+		const floatValue = parseFloat(value);
+		const formattedValue = floatValue.toLocaleString();
+
+		setValueSalary(formattedValue === 'NaN' ? '0' : formattedValue);
 	};
-	const handleGoal = (e) => {
-		setGoal(e.target.value);
+	const handleValueGoal = (e) => {
+		let value = e.target.value.replace(/[^0-9.]/g, '');
+		const floatValue = parseFloat(value);
+		const formattedValue = floatValue.toLocaleString();
+
+		setValueGoal(formattedValue === 'NaN' ? '0' : formattedValue);
 	};
 
 	const handleUpdateUser = async () => {
@@ -107,9 +130,15 @@ const Profile = () => {
 						</button>
 					</div>
 				</div>
-				<div className='flex flex-col dark:text-white text-black mt-5'>
-					<p className='opacity-50'>Usuario desde</p>
-					<p className='text-lg font-semibold'>{format(user?.created_in, 'PP')}</p>
+				<div className='flex justify-between'>
+					<div className='flex flex-col items-center dark:text-white text-black mt-5'>
+						<p className='opacity-50'>Usuario desde</p>
+						<p className='text-lg font-semibold'>{format(user?.created_in, 'PP')}</p>
+					</div>
+					<div className='flex flex-col items-center dark:text-white text-black mt-5'>
+						<p className='opacity-50'>Ultima actualización</p>
+						{/* <p className='text-lg font-semibold'>{format(dataWallet?.modify_in, 'PP')}</p> */}
+					</div>
 				</div>
 				<Tabs defaultValue='account' className=''>
 					<TabsList className='flex  bg-dark_secondary_color w-full mt-5'>
@@ -190,53 +219,40 @@ const Profile = () => {
 						</div>
 					</TabsContent>
 					<TabsContent value='password'>
-						<div className='flex md:gap-10 gap-3 mt-5 '>
-							<div className='flex flex-col w-full p'>
+						<div className='flex itmes-center md:gap-10 gap-3 mt-5 '>
+							<div className='flex flex-col w-full'>
 								<Label className='text-lg dark:text-white text-black opacity-50'>Salario</Label>
 								<Input
 									className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full mt-2 placeholder:opacity-30'
 									id='name'
-									value={salary}
-									onChange={handleSalary}
-									placeholder=''
-									type='number'
+									value={valueSalary}
+									onChange={handleValueSalary}
+									type='text'
 								/>
 							</div>
 							<div className='flex flex-col w-full'>
-								<h2 className='text-lg dark:text-white text-black opacity-50'>Tipo de moneda</h2>
-								<div className='pl-16 mt-5 flex flex-col gap-1'>
-									<Label className='text-md dark:text-white text-black opacity-50 flex items-center '>
-										<span>Cop</span>
-										<Input
-											className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full placeholder:opacity-30 h-5 mr-8'
-											id='cop'
-											value='Peso colombiano(Cop)'
-											name='cop'
-											type='checkbox'
-										/>
-									</Label>
-									<Label className='text-lg dark:text-white text-black opacity-50 flex items-center'>
-										<span>usd</span>
-										<Input
-											className='border-b dark:bg-dark_secondary_color border-none  dark:text-white text-black placeholder:text-gray-300 w-full  placeholder:opacity-30 h-5 mr-8'
-											id='usd'
-											name='usd'
-											value={'fdsafsda'}
-											type='checkbox'
-										/>
-									</Label>
-								</div>
+								<Label className='text-lg dark:text-white text-black opacity-50'>Meta a ahorrar</Label>
+								<Input
+									className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full placeholder:opacity-30 mt-2'
+									id='goal'
+									value={valueGoal}
+									onChange={handleValueGoal}
+									type='text'
+								/>
 							</div>
 						</div>
-						<div className='flex flex-col mt-5'>
-							<Label className='text-lg dark:text-white text-black opacity-50'>Meta a ahorrar</Label>
-							<Input
-								className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full placeholder:opacity-30'
-								id='goal'
-								value={goal}
-								onChange={handleGoal}
-								type='number'
-							/>
+						<div className='flex w-full items-center mt-5'>
+							<h2 className='text-lg dark:text-white text-black opacity-50 mr-28'>Tipo de moneda</h2>
+							<RadioGroup className='flex '>
+								<div className='flex items-center space-x-2 dark:text-white opacity-80 text-black'>
+									<Label htmlFor='r1'>Cop</Label>
+									<RadioGroupItem value='cop' id='cop' className='text-alternative_color' />
+								</div>
+								<div className='flex items-center space-x-2 dark:text-white opacity-80 text-black'>
+									<Label htmlFor='r2'>Usd</Label>
+									<RadioGroupItem value='usd' id='usd' className='text-alternative_color' />
+								</div>
+							</RadioGroup>
 						</div>
 
 						<div className='flex flex-col-reverse md:flex-row md:gap-10 mt-8'>
