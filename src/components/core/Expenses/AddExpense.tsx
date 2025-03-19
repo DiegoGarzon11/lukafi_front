@@ -106,7 +106,7 @@ export const AddExpense = ({ apiData, sendData, className }) => {
 						setSelectedCategory(null);
 					}}
 					variant='ghost'
-					className={`${className} py-6 dark:hover:bg-hover_primary_color  dark:bg-dark_primary_color bg-light_primary_color hover:bg-zinc-400 text-black  dark:text-white flex items-center gap-3`}>
+					className={`${className} py-6 dark:hover:bg-dark_secondary_color hover:bg-light_secondary_color  dark:bg-dark_primary_color bg-light_primary_color  text-black  dark:text-white flex items-center gap-3`}>
 					{t('addExpense.addExpense')} <DollarSign />
 				</Button>
 			</DialogTrigger>

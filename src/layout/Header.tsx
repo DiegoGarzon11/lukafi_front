@@ -180,14 +180,20 @@ export default function Header({ valueSide }) {
 							{allowSidebar && <SheetSide />}
 						</section>
 						{localStorage.token && allowSidebar && (
-							<SidebarTrigger className='z-50 mt-3 ml-3 sticky top-3 cursor-pointer dark:text-white text-black' />
+							<SidebarTrigger
+								className={`z-50 mt-3 ml-3 fixed  transition-all duration-500 ease-in-out  ${
+									isSideOpen ? ' md:left-64' : 'md:left-0 '
+								}  top-1 cursor-pointer dark:text-white text-black`}
+							/>
 						)}
 						<Button
 							variant='ghost'
-							className='z-50 mt-3 ml-3 text-lg  sticky top-3 cursor-default dark:text-white text-black'>
+							className={`z-50 mt-3 ml-3 text-lg transition-all duration-500 ease-in-out ${
+								localStorage.token && allowSidebar && isSideOpen ? ' md:left-72 left-6 ' : 'md:left-6  '
+							} fixed  top-1 cursor-default dark:text-white text-black`}>
 							Lukafi
 						</Button>
-						<div className=' w-full fixed flex justify-end shadow-xs shadow-z-700 rounded-full p-3 z-10 bg-linear-to-b dark:from-zinc-950 dark:to-dark_primary_color from-zinc-100 to-zinc-300 border-b border-gray-600/50 '>
+						<div className=' w-full fixed flex justify-end rounded-full p-3 z-10 bg-linear-to-t dark:from-dark_primary_color dark:to-dark_secondary_color from-light_primary_color to-light_secondary_color  '>
 							<div className='flex items-center gap-5 dark:text-white text-black'>
 								{!localStorage.token && location.pathname === '/' && (
 									<Button
@@ -263,7 +269,7 @@ export default function Header({ valueSide }) {
 									<DialogTitle className='my-3 dark:text-white text-black text-center absolute top-0 '>Bienvenido de vuelta</DialogTitle>
 									<DialogDescription>
 										<form className='flex flex-col gap-5 w-full'>
-										<p className='dark:text-white text-black self-start text-base font-semibold'>
+											<p className='dark:text-white text-black self-start text-base font-semibold'>
 												¿No tienes cuenta?
 												<button
 													onClick={(e) => {
@@ -316,7 +322,6 @@ export default function Header({ valueSide }) {
 												type='submit'>
 												{loader || statusCode?.status === 200 ? <LoaderApi color='white' /> : 'Iniciar sesión'}
 											</Button>
-											
 										</form>
 									</DialogDescription>
 								</DialogHeader>

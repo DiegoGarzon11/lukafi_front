@@ -100,8 +100,8 @@ export function SheetSide() {
 	return (
 		<Sidebar
 			variant='sidebar'
-			className={`z-50  bg-zinc-200  min-w-28  `}>
-			<SidebarContent className='dark:bg-dark_primary_color bg-zinc-200 '>
+			className={`z-50   min-w-28  `}>
+			<SidebarContent className='dark:bg-dark_primary_color bg-light_primary_color '>
 				<div className=' w-full flex justify-end mt-3'>
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>

@@ -20,24 +20,25 @@ export function DatePicker({ sendDate }) {
 	const handleDateSelect = (selectedDate) => {
 		setDate(selectedDate);
 		sendDate(selectedDate);
-		setOpenCalendar(false);
 	};
 
 	return (
-		<Popover open={openCalendar}>
+		<Popover
+			open={openCalendar}
+			onOpenChange={setOpenCalendar}>
 			<PopoverTrigger asChild>
 				<Button
-					onClick={() => setOpenCalendar(true)}
-					variant={'black_outline'}
+					onClick={() => setOpenCalendar((openCalendar) => !openCalendar)}
+					variant={'ghost'}
 					className={cn(
-						'w-full  justify-center text-center font-normal h-10 text-base bg-dark_secondary_color cursor-pointer  	',
+						'w-full  justify-center text-center font-normal h-10 text-base dark:bg-dark_secondary_color bg-light_secondary_color cursor-pointer  	',
 						!date && 'text-muted-foreground '
 					)}>
 					<CalendarIcon className='mr-2 h-4 w-4' />
 					{date ? format(date, 'PPPP') : <span> {t('dataPicker.selectDate')} </span>}
 				</Button>
 			</PopoverTrigger>
-			<PopoverContent className='w-auto dark:bg-dark_secondary_color  bg-zinc-100 dark:text-white text-black'>
+			<PopoverContent className='w-auto dark:bg-dark_secondary_color  bg-light_secondary_color dark:text-white text-black'>
 				<Calendar
 					mode='single'
 					selected={date}

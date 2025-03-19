@@ -126,7 +126,7 @@ export const Dashboard = () => {
 					/>
 				</section>
 				<section className='flex md:col-span-3 md:row-span-3 flex-wrap md:flex-nowrap  gap-3 md:h-full'>
-					<div className='flex flex-col dark:bg-dark_primary_color rounded-md  bg-zinc-200 w-full h-full '>
+					<div className='flex flex-col dark:bg-dark_primary_color rounded-md  bg-light_primary_color w-full h-full '>
 						<div className='flex flex-col md:flex-row justify-between items-center  p-5   gap-3'>
 							<div className='flex gap-1.5 items-center w-full flex-col md:flex-row '>
 								<p className='text-xl font-semibold pb-5 md:pb-0 flex  gap-10 items-center dark:text-white text-black'>
@@ -201,7 +201,7 @@ export const Dashboard = () => {
 						)}
 					</div>
 
-					<article className=' text-white flex flex-col justify-between dark:bg-dark_primary_color bg-zinc-200 w-full md:w-2/5 rounded-md p-5 shadow-xl '>
+					<article className=' dark:text-white text-black flex flex-col justify-between dark:bg-dark_primary_color bg-light_primary_color w-full md:w-2/5 rounded-md p-5 shadow-xl '>
 						<div className='flex flex-col items-center justify-center'>
 							<p className='text-3xl font-bold text-main_color'>
 								+
@@ -247,7 +247,7 @@ export const Dashboard = () => {
 				</section>
 
 				<section className='  md:col-span-3   flex flex-col-reverse md:flex-row justify-end items-end gap-3 w-full '>
-					<div className='dark:bg-dark_primary_color  w-full md:w-3/6 pt-10 rounded-md  text-center md:text-start md:px-5  h-full'>
+					<div className='dark:bg-dark_primary_color bg-light_primary_color  w-full md:w-3/6 pt-10 rounded-md  text-center md:text-start md:px-5  h-full'>
 						<p className='   pb-5 dark:text-white text-black text-center md:text-start text-2xl font-semibold '>Oberva tus metas mensuales</p>
 						<p className='dark:text-white text-black text-lg '>
 							Estas a{' '}
@@ -260,7 +260,7 @@ export const Dashboard = () => {
 							<ChartExampleTwo />
 						</div>
 					</div>
-					<div className='flex flex-col dark:bg-dark_primary_color rounded-md w-full  md:w-3/4 h-full py-10 md:px-5 '>
+					<div className='flex flex-col dark:bg-dark_primary_color bg-light_primary_color rounded-md w-full  md:w-3/4 h-full py-10 md:px-5 '>
 						<div className='flex flex-col md:flex-row items-center justify-between  gap-2'>
 							<p className=' pb-5 dark:text-white text-black text-2xl font-semibold '>{t('dashboard.viewExpensesCategory')}</p>
 							<div className='flex gap-3 justify-end'>

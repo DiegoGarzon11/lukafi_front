@@ -58,7 +58,7 @@ export const AddIncome = ({ apiData, className, sendData }) => {
 			<DialogTrigger asChild>
 				<Button
 					variant='ghost'
-					className={` ${className} py-6 dark:hover:bg-zinc-900 dark:bg-dark_primary_color bg-light_primary_color text-black dark:text-white hover:bg-zinc-400 flex items-center gap-3`}>
+					className={` ${className} py-6 dark:hover:bg-dark_secondary_color hover:bg-light_secondary_color dark:bg-dark_primary_color bg-light_primary_color text-black dark:text-white flex items-center gap-3`}>
 					{t('addIncome.newIncome')} <PiggyBank />
 				</Button>
 			</DialogTrigger>
