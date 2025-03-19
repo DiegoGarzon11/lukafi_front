@@ -73,7 +73,6 @@ export default function Header({ valueSide }) {
 		valueSide(!isSideOpen);
 	};
 
-	
 	const userDeleted = localStorage.getItem('userMain') ? JSON.parse(localStorage.getItem('userMain'))?.deleted_in : null;
 	const currentRoute = localStorage.route_name;
 	console.log(currentRoute);
@@ -194,7 +193,7 @@ export default function Header({ valueSide }) {
 									<Button
 										onClick={handleAuth}
 										variant='ghost'
-										className='cursor-pointer rounded-4xl dark:bg-dark_foreground bg-light_primary_color px-3 py-1 border border-gray-800'>
+										className='cursor-pointer rounded-4xl dark:bg-dark_foreground bg-light_foreground  px-3 py-1 border border-gray-800'>
 										{t('header.signIn')} / {t('form.field.signUp')}
 									</Button>
 								)}
@@ -264,19 +263,30 @@ export default function Header({ valueSide }) {
 									<DialogTitle className='my-3 dark:text-white text-black text-center absolute top-0 '>Bienvenido de vuelta</DialogTitle>
 									<DialogDescription>
 										<form className='flex flex-col gap-5 w-full'>
+										<p className='dark:text-white text-black self-start text-base font-semibold'>
+												¿No tienes cuenta?
+												<button
+													onClick={(e) => {
+														e.preventDefault();
+														setFlipped(true);
+													}}
+													className='text-main_color underline ml-2 cursor-pointer'>
+													Registrarse
+												</button>
+											</p>
 											<Input
 												type='email'
 												onChange={handleChange}
 												value={data.email}
 												placeholder='Email'
 												name='email'
-												className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
+												className='border-b dark:bg-dark_secondary_color bg-light_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
 											/>
 											<div className='relative w-full'>
 												<Input
 													autoComplete='new-password'
 													type={showPassword ? 'text' : 'password'}
-													className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
+													className='border-b dark:bg-dark_secondary_color bg-light_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
 													placeholder='Password'
 													onChange={handleChange}
 													value={data.password}
@@ -290,12 +300,12 @@ export default function Header({ valueSide }) {
 													{showPassword ? <EyeOpen className='text-zinc-500' /> : <EyeClose className='text-zinc-500' />}
 												</button>
 											</div>
-											<p className='dark:text-white text-black text-center text-base'>
+											<p className='dark:text-white text-black text-center text-base font-semibold'>
 												¿Olvidaste tu contraseña?
 												<Link
 													onClick={() => setIsAuthOpen(false)}
 													to='/auth/restore-password'
-													className='text-lime-500 underline ml-2'>
+													className='text-main_color underline ml-2'>
 													Recuperar
 												</Link>
 											</p>
@@ -306,17 +316,7 @@ export default function Header({ valueSide }) {
 												type='submit'>
 												{loader || statusCode?.status === 200 ? <LoaderApi color='white' /> : 'Iniciar sesión'}
 											</Button>
-											<p className='dark:text-white text-black text-center  text-lg absolute bottom-0 '>
-												¿No tienes cuenta?
-												<button
-													onClick={(e) => {
-														e.preventDefault();
-														setFlipped(true);
-													}}
-													className='text-lime-500 underline ml-2 cursor-pointer'>
-													Registrarse
-												</button>
-											</p>
+											
 										</form>
 									</DialogDescription>
 								</DialogHeader>
@@ -325,21 +325,22 @@ export default function Header({ valueSide }) {
 							<div className='absolute w-full h-full flex flex-col justify-center items-center rotate-y-180 [backface-visibility:hidden]'>
 								<DialogHeader className='flex flex-col justify-around w-full'>
 									<DialogTitle className='my-3 dark:text-white text-black text-center absolute top-0 '>Crear Cuenta</DialogTitle>
-									<p className='dark:text-white text-black text-center mb-10 self-start text-lg'>
-										¿Ya tienes cuenta?
-										<button
-											onClick={(e) => {
-												e.preventDefault();
-												setFlipped(false);
-											}}
-											className='text-lime-500 underline ml-2 cursor-pointer'>
-											Iniciar sesión
-										</button>
-									</p>
+
 									<DialogDescription>
 										<form
 											className='flex flex-col gap-5 w-full'
 											onSubmit={handleSubmitSignUp}>
+											<p className='dark:text-white text-black text-center self-start text-base font-semibold'>
+												¿Ya tienes cuenta?
+												<button
+													onClick={(e) => {
+														e.preventDefault();
+														setFlipped(false);
+													}}
+													className='text-main_color underline ml-2 cursor-pointer'>
+													Iniciar sesión
+												</button>
+											</p>
 											<div className='flex  gap-3'>
 												<Input
 													type='text'
@@ -347,7 +348,7 @@ export default function Header({ valueSide }) {
 													value={data.newName}
 													placeholder='Nombre'
 													name='newName'
-													className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
+													className='border-b dark:bg-dark_secondary_color bg-light_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
 												/>
 												<Input
 													type='text'
@@ -355,7 +356,7 @@ export default function Header({ valueSide }) {
 													value={data.newLastName}
 													placeholder='Last Name'
 													name='newLastName'
-													className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
+													className='border-b dark:bg-dark_secondary_color bg-light_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
 												/>
 											</div>
 											<Input
@@ -364,13 +365,13 @@ export default function Header({ valueSide }) {
 												value={data.newEmail}
 												placeholder='Email'
 												name='newEmail'
-												className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
+												className='border-b dark:bg-dark_secondary_color bg-light_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
 											/>
 											<div className='relative w-full'>
 												<Input
 													autoComplete='new-password'
 													type={showPassword ? 'text' : 'password'}
-													className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
+													className='border-b dark:bg-dark_secondary_color bg-light_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
 													onChange={handleChange}
 													placeholder='Password'
 													value={data.newPassword}

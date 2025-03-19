@@ -169,10 +169,10 @@ export function SheetSide() {
 													key={child.path}
 													to={child.path}>
 													<Button
-														className={`w-full gap-4 justify-start py-6 bg-zinc-200  text-black dark:text-white cursor-pointer ${
+														className={`w-full gap-4 justify-start py-6 dark:text-white text-black cursor-pointer ${
 															localStorage.route_name === child.path
-																? 'bg-alternative_color '
-																: 'bg-transparent dark:hover:bg-dark_secondary_color'
+																? 'bg-alternative_color text-white '
+																: 'bg-transparent dark:hover:bg-dark_secondary_color hover:bg-light_secondary_color'
 														}`}>
 														{child.icon}
 														{child.name}

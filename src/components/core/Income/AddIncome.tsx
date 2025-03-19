@@ -58,11 +58,11 @@ export const AddIncome = ({ apiData, className, sendData }) => {
 			<DialogTrigger asChild>
 				<Button
 					variant='ghost'
-					className={` ${className} py-6 dark:hover:bg-zinc-900 dark:bg-dark_primary_color bg-zinc-300 text-black dark:text-white hover:bg-zinc-400 flex items-center gap-3`}>
+					className={` ${className} py-6 dark:hover:bg-zinc-900 dark:bg-dark_primary_color bg-light_primary_color text-black dark:text-white hover:bg-zinc-400 flex items-center gap-3`}>
 					{t('addIncome.newIncome')} <PiggyBank />
 				</Button>
 			</DialogTrigger>
-			<DialogContent className=' w-full md:w-[500px] rounded-md dark:bg-dark_primary_color dark:text-white text-black '>
+			<DialogContent className=' w-full md:w-[500px] rounded-md dark:bg-dark_primary_color bg-light_primary_color dark:text-white text-black '>
 				<DialogHeader>
 					<DialogTitle>{t('addIncome.newIncome')}</DialogTitle>
 					<DialogDescription className='opacity-50'>{t('addIncome.instructions')}</DialogDescription>
@@ -76,7 +76,7 @@ export const AddIncome = ({ apiData, className, sendData }) => {
 						<Input
 							onChange={(e) => setName(e.target.value)}
 							value={name}
-							className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full mt-2 placeholder:opacity-30'
+							className='border-b dark:bg-dark_secondary_color bg-light_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full mt-2 dark:placeholder:opacity-30'
 							placeholder='Ej Salario'
 						/>
 					</div>
@@ -88,7 +88,7 @@ export const AddIncome = ({ apiData, className, sendData }) => {
 							id='value_income'
 							onChange={(e) => handleValues(e)}
 							value={value}
-							className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full mt-2 placeholder:opacity-30'
+							className='border-b dark:bg-dark_secondary_color bg-light_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full mt-2 '
 							type='text'
 						/>
 					</div>

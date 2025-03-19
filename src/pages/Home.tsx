@@ -37,7 +37,7 @@ export const Home = () => {
 								<button className='dark:bg-dark_foreground rounded-4xl px-3 dark:text-white text-black py-1'>Incomes</button>
 							</div>
 						</div>
-						<div className='mt-10 md:flex md:justify-center wf'>
+						<div className='mt-10 md:flex md:justify-center '>
 							<ChartExample />
 						</div>
 					</div>
@@ -46,13 +46,13 @@ export const Home = () => {
 					<div className='flex justify-start flex-col-reverse md:flex-col items-center md:w-4/6  '>
 						<div className=' w-full flex flex-col md:items-center items-center mt-8  '>
 							<p className='text-2xl font-semibold dark:text-white text-black'>{t('home.phrase4.text1')}</p>
-							<CornerDownRight className='text-lime-500 w-20 h-20 brightness-150 hidden md:block ' />
-							<ArrowDown className='text-lime-500 w-20 h-20 brightness-150 my-3 block md:hidden' />
+							<CornerDownRight className='text-main_color w-20 h-20  hidden md:block ' />
+							<ArrowDown className='text-main_color w-20 h-20  my-3 block md:hidden' />
 						</div>
 						<div className='dark:bg-dark_primary_color bg-light_primary_color dark:text-white text-black rounded-2xl p-3 mt-10 w-full flex flex-col gap-3 items-center   '>
 							<p className='dark:text-white text-black font-semibold text-4xl text-balance text-center '>Tus finanzas con lukafi</p>
 							<p className='text-center opacity-50'>¿Como se veran tus finanzas cuando empiezas con lukafi?</p>
-							<div className='dark:bg-dark_secondary_color flex justify-center items-center flex-col py-8  md:px-20 rounded-4xl m-8 w-full '>
+							<div className='dark:bg-dark_secondary_color bg-light_secondary_color flex justify-center items-center flex-col py-8  md:px-20 rounded-4xl m-8 w-full '>
 								<div className='flex justify-between items-center mx-10 mb-5  w-full px-10  '>
 									<p className='md:text-3xl text-xl font-extrabold dark:text-white text-black'>Estadisticas</p>
 									<button className='dark:bg-dark_foreground rounded-4xl px-3 dark:text-white text-black py-1'>Ahorros</button>
@@ -86,21 +86,21 @@ export const Home = () => {
 				</section>
 				<section className='flex md:flex-row flex-col justify-between w-full gap-5'>
 					<div className='flex justify-center flex-col items-center md:w-4/6'>
-						<ArrowDown className='text-lime-500 w-20 h-20 brightness-150 my-3' />
+						<ArrowDown className='text-main_color w-20 h-20  my-3' />
 
 						<div className='dark:bg-dark_primary_color bg-light_primary_color dark:text-white text-black rounded-2xl p-3 w-full flex flex-col gap-3 items-center text-center text-balance'>
 							<h3 className='font-semibold text-2xl'>¿Como lo hacemos?</h3>
 							<p className='text-lg'>Gracias a lukafi podrás tener un control total de tus finanzas, ahorros y ingresos.</p>
 							<p className='text-lg opacity-50'>
-								Nosotros nos encargamos de que de una manera clara y sencilla gestiones y lleves el dia a dia de tus finanzas{' '}
+								Nosotros nos encargamos de que de una manera clara y sencilla gestiones y lleves el dia a dia de tus finanzas
 							</p>
 							<p className='text-lg'>
-								Di Adios a la pérdida de tiempo y dinero, ya esta <span className='text-lime-500'>lukafi</span>
+								Di Adios a la pérdida de tiempo y dinero, ya esta <span className='text-main_color font-semibold'>lukafi</span>
 							</p>
 						</div>
 					</div>
 					<footer className='flex justify-between flex-col items-center md:w-2/4  dark:bg-dark_primary_color bg-light_primary_color rounded-br-4xl rounded-tl-4xl p-3 dark:text-white text-black mt-5 '>
-						<Star className='self-start text-lime-500 size-11 ' />
+						<Star className='self-start text-main_color size-11 ' />
 						<h3 className='text-center text-3xl font-semibold mb-10'>LUKAFI</h3>
 						<div className='md:flex  gap-10 '>
 							<p>¿Quienes somos?</p>
@@ -111,7 +111,7 @@ export const Home = () => {
 							</div>
 						</div>
 						<p className='mt-5'>2022 © Lukafi</p>
-						<Star className='self-end text-lime-500 size-11  ' />
+						<Star className='self-end text-main_color size-11  ' />
 					</footer>
 				</section>
 			</main>

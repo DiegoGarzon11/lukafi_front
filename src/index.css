@@ -5,10 +5,12 @@
 	--color-dark_secondary_color: #1f201f;
 	--color-dark_foreground: #1e2129;
 
+	--color-main_color: #7fbd0c;
 	--color-alternative_color: #fe337c;
-
-	--color-light_primary_color: #aaaaaa;
-	--color-light_secondary_color: #f5f5f5;
+	
+	--color-light_primary_color: #f2f3f2;
+	--color-light_secondary_color: #eaebea;
+	--color-light_foreground: #e6e6e5;
 
 	--color-hover_primary_color: #17181b;
 }
