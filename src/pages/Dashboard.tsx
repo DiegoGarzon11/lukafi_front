@@ -75,11 +75,7 @@ export const Dashboard = () => {
 	};
 
 	if (fetching) {
-		return (
-			<div className='h-screen flex justify-center pt-20 flex-col items-center gap-3 dark:bg-dark_primary_color bg-zinc-200'>
-				<LoaderComponent />
-			</div>
-		);
+		return <LoaderComponent />;
 	}
 	return (
 		<main>
@@ -194,7 +190,7 @@ export const Dashboard = () => {
 								</div>
 							</>
 						) : (
-							<div className=' flex justify-center items-center gap-3   '>
+							<div className=' flex justify-center items-center gap-3'>
 								<AlertTriangle className='text-yellow-500' />
 								<p className='text-lg font-semibold'> {t('dashboard.noExpenses')}</p>
 							</div>

@@ -86,9 +86,9 @@ export const Expense = ({color}) => (
 		<path d='M123.5 261.2c-2.2 2-2.7 3.4-3.2 9.4l-.6 7.2-3.6 1.1c-5.4 1.6-10.6 6.5-13.7 12.8-6.8 13.8-1.2 32.8 11.4 38.9 2.3 1.1 7.3 2 13.1 2.4 8.6.6 9.6.9 11.7 3.4 3.5 4 3.3 9.9-.5 13.7l-2.9 2.9h-15.1c-14.3 0-15.1.1-17.7 2.3-3.5 3.1-3.7 7.7-.4 11.2 2.1 2.3 3.1 2.5 10.2 2.5h7.8v4.2c0 9.5 2.7 13.8 8.5 13.8s8.5-4.3 8.5-13.7c0-4 .2-4.3 4.3-6.1 10.6-4.7 16.1-12.7 16.1-23.7 0-5.9-.4-7.9-2.9-12.5-3.3-6-9.6-11.4-15.3-13-2-.5-6.8-1-10.5-1-6.2 0-7.1-.3-9.8-2.9-2.5-2.6-2.9-3.7-2.9-8.6 0-11 2.6-12.5 21.9-12.5 7.7 0 14.7-.3 15.6-.6 1.8-.7 4.5-5.5 4.5-7.9 0-.9-1.3-3-2.9-4.6-2.7-2.7-3.5-2.9-10.4-2.9h-7.4l-.6-6.6c-.4-5-1-7.1-2.8-9-2.8-3-7-3.1-10.4-.2z' />
 	</svg>
 );
-export const LoaderPage = () => (
+export const LoaderPage = ({color}) => (
 	<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 24 24'>
-		<circle cx='18' cy='12' r='0' fill='currentColor'>
+		<circle cx='18' cy='12' r='0' fill={color}>
 			<animate
 				attributeName='r'
 				begin='.67'
@@ -99,7 +99,7 @@ export const LoaderPage = () => (
 				values='0;2;0;0'
 			/>
 		</circle>
-		<circle cx='12' cy='12' r='0' fill='currentColor'>
+		<circle cx='12' cy='12' r='0' fill={color}>
 			<animate
 				attributeName='r'
 				begin='.33'
@@ -110,7 +110,7 @@ export const LoaderPage = () => (
 				values='0;2;0;0'
 			/>
 		</circle>
-		<circle cx='6' cy='12' r='0' fill='currentColor'>
+		<circle cx='6' cy='12' r='0' fill={color}>
 			<animate
 				attributeName='r'
 				begin='0'

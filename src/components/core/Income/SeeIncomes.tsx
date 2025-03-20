@@ -77,11 +77,7 @@ export const SeeIncomes = () => {
 		}
 	};
 	if (fetching) {
-		return (
-			<div className='h-screen flex justify-center pt-20 flex-col items-center gap-3 dark:bg-dark_primary_color bg-zinc-200'>
-				<LoaderComponent />
-			</div>
-		);
+		return <LoaderComponent />;
 	}
 	return (
 		<main className='pt-20 p-3 '>
@@ -136,7 +132,9 @@ export const SeeIncomes = () => {
 									<Table className='w-full'>
 										<TableBody className=' w-full scrollbar-custom'>
 											{incomes?.map((i) => (
-												<TableRow key={i?.income_id} className='h-16'>
+												<TableRow
+													key={i?.income_id}
+													className='h-16'>
 													<TableCell className='font-medium  w-full '>
 														<p>{new Date(i?.date).toLocaleDateString()}</p>
 													</TableCell>
