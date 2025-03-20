@@ -122,11 +122,7 @@ export const SeeDebts = () => {
 		}, 1000);
 	};
 	if (fetching) {
-		return (
-			<div className='h-screen flex justify-center pt-20 flex-col items-center gap-3 dark:bg-dark_primary_color bg-zinc-200'>
-				<LoaderComponent />
-			</div>
-		);
+		return <LoaderComponent />;
 	}
 	return (
 		<main className='pt-20 p-3  dark:bg-black bg-white'>
