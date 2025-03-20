@@ -1,20 +1,20 @@
-import { GetExpenses } from '@/apis/ExpenseService';
-import { GetWalletUser } from '@/apis/WalletService';
-import { Chart, ChartDonut, ChartExampleTwo } from '@/components/core/Charts';
-import { AddDebt } from '@/components/core/Debts/AddDebt';
-import { AddExpense } from '@/components/core/Expenses/AddExpense';
-import { AddIncome } from '@/components/core/Income/AddIncome';
-import { LoaderComponent } from '@/components/others/Loader';
-import { Button } from '@/components/ui/button';
-import { Expenses, Incomes, ResponseWallet } from '@/interfaces/Wallet';
-import { format } from 'date-fns';
-import { AlertTriangle } from 'lucide-react';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { GetAllIncomes } from '@/apis/Income.service';
-import { LoaderApi } from '@/assets/icons/Svg';
-import { Link } from 'react-router-dom';
+import {GetExpenses} from '@/apis/ExpenseService';
+import {GetWalletUser} from '@/apis/WalletService';
+import {Chart, ChartDonut, ChartExampleTwo} from '@/components/core/Charts';
+import {AddDebt} from '@/components/core/Debts/AddDebt';
+import {AddExpense} from '@/components/core/Expenses/AddExpense';
+import {AddIncome} from '@/components/core/Income/AddIncome';
+import {LoaderComponent} from '@/components/others/Loader';
+import {Button} from '@/components/ui/button';
+import {Expenses, Incomes, ResponseWallet} from '@/interfaces/Wallet';
+import {format} from 'date-fns';
+import {AlertTriangle} from 'lucide-react';
+import {useEffect, useState} from 'react';
+import {useTranslation} from 'react-i18next';
+import {Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle} from '@/components/ui/dialog';
+import {GetAllIncomes} from '@/apis/Income.service';
+import {LoaderApi} from '@/assets/icons/Svg';
+import {Link} from 'react-router-dom';
 export const Dashboard = () => {
 	const [userData, setDataUser] = useState<ResponseWallet | undefined>(undefined);
 	const [expenses, setExpenses] = useState<Array<Expenses> | undefined>([]);
@@ -26,7 +26,7 @@ export const Dashboard = () => {
 	localStorage.setItem('filterChartBalance', filter);
 	const user = JSON.parse(localStorage.getItem('userMain'));
 
-	const { t, i18n } = useTranslation();
+	const {t, i18n} = useTranslation();
 	i18n.changeLanguage();
 
 	const getExpenses = async (walletId) => {
@@ -82,16 +82,19 @@ export const Dashboard = () => {
 		);
 	}
 	return (
-		<main>
-			<div className='flex flex-col md:grid md:grid-cols-3  h-full pt-20 p-3 gap-3 dark:bg-black bg-white'>
+		<main className='h-screen'>
+			<div className='flex flex-col md:grid md:grid-cols-3 h-full pt-20 p-3 gap-3 dark:bg-black bg-white'>
 				{userData.wallet.available <= 0 && (
 					<Dialog defaultOpen>
 						<DialogContent className=' w-full md:w-[500px] rounded-md dark:bg-dark_primary_color dark:text-white text-black '>
 							<DialogHeader>
-								<DialogTitle className='text-lg font-semibold leading-none -tracking-tighter text-red-500'>¡Importante!</DialogTitle>
+								<DialogTitle className='text-lg font-semibold leading-none -tracking-tighter text-red-500'>
+									¡Importante!
+								</DialogTitle>
 								<span className='text-yellow-00'>Agrega tu saldo disponible</span>
 								<DialogDescription className='text-xl leading-7 tracking-wide dark:text-white text-black   opacity-70 text-balance'>
-									Ten en cuenta que cuando empiezas a usar <span className='text-green-500'>Lukafi</span>, tu saldo disponible será cero
+									Ten en cuenta que cuando empiezas a usar <span className='text-green-500'>Lukafi</span>, tu saldo disponible será
+									cero
 									<br />
 									<span>Te recomendamos que como tu primer ingreso</span>
 									<span className='text-green-500'> agregues todo el dinero que tengas disponible en general</span>
@@ -106,43 +109,27 @@ export const Dashboard = () => {
 					</Dialog>
 				)}
 
-				<section className='md:flex grid grid-cols-2 grid-rows-2 md:flex-nowrap w-full gap-3 md:col-span-3'>
-					<div className='col-span-2 w-full'>
-						<AddIncome
-							sendData={(e) => recibeResponseChild(e)}
-							className='w-full cursor-pointer'
-							apiData={userData?.wallet}
-						/>
-					</div>
-					<AddExpense
-						className='w-full cursor-pointer'
-						sendData={(e) => recibeResponseChild(e)}
-						apiData={userData?.wallet}
-					/>
-					<AddDebt
-						sendData={(e) => recibeResponseChild(e)}
-						className='w-full cursor-pointer'
-						apiData={userData?.wallet}
-					/>
+				<section className='flex gap-3 flex-wrap md:flex-nowrap md:col-span-3'>
+					<AddIncome sendData={(e) => recibeResponseChild(e)} className='w-full cursor-pointer' apiData={userData?.wallet} />
+					<AddExpense className='w-full cursor-pointer' sendData={(e) => recibeResponseChild(e)} apiData={userData?.wallet} />
+					<AddDebt sendData={(e) => recibeResponseChild(e)} className='w-full cursor-pointer' apiData={userData?.wallet} />
 				</section>
 				<section className='flex md:col-span-3 md:row-span-3 flex-wrap md:flex-nowrap  gap-3 md:h-full'>
-					<div className='flex flex-col dark:bg-dark_primary_color rounded-md  bg-light_primary_color w-full h-full '>
-						<div className='flex flex-col md:flex-row justify-between items-center  p-5   gap-3'>
-							<div className='flex gap-1.5 items-center w-full flex-col md:flex-row '>
-								<p className='text-xl font-semibold pb-5 md:pb-0 flex  gap-10 items-center dark:text-white text-black'>
-									{t('dashboard.viewBalanceExpenses')}
-								</p>
+					<div className='flex flex-col dark:bg-dark_primary_color rounded-md bg-light_primary_color w-full'>
+						<div className='flex md:flex-row flex-col justify-between p-3 items-center dark:text-white text-black'>
+							<p className='dark:text-white text-black text-center md:text-start text-2xl font-semibold '>
+								{t('dashboard.viewBalanceExpenses')}
 								{localStorage.getItem('filterChartBalance') === 'day' ? (
-									<p className='text-xl font-semibold pb-5 md:pb-0  flex  gap-2 items-center dark:text-white text-black '>
+									<span className='mx-2'>
 										en el mes de
-										<span className='text-main_color font-semibold text-xl'>{<span>{format(new Date(), 'MMMM')}</span>}</span>
-									</p>
+										<span className='text-main_color font-semibold ml-2'>{<span>{format(new Date(), 'MMMM')}</span>}</span>
+									</span>
 								) : (
 									''
 								)}
-							</div>
+							</p>
 
-							<div className='flex gap-3'>
+							<div className='flex justify-between md:mt-0 mt-3'>
 								<Button
 									disabled={filter === 'day'}
 									variant='ghost'
@@ -172,6 +159,7 @@ export const Dashboard = () => {
 								</Button>
 							</div>
 						</div>
+
 						<div className='px-5 py-3 flex justify-center items-center'>
 							<p className='font-semibold dark:text-white text-black   opacity-60'>
 								Moneda en: <span className='uppercase'>{userData?.wallet?.currency_type}</span>
@@ -187,14 +175,11 @@ export const Dashboard = () => {
 								</div>
 
 								<div className={changeFilter ? 'invisible' : ''}>
-									<Chart
-										trigger={trigger}
-										filter={filter}
-									/>
+									<Chart trigger={trigger} filter={filter} />
 								</div>
 							</>
 						) : (
-							<div className=' flex justify-center items-center gap-3   '>
+							<div className=' flex justify-center h-full items-center gap-3'>
 								<AlertTriangle className='text-yellow-500' />
 								<p className='text-lg font-semibold'> {t('dashboard.noExpenses')}</p>
 							</div>
@@ -246,19 +231,30 @@ export const Dashboard = () => {
 					</article>
 				</section>
 
-				<section className='  md:col-span-3   flex flex-col-reverse md:flex-row justify-end items-end gap-3 w-full '>
-					<div className='dark:bg-dark_primary_color bg-light_primary_color  w-full md:w-3/6 pt-10 rounded-md  text-center md:text-start md:px-5  h-full'>
-						<p className='   pb-5 dark:text-white text-black text-center md:text-start text-2xl font-semibold '>Oberva tus metas mensuales</p>
-						<p className='dark:text-white text-black text-lg '>
-							Estas a
-							<span className='font-semibold text-main_color'>
-								{Number(userData?.wallet?.saving - userData?.wallet?.available).toLocaleString()}$
-							</span>
-							de alcanzar tu meta! animo🫡
+				<section className='md:col-span-3 flex flex-col-reverse md:flex-row justify-end items-end gap-3 w-full '>
+					<div className=' flex flex-col dark:bg-dark_primary_color bg-light_primary_color w-full md:w-3/6 pt-10 rounded-md  text-center md:text-start md:px-5 h-full'>
+						<p className='pb-5 dark:text-white text-black text-center md:text-start text-2xl font-semibold '>
+							Oberva tus metas mensuales
 						</p>
-						<div className='flex justify-center items-center mt-8 '>
-							<ChartExampleTwo />
-						</div>
+						{userData?.wallet?.saving ? (
+							<>
+								<h2 className='dark:text-white text-black text-lg '>
+									Estas a
+									<span className='font-semibold text-main_color'>
+										{Number(userData?.wallet?.saving - userData?.wallet?.available).toLocaleString()}$
+									</span>
+									de alcanzar tu meta! animo🫡
+								</h2>
+								<div className='flex justify-center items-center mt-8'>
+									<ChartExampleTwo />
+								</div>
+							</>
+						) : (
+							<div className=' flex justify-center items-center gap-3'>
+								<AlertTriangle className='text-yellow-500' />
+								<p className='text-lg font-semibold'> {t('dashboard.noExpenses')}</p>
+							</div>
+						)}
 					</div>
 					<div className='flex flex-col dark:bg-dark_primary_color bg-light_primary_color rounded-md w-full  md:w-3/4 h-full py-10 md:px-5 '>
 						<div className='flex flex-col md:flex-row items-center justify-between  gap-2'>
@@ -269,16 +265,10 @@ export const Dashboard = () => {
 									className='shadow-inner border border-alternative_color dark:text-white text-black  text-lg'>
 									{t('dashboard.day')}
 								</Button>
-								<Button
-									disabled
-									variant='ghost'
-									className=' dark:text-white text-black opacity-50 text-lg'>
+								<Button disabled variant='ghost' className=' dark:text-white text-black opacity-50 text-lg'>
 									{t('dashboard.month')}
 								</Button>
-								<Button
-									variant='ghost'
-									disabled
-									className=' dark:text-white text-black opacity-50  text-lg'>
+								<Button variant='ghost' disabled className=' dark:text-white text-black opacity-50  text-lg'>
 									{t('dashboard.year')}
 								</Button>
 							</div>
@@ -297,43 +287,3 @@ export const Dashboard = () => {
 		</main>
 	);
 };
-{
-	/* <article className=' w-full h-full  shadow-xs border-none  text-black  dark:text-white  md:grid md:grid-cols-3 gap-3 flex flex-col '>
-						<div className='border border-border dark:bg-dark_primary_color bg-zinc-200 p-3 rounded-md flex justify-center flex-col items-center h-48 md:h-full'>
-							<p className='h-1/2 text-lg'>Reporte meta de ahorros mensual</p>
-
-							<div className='flex gap-3 items-end h-full flex-col'>
-								<p className='flex items-start gap-2 '>
-									<span>Meta:</span>
-									<span className='text-green-500'>{Number(userData?.wallet?.saving).toLocaleString()} $</span>
-								</p>
-
-								<p className='flex items-center gap-2'>
-									{Number(userData?.wallet?.incomes) - Number(userData?.wallet?.variable_expenses) <= Number(userData?.wallet?.saving) ? (
-										<ArrowDown className='text-red-500' />
-									) : (
-										<ArrowUp className='text-green-500' />
-									)}
-									<span>Ahora:</span>
-									<span
-										className={`text-${
-											Number(userData?.wallet?.incomes) - Number(userData?.wallet?.variable_expenses) <= Number(userData?.wallet?.saving)
-												? 'red'
-												: 'green'
-										}-500 flex items-center gap-2`}>
-										{(Number(userData?.wallet?.incomes) - Number(userData?.wallet?.variable_expenses)).toLocaleString()} $
-									</span>
-								</p>
-							</div>
-						</div>
-						<div className='border border-border dark:bg-dark_primary_color bg-zinc-200  p-3 rounded-md flex justify-center flex-col items-center h-48 md:h-full'>
-							<ChartIncomes trigger={trigger} />
-						</div>
-						<div className='border border-border dark:bg-dark_primary_color bg-zinc-200  p-3 rounded-md flex justify-center flex-col items-center h-48 md:h-full'>
-							<p className='h-1/2 text-lg'>Saldo disponible contando gastos fijos</p>
-							<p className='text-xl text-green-500'>
-								{(Number(userData?.wallet?.available) - Number(userData?.wallet?.fixed_expenses)).toLocaleString()} $
-							</p>
-						</div>
-					</article> */
-}
