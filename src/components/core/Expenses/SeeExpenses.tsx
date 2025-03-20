@@ -15,7 +15,7 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrig
 import { Input } from '@/components/ui/input';
 import { ApiResponse } from '@/interfaces/Api';
 import { LoaderApi } from '@/assets/icons/Svg';
-import { Toast } from '@/tools/Toast';
+import { Toast } from '@/hooks/Toast';
 import { AddExpense } from './AddExpense';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
 import { LoaderComponent } from '@/components/others/Loader';

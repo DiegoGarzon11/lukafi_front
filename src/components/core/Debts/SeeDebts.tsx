@@ -10,7 +10,7 @@ import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, Tabl
 import { ApiResponse } from '@/interfaces/Api';
 import { Debt, DebtsHistory, ResponseWallet } from '@/interfaces/Wallet';
 
-import { Toast } from '@/tools/Toast';
+import { Toast } from '@/hooks/Toast';
 import { format } from 'date-fns';
 import { EllipsisVertical, NotebookPen, ScrollText, Trash2 } from 'lucide-react';
 import { useEffect, useState } from 'react';

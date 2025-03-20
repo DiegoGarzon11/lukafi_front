@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 import { CURRENCIES } from '@/tools/currencies';
 import { EditSavingGoal, GetWalletUser } from '@/apis/WalletService';
 import { ResponseWallet } from '@/interfaces/Wallet';
-import { Toast } from '@/tools/Toast';
+import { Toast } from '@/hooks/Toast';
 import { ApiResponse } from '@/interfaces/Api';
 import { LoaderComponent } from '@/components/others/Loader';
 

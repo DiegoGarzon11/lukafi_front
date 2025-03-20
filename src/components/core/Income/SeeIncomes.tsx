@@ -14,7 +14,7 @@ import { EllipsisVertical, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { LoaderApi } from '@/assets/icons/Svg';
 import { ApiResponse } from '@/interfaces/Api';
-import { Toast } from '@/tools/Toast';
+import { Toast } from '@/hooks/Toast';
 import { LoaderComponent } from '@/components/others/Loader';
 
 export const SeeIncomes = () => {

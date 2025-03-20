@@ -6,7 +6,7 @@ import {Label} from '@/components/ui/label';
 import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs';
 import {ApiResponse} from '@/interfaces/Api';
-import {Toast} from '@/tools/Toast';
+import {Toast} from '@/hooks/Toast';
 import {Pencil1Icon} from '@radix-ui/react-icons';
 import {format} from 'date-fns';
 import {useEffect, useState} from 'react';
