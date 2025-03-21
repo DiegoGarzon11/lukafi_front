@@ -1,15 +1,15 @@
-import { ChartFinance } from '@/components/core/Charts';
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
-import { Card, CardContent } from '@/components/ui/card';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from '@/components/ui/carousel';
-import { Input } from '@/components/ui/input';
-import { useState, useEffect } from 'react';
-import { CURRENCIES } from '@/tools/currencies';
-import { EditSavingGoal, GetWalletUser } from '@/apis/WalletService';
-import { ResponseWallet } from '@/interfaces/Wallet';
-import { Toast } from '@/hooks/Toast';
-import { ApiResponse } from '@/interfaces/Api';
-import { LoaderComponent } from '@/components/others/Loader';
+import {ChartFinance} from '@/components/core/Charts';
+import {Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator} from '@/components/ui/breadcrumb';
+import {Card, CardContent} from '@/components/ui/card';
+import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi} from '@/components/ui/carousel';
+import {Input} from '@/components/ui/input';
+import {useState, useEffect} from 'react';
+import {CURRENCIES} from '@/tools/currencies';
+import {EditSavingGoal, GetWalletUser} from '@/apis/WalletService';
+import {ResponseWallet} from '@/interfaces/Wallet';
+import {Toast} from '@/hooks/Toast';
+import {ApiResponse} from '@/interfaces/Api';
+import {LoaderComponent} from '@/components/others/Loader';
 
 export const WalletComponent = () => {
 	const [api, setApi] = useState<CarouselApi>();
@@ -109,12 +109,8 @@ export const WalletComponent = () => {
 							<p className='font-semibold text-start md:w-1/2 underline'>Selecciona tipo de moneda</p>
 							<div className='flex justify-around mt-3 mb-6'>
 								{CURRENCIES.map((c) => (
-									<div
-										key={c.symbol}
-										className='flex'>
-										<label
-											htmlFor={c.symbol}
-											className='pl-2 flex gap-3 items-center cursor-pointer'>
+									<div key={c.symbol} className='flex'>
+										<label htmlFor={c.symbol} className='pl-2 flex gap-3 items-center cursor-pointer'>
 											<input
 												defaultChecked={c.symbol === 'cop'}
 												id={c.symbol}
@@ -134,11 +130,7 @@ export const WalletComponent = () => {
 							<div className='w-full flex justify-center items-center gap-3 px-5 md:px-10'>
 								<div className='w-full'>
 									<p className='font-semibold text-start '> Meta a ahorrar</p>
-									<Input
-										className=''
-										onChange={handleValues}
-										value={amount || userData?.wallet?.saving.toLocaleString()}
-									/>
+									<Input className='' onChange={handleValues} value={amount || userData?.wallet?.saving.toLocaleString()} />
 								</div>
 							</div>
 
@@ -159,9 +151,7 @@ export const WalletComponent = () => {
 						<ChartFinance />
 					</div>
 					<div className='dark:bg-dark_primary_color rounded-xl flex flex-col items-center justify-center p-3 h-full  '>
-						<Carousel
-							setApi={setApi}
-							className='w-full'>
+						<Carousel setApi={setApi} className='w-full'>
 							<div className='flex justify-evenly  items-start mb-5 w-4/5'>
 								<p className=' w-full text-center '>selecciona tu tarjeta</p>
 
@@ -170,10 +160,8 @@ export const WalletComponent = () => {
 							</div>
 
 							<CarouselContent>
-								{Array.from({ length: 5 }).map((_, index) => (
-									<CarouselItem
-										className='flex justify-center'
-										key={index}>
+								{Array.from({length: 5}).map((_, index) => (
+									<CarouselItem className='flex justify-center' key={index}>
 										<article className=' text-white flex flex-col justify-between  bg-linear-to-r  to-green-400  from-gray-700  rounded-3xl p-8 shadow-xl shadow-zinc-900/90 min-w-80 '>
 											<div className='flex justify-between'>
 												<p className='text-xl font-bold'>diego</p>

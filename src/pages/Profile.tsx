@@ -13,6 +13,7 @@ import {format} from 'date-fns';
 import {useEffect, useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import {User} from '@/interfaces/User';
+import {ResponseWallet} from '@/interfaces/Wallet';
 
 const Profile = () => {
 	const user: User = JSON.parse(localStorage.getItem('userMain'));
