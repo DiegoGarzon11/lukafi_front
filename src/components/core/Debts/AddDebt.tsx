@@ -5,7 +5,7 @@ import { DatePicker } from '@/components/ui/datapicker';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { ApiResponse } from '@/interfaces/Api';
-import { Toast } from '@/tools/Toast';
+import { Toast } from '@/hooks/Toast';
 import { HandCoins } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';

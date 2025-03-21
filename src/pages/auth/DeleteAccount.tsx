@@ -2,7 +2,7 @@ import {Input} from '@/components/ui/input';
 import {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {DeleteUser} from '@/apis/UserService';
-import {Toast} from '@/tools/Toast';
+import {Toast} from '@/hooks/Toast';
 
 const DeleteAccount = () => {
 	const {t, i18n} = useTranslation();

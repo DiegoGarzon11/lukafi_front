@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import {AddNewIncome} from '@/apis/Income.service';
 import {LoaderApi} from '@/assets/icons/Svg';
 import {Button} from '@/components/ui/button';
@@ -8,6 +9,18 @@ import {Toast} from '@/tools/Toast';
 import {PiggyBank} from 'lucide-react';
 import {useState} from 'react';
 import {useTranslation} from 'react-i18next';
+=======
+import { AddNewIncome } from '@/apis/Income.service';
+import { LoaderApi } from '@/assets/icons/Svg';
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { ApiResponse } from '@/interfaces/Api';
+import { Toast } from '@/hooks/Toast';
+import { PiggyBank } from 'lucide-react';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+>>>>>>> dc748f03b730065bc3a6b6c6d88384a6cab4d73e
 
 export const AddIncome = ({apiData, className, sendData}) => {
 	const [name, setName] = useState('');

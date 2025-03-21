@@ -1,6 +1,6 @@
 import {RestorePassword, GenerateNewPassword} from '@/apis/UserService';
 import {useEffect, useState} from 'react';
-import {Toast} from '@/tools/Toast';
+import {Toast} from '@/hooks/Toast';
 import {EyeClose, EyeOpen, LoaderApi} from '@/assets/icons/Svg';
 import {Input} from '@/components/ui/input';
 import {Link} from 'react-router-dom';

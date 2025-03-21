@@ -7,13 +7,12 @@ import {Label} from '@/components/ui/label';
 import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs';
 import {ApiResponse} from '@/interfaces/Api';
-import {User} from '@/interfaces/User';
-import {ResponseWallet} from '@/interfaces/Wallet';
-import {Toast} from '@/tools/Toast';
+import {Toast} from '@/hooks/Toast';
 import {Pencil1Icon} from '@radix-ui/react-icons';
 import {format} from 'date-fns';
 import {useEffect, useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
+import {User} from '@/interfaces/User';
 
 const Profile = () => {
 	const user: User = JSON.parse(localStorage.getItem('userMain'));

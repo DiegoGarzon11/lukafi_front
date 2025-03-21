@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ApiResponse } from '@/interfaces/Api';
 import { Category } from '@/interfaces/Category';
-import { Toast } from '@/tools/Toast';
+import { Toast } from '@/hooks/Toast';
 import { DollarSign } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';

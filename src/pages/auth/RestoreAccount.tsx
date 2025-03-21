@@ -1,7 +1,7 @@
 import { RestoreAccount } from '@/apis/UserService';
 import { Button } from '@/components/ui/button';
 import { ApiResponse } from '@/interfaces/Api';
-import { Toast } from '@/tools/Toast';
+import { Toast } from '@/hooks/Toast';
 import { BadgeCheck } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';

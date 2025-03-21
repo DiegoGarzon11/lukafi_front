@@ -1,17 +1,17 @@
-import {Col, Usa, Moon, Sun, LoaderApi, EyeOpen, EyeClose} from '@/assets/icons/Svg';
-import {useTranslation} from 'react-i18next';
-import {useEffect, useState} from 'react';
-import {Link, Outlet, useLocation} from 'react-router-dom';
-import {Button} from '@/components/ui/button';
-import {SheetSide} from '@/layout/sheetSide';
-import {SidebarProvider, SidebarTrigger} from '@/components/ui/sidebar';
-import {Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle} from '@/components/ui/dialog';
-import {Input} from '@/components/ui/input';
-import {ApiResponse} from '@/interfaces/Api';
-import {UserDefault, UserRegister, UserSignIn} from '@/apis/UserService';
-import {Toast} from '@/tools/Toast';
-import {CreateWallet} from '@/apis/WalletService';
-export default function Header({valueSide}) {
+import { Col, Usa, Moon, Sun, LoaderApi, EyeOpen, EyeClose } from '@/assets/icons/Svg';
+import { useTranslation } from 'react-i18next';
+import { useEffect, useState } from 'react';
+import { Link, Outlet, useLocation } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SheetSide } from '@/layout/sheetSide';
+import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { ApiResponse } from '@/interfaces/Api';
+import { UserDefault, UserRegister, UserSignIn } from '@/apis/UserService';
+import { Toast } from '@/hooks/Toast';
+import { CreateWallet } from '@/apis/WalletService';
+export default function Header({ valueSide }) {
 	const location = useLocation();
 	const [isOpen, setIsOpen] = useState(false);
 	const [isSideOpen, setIsSideOpen] = useState(true);
@@ -102,6 +102,7 @@ export default function Header({valueSide}) {
 			[name]: value,
 		}));
 	}
+
 	async function handleSubmit(event) {
 		event.preventDefault();
 		setLoader(true);
@@ -169,7 +170,11 @@ export default function Header({valueSide}) {
 			setLoader(false);
 		}
 	}
-
+	const keyEnter = (e) => {
+		if (e.key === 'Enter') {
+			handleSubmit(e);
+		}
+	};
 	return (
 		<>
 			<header className='z-50 absolute gap-5 '>
@@ -266,8 +271,11 @@ export default function Header({valueSide}) {
 										Bienvenido de vuelta
 									</DialogTitle>
 									<DialogDescription>
-										<form className='flex flex-col gap-5 w-full'>
-											<p className='dark:text-white text-black self-start text-base font-semibold'>
+										<form
+											className='flex flex-col gap-5 w-full'
+											onSubmit={handleSubmit}
+											onKeyDown={keyEnter}>
+											<div className='dark:text-white text-black self-start text-base font-semibold'>
 												¿No tienes cuenta?
 												<button
 													onClick={(e) => {
@@ -277,9 +285,10 @@ export default function Header({valueSide}) {
 													className='text-main_color underline ml-2 cursor-pointer'>
 													Registrarse
 												</button>
-											</p>
+											</div>
 											<Input
 												type='email'
+												autoComplete='email'
 												onChange={handleChange}
 												value={data.email}
 												placeholder='Email'
@@ -288,7 +297,7 @@ export default function Header({valueSide}) {
 											/>
 											<div className='relative w-full'>
 												<Input
-													autoComplete='new-password'
+													autoComplete='password'
 													type={showPassword ? 'text' : 'password'}
 													className='border-b dark:bg-dark_secondary_color bg-light_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
 													placeholder='Password'
@@ -315,7 +324,6 @@ export default function Header({valueSide}) {
 											</p>
 											<Button
 												disabled={!data.email || !data.password || loader}
-												onClick={handleSubmit}
 												className='w-full font-semibold bg-alternative_color text-white text-lg flex justify-center items-center py-5 cursor-pointer'
 												type='submit'>
 												{loader || statusCode?.status === 200 ? <LoaderApi color='white' /> : 'Iniciar sesión'}
@@ -344,6 +352,7 @@ export default function Header({valueSide}) {
 											</p>
 											<div className='flex  gap-3'>
 												<Input
+													autoComplete='name'
 													type='text'
 													onChange={handleChange}
 													value={data.newName}
@@ -352,6 +361,7 @@ export default function Header({valueSide}) {
 													className='border-b dark:bg-dark_secondary_color bg-light_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
 												/>
 												<Input
+													autoComplete='name'
 													type='text'
 													onChange={handleChange}
 													value={data.newLastName}
@@ -361,6 +371,7 @@ export default function Header({valueSide}) {
 												/>
 											</div>
 											<Input
+												autoComplete='email'
 												type='email'
 												onChange={handleChange}
 												value={data.newEmail}
