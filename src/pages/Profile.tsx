@@ -1,4 +1,5 @@
 import {EditUser, UserIconUpdate} from '@/apis/UserService';
+import {EditWallet, GetWalletUser} from '@/apis/WalletService';
 import {Button} from '@/components/ui/button';
 import {Dialog, DialogContent, DialogDescription, DialogHeader} from '@/components/ui/dialog';
 import {Input} from '@/components/ui/input';
@@ -6,17 +7,31 @@ import {Label} from '@/components/ui/label';
 import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs';
 import {ApiResponse} from '@/interfaces/Api';
+import {User} from '@/interfaces/User';
+import {ResponseWallet} from '@/interfaces/Wallet';
 import {Toast} from '@/tools/Toast';
 import {Pencil1Icon} from '@radix-ui/react-icons';
 import {format} from 'date-fns';
 import {useEffect, useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
-import {GetWalletUser} from '@/apis/WalletService';
-import {User} from '@/interfaces/User';
-import {ResponseWallet} from '@/interfaces/Wallet';
 
 const Profile = () => {
 	const user: User = JSON.parse(localStorage.getItem('userMain'));
+	const [selectedAvatar, setSelectedAvatar] = useState('');
+	const [avatarCategory, setAvatarCategory] = useState('adventurer');
+	const [dialogAvatar, setDialogAvatar] = useState(false);
+	const [responseApi, setresponseApi] = useState<ApiResponse | undefined>(undefined);
+	const [visibilytToast, setVisibilityToast] = useState(false);
+	const [avatar, setAvatar] = useState('');
+	const [tab, setTab] = useState('account');
+	const [dataWallet, setDataWallet] = useState<ResponseWallet | undefined>(undefined);
+	const [name, setName] = useState(user.name);
+	const [lastname, setLastname] = useState(user.last_name);
+	const [email, setEmail] = useState(user.email);
+	const [valueSalary, setValueSalary] = useState('');
+	const [valueGoal, setValueGoal] = useState('');
+	const [valueCurrency, setValueCurrency] = useState(null);
+
 	const ICONS = {
 		adventurer: ['John', 'Alice', 'Bob', 'Charlie', 'David', 'Eve', 'Frank', 'Grace'],
 		avataaars: ['Christopher', 'Sawyer', 'Oliver', 'Ryker', 'Valentina', 'Avery', 'Nolan', 'Liliana'],
@@ -26,19 +41,17 @@ const Profile = () => {
 		bottts: ['Ryker', 'Katherine', 'Liliana', 'Brian', 'Jade', 'Easton', 'Ben', 'Chewie'],
 	};
 
-	const [selectedAvatar, setSelectedAvatar] = useState('');
-	const [avatarCategory, setAvatarCategory] = useState('adventurer');
-	const [dialogAvatar, setDialogAvatar] = useState(false);
-	const [responseApi, setresponseApi] = useState<ApiResponse | undefined>(undefined);
-	const [visibilytToast, setVisibilityToast] = useState(false);
-	const [avatar, setAvatar] = useState('');
-	const [tab, setTab] = useState('account');
-	const [name, setName] = useState(user.name);
-	const [lastname, setLastname] = useState(user.last_name);
-	const [email, setEmail] = useState(user.email);
-	const [valueSalary, setValueSalary] = useState('0');
-	const [valueGoal, setValueGoal] = useState('0');
-	const [dataWallet, setDataWallet] = useState<ResponseWallet | undefined>(undefined);
+	useEffect(() => {
+		const fetchData = async () => {
+			const response = await GetWalletUser(user.user_id);
+			setDataWallet(response);
+			setValueGoal(response.wallet.saving.toLocaleString());
+			setValueSalary(response.wallet.salary.toLocaleString());
+			setValueCurrency(response.wallet.currency_type);
+		};
+		fetchData();
+	}, []);
+
 	const navigate = useNavigate();
 
 	const handleUpdateIcon = async () => {
@@ -57,15 +70,6 @@ const Profile = () => {
 			navigate('/profile');
 		}
 	};
-
-	// useEffect(() => {
-	// 	const fetchData = async () => {
-	// 		const response = await GetWalletUser(user.user_id);
-	// 		setDataWallet(response.wallet);
-	// 		console.log(dataWallet);
-	// 	};
-	// 	fetchData();
-	// }, []);
 
 	const handleValueSalary = (e) => {
 		let value = e.target.value.replace(/[^0-9.]/g, '');
@@ -111,10 +115,43 @@ const Profile = () => {
 		}
 	};
 
+	const handleCurrency = (value) => {
+		setValueCurrency(value);
+		console.log(value);
+	};
+
+	const handleUpdateWallet = async () => {
+		setVisibilityToast(false);
+		setresponseApi(undefined);
+
+		const response = await EditWallet({
+			saving: valueGoal.replace(/,/g, ''),
+			salary: valueSalary.replace(/,/g, ''),
+			currency_type: valueCurrency,
+			user_id: user?.user_id,
+			wallet_id: dataWallet?.wallet.wallet_id,
+		});
+		try {
+			if (response) {
+				setVisibilityToast(true);
+				setresponseApi(response);
+
+				await GetWalletUser(user.user_id);
+				setDialogAvatar(false);
+				navigate('/profile');
+			}
+		} catch (error) {
+			console.error(error);
+		} finally {
+			setVisibilityToast(true);
+			setresponseApi(response);
+		}
+	};
+
 	return (
-		<main className='h-full pt-20 p-3 '>
-			<section className='w-full  dark:bg-dark_primary_color rounded-md px-3 md:px-10 pt-5 pb-6  h-full col-span-3'>
-				<div className='dark:text-white text-black flex flex-col items-center justify-center'>
+		<main className='h-screen pt-20 p-3 '>
+			<section className='w-full dark:bg-dark_primary_color rounded-md px-3 md:px-10 pt-5 pb-6  h-full col-span-3'>
+				<div className='dark:text-white text-black flex flex-col items-center justify-between'>
 					<div className='flex justify-center items-center gap-3'>
 						<div className='flex flex-col items-start justify-center  '>
 							<img src={user.icon} alt='avatar' className='w-28 h-28 rounded-full' />
@@ -130,15 +167,21 @@ const Profile = () => {
 						</button>
 					</div>
 				</div>
-				<div className='flex justify-between'>
+				<div className='flex mt-8 justify-between'>
 					<div className='flex flex-col items-center dark:text-white text-black mt-5'>
 						<p className='opacity-50'>Usuario desde</p>
 						<p className='text-lg font-semibold'>{format(user?.created_in, 'PP')}</p>
 					</div>
-					<div className='flex flex-col items-center dark:text-white text-black mt-5'>
-						<p className='opacity-50'>Ultima actualización</p>
-						{/* <p className='text-lg font-semibold'>{format(dataWallet?.modify_in, 'PP')}</p> */}
-					</div>
+					{tab === 'wallet' ? (
+						<div className='flex flex-col flex-wrap items-center dark:text-white text-black mt-5'>
+							<p className=' opacity-50'>Ultima actualizacion:</p>
+							<p className=' text-lg font-semibold'>
+								{dataWallet?.wallet?.modify_in && format(dataWallet?.wallet?.modify_in, 'PP - HH:mm')}
+							</p>
+						</div>
+					) : (
+						''
+					)}
 				</div>
 				<Tabs defaultValue='account' className=''>
 					<TabsList className='flex  bg-dark_secondary_color w-full mt-5'>
@@ -151,7 +194,7 @@ const Profile = () => {
 							Editar perfil
 						</TabsTrigger>
 						<TabsTrigger
-							value='password'
+							value='wallet'
 							className={`${
 								tab === 'wallet' ? 'bg-alternative_color' : ' dark:bg-dark_foreground'
 							} dark:text-white text-black cursor-pointer`}
@@ -197,14 +240,12 @@ const Profile = () => {
 						</div>
 
 						<div className='flex flex-col-reverse md:flex-row md:gap-10 mt-8'>
-							<div className='w-full flex flex-col gap-5 mt-8 md:mt-0'>
-								<Button>
-									<Link
-										to='/auth/change-password'
-										className=' w-full font-semibold  text-white text-lg flex justify-center items-center py-1 rounded-lg cursor-pointer border border-alternative_color '>
+							<div className='w-full flex flex-col gap-5'>
+								<Link to='/auth/change-password'>
+									<Button className='w-full font-semibold  text-white text-lg flex justify-center items-center py-5 rounded-lg cursor-pointer border border-alternative_color '>
 										Cambiar contraseña
-									</Link>
-								</Button>
+									</Button>
+								</Link>
 
 								<Link to='/auth/delete-account' className='dark:text-white text-black underline self-center '>
 									Eliminar Cuenta
@@ -218,7 +259,7 @@ const Profile = () => {
 							</Button>
 						</div>
 					</TabsContent>
-					<TabsContent value='password'>
+					<TabsContent value='wallet'>
 						<div className='flex itmes-center md:gap-10 gap-3 mt-5 '>
 							<div className='flex flex-col w-full'>
 								<Label className='text-lg dark:text-white text-black opacity-50'>Salario</Label>
@@ -241,15 +282,19 @@ const Profile = () => {
 								/>
 							</div>
 						</div>
-						<div className='flex w-full items-center mt-5'>
-							<h2 className='text-lg dark:text-white text-black opacity-50 mr-28'>Tipo de moneda</h2>
-							<RadioGroup className='flex '>
-								<div className='flex items-center space-x-2 dark:text-white opacity-80 text-black'>
-									<Label htmlFor='r1'>Cop</Label>
+						<div className='flex w-full items-center mt-5 justify-start gap-20'>
+							<h2 className='text-lg dark:text-white text-black opacity-50 '>Tipo de moneda</h2>
+							<RadioGroup className='flex' onValueChange={handleCurrency} value={valueCurrency}>
+								<div className='flex items-center space-x-2 dark:text-white opacity-80 text-black '>
+									<Label htmlFor='cop' className='text-lg'>
+										Cop
+									</Label>
 									<RadioGroupItem value='cop' id='cop' className='text-alternative_color' />
 								</div>
-								<div className='flex items-center space-x-2 dark:text-white opacity-80 text-black'>
-									<Label htmlFor='r2'>Usd</Label>
+								<div className='flex items-center space-x-2 dark:text-white opacity-80 text-black md:ml-5'>
+									<Label htmlFor='usd' className='text-lg'>
+										Usd
+									</Label>
 									<RadioGroupItem value='usd' id='usd' className='text-alternative_color' />
 								</div>
 							</RadioGroup>
@@ -257,8 +302,7 @@ const Profile = () => {
 
 						<div className='flex flex-col-reverse md:flex-row md:gap-10 mt-8'>
 							<Button
-								onClick={handleUpdateUser}
-								disabled={name === '' || lastname === '' || email === ''}
+								onClick={handleUpdateWallet}
 								className=' w-full font-semibold  text-white text-lg flex justify-center items-center py-5 cursor-pointer bg-alternative_color '>
 								Guardar cambios
 							</Button>

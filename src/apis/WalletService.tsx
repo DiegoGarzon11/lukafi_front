@@ -29,6 +29,31 @@ export const GetWalletValues = async (wallet_id: string) => {
 		console.warn('Wallet not found');
 	}
 };
+
+export const EditWallet = async (data) => {
+	if (data) {
+		console.log(data);
+		const formData = new URLSearchParams();
+		formData.append('salary', data.salary);
+		formData.append('saving', data.saving);
+		formData.append('currency_type', data.currency_type);
+		try {
+			const response = await fetch(`${API_URL}/wallet/edit-wallet/${data.wallet_id}/${data.user_id}`, {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded',
+				},
+				body: formData,
+			});
+			return await response.json();
+		} catch (error) {
+			console.error(error);
+		}
+	} else {
+		console.warn('Wallet not found');
+	}
+};
+
 export const CreateWallet = async (data) => {
 	if (data) {
 		const formData = new URLSearchParams();
@@ -75,28 +100,6 @@ export const GetMonthlyReport = async (data) => {
 				method: 'GET',
 			});
 
-			return await response.json();
-		} catch (error) {
-			console.error(error);
-		}
-		return;
-	}
-	console.warn('datos no enviados');
-};
-export const EditSavingGoal = async (data) => {
-	if (data) {
-		const formData = new URLSearchParams();
-		formData.append('saving', data.amount);
-		formData.append('wallet_id', data.wallet_id);
-		formData.append('wallet_id', data.user_id);
-		try {
-			const response = await fetch(`${API_URL}/wallet/edit-saving-goal/${data.wallet_id}/${data.user_id}`, {
-				method: 'PATCH',
-				headers: {
-					'Content-Type': 'application/x-www-form-urlencoded',
-				},
-				body: formData,
-			});
 			return await response.json();
 		} catch (error) {
 			console.error(error);

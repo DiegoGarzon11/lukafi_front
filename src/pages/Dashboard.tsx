@@ -177,7 +177,7 @@ export const Dashboard = () => {
 						) : (
 							<div className=' flex justify-center h-full items-center gap-3'>
 								<AlertTriangle className='text-yellow-500' />
-								<p className='text-lg font-semibold'> {t('dashboard.noExpenses')}</p>
+								<p className='text-lg font-semibold dark:text-white'> {t('dashboard.noExpenses')}</p>
 							</div>
 						)}
 					</div>
@@ -228,7 +228,7 @@ export const Dashboard = () => {
 				</section>
 
 				<section className='md:col-span-3 flex flex-col-reverse md:flex-row justify-end items-end gap-3 w-full '>
-					<div className=' flex flex-col dark:bg-dark_primary_color bg-light_primary_color w-full md:w-3/6 pt-10 rounded-md  text-center md:text-start md:px-5 h-full'>
+					<div className=' flex flex-col dark:bg-dark_primary_color bg-light_primary_color w-full md:w-3/6 pt-3 pb-10 rounded-md  text-center md:text-start md:px-5 h-full'>
 						<p className='pb-5 dark:text-white text-black text-center md:text-start text-2xl font-semibold '>
 							Oberva tus metas mensuales
 						</p>
@@ -246,14 +246,14 @@ export const Dashboard = () => {
 								</div>
 							</>
 						) : (
-							<div className=' flex justify-center items-center gap-3'>
+							<div className=' flex justify-center items-center pt-5 gap-3'>
 								<AlertTriangle className='text-yellow-500' />
-								<p className='text-lg font-semibold'> {t('dashboard.noExpenses')}</p>
+								<p className='text-lg font-semibold dark:text-white'> {t('dashboard.noExpenses')}</p>
 							</div>
 						)}
 					</div>
-					<div className='flex flex-col dark:bg-dark_primary_color bg-light_primary_color rounded-md w-full  md:w-3/4 h-full py-10 md:px-5 '>
-						<div className='flex flex-col md:flex-row items-center justify-between  gap-2'>
+					<div className='flex flex-col dark:bg-dark_primary_color bg-light_primary_color rounded-md w-full  md:w-3/4 h-full pt-3 pb-10 md:px-5'>
+						<div className='flex flex-col md:flex-row items-center justify-between gap-2'>
 							<p className=' pb-5 dark:text-white text-black text-2xl font-semibold '>{t('dashboard.viewExpensesCategory')}</p>
 							<div className='flex gap-3 justify-end'>
 								<Button
@@ -272,9 +272,9 @@ export const Dashboard = () => {
 						{expenses?.length > 0 ? (
 							<ChartDonut trigger={trigger} />
 						) : (
-							<div className=' flex justify-center items-center gap-3  h-full'>
+							<div className=' flex justify-center items-center gap-3 pt-5 h-full'>
 								<AlertTriangle className='text-yellow-500' />
-								<p className='text-lg font-semibold'> {t('dashboard.noExpenses')} </p>
+								<p className='text-lg font-semibold dark:text-white'> {t('dashboard.noExpenses')} </p>
 							</div>
 						)}
 					</div>

@@ -1,17 +1,17 @@
-import { Col, Usa, Moon, Sun, LoaderApi, EyeOpen, EyeClose } from '@/assets/icons/Svg';
-import { useTranslation } from 'react-i18next';
-import { useEffect, useState } from 'react';
-import { Link, Outlet, useLocation } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { SheetSide } from '@/layout/sheetSide';
-import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { ApiResponse } from '@/interfaces/Api';
-import { UserDefault, UserRegister, UserSignIn } from '@/apis/UserService';
-import { Toast } from '@/tools/Toast';
-import { CreateWallet } from '@/apis/WalletService';
-export default function Header({ valueSide }) {
+import {Col, Usa, Moon, Sun, LoaderApi, EyeOpen, EyeClose} from '@/assets/icons/Svg';
+import {useTranslation} from 'react-i18next';
+import {useEffect, useState} from 'react';
+import {Link, Outlet, useLocation} from 'react-router-dom';
+import {Button} from '@/components/ui/button';
+import {SheetSide} from '@/layout/sheetSide';
+import {SidebarProvider, SidebarTrigger} from '@/components/ui/sidebar';
+import {Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle} from '@/components/ui/dialog';
+import {Input} from '@/components/ui/input';
+import {ApiResponse} from '@/interfaces/Api';
+import {UserDefault, UserRegister, UserSignIn} from '@/apis/UserService';
+import {Toast} from '@/tools/Toast';
+import {CreateWallet} from '@/apis/WalletService';
+export default function Header({valueSide}) {
 	const location = useLocation();
 	const [isOpen, setIsOpen] = useState(false);
 	const [isSideOpen, setIsSideOpen] = useState(true);
@@ -27,7 +27,7 @@ export default function Header({ valueSide }) {
 		return savedTheme || 'light';
 	});
 
-	const { t, i18n } = useTranslation();
+	const {t, i18n} = useTranslation();
 	const onChangeLanguage = (e) => {
 		i18n.changeLanguage(e);
 		if (e === 'es') {
@@ -75,7 +75,6 @@ export default function Header({ valueSide }) {
 
 	const userDeleted = localStorage.getItem('userMain') ? JSON.parse(localStorage.getItem('userMain'))?.deleted_in : null;
 	const currentRoute = localStorage.route_name;
-	console.log(currentRoute);
 
 	useEffect(() => {
 		if (userDeleted != null) {
@@ -97,7 +96,7 @@ export default function Header({ valueSide }) {
 		password: '',
 	});
 	function handleChange(e) {
-		const { name, value } = e.target;
+		const {name, value} = e.target;
 		setData((prevData) => ({
 			...prevData,
 			[name]: value,
@@ -117,7 +116,9 @@ export default function Header({ valueSide }) {
 				const userDefault = await UserDefault();
 
 				localStorage.setItem('userMain', JSON.stringify(userDefault?.users));
-				return userDefault?.users.deleted_in == null ? (window.location.href = '/dashboard') : (window.location.href = '/restore-account');
+				return userDefault?.users.deleted_in == null
+					? (window.location.href = '/dashboard')
+					: (window.location.href = '/restore-account');
 			}
 			console.warn('user not found');
 		} catch (error) {
@@ -137,7 +138,7 @@ export default function Header({ valueSide }) {
 			email: data.newEmail,
 			password: data.newPassword,
 			name: data.newName,
-			last_name: data.newLastName,
+			lastName: data.newLastName,
 		};
 
 		try {
@@ -173,9 +174,7 @@ export default function Header({ valueSide }) {
 		<>
 			<header className='z-50 absolute gap-5 '>
 				<div className={`flex justify-start gap-3 items-center  `}>
-					<SidebarProvider
-						open={isSideOpen}
-						onOpenChange={handleSidebar}>
+					<SidebarProvider open={isSideOpen} onOpenChange={handleSidebar}>
 						<section className={`${localStorage.token ? '' : 'hidden'}  transition-all duration-500 ease-in-out`}>
 							{allowSidebar && <SheetSide />}
 						</section>
@@ -207,9 +206,7 @@ export default function Header({ valueSide }) {
 									</Button>
 								)}
 
-								<button
-									onClick={() => setIsOpen(!isOpen)}
-									className='cursor-pointer'>
+								<button onClick={() => setIsOpen(!isOpen)} className='cursor-pointer'>
 									{localStorage.lang == 'en' ? <Usa /> : <Col />}
 								</button>
 								{isOpen && (
@@ -240,15 +237,11 @@ export default function Header({ valueSide }) {
 									</div>
 								)}
 								{theme === 'dark' ? (
-									<button
-										className='dark:bg-transparent dark:hover:bg-transparent p-0 cursor-pointer'
-										onClick={handleTheme}>
+									<button className='dark:bg-transparent dark:hover:bg-transparent p-0 cursor-pointer' onClick={handleTheme}>
 										<Moon />
 									</button>
 								) : (
-									<button
-										className='bg-transparent hover:bg-transparent p-0 cursor-pointer'
-										onClick={handleTheme}>
+									<button className='bg-transparent hover:bg-transparent p-0 cursor-pointer' onClick={handleTheme}>
 										<Sun />
 									</button>
 								)}
@@ -258,18 +251,20 @@ export default function Header({ valueSide }) {
 				</div>
 			</header>
 			<Outlet />
-			<Dialog
-				open={isAuthOpen}
-				onOpenChange={setIsAuthOpen}>
+			<Dialog open={isAuthOpen} onOpenChange={setIsAuthOpen}>
 				<DialogContent
 					aria-describedby={null}
 					className=' w-[95%] md:w-[400px] h-[500px] dark:bg-dark_primary_color bg-light_primary_color'>
 					<div className='relative w-full h-full [perspective:1000px]'>
 						<div
-							className={`absolute w-full h-full transition-all duration-1000 [transform-style:preserve-3d] ${flipped ? 'rotate-y-180' : ''}`}>
+							className={`absolute w-full h-full transition-all duration-1000 [transform-style:preserve-3d] ${
+								flipped ? 'rotate-y-180' : ''
+							}`}>
 							<div className='absolute w-full h-full flex flex-col justify-center items-center [backface-visibility:hidden] '>
 								<DialogHeader className='flex flex-col justify-around w-full'>
-									<DialogTitle className='my-3 dark:text-white text-black text-center absolute top-0 '>Bienvenido de vuelta</DialogTitle>
+									<DialogTitle className='my-3 dark:text-white text-black text-center absolute top-0 '>
+										Bienvenido de vuelta
+									</DialogTitle>
 									<DialogDescription>
 										<form className='flex flex-col gap-5 w-full'>
 											<p className='dark:text-white text-black self-start text-base font-semibold'>
@@ -335,9 +330,7 @@ export default function Header({ valueSide }) {
 									<DialogTitle className='my-3 dark:text-white text-black text-center absolute top-0 '>Crear Cuenta</DialogTitle>
 
 									<DialogDescription>
-										<form
-											className='flex flex-col gap-5 w-full'
-											onSubmit={handleSubmitSignUp}>
+										<form className='flex flex-col gap-5 w-full' onSubmit={handleSubmitSignUp}>
 											<p className='dark:text-white text-black text-center self-start text-base font-semibold'>
 												¿Ya tienes cuenta?
 												<button

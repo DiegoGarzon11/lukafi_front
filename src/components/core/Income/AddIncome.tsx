@@ -1,22 +1,22 @@
-import { AddNewIncome } from '@/apis/Income.service';
-import { LoaderApi } from '@/assets/icons/Svg';
-import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { ApiResponse } from '@/interfaces/Api';
-import { Toast } from '@/tools/Toast';
-import { PiggyBank } from 'lucide-react';
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import {AddNewIncome} from '@/apis/Income.service';
+import {LoaderApi} from '@/assets/icons/Svg';
+import {Button} from '@/components/ui/button';
+import {Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger} from '@/components/ui/dialog';
+import {Input} from '@/components/ui/input';
+import {ApiResponse} from '@/interfaces/Api';
+import {Toast} from '@/tools/Toast';
+import {PiggyBank} from 'lucide-react';
+import {useState} from 'react';
+import {useTranslation} from 'react-i18next';
 
-export const AddIncome = ({ apiData, className, sendData }) => {
+export const AddIncome = ({apiData, className, sendData}) => {
 	const [name, setName] = useState('');
 	const [value, setValue] = useState('0');
 	const [loader, setLoader] = useState(false);
 	const [visibilytToast, setVisibilityToast] = useState(false);
 	const [responseIncome, setResponseIncome] = useState<ApiResponse | undefined>(null);
 
-	const { t, i18n } = useTranslation();
+	const {t, i18n} = useTranslation();
 	i18n.changeLanguage();
 
 	const handleValues = (e) => {
