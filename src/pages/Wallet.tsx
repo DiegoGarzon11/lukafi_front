@@ -5,7 +5,7 @@ import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious,
 import {Input} from '@/components/ui/input';
 import {useState, useEffect} from 'react';
 import {CURRENCIES} from '@/tools/currencies';
-import {EditSavingGoal, GetWalletUser} from '@/apis/WalletService';
+import {EditWallet, GetWalletUser} from '@/apis/WalletService';
 import {ResponseWallet} from '@/interfaces/Wallet';
 import {Toast} from '@/hooks/Toast';
 import {ApiResponse} from '@/interfaces/Api';
@@ -62,7 +62,7 @@ export const WalletComponent = () => {
 			amount: amount == '' ? userData?.wallet?.saving : amount.replace(/,/g, ''),
 		};
 
-		const response = await EditSavingGoal(params);
+		const response = await EditWallet(params);
 		if (response) {
 			setApiResponse(response);
 			setVisibilityToast(true);
