@@ -111,7 +111,6 @@ export const GenerateNewPassword = async (password, token) => {
 	}
 };
 
-// !espera del back para eliminar usuario con token
 export const DeleteUser = async (data) => {
 	const {email, password} = data;
 	try {
