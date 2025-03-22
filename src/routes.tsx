@@ -12,7 +12,6 @@ import RestoreAccountPage from './pages/auth/RestoreAccount';
 
 const isAuthenticated = localStorage?.token;
 const userDeleted = localStorage.getItem('userMain') ? JSON.parse(localStorage.getItem('userMain'))?.deleted_in : null;
-console.log(userDeleted);
 
 const RoutesManager = () => (
 	<Routes>

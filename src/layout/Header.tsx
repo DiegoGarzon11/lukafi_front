@@ -27,7 +27,7 @@ export default function Header({ valueSide }) {
 		return savedTheme || 'light';
 	});
 
-	const {t, i18n} = useTranslation();
+	const { t, i18n } = useTranslation();
 	const onChangeLanguage = (e) => {
 		i18n.changeLanguage(e);
 		if (e === 'es') {
@@ -96,7 +96,7 @@ export default function Header({ valueSide }) {
 		password: '',
 	});
 	function handleChange(e) {
-		const {name, value} = e.target;
+		const { name, value } = e.target;
 		setData((prevData) => ({
 			...prevData,
 			[name]: value,
@@ -117,9 +117,7 @@ export default function Header({ valueSide }) {
 				const userDefault = await UserDefault();
 
 				localStorage.setItem('userMain', JSON.stringify(userDefault?.users));
-				return userDefault?.users.deleted_in == null
-					? (window.location.href = '/dashboard')
-					: (window.location.href = '/restore-account');
+				return userDefault?.users.deleted_in == null ? (window.location.href = '/dashboard') : (window.location.href = '/restore-account');
 			}
 			console.warn('user not found');
 		} catch (error) {
@@ -175,31 +173,34 @@ export default function Header({ valueSide }) {
 			handleSubmit(e);
 		}
 	};
+
 	return (
 		<>
 			<header className='z-50 absolute gap-5 '>
 				<div className={`flex justify-start gap-3 items-center  `}>
-					<SidebarProvider open={isSideOpen} onOpenChange={handleSidebar}>
-						<section className={`${localStorage.token ? '' : 'hidden'}  transition-all duration-500 ease-in-out`}>
+					<SidebarProvider
+						open={isSideOpen}
+						onOpenChange={handleSidebar}>
+						<section className={`${localStorage.token ? '' : 'hidden'}   transition-all duration-500 ease-in-out`}>
 							{allowSidebar && <SheetSide />}
 						</section>
 						{localStorage.token && allowSidebar && (
 							<SidebarTrigger
-								className={`z-50 mt-3 ml-6 fixed  transition-all duration-500 ease-in-out  ${
+								className={`z-50 mt-3 md:ml-6 ml-3 fixed  transition-all duration-500 ease-in-out block  ${
 									isSideOpen ? ' md:left-64' : 'md:left-0 '
 								}  top-1 cursor-pointer dark:text-white text-black`}
 							/>
 						)}
-						<Button
-							variant='ghost'
-							className={`z-50 mt-3 ml-6 text-lg transition-all duration-500 ease-in-out ${
+						<p
+							
+							className={`z-50 mt-3 ml-8 text-lg transition-all duration-500 ease-in-out font-semibold ${
 								localStorage.token && allowSidebar && isSideOpen ? ' md:left-72 left-6 ' : 'md:left-6  '
-							} fixed  top-1 cursor-default dark:text-white text-black`}>
+							} fixed  top-1 cursor-default dark:text-white text-black `}>
 							Lukafi
-						</Button>
+						</p>
 						<div
 							className={` transition-all duration-500 ease-in-out ${
-								localStorage.token && allowSidebar && isSideOpen ? 'md:ml-[264px]  md:w-[82%] w-full' : 'w-full'
+								localStorage.token && allowSidebar && isSideOpen ? 'md:ml-[262px]  md:w-[82%] w-full' : 'w-full'
 							} fixed flex justify-end rounded-b-3xl p-3 z-10 bg-linear-to-t dark:from-dark_primary_color dark:to-dark_secondary_color from-light_primary_color to-light_secondary_color `}>
 							<div className='flex items-center gap-5 dark:text-white text-black'>
 								{!localStorage.token && location.pathname === '/' && (
@@ -211,7 +212,9 @@ export default function Header({ valueSide }) {
 									</Button>
 								)}
 
-								<button onClick={() => setIsOpen(!isOpen)} className='cursor-pointer'>
+								<button
+									onClick={() => setIsOpen(!isOpen)}
+									className='cursor-pointer'>
 									{localStorage.lang == 'en' ? <Usa /> : <Col />}
 								</button>
 								{isOpen && (
@@ -242,11 +245,15 @@ export default function Header({ valueSide }) {
 									</div>
 								)}
 								{theme === 'dark' ? (
-									<button className='dark:bg-transparent dark:hover:bg-transparent p-0 cursor-pointer' onClick={handleTheme}>
+									<button
+										className='dark:bg-transparent dark:hover:bg-transparent p-0 cursor-pointer'
+										onClick={handleTheme}>
 										<Moon />
 									</button>
 								) : (
-									<button className='bg-transparent hover:bg-transparent p-0 cursor-pointer' onClick={handleTheme}>
+									<button
+										className='bg-transparent hover:bg-transparent p-0 cursor-pointer'
+										onClick={handleTheme}>
 										<Sun />
 									</button>
 								)}
@@ -256,20 +263,18 @@ export default function Header({ valueSide }) {
 				</div>
 			</header>
 			<Outlet />
-			<Dialog open={isAuthOpen} onOpenChange={setIsAuthOpen}>
+			<Dialog
+				open={isAuthOpen}
+				onOpenChange={setIsAuthOpen}>
 				<DialogContent
 					aria-describedby={null}
 					className=' w-[95%] md:w-[400px] h-[500px] dark:bg-dark_primary_color bg-light_primary_color'>
 					<div className='relative w-full h-full [perspective:1000px]'>
 						<div
-							className={`absolute w-full h-full transition-all duration-1000 [transform-style:preserve-3d] ${
-								flipped ? 'rotate-y-180' : ''
-							}`}>
+							className={`absolute w-full h-full transition-all duration-1000 [transform-style:preserve-3d] ${flipped ? 'rotate-y-180' : ''}`}>
 							<div className='absolute w-full h-full flex flex-col justify-center items-center [backface-visibility:hidden] '>
 								<DialogHeader className='flex flex-col justify-around w-full'>
-									<DialogTitle className='my-3 dark:text-white text-black text-center absolute top-0 '>
-										Bienvenido de vuelta
-									</DialogTitle>
+									<DialogTitle className='my-3 dark:text-white text-black text-center absolute top-0 '>Bienvenido de vuelta</DialogTitle>
 									<DialogDescription>
 										<form
 											className='flex flex-col gap-5 w-full'
@@ -338,7 +343,9 @@ export default function Header({ valueSide }) {
 									<DialogTitle className='my-3 dark:text-white text-black text-center absolute top-0 '>Crear Cuenta</DialogTitle>
 
 									<DialogDescription>
-										<form className='flex flex-col gap-5 w-full' onSubmit={handleSubmitSignUp}>
+										<form
+											className='flex flex-col gap-5 w-full'
+											onSubmit={handleSubmitSignUp}>
 											<p className='dark:text-white text-black text-center self-start text-base font-semibold'>
 												¿Ya tienes cuenta?
 												<button

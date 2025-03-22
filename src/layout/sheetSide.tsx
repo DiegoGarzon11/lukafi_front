@@ -1,7 +1,6 @@
 import { Button } from '@/components/ui/button';
 
 import { useTranslation } from 'react-i18next';
-import logo from '/images/logo.png';
 import {
 	ChevronDown,
 	DollarSign,
@@ -9,7 +8,6 @@ import {
 	LogOut,
 	LucideHelpCircle,
 	LucideLineChart,
-	LucidePencil,
 	PiggyBank,
 	User,
 	Wallet,
@@ -20,7 +18,7 @@ import { Link } from 'react-router-dom';
 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
-import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuSub } from '@/components/ui/sidebar';
+import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuSub, SidebarTrigger } from '@/components/ui/sidebar';
 
 import {
 	DropdownMenu,
@@ -75,11 +73,6 @@ export function SheetSide() {
 					icon: <PiggyBank />,
 					path: '/wallet/incomes',
 				},
-				{
-					name: t('sheetside.wallet.editWallet') as string,
-					icon: <LucidePencil />,
-					path: '/wallet',
-				},
 			],
 		},
 
@@ -99,9 +92,9 @@ export function SheetSide() {
 
 	return (
 		<Sidebar
-			variant='sidebar'
-			className={`z-50  min-w-28  `}>
-			<SidebarContent className='dark:bg-dark_primary_color bg-light_primary_color ml-3 rounded-3xl  my-2'>
+			variant='floating'
+			className={`z-50    `}>
+			<SidebarContent className='dark:bg-dark_primary_color bg-light_primary_color  rounded-3xl bgr  '>
 				<div className=' w-full flex justify-end mt-3'>
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
@@ -164,20 +157,35 @@ export function SheetSide() {
 										key={i}
 										className='flex flex-col gap-2 mt-3'>
 										<SidebarMenuSub>
-											{page.children.map((child) => (
-												<Link
-													key={child.path}
-													to={child.path}>
-													<Button
-														className={`w-full gap-4 justify-start py-6 dark:text-white text-black cursor-pointer ${
-															localStorage.route_name === child.path
-																? 'bg-alternative_color text-white '
-																: 'bg-transparent dark:hover:bg-dark_secondary_color hover:bg-light_secondary_color'
-														}`}>
-														{child.icon}
-														{child.name}
-													</Button>
-												</Link>
+											{page.children.map((child, i) => (
+												<div key={i}>
+													<Link
+														key={i}
+														to={child.path}>
+														<SidebarTrigger
+															className={`md:hidden w-full gap-4 justify-start py-6 dark:text-white text-black cursor-pointer ${
+																localStorage.route_name === child.path
+																	? 'bg-alternative_color text-white '
+																	: 'bg-transparent dark:hover:bg-dark_secondary_color hover:bg-light_secondary_color'
+															}`}>
+															{child.icon}
+															{child.name}
+														</SidebarTrigger>
+													</Link>
+													<Link
+														key={child.path }
+														to={child.path}>
+														<Button
+															className={`hidden md:flex w-full gap-4 justify-start py-6 dark:text-white text-black cursor-pointer ${
+																localStorage.route_name === child.path
+																	? 'bg-alternative_color text-white '
+																	: 'bg-transparent dark:hover:bg-dark_secondary_color hover:bg-light_secondary_color'
+															}`}>
+															{child.icon}
+															{child.name}
+														</Button>
+													</Link>
+												</div>
 											))}
 										</SidebarMenuSub>
 									</CollapsibleContent>

@@ -1,19 +1,19 @@
-import {EditUser, UserIconUpdate} from '@/apis/UserService';
-import {EditWallet, GetWalletUser} from '@/apis/WalletService';
-import {Button} from '@/components/ui/button';
-import {Dialog, DialogContent, DialogDescription, DialogHeader} from '@/components/ui/dialog';
-import {Input} from '@/components/ui/input';
-import {Label} from '@/components/ui/label';
-import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
-import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs';
-import {ApiResponse} from '@/interfaces/Api';
-import {Toast} from '@/hooks/Toast';
-import {Pencil1Icon} from '@radix-ui/react-icons';
-import {format} from 'date-fns';
-import {useEffect, useState} from 'react';
-import {Link, useNavigate} from 'react-router-dom';
-import {User} from '@/interfaces/User';
-import {ResponseWallet} from '@/interfaces/Wallet';
+import { EditUser, UserIconUpdate } from '@/apis/UserService';
+import { EditWallet, GetWalletUser } from '@/apis/WalletService';
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { ApiResponse } from '@/interfaces/Api';
+import { Toast } from '@/hooks/Toast';
+import { Pencil1Icon } from '@radix-ui/react-icons';
+import { format } from 'date-fns';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { User } from '@/interfaces/User';
+import { ResponseWallet } from '@/interfaces/Wallet';
 
 const Profile = () => {
 	const user: User = JSON.parse(localStorage.getItem('userMain'));
@@ -28,7 +28,6 @@ const Profile = () => {
 	const [name, setName] = useState(user.name);
 	const [lastname, setLastname] = useState(user.last_name);
 	const [email, setEmail] = useState(user.email);
-	const [valueSalary, setValueSalary] = useState('');
 	const [valueGoal, setValueGoal] = useState('');
 	const [valueCurrency, setValueCurrency] = useState(null);
 
@@ -46,7 +45,6 @@ const Profile = () => {
 			const response = await GetWalletUser(user.user_id);
 			setDataWallet(response);
 			setValueGoal(response.wallet.saving.toLocaleString());
-			setValueSalary(response.wallet.salary.toLocaleString());
 			setValueCurrency(response.wallet.currency_type);
 		};
 		fetchData();
@@ -71,13 +69,6 @@ const Profile = () => {
 		}
 	};
 
-	const handleValueSalary = (e) => {
-		let value = e.target.value.replace(/[^0-9.]/g, '');
-		const floatValue = parseFloat(value);
-		const formattedValue = floatValue.toLocaleString();
-
-		setValueSalary(formattedValue === 'NaN' ? '0' : formattedValue);
-	};
 	const handleValueGoal = (e) => {
 		let value = e.target.value.replace(/[^0-9.]/g, '');
 		const floatValue = parseFloat(value);
@@ -117,7 +108,6 @@ const Profile = () => {
 
 	const handleCurrency = (value) => {
 		setValueCurrency(value);
-		console.log(value);
 	};
 
 	const handleUpdateWallet = async () => {
@@ -126,7 +116,6 @@ const Profile = () => {
 
 		const response = await EditWallet({
 			saving: valueGoal.replace(/,/g, ''),
-			salary: valueSalary.replace(/,/g, ''),
 			currency_type: valueCurrency,
 			user_id: user?.user_id,
 			wallet_id: dataWallet?.wallet.wallet_id,
@@ -149,25 +138,28 @@ const Profile = () => {
 	};
 
 	return (
-		<main className='h-screen pt-20 p-3 '>
-			<section className='w-full dark:bg-dark_primary_color rounded-md px-3 md:px-10 pt-5 pb-6  h-full col-span-3'>
+		<main className='h-screen pt-16 p-3 '>
+			<section className='w-full dark:bg-dark_primary_color bg-light_primary_color rounded-md px-3 md:px-10 pt-5 h-screen md:h-full col-span-3'>
 				<div className='dark:text-white text-black flex flex-col items-center justify-between'>
-					<div className='flex justify-center items-center gap-3'>
-						<div className='flex flex-col items-start justify-center  '>
-							<img src={user.icon} alt='avatar' className='w-28 h-28 rounded-full' />
-							<div className='mt-5'>
-								<p className='text-xl font-bold'>{user.full_name}</p>
-								<p className='text-sm opacity-50'>{user.email}</p>
-							</div>
+					<div className='flex justify-center items-center gap-2 relative'>
+						<div className='flex flex-col items-center justify-center h-autos w-auto '>
+							<img
+								src={user.icon}
+								alt='avatar'
+								className='w-28 md:w-32 dark:bg-dark_secondary_color  bg-light_secondary_color  rounded-full mb-1'
+							/>
+
+							<p className='text-xl font-bold'>{user.full_name}</p>
+							<p className='text-sm opacity-50'>{user.email}</p>
 						</div>
 						<button
 							onClick={() => setDialogAvatar(true)}
-							className='bg-alternative_color text-white  p-2 rounded-full cursor-pointer flex items-center gap-2 absolute right-34 md:relative md:right-14'>
-							<Pencil1Icon className='w-5 h-5 font-semibold' />
+							className='dark:bg-dark_secondary_color bg-light_secondary_color text-white  p-2 rounded-full cursor-pointer flex items-center gap-2  absolute  -right-3 bottom-11   border-4 dark:border-dark_primary_color border-light_primary_color '>
+							<Pencil1Icon className='w-5 h-5 font-semibold dark:text-white text-black' />
 						</button>
 					</div>
 				</div>
-				<div className='flex mt-8 justify-between'>
+				<div className='flex mt-3 justify-between'>
 					<div className='flex flex-col items-center dark:text-white text-black mt-5'>
 						<p className='opacity-50'>Usuario desde</p>
 						<p className='text-lg font-semibold'>{format(user?.created_in, 'PP')}</p>
@@ -175,29 +167,25 @@ const Profile = () => {
 					{tab === 'wallet' ? (
 						<div className='flex flex-col flex-wrap items-center dark:text-white text-black mt-5'>
 							<p className=' opacity-50'>Ultima actualizacion:</p>
-							<p className=' text-lg font-semibold'>
-								{dataWallet?.wallet?.modify_in && format(dataWallet?.wallet?.modify_in, 'PP - HH:mm')}
-							</p>
+							<p className=' text-lg font-semibold'>{dataWallet?.wallet?.modify_in && format(dataWallet?.wallet?.modify_in, 'PP - HH:mm')}</p>
 						</div>
 					) : (
 						''
 					)}
 				</div>
-				<Tabs defaultValue='account' className=''>
-					<TabsList className='flex  bg-dark_secondary_color w-full mt-5'>
+				<Tabs
+					defaultValue='account'
+					className=''>
+					<TabsList className='flex  dark:bg-dark_secondary_color bg-light_secondary_color  w-full mt-5'>
 						<TabsTrigger
-							className={`${
-								tab === 'account' ? 'bg-alternative_color' : ' dark:bg-dark_foreground'
-							} dark:text-white text-black cursor-pointer`}
+							className={`${tab === 'account' ? 'bg-alternative_color text-white' : ' '} dark:text-white  cursor-pointer`}
 							value='account'
 							onClick={() => setTab('account')}>
 							Editar perfil
 						</TabsTrigger>
 						<TabsTrigger
 							value='wallet'
-							className={`${
-								tab === 'wallet' ? 'bg-alternative_color' : ' dark:bg-dark_foreground'
-							} dark:text-white text-black cursor-pointer`}
+							className={`${tab === 'wallet' ? 'bg-alternative_color text-white' : ''} dark:text-white cursor-pointer`}
 							onClick={() => setTab('wallet')}>
 							Editar Billetera
 						</TabsTrigger>
@@ -207,7 +195,7 @@ const Profile = () => {
 							<div className='flex flex-col w-full'>
 								<Label className='text-lg dark:text-white text-black opacity-50'>Nombre</Label>
 								<Input
-									className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full mt-2 placeholder:opacity-30'
+									className='border-b dark:bg-dark_secondary_color bg-light_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full mt-2 placeholder:opacity-30'
 									id='name'
 									value={name}
 									onChange={(e) => setName(e.target.value)}
@@ -218,7 +206,7 @@ const Profile = () => {
 							<div className='flex flex-col  w-full'>
 								<Label className='text-lg dark:text-white text-black opacity-50'>Apellido</Label>
 								<Input
-									className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full mt-2 placeholder:opacity-30'
+									className='border-b dark:bg-dark_secondary_color bg-light_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full mt-2 placeholder:opacity-30'
 									id='lastname'
 									value={lastname}
 									onChange={(e) => setLastname(e.target.value)}
@@ -230,7 +218,7 @@ const Profile = () => {
 						<div className='flex flex-col mt-5'>
 							<Label className='text-lg dark:text-white text-black opacity-50'>Correo electrónico</Label>
 							<Input
-								className='border-b dark:bg-dark_secondary_color border-none text-lg  dark:text-white text-black placeholder:text-gray-300 w-full  placeholder:opacity-30'
+								className='border-b dark:bg-dark_secondary_color bg-light_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full mt-2 placeholder:opacity-30'
 								id='email'
 								value={email}
 								onChange={(e) => setEmail(e.target.value)}
@@ -239,65 +227,72 @@ const Profile = () => {
 							/>
 						</div>
 
-						<div className='flex flex-col-reverse md:flex-row md:gap-10 mt-8'>
-							<div className='w-full flex flex-col gap-5'>
-								<Link to='/auth/change-password'>
-									<Button className='w-full font-semibold  text-white text-lg flex justify-center items-center py-5 rounded-lg cursor-pointer border border-alternative_color '>
-										Cambiar contraseña
-									</Button>
-								</Link>
+						<Button
+							onClick={handleUpdateUser}
+							disabled={name === '' || lastname === '' || email === ''}
+							className=' w-full font-semibold  text-white text-lg flex justify-center items-center py-5 cursor-pointer bg-alternative_color mt-8 '>
+							Guardar cambios
+						</Button>
+						<div className='flex mt-5 justify-around dark:text-white text-black '> 
+							<Link to='/auth/change-password' className='hover:underline'>Cambiar contraseña</Link>
 
-								<Link to='/auth/delete-account' className='dark:text-white text-black underline self-center '>
-									Eliminar Cuenta
-								</Link>
-							</div>
-							<Button
-								onClick={handleUpdateUser}
-								disabled={name === '' || lastname === '' || email === ''}
-								className=' w-full font-semibold  text-white text-lg flex justify-center items-center py-5 cursor-pointer bg-alternative_color '>
-								Guardar cambios
-							</Button>
+							<Link
+								to='/auth/delete-account'
+								className='hover:underline'
+								>
+								Eliminar Cuenta
+							</Link>
 						</div>
 					</TabsContent>
 					<TabsContent value='wallet'>
-						<div className='flex itmes-center md:gap-10 gap-3 mt-5 '>
-							<div className='flex flex-col w-full'>
-								<Label className='text-lg dark:text-white text-black opacity-50'>Salario</Label>
-								<Input
-									className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full mt-2 placeholder:opacity-30'
-									id='name'
-									value={valueSalary}
-									onChange={handleValueSalary}
-									type='text'
-								/>
+						<div className='grid grid-cols-1 grid-rows-1  mt-5 justify-between '>
+							<Label className='text-lg dark:text-white text-black opacity-50 text-center'>Tipo de moneda</Label>
+
+							<div className='flex flex-col w-full justify-end items-center'>
+								<RadioGroup
+									onValueChange={handleCurrency}
+									value={valueCurrency}>
+									<div className='h-full'>
+										<div className='flex gap-3'>
+											<div className='flex items-center space-x-2 dark:text-white opacity-80 text-black'>
+												<Label
+													htmlFor='cop'
+													className='text-lg cursor-pointer'>
+													Cop
+												</Label>
+												<RadioGroupItem
+													value='cop'
+													id='cop'
+													className='text-alternative_color cursor-pointer'
+												/>
+											</div>
+											<div className='flex items-center space-x-2 dark:text-white opacity-80 text-black md:ml-5 '>
+												<Label
+													htmlFor='usd'
+													className='text-lg cursor-pointer'>
+													Usd
+												</Label>
+												<RadioGroupItem
+													value='usd'
+													id='usd'
+													className='text-alternative_color cursor-pointer'
+												/>
+											</div>
+										</div>
+									</div>
+								</RadioGroup>
 							</div>
-							<div className='flex flex-col w-full'>
+							<div className='flex flex-col w-full mt-3'>
 								<Label className='text-lg dark:text-white text-black opacity-50'>Meta a ahorrar</Label>
+
 								<Input
-									className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full placeholder:opacity-30 mt-2'
+									className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full placeholder:opacity-30 '
 									id='goal'
 									value={valueGoal}
 									onChange={handleValueGoal}
 									type='text'
 								/>
 							</div>
-						</div>
-						<div className='flex w-full items-center mt-5 justify-start gap-20'>
-							<h2 className='text-lg dark:text-white text-black opacity-50 '>Tipo de moneda</h2>
-							<RadioGroup className='flex' onValueChange={handleCurrency} value={valueCurrency}>
-								<div className='flex items-center space-x-2 dark:text-white opacity-80 text-black '>
-									<Label htmlFor='cop' className='text-lg'>
-										Cop
-									</Label>
-									<RadioGroupItem value='cop' id='cop' className='text-alternative_color' />
-								</div>
-								<div className='flex items-center space-x-2 dark:text-white opacity-80 text-black md:ml-5'>
-									<Label htmlFor='usd' className='text-lg'>
-										Usd
-									</Label>
-									<RadioGroupItem value='usd' id='usd' className='text-alternative_color' />
-								</div>
-							</RadioGroup>
 						</div>
 
 						<div className='flex flex-col-reverse md:flex-row md:gap-10 mt-8'>
@@ -311,10 +306,12 @@ const Profile = () => {
 				</Tabs>
 			</section>
 
-			<Dialog open={dialogAvatar} onOpenChange={setDialogAvatar}>
-				<DialogContent className=' w-full md:w-[500px] rounded-md dark:bg-dark_primary_color dark:text-white text-black '>
+			<Dialog
+				open={dialogAvatar}
+				onOpenChange={setDialogAvatar}>
+				<DialogContent aria-describedby='modal' className=' w-full md:w-[500px] rounded-md dark:bg-dark_primary_color dark:text-white text-black '>
 					<div className='flex flex-col items-center space-y-4'>
-						<h2 className='text-xl font-semibold'>Selecciona tu avatar</h2>
+						<DialogTitle className='text-xl font-semibold'>Selecciona tu avatar</DialogTitle>
 						<DialogHeader>
 							<div className='flex gap-3 w-full justify-center flex-wrap'>
 								<Button
@@ -380,7 +377,11 @@ const Profile = () => {
 				</DialogContent>
 			</Dialog>
 			{visibilytToast && (
-				<Toast visibility={visibilytToast} severity={responseApi?.status == 200 ? 'success' : 'error'} message={responseApi?.message} />
+				<Toast
+					visibility={visibilytToast}
+					severity={responseApi?.status == 200 ? 'success' : 'error'}
+					message={responseApi?.message}
+				/>
 			)}
 		</main>
 	);

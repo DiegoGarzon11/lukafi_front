@@ -87,7 +87,7 @@ export const AddDebt = ({ apiData, sendData, className }) => {
 					{t('addDebt.addDebt')} <HandCoins />
 				</Button>
 			</DialogTrigger>
-			<DialogContent className=' w-full md:w-[500px] rounded-md dark:bg-dark_primary_color bg-light_primary_color dark:text-white text-black '>
+			<DialogContent aria-describedby='modal-title' className=' w-full md:w-[500px] rounded-md dark:bg-dark_primary_color bg-light_primary_color dark:text-white text-black '>
 				<DialogHeader>
 					<DialogTitle>{t('addDebt.newDebt')}</DialogTitle>
 					<DialogDescription className='opacity-50'>{t('addDebt.instructions')}</DialogDescription>

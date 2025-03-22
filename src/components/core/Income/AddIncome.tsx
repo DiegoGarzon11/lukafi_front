@@ -62,7 +62,7 @@ export const AddIncome = ({apiData, className, sendData}) => {
 					{t('addIncome.newIncome')} <PiggyBank />
 				</Button>
 			</DialogTrigger>
-			<DialogContent className=' w-full md:w-[500px] rounded-md dark:bg-dark_primary_color bg-light_primary_color dark:text-white text-black '>
+			<DialogContent aria-describedby='modal' className=' w-full md:w-[500px] rounded-md dark:bg-dark_primary_color bg-light_primary_color dark:text-white text-black '>
 				<DialogHeader>
 					<DialogTitle>{t('addIncome.newIncome')}</DialogTitle>
 					<DialogDescription className='opacity-50'>{t('addIncome.instructions')}</DialogDescription>

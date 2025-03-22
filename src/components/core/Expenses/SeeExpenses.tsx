@@ -266,7 +266,7 @@ export const SeeExpenses = () => {
 															{f.is_paid ? `${t('dashboard.alreadyPaid')}` : `${t('dashboard.pay')}`}
 														</DialogTrigger>
 														{!f.is_paid && (
-															<DialogContent className=' w-[95%] md:w-[500px] rounded-md '>
+															<DialogContent aria-describedby='modal' className=' w-[95%] md:w-[500px] rounded-md '>
 																<DialogHeader>
 																	<DialogTitle className='text-start'>
 																		{t('dashboard.confirm')}

@@ -110,7 +110,7 @@ export const AddExpense = ({ apiData, sendData, className }) => {
 					{t('addExpense.addExpense')} <DollarSign />
 				</Button>
 			</DialogTrigger>
-			<DialogContent className=' w-full md:w-[500px] rounded-md dark:bg-dark_primary_color bg-light_primary_color dark:text-white text-black '>
+			<DialogContent aria-activedescendant='modal-title' className=' w-full md:w-[500px] rounded-md dark:bg-dark_primary_color bg-light_primary_color dark:text-white text-black '>
 				<DialogHeader>
 					<DialogTitle>{t('addExpense.newExpense')}</DialogTitle>
 					<DialogDescription className='opacity-50'> {t('addExpense.completeFields')} </DialogDescription>

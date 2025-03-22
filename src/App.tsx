@@ -29,7 +29,7 @@ function App() {
 			<RouteName />
 			<Header valueSide={handleSideValue} />
 
-			<div className={`${isSideOpen && allowSidebar && localStorage.token ? 'md:ml-64' : ' '}  transition-all duration-500 ease-in-out`}>
+			<div className={`${isSideOpen && allowSidebar && localStorage.token ? 'md:ml-62' : ' '}  transition-all duration-500 ease-in-out`}>
 				<RoutesManager />
 			</div>
 		</BrowserRouter>
