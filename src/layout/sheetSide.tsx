@@ -102,24 +102,28 @@ export function SheetSide() {
 								<UserCog className='dark:text-white text-black cursor-pointer' />
 							</Button>
 						</DropdownMenuTrigger>
-						<DropdownMenuContent className='p-2 w-36  dark:bg-dark_foreground  rounded-md dark:text-white text-black '>
+						<DropdownMenuContent className='p-2 w-36  dark:bg-dark_foreground  bg-light_foreground rounded-md dark:text-white text-black '>
 							<DropdownMenuLabel className='flex items-center font-bold h-9 border-b-2 border-zinc-500 '>My Account</DropdownMenuLabel>
 							<DropdownMenuGroup>
 								<Link
 									className=''
 									to='/profile'>
-									<DropdownMenuItem className='flex w-full   rounded-sm pl-2 my-1 items-center h-9  dark:hover:bg-dark_secondary_color cursor-pointer hover:bg-zinc-100'>
-										<UserRoundPen className='mr-2' />
-										Profile
+									<DropdownMenuItem className='  flex w-full   rounded-sm pl-2 my-1 items-center h-9  hover:bg-light_secondary_color dark:hover:bg-dark_secondary_color cursor-pointer'>
+										<SidebarTrigger className='md:hidden flex w-full  justify-start rounded-sm my-1 items-center h-9  dark:hover:bg-dark_secondary_color cursor-pointer hover:bg-light_secondary_color'>
+											<UserRoundPen />
+											Profile
+										</SidebarTrigger>
+										<UserRoundPen className='mr-2 hidden md:flex' />
+										<span className=' hidden md:flex'>Profile</span>
 									</DropdownMenuItem>
 								</Link>
+								<DropdownMenuItem
+									onClick={() => closeSession()}
+									className=' flex w-full   rounded-sm pl-2 my-1 items-center h-9  hover:bg-light_secondary_color dark:hover:bg-dark_secondary_color cursor-pointer'>
+									<LogOut className='mr-2' />
+									Log out
+								</DropdownMenuItem>
 							</DropdownMenuGroup>
-							<DropdownMenuItem
-								onClick={() => closeSession()}
-								className=' flex w-full   rounded-sm pl-2 my-1 items-center h-9  hover:bg-zinc-100 dark:hover:bg-dark_secondary_color cursor-pointer'>
-								<LogOut className='mr-2' />
-								Log out
-							</DropdownMenuItem>
 						</DropdownMenuContent>
 					</DropdownMenu>
 				</div>
@@ -158,34 +162,29 @@ export function SheetSide() {
 										className='flex flex-col gap-2 mt-3'>
 										<SidebarMenuSub>
 											{page.children.map((child, i) => (
-												<div key={i}>
-													<Link
-														key={i}
-														to={child.path}>
-														<SidebarTrigger
-															className={`md:hidden w-full gap-4 justify-start py-6 dark:text-white text-black cursor-pointer ${
-																localStorage.route_name === child.path
-																	? 'bg-alternative_color text-white '
-																	: 'bg-transparent dark:hover:bg-dark_secondary_color hover:bg-light_secondary_color'
-															}`}>
-															{child.icon}
-															{child.name}
-														</SidebarTrigger>
-													</Link>
-													<Link
-														key={child.path }
-														to={child.path}>
-														<Button
-															className={`hidden md:flex w-full gap-4 justify-start py-6 dark:text-white text-black cursor-pointer ${
-																localStorage.route_name === child.path
-																	? 'bg-alternative_color text-white '
-																	: 'bg-transparent dark:hover:bg-dark_secondary_color hover:bg-light_secondary_color'
-															}`}>
-															{child.icon}
-															{child.name}
-														</Button>
-													</Link>
-												</div>
+												<Link
+													key={i}
+													to={child.path}>
+													<SidebarTrigger
+														className={`md:hidden w-full gap-4 justify-start py-6 dark:text-white text-black cursor-pointer ${
+															localStorage.route_name === child.path
+																? 'bg-alternative_color text-white '
+																: 'bg-transparent dark:hover:bg-dark_secondary_color hover:bg-light_secondary_color'
+														}`}>
+														<p className='ml-6'>{child.icon}</p>
+														<p>{child.name}</p>
+													</SidebarTrigger>
+
+													<Button
+														className={`hidden md:flex w-full gap-4 justify-start py-6 dark:text-white text-black cursor-pointer ${
+															localStorage.route_name === child.path
+																? 'bg-alternative_color text-white '
+																: 'bg-transparent dark:hover:bg-dark_secondary_color hover:bg-light_secondary_color'
+														}`}>
+														{child.icon}
+														{child.name}
+													</Button>
+												</Link>
 											))}
 										</SidebarMenuSub>
 									</CollapsibleContent>

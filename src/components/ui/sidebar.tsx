@@ -157,7 +157,7 @@ const Sidebar = React.forwardRef<
 				<SheetContent
 					data-sidebar='sidebar'
 					data-mobile='true'
-					className='w-(--sidebar-width)  p-0 text-sidebar-foreground [&>button]:hidden'
+					className='max-w-60  p-0  [&>button]:hidden' 
 					style={
 						{
 							'--sidebar-width': SIDEBAR_WIDTH_MOBILE,
@@ -231,7 +231,7 @@ const SidebarTrigger = React.forwardRef<React.ElementRef<typeof Button>, React.C
 				{...props}>
 				<PanelLeft className={`${children ? 'hidden' : ''}   `} />
 				<span className='sr-only'>Toggle Sidebar</span>
-				<span className='flex w-full gap-4  ml-6 '>{children}</span>
+				<span className='flex w-full gap-4   '>{children}</span>
 			</Button>
 		);
 	}

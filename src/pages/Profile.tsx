@@ -32,12 +32,12 @@ const Profile = () => {
 	const [valueCurrency, setValueCurrency] = useState(null);
 
 	const ICONS = {
-		adventurer: ['John', 'Alice', 'Bob', 'Charlie', 'David', 'Eve', 'Frank', 'Grace'],
-		avataaars: ['Christopher', 'Sawyer', 'Oliver', 'Ryker', 'Valentina', 'Avery', 'Nolan', 'Liliana'],
-		'big-smile': ['Kennedy', 'Kendall', 'Kylo', 'Rey', 'Finn', 'Jake', 'Ben', 'Chewie'],
-		micah: ['Valentina', 'Destiny', 'Christopher', 'Brian', 'Adrian', 'Liam', 'Wyatt', 'Ryker'],
-		lorelei: ['Christopher', 'Brian', 'Eliza', 'Liliana', 'Nolan', 'Kingston', 'Robert', 'Easton'],
-		bottts: ['Ryker', 'Katherine', 'Liliana', 'Brian', 'Jade', 'Easton', 'Ben', 'Chewie'],
+		adventurer: ['Emery', 'Valentina', 'Mackenzie', 'Aidan', 'Mason', 'Alexander', 'Kingston', 'Sarah'],
+		avataaars: ['Sophia', 'Adrian', 'Wyatt', 'Oliver', 'Chase', 'Eliza', 'Jack', 'Nolan'],
+		'big-smile': ['Nolan', 'Adrian', 'Kingston', 'Oliver', 'Sarah', 'Sara', 'Amaya', 'Eliza'],
+		micah: ['Emery', 'Adrian', 'Kingston', 'Oliver', 'Sarah', 'Sara', 'Amaya', 'Eliza'],
+		notionists: ['Sophia', 'Robert', 'Mackenzie', 'Aidan', 'Eliza', 'Alexander', 'Sarah', 'Grace'],
+		'open-peeps': ['Nolan', 'Valentina', 'Wyatt', 'Aidan', 'Mason', 'Jack', 'Amaya', 'Sadie'],
 	};
 
 	useEffect(() => {
@@ -150,24 +150,24 @@ const Profile = () => {
 							/>
 
 							<p className='text-xl font-bold'>{user.full_name}</p>
-							<p className='text-sm opacity-50'>{user.email}</p>
+							<p className='text-lg opacity-50'>{user.email}</p>
 						</div>
 						<button
 							onClick={() => setDialogAvatar(true)}
-							className='dark:bg-dark_secondary_color bg-light_secondary_color text-white  p-2 rounded-full cursor-pointer flex items-center gap-2  absolute  -right-3 bottom-11   border-4 dark:border-dark_primary_color border-light_primary_color '>
+							className='dark:bg-dark_secondary_color bg-light_secondary_color text-white  p-2 rounded-full cursor-pointer flex items-center gap-2  absolute  right-0 bottom-15   border-4 dark:border-dark_primary_color border-light_primary_color '>
 							<Pencil1Icon className='w-5 h-5 font-semibold dark:text-white text-black' />
 						</button>
 					</div>
 				</div>
 				<div className='flex mt-3 justify-between'>
 					<div className='flex flex-col items-center dark:text-white text-black mt-5'>
-						<p className='opacity-50'>Usuario desde</p>
-						<p className='text-lg font-semibold'>{format(user?.created_in, 'PP')}</p>
+						<p>Usuario desde</p>
+						<p className='text-lg font-semibold text-main_color'>{format(user?.created_in, 'PP')}</p>
 					</div>
 					{tab === 'wallet' ? (
 						<div className='flex flex-col flex-wrap items-center dark:text-white text-black mt-5'>
-							<p className=' opacity-50'>Ultima actualizacion:</p>
-							<p className=' text-lg font-semibold'>{dataWallet?.wallet?.modify_in && format(dataWallet?.wallet?.modify_in, 'PP - HH:mm')}</p>
+							<p >Ultima actualizacion:</p>
+							<p className=' text-lg font-semibold text-main_color'>{dataWallet?.wallet?.modify_in && format(dataWallet?.wallet?.modify_in, 'PP - HH:mm')}</p>
 						</div>
 					) : (
 						''
@@ -193,7 +193,7 @@ const Profile = () => {
 					<TabsContent value='account'>
 						<div className='flex md:gap-10 gap-3 mt-5 '>
 							<div className='flex flex-col w-full'>
-								<Label className='text-lg dark:text-white text-black opacity-50'>Nombre</Label>
+								<Label className='text-lg dark:text-white text-black opacity-70'>Nombre</Label>
 								<Input
 									className='border-b dark:bg-dark_secondary_color bg-light_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full mt-2 placeholder:opacity-30'
 									id='name'
@@ -204,7 +204,7 @@ const Profile = () => {
 								/>
 							</div>
 							<div className='flex flex-col  w-full'>
-								<Label className='text-lg dark:text-white text-black opacity-50'>Apellido</Label>
+								<Label className='text-lg dark:text-white text-black opacity-70'>Apellido</Label>
 								<Input
 									className='border-b dark:bg-dark_secondary_color bg-light_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full mt-2 placeholder:opacity-30'
 									id='lastname'
@@ -216,7 +216,7 @@ const Profile = () => {
 							</div>
 						</div>
 						<div className='flex flex-col mt-5'>
-							<Label className='text-lg dark:text-white text-black opacity-50'>Correo electrónico</Label>
+							<Label className='text-lg dark:text-white text-black opacity-70'>Correo electrónico</Label>
 							<Input
 								className='border-b dark:bg-dark_secondary_color bg-light_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full mt-2 placeholder:opacity-30'
 								id='email'
@@ -246,7 +246,7 @@ const Profile = () => {
 					</TabsContent>
 					<TabsContent value='wallet'>
 						<div className='grid grid-cols-1 grid-rows-1  mt-5 justify-between '>
-							<Label className='text-lg dark:text-white text-black opacity-50 text-center'>Tipo de moneda</Label>
+							<Label className='text-lg dark:text-white text-black  text-center opacity-70'>Tipo de moneda</Label>
 
 							<div className='flex flex-col w-full justify-end items-center'>
 								<RadioGroup
@@ -254,7 +254,7 @@ const Profile = () => {
 									value={valueCurrency}>
 									<div className='h-full'>
 										<div className='flex gap-3'>
-											<div className='flex items-center space-x-2 dark:text-white opacity-80 text-black'>
+											<div className='flex items-center space-x-2 dark:text-white  text-black'>
 												<Label
 													htmlFor='cop'
 													className='text-lg cursor-pointer'>
@@ -266,7 +266,7 @@ const Profile = () => {
 													className='text-alternative_color cursor-pointer'
 												/>
 											</div>
-											<div className='flex items-center space-x-2 dark:text-white opacity-80 text-black md:ml-5 '>
+											<div className='flex items-center space-x-2 dark:text-white  text-black md:ml-5 '>
 												<Label
 													htmlFor='usd'
 													className='text-lg cursor-pointer'>
@@ -283,7 +283,7 @@ const Profile = () => {
 								</RadioGroup>
 							</div>
 							<div className='flex flex-col w-full mt-3'>
-								<Label className='text-lg dark:text-white text-black opacity-50'>Meta a ahorrar</Label>
+								<Label className='text-lg dark:text-white text-black  opacity-70'>Meta a ahorrar</Label>
 
 								<Input
 									className='border-b dark:bg-dark_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full placeholder:opacity-30 '
@@ -335,14 +335,14 @@ const Profile = () => {
 									Book
 								</Button>
 								<Button
-									onClick={() => setAvatarCategory('lorelei')}
-									className={`${avatarCategory === 'lorelei' ? 'bg-alternative_color' : ''} w-32 cursor-pointer `}>
+									onClick={() => setAvatarCategory('notionists')}
+									className={`${avatarCategory === 'notionists' ? 'bg-alternative_color' : ''} w-32 cursor-pointer `}>
 									Movie
 								</Button>
 								<Button
-									onClick={() => setAvatarCategory('bottts')}
-									className={`${avatarCategory === 'bottts' ? 'bg-alternative_color' : ''} w-32 cursor-pointer `}>
-									Robot
+									onClick={() => setAvatarCategory('open-peeps')}
+									className={`${avatarCategory === 'open-peeps' ? 'bg-alternative_color' : ''} w-32 cursor-pointer `}>
+									Strange
 								</Button>
 							</div>
 						</DialogHeader>
