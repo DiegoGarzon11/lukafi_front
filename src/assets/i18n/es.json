@@ -37,6 +37,13 @@
 	"home.footer.text1": "¿Quienes somos?",
 	"home.footer.text2": "Contactanos",
 
+	"home.seccion2.title": "Tus finanzas con",
+	"home.section2.p": "¿Como se veran tus finanzas cuando empiezas con ?",
+	"home.section2.chartTitle": "Estadisticas",
+	"home.section2.chartSubtitle": "Ahorros",
+	"home.section2.chartSavings": "Ahorro",
+	"home.section2.chartDebts": "Deudas",
+
 	"component.card.button": "Conoce mas",
 
 	"addExpense.addExpense": "Agregar gasto",

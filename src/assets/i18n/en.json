@@ -37,6 +37,13 @@
 	"home.footer.text1": "Who we are?",
 	"home.footer.text2": "Contact us",
 
+	"home.section2.title": "Your finances with",
+	"home.section2.p": "What will your finances look like when you start with ?",
+	"home.section2.chartTitle": "Statistics",
+	"home.section2.chartSubtitle": "Savings",
+	"home.section2.chartSaving": "Saving",
+	"home.section2.chartDebts": "Debts",
+
 	"component.card.button": "more info",
 
 	"sheet.button.signOut": "Sign out",
