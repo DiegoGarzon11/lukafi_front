@@ -192,7 +192,6 @@ export default function Header({ valueSide }) {
 							/>
 						)}
 						<p
-							
 							className={`z-50 mt-3 ml-8 text-lg transition-all duration-500 ease-in-out font-semibold ${
 								localStorage.token && allowSidebar && isSideOpen ? ' md:left-72 left-6 ' : 'md:left-6  '
 							} fixed  top-1 cursor-default dark:text-white text-black `}>
@@ -275,66 +274,64 @@ export default function Header({ valueSide }) {
 							<div className='absolute w-full h-full flex flex-col justify-center items-center [backface-visibility:hidden] '>
 								<DialogHeader className='flex flex-col justify-around w-full'>
 									<DialogTitle className='my-3 dark:text-white text-black text-center absolute top-0 '>Bienvenido de vuelta</DialogTitle>
-									<DialogDescription>
-										<form
-											className='flex flex-col gap-5 w-full'
-											onSubmit={handleSubmit}
-											onKeyDown={keyEnter}>
-											<div className='dark:text-white text-black self-start text-base font-semibold'>
-												¿No tienes cuenta?
-												<button
-													onClick={(e) => {
-														e.preventDefault();
-														setFlipped(true);
-													}}
-													className='text-main_color underline ml-2 cursor-pointer'>
-													Registrarse
-												</button>
-											</div>
+									<form
+										className='flex flex-col gap-5 w-full'
+										onSubmit={handleSubmit}
+										onKeyDown={keyEnter}>
+										<DialogDescription className='dark:text-white text-black self-start text-base font-semibold'>
+											¿No tienes cuenta?
+											<button
+												onClick={(e) => {
+													e.preventDefault();
+													setFlipped(true);
+												}}
+												className='text-main_color underline ml-2 cursor-pointer'>
+												Registrarse
+											</button>
+										</DialogDescription>
+										<Input
+											type='email'
+											autoComplete='email'
+											onChange={handleChange}
+											value={data.email}
+											placeholder='Email'
+											name='email'
+											className='border-b dark:bg-dark_secondary_color bg-light_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
+										/>
+										<div className='relative w-full'>
 											<Input
-												type='email'
-												autoComplete='email'
-												onChange={handleChange}
-												value={data.email}
-												placeholder='Email'
-												name='email'
+												autoComplete='password'
+												type={showPassword ? 'text' : 'password'}
 												className='border-b dark:bg-dark_secondary_color bg-light_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
+												placeholder='Password'
+												onChange={handleChange}
+												value={data.password}
+												name='password'
 											/>
-											<div className='relative w-full'>
-												<Input
-													autoComplete='password'
-													type={showPassword ? 'text' : 'password'}
-													className='border-b dark:bg-dark_secondary_color bg-light_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
-													placeholder='Password'
-													onChange={handleChange}
-													value={data.password}
-													name='password'
-												/>
-												<button
-													className='absolute right-2 top-1 cursor-pointer'
-													onClick={(e) => {
-														e.preventDefault(), setShowPassword((prev) => !prev);
-													}}>
-													{showPassword ? <EyeOpen className='text-zinc-500' /> : <EyeClose className='text-zinc-500' />}
-												</button>
-											</div>
-											<p className='dark:text-white text-black text-center text-base font-semibold'>
-												¿Olvidaste tu contraseña?
-												<Link
-													onClick={() => setIsAuthOpen(false)}
-													to='/auth/restore-password'
-													className='text-main_color underline ml-2'>
-													Recuperar
-												</Link>
-											</p>
-											<Button
-												disabled={!data.email || !data.password || loader}
-												className='w-full font-semibold bg-alternative_color text-white text-lg flex justify-center items-center py-5 cursor-pointer'
-												type='submit'>
-												{loader || statusCode?.status === 200 ? <LoaderApi color='white' /> : 'Iniciar sesión'}
-											</Button>
-										</form>
-									</DialogDescription>
+											<button
+												className='absolute right-2 top-1 cursor-pointer'
+												onClick={(e) => {
+													e.preventDefault(), setShowPassword((prev) => !prev);
+												}}>
+												{showPassword ? <EyeOpen className='text-zinc-500' /> : <EyeClose className='text-zinc-500' />}
+											</button>
+										</div>
+										<p className='dark:text-white text-black text-center text-base font-semibold'>
+											¿Olvidaste tu contraseña?
+											<Link
+												onClick={() => setIsAuthOpen(false)}
+												to='/auth/restore-password'
+												className='text-main_color underline ml-2'>
+												Recuperar
+											</Link>
+										</p>
+										<Button
+											disabled={!data.email || !data.password || loader}
+											className='w-full font-semibold bg-alternative_color text-white text-lg flex justify-center items-center py-5 cursor-pointer'
+											type='submit'>
+											{loader || statusCode?.status === 200 ? <LoaderApi color='white' /> : 'Iniciar sesión'}
+										</Button>
+									</form>
 								</DialogHeader>
 							</div>
 
@@ -342,78 +339,76 @@ export default function Header({ valueSide }) {
 								<DialogHeader className='flex flex-col justify-around w-full'>
 									<DialogTitle className='my-3 dark:text-white text-black text-center absolute top-0 '>Crear Cuenta</DialogTitle>
 
-									<DialogDescription>
-										<form
-											className='flex flex-col gap-5 w-full'
-											onSubmit={handleSubmitSignUp}>
-											<p className='dark:text-white text-black text-center self-start text-base font-semibold'>
-												¿Ya tienes cuenta?
-												<button
-													onClick={(e) => {
-														e.preventDefault();
-														setFlipped(false);
-													}}
-													className='text-main_color underline ml-2 cursor-pointer'>
-													Iniciar sesión
-												</button>
-											</p>
-											<div className='flex  gap-3'>
-												<Input
-													autoComplete='name'
-													type='text'
-													onChange={handleChange}
-													value={data.newName}
-													placeholder='Nombre'
-													name='newName'
-													className='border-b dark:bg-dark_secondary_color bg-light_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
-												/>
-												<Input
-													autoComplete='name'
-													type='text'
-													onChange={handleChange}
-													value={data.newLastName}
-													placeholder='Last Name'
-													name='newLastName'
-													className='border-b dark:bg-dark_secondary_color bg-light_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
-												/>
-											</div>
+									<form
+										className='flex flex-col gap-5 w-full'
+										onSubmit={handleSubmitSignUp}>
+										<DialogDescription className='dark:text-white text-black text-center self-start text-base font-semibold'>
+											¿Ya tienes cuenta?
+											<button
+												onClick={(e) => {
+													e.preventDefault();
+													setFlipped(false);
+												}}
+												className='text-main_color underline ml-2 cursor-pointer'>
+												Iniciar sesión
+											</button>
+										</DialogDescription>
+										<div className='flex  gap-3'>
 											<Input
-												autoComplete='email'
-												type='email'
+												autoComplete='name'
+												type='text'
 												onChange={handleChange}
-												value={data.newEmail}
-												placeholder='Email'
-												name='newEmail'
+												value={data.newName}
+												placeholder='Nombre'
+												name='newName'
 												className='border-b dark:bg-dark_secondary_color bg-light_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
 											/>
-											<div className='relative w-full'>
-												<Input
-													autoComplete='new-password'
-													type={showPassword ? 'text' : 'password'}
-													className='border-b dark:bg-dark_secondary_color bg-light_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
-													onChange={handleChange}
-													placeholder='Password'
-													value={data.newPassword}
-													name='newPassword'
-												/>
-												<span className='text-alternative_color opacity-90'>Por favor verifique su contraseña</span>
-												<button
-													className='absolute right-2 top-1 cursor-pointer'
-													onClick={(e) => {
-														e.preventDefault(), setShowPassword((prev) => !prev);
-													}}>
-													{showPassword ? <EyeOpen className='text-zinc-500' /> : <EyeClose className='text-zinc-500' />}
-												</button>
-											</div>
+											<Input
+												autoComplete='name'
+												type='text'
+												onChange={handleChange}
+												value={data.newLastName}
+												placeholder='Last Name'
+												name='newLastName'
+												className='border-b dark:bg-dark_secondary_color bg-light_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
+											/>
+										</div>
+										<Input
+											autoComplete='email'
+											type='email'
+											onChange={handleChange}
+											value={data.newEmail}
+											placeholder='Email'
+											name='newEmail'
+											className='border-b dark:bg-dark_secondary_color bg-light_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
+										/>
+										<div className='relative w-full'>
+											<Input
+												autoComplete='new-password'
+												type={showPassword ? 'text' : 'password'}
+												className='border-b dark:bg-dark_secondary_color bg-light_secondary_color border-none text-lg dark:text-white text-black placeholder:text-gray-300 w-full'
+												onChange={handleChange}
+												placeholder='Password'
+												value={data.newPassword}
+												name='newPassword'
+											/>
+											<span className='text-alternative_color opacity-90'>Por favor verifique su contraseña</span>
+											<button
+												className='absolute right-2 top-1 cursor-pointer'
+												onClick={(e) => {
+													e.preventDefault(), setShowPassword((prev) => !prev);
+												}}>
+												{showPassword ? <EyeOpen className='text-zinc-500' /> : <EyeClose className='text-zinc-500' />}
+											</button>
+										</div>
 
-											<Button
-												type='submit'
-												className='w-full font-semibold bg-alternative_color text-white text-lg flex justify-center items-center py-5 cursor-pointer'
-												disabled={data.newName == '' || data.newLastName == '' || data.newPassword == ''}>
-												{loader ? <LoaderApi color='white' /> : t('form.field.signUp')}
-											</Button>
-										</form>
-									</DialogDescription>
+										<Button
+											type='submit'
+											className='w-full font-semibold bg-alternative_color text-white text-lg flex justify-center items-center py-5 cursor-pointer'
+											disabled={data.newName == '' || data.newLastName == '' || data.newPassword == ''}>
+											{loader ? <LoaderApi color='white' /> : t('form.field.signUp')}
+										</Button>
+									</form>
 								</DialogHeader>
 							</div>
 						</div>
