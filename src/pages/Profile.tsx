@@ -122,11 +122,14 @@ const Profile = () => {
 		});
 		try {
 			if (response) {
+				
+				
 				setVisibilityToast(true);
 				setresponseApi(response);
 
-				await GetWalletUser(user.user_id);
+				 await GetWalletUser(user.user_id);
 				setDialogAvatar(false);
+
 				navigate('/profile');
 			}
 		} catch (error) {

@@ -9,7 +9,7 @@ export const Home = () => {
 	const {t, i18n} = useTranslation();
 	i18n.changeLanguage();
 	return (
-		<div className='dark:bg-black h-full '>
+		<div className='dark:bg-dark_background bg-light_background h-full '>
 			<main className='flex flex-col items-center md:mx-5  pt-18'>
 				<section className='dark:bg-dark_primary_color bg-light_primary_color w-full flex items-center md:items-start flex-col md:flex-row justify-between rounded-4xl '>
 					<div className='flex flex-col  items-center  gap-3 w-full md:w-5/12  md:ml-30 md:mt-20 '>
