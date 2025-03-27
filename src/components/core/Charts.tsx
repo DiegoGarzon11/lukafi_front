@@ -233,8 +233,6 @@ export const ChartDonut = ({trigger}) => {
 };
 
 export const ChartExample = () => {
-	const {t, i18n} = useTranslation();
-	i18n.changeLanguage();
 	const data = [
 		{
 			name: 'Enero',
@@ -286,15 +284,13 @@ export const ChartExample = () => {
 				<Legend iconType='star' />
 
 				<Line type='bump' dataKey='ingresos' stroke={MAIN_COLOR} strokeWidth={3} />
-				<Line type='bump' dataKey={`${t('home.section2.chartDebts')}`} stroke='#fe337c' strokeWidth={3} />
+				<Line type='bump' dataKey='deudas' stroke='#fe337c' strokeWidth={3} />
 			</LineChart>
 		</ResponsiveContainer>
 	);
 };
 
 export const ChartExampleTwo = ({trigger = false}) => {
-	const {t, i18n} = useTranslation();
-	i18n.changeLanguage();
 	const dataExample = [
 		{
 			name: 'Enero',
@@ -323,13 +319,9 @@ export const ChartExampleTwo = ({trigger = false}) => {
 					<CartesianGrid strokeDasharray='5 5' vertical={false} strokeLinecap='square' opacity={0.2} />
 					<XAxis dataKey='name' />
 					<YAxis />
-					<Legend />
-					<Bar dataKey={`${t('home.section2.chartSaving')}`} fill={MAIN_COLOR} activeBar={<Rectangle fill='pink' stroke='blue' />} />
-					<Bar
-						dataKey={`${t('home.section2.chartDebts')}`}
-						fill={SECOND_COLOR}
-						activeBar={<Rectangle fill='gold' stroke='purple' />}
-					/>
+					<Legend iconType='star' />
+					<Bar dataKey='ahorro' fill={MAIN_COLOR} activeBar={<Rectangle fill='pink' stroke='blue' />} />
+					<Bar dataKey='deudas' fill={SECOND_COLOR} activeBar={<Rectangle fill='gold' stroke='purple' />} />
 				</BarChart>
 			</ResponsiveContainer>
 		);
