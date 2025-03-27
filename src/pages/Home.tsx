@@ -50,12 +50,16 @@ export const Home = () => {
 							<ArrowDown className='text-main_color w-20 h-20  my-3 block md:hidden' />
 						</div>
 						<div className='dark:bg-dark_primary_color bg-light_primary_color dark:text-white text-black rounded-2xl p-3 mt-10 w-full flex flex-col gap-3 items-center   '>
-							<p className='dark:text-white text-black font-semibold text-4xl text-balance text-center '>Tus finanzas con lukafi</p>
-							<p className='text-center opacity-50'>¿Como se veran tus finanzas cuando empiezas con lukafi?</p>
+							<p className='dark:text-white text-black font-semibold text-4xl text-balance text-center '>
+								{t('home.section2.title')} lukafi
+							</p>
+							<p className='text-center opacity-50'>{t('home.section2.p')} lukafi?</p>
 							<div className='dark:bg-dark_secondary_color bg-light_secondary_color flex justify-center items-center flex-col py-8  md:px-20 rounded-4xl m-8 w-full '>
 								<div className='flex justify-between items-center mx-10 mb-5  w-full px-10  '>
-									<p className='md:text-3xl text-xl font-extrabold dark:text-white text-black'>Estadisticas</p>
-									<button className='dark:bg-dark_foreground rounded-4xl px-3 dark:text-white text-black py-1'>Ahorros</button>
+									<p className='md:text-3xl text-xl font-extrabold dark:text-white text-black'>{t('home.section2.chartTitle')}</p>
+									<button className='dark:bg-dark_foreground rounded-4xl px-3 dark:text-white text-black py-1'>
+										{t('home.section2.chartSubtitle')}
+									</button>
 								</div>
 								<ChartExampleTwo />
 							</div>

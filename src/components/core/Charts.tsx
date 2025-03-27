@@ -15,19 +15,32 @@ import {
 	Rectangle,
 	BarChart,
 } from 'recharts';
-import { GetExpensesByCategory } from '@/apis/ExpenseService';
-import { useEffect, useState } from 'react';
-import { GetWalletUser, GetWalletValues, GetDailyReport, GetMonthlyReport } from '@/apis/WalletService';
-import { PieChart, Pie } from 'recharts';
-import { ExpensesByCategory, Incomes, wallet_values } from '@/interfaces/Wallet';
-import { useTranslation } from 'react-i18next';
+import {GetExpensesByCategory} from '@/apis/ExpenseService';
+import {useEffect, useState} from 'react';
+import {GetWalletUser, GetWalletValues, GetDailyReport, GetMonthlyReport} from '@/apis/WalletService';
+import {PieChart, Pie} from 'recharts';
+import {ExpensesByCategory, Incomes, wallet_values} from '@/interfaces/Wallet';
+import {useTranslation} from 'react-i18next';
 
 const COLORS = ['#7fbd0c', '#fe337c', '#ff654e', '#fe337c', '#0af9e2'];
 const MAIN_COLOR = '#7fbd0c';
 const SECOND_COLOR = '#fe337c';
-const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-const CustomTooltipDaily = ({ payload }) => {
-	const { t, i18n } = useTranslation();
+const months = [
+	'Enero',
+	'Febrero',
+	'Marzo',
+	'Abril',
+	'Mayo',
+	'Junio',
+	'Julio',
+	'Agosto',
+	'Septiembre',
+	'Octubre',
+	'Noviembre',
+	'Diciembre',
+];
+const CustomTooltipDaily = ({payload}) => {
+	const {t, i18n} = useTranslation();
 	i18n.changeLanguage();
 
 	function validateName(name) {
@@ -61,7 +74,7 @@ const CustomTooltipDaily = ({ payload }) => {
 	);
 };
 
-export const Chart = ({ trigger, filter }) => {
+export const Chart = ({trigger, filter}) => {
 	const userInfo = JSON.parse(localStorage.userMain);
 	const [report, setReport] = useState();
 
@@ -91,35 +104,18 @@ export const Chart = ({ trigger, filter }) => {
 					left: 20,
 					bottom: 5,
 				}}>
-				<CartesianGrid
-					strokeDasharray='5 5'
-					vertical={false}
-					strokeLinecap='square'
-					opacity={0.2}
-				/>
+				<CartesianGrid strokeDasharray='5 5' vertical={false} strokeLinecap='square' opacity={0.2} />
 				<XAxis dataKey='day' />
 				<YAxis />
 				<Tooltip content={CustomTooltipDaily} />
 				<Legend />
-				<Line
-					strokeWidth={3}
-					activeDot={{ r: 5 }}
-					type='bump'
-					dataKey='incomes'
-					stroke={MAIN_COLOR}
-				/>
-				<Line
-					activeDot={{ r: 5 }}
-					strokeWidth={3}
-					type='bump'
-					dataKey='expenses'
-					stroke={SECOND_COLOR}
-				/>
+				<Line strokeWidth={3} activeDot={{r: 5}} type='bump' dataKey='incomes' stroke={MAIN_COLOR} />
+				<Line activeDot={{r: 5}} strokeWidth={3} type='bump' dataKey='expenses' stroke={SECOND_COLOR} />
 			</LineChart>
 		</ResponsiveContainer>
 	);
 };
-export const ChartDonut = ({ trigger }) => {
+export const ChartDonut = ({trigger}) => {
 	const userInfo = JSON.parse(localStorage.userMain);
 	const [expensesByCategory, setExpensesByCategory] = useState<Array<ExpensesByCategory>>([]);
 
@@ -134,7 +130,7 @@ export const ChartDonut = ({ trigger }) => {
 
 	const showName = (props) => {
 		const RADIAN = Math.PI / 180;
-		const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, percent, value } = props;
+		const {cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, percent, value} = props;
 		const sin = Math.sin(-RADIAN * midAngle);
 		const cos = Math.cos(-RADIAN * midAngle);
 		const sx = cx + (outerRadius + 10) * cos;
@@ -147,12 +143,7 @@ export const ChartDonut = ({ trigger }) => {
 
 		return (
 			<g>
-				<text
-					x={cx}
-					y={cy}
-					dy={8}
-					textAnchor='middle'
-					fill={fill}>
+				<text x={cx} y={cy} dy={8} textAnchor='middle' fill={fill}>
 					{payload.category_name || payload.name}
 				</text>
 				<Sector
@@ -173,20 +164,8 @@ export const ChartDonut = ({ trigger }) => {
 					outerRadius={outerRadius + 10}
 					fill={fill}
 				/>
-				<path
-					className='hidden md:block'
-					d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`}
-					stroke={fill}
-					fill='none'
-				/>
-				<circle
-					className='hidden md:block'
-					cx={ex}
-					cy={ey}
-					r={2}
-					fill={fill}
-					stroke='none'
-				/>
+				<path className='hidden md:block' d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill='none' />
+				<circle className='hidden md:block' cx={ex} cy={ey} r={2} fill={fill} stroke='none' />
 				<text
 					className='hidden md:block'
 					x={ex + (cos >= 0 ? 1 : -1) * 12}
@@ -232,9 +211,7 @@ export const ChartDonut = ({ trigger }) => {
 
 	return (
 		<ResponsiveContainer height={330}>
-			<PieChart
-				width={600}
-				height={400}>
+			<PieChart width={600} height={400}>
 				<Pie
 					activeShape={showName}
 					data={expensesByCategory}
@@ -245,10 +222,7 @@ export const ChartDonut = ({ trigger }) => {
 					fill='#8884d8'
 					dataKey='value'>
 					{expensesByCategory?.map((e, i) => (
-						<Cell
-							key={e.expense_id}
-							fill={COLORS[i % COLORS.length]}
-						/>
+						<Cell key={e.expense_id} fill={COLORS[i % COLORS.length]} />
 					))}
 				</Pie>
 
@@ -258,8 +232,9 @@ export const ChartDonut = ({ trigger }) => {
 	);
 };
 
-
 export const ChartExample = () => {
+	const {t, i18n} = useTranslation();
+	i18n.changeLanguage();
 	const data = [
 		{
 			name: 'Enero',
@@ -292,7 +267,7 @@ export const ChartExample = () => {
 			deudas: 700,
 		},
 	];
-	
+
 	return (
 		<ResponsiveContainer height={250}>
 			<LineChart
@@ -305,35 +280,21 @@ export const ChartExample = () => {
 					left: 20,
 					bottom: 5,
 				}}>
-				<CartesianGrid
-					strokeDasharray='5 5'
-					vertical={false}
-					strokeLinecap='square'
-					opacity={0.2}
-				/>
+				<CartesianGrid strokeDasharray='5 5' vertical={false} strokeLinecap='square' opacity={0.2} />
 				<XAxis dataKey='name' />
 				<YAxis />
-				<Legend iconType='star'  />
+				<Legend iconType='star' />
 
-				<Line
-					type='bump'
-					dataKey='ingresos'
-					
-					stroke={MAIN_COLOR}
-					strokeWidth={3}
-				/>
-				<Line
-					type='bump'
-					dataKey='deudas'
-					stroke='#fe337c'
-					strokeWidth={3}
-				/>
+				<Line type='bump' dataKey='ingresos' stroke={MAIN_COLOR} strokeWidth={3} />
+				<Line type='bump' dataKey={`${t('home.section2.chartDebts')}`} stroke='#fe337c' strokeWidth={3} />
 			</LineChart>
 		</ResponsiveContainer>
 	);
 };
 
-export const ChartExampleTwo = ({ trigger = false }) => {
+export const ChartExampleTwo = ({trigger = false}) => {
+	const {t, i18n} = useTranslation();
+	i18n.changeLanguage();
 	const dataExample = [
 		{
 			name: 'Enero',
@@ -359,34 +320,15 @@ export const ChartExampleTwo = ({ trigger = false }) => {
 						left: 20,
 						bottom: 5,
 					}}>
-					<CartesianGrid
-						strokeDasharray='5 5'
-						vertical={false}
-						strokeLinecap='square'
-						opacity={0.2}
-					/>
+					<CartesianGrid strokeDasharray='5 5' vertical={false} strokeLinecap='square' opacity={0.2} />
 					<XAxis dataKey='name' />
 					<YAxis />
 					<Legend />
+					<Bar dataKey={`${t('home.section2.chartSaving')}`} fill={MAIN_COLOR} activeBar={<Rectangle fill='pink' stroke='blue' />} />
 					<Bar
-						dataKey='ahorro'
-						fill={MAIN_COLOR}
-						activeBar={
-							<Rectangle
-								fill='pink'
-								stroke='blue'
-							/>
-						}
-					/>
-					<Bar
-						dataKey='deudas'
+						dataKey={`${t('home.section2.chartDebts')}`}
 						fill={SECOND_COLOR}
-						activeBar={
-							<Rectangle
-								fill='gold'
-								stroke='purple'
-							/>
-						}
+						activeBar={<Rectangle fill='gold' stroke='purple' />}
 					/>
 				</BarChart>
 			</ResponsiveContainer>
@@ -423,37 +365,14 @@ export const ChartExampleTwo = ({ trigger = false }) => {
 					left: 20,
 					bottom: 5,
 				}}>
-				<CartesianGrid
-					strokeDasharray='5 5'
-					vertical={false}
-					strokeLinecap='square'
-					opacity={0.2}
-				/>
+				<CartesianGrid strokeDasharray='5 5' vertical={false} strokeLinecap='square' opacity={0.2} />
 
 				<YAxis />
 				<Legend />
 				{localStorage.token && (
 					<>
-						<Bar
-							dataKey='saving'
-							fill={SECOND_COLOR}
-							activeBar={
-								<Rectangle
-									fill='#0ef9e2'
-									stroke='purple'
-								/>
-							}
-						/>
-						<Bar
-							dataKey='available'
-							fill={MAIN_COLOR}
-							activeBar={
-								<Rectangle
-									fill='#ff654e'
-									stroke='purple'
-								/>
-							}
-						/>
+						<Bar dataKey='saving' fill={SECOND_COLOR} activeBar={<Rectangle fill='#0ef9e2' stroke='purple' />} />
+						<Bar dataKey='available' fill={MAIN_COLOR} activeBar={<Rectangle fill='#ff654e' stroke='purple' />} />
 					</>
 				)}
 			</BarChart>
