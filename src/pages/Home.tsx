@@ -77,13 +77,11 @@ export const Home = () => {
 						<ArrowDown className='text-main_color w-20 h-20  my-3' />
 
 						<div className='dark:bg-dark_primary_color bg-light_primary_color dark:text-white text-black rounded-2xl p-3 w-full flex flex-col gap-3 items-center text-center text-balance'>
-							<h3 className='font-semibold text-2xl'>¿Como lo hacemos?</h3>
-							<p className='text-lg'>Gracias a lukafi podrás tener un control total de tus finanzas, ahorros y ingresos.</p>
-							<p className='text-lg opacity-50'>
-								Nosotros nos encargamos de que de una manera clara y sencilla gestiones y lleves el dia a dia de tus finanzas
-							</p>
+							<h3 className='font-semibold text-3xl'>{t('home.how.title')}</h3>
+							<p className='text-lg'>{t('home.how.subtitle')}.</p>
+							<p className='text-lg opacity-50 '>{t('home.how.text1')}.</p>
 							<p className='text-lg'>
-								Di Adios a la pérdida de tiempo y dinero, ya esta <span className='text-main_color font-semibold'>lukafi</span>
+								{t('home.how.text2')} <span className='text-main_color font-semibold'>lukafi.</span>
 							</p>
 						</div>
 					</div>
@@ -91,9 +89,9 @@ export const Home = () => {
 						<Star className='self-start text-main_color size-11 ' />
 						<h3 className='text-center text-3xl font-semibold mb-10'>LUKAFI</h3>
 						<div className='md:flex  gap-10 '>
-							<p>¿Quienes somos?</p>
+							<p>{t('home.footer.text1')}</p>
 							<div className='flex gap-3'>
-								<p>Contactanos:</p>
+								<p>{t('home.footer.text2')}:</p>
 								<Phone />
 								<Mail />
 							</div>

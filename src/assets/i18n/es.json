@@ -34,14 +34,20 @@
 	"home.card.text1": "Registrate",
 	"home.card.text2": "Aquí",
 	"home.card.text3": "ahora y toma el control de tus finanzas al instante!",
+
+	"home.how.title": "¿Cómo lo hacemos?",
+	"home.how.subtitle": "Gracias a lukafi podrás tener un control total de tus finanzas, ahorros y ingresos",
+	"home.how.text1": "Nosotros nos encargamos de que de una manera clara y sencilla gestiones y lleves el dia a dia de tus finanzas",
+	"home.how.text2": "Dí Adios a la pérdida de tiempo y dinero, ya está",
+
 	"home.footer.text1": "¿Quienes somos?",
 	"home.footer.text2": "Contactanos",
 
-	"home.seccion2.title": "Tus finanzas con",
+	"home.section2.title": "Tus finanzas con",
 	"home.section2.p": "¿Como se veran tus finanzas cuando empiezas con ?",
 	"home.section2.chartTitle": "Estadisticas",
 	"home.section2.chartSubtitle": "Ahorros",
-	"home.section2.chartSavings": "Ahorro",
+	"home.section2.chartSaving": "Ahorro",
 	"home.section2.chartDebts": "Deudas",
 
 	"component.card.button": "Conoce mas",
