@@ -19,6 +19,7 @@ import { Toast } from '@/hooks/Toast';
 import { AddExpense } from './AddExpense';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
 import { LoaderComponent } from '@/components/others/Loader';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 export const SeeExpenses = () => {
 	const [fixedExpenses, setFixedExpenses] = useState<Array<Expenses> | undefined>(undefined);
@@ -35,6 +36,7 @@ export const SeeExpenses = () => {
 	const [visibilityToast, setVisibilityToast] = useState(false);
 	const [loader, setLoader] = useState(false);
 	const [fetching, setFetching] = useState(true);
+	const [tab, setTab] = useState('variable');
 	const days = Array.from({ length: 31 }, (_, i) => i + 1);
 
 	const { t, i18n } = useTranslation();
@@ -182,12 +184,13 @@ export const SeeExpenses = () => {
 		const differenceInDays: number = Math.ceil(differenceInTime / (1000 * 60 * 60 * 24));
 		return differenceInDays;
 	}
+
 	if (fetching) {
 		return <LoaderComponent />;
 	}
 	return (
-		<main className='pt-20 p-3  dark:bg-black bg-white'>
-			<nav className='flex w-full justify-between items-center pb-3'>
+		<main className='pt-20 p-3  dark:bg-black bg-white '>
+			<nav className='flex w-full justify-between items-center mb-3'>
 				<Breadcrumb>
 					<BreadcrumbList>
 						<BreadcrumbItem>
@@ -206,195 +209,222 @@ export const SeeExpenses = () => {
 					apiData={userData?.wallet}
 				/>
 			</nav>
-			<section className=' shadow-xs  md:col-span-3 md:row-span-2 '>
+			<section className=' shadow-xs  md:col-span-3 md:row-span-2  '>
 				<div className=' w-full  flex flex-col  justify-between gap-5 order-3 '>
-					<div className='dark:bg-dark_primary_color bg-zinc-200  p-3 w-full  rounded-xl border border-gray-600/50'>
-						<div className='flex gap-3 flex-col items-start '>
-							<h5 className='text-2xl'> {t('dashboard.allFixedExpenses')} </h5>
+					<Tabs
+						defaultValue='variable'
+						className='w-full'>
+						<TabsList className='flex  dark:bg-dark_secondary_color bg-light_secondary_color  w-full mb-3'>
+							<TabsTrigger
+								onClick={() => setTab('fixed')}
+								value='fixed'
+								className={`${tab === 'fixed' ? 'bg-alternative_color text-white' : ' '} dark:text-white  cursor-pointer`}>
+								Gastos
+							</TabsTrigger>
+							<TabsTrigger
+								onClick={() => setTab('variable')}
+								value='variable'
+								className={`${tab === 'variable' ? 'bg-alternative_color text-white' : ' '} dark:text-white  cursor-pointer`}>
+								Gastos Fijos
+							</TabsTrigger>
+						</TabsList>
 
-							<div className='w-9/12'>
-								<Input
-									disabled
-									placeholder='Buscar'
-									className='border dark:border-zinc-400 dark:bg-zinc-800/30 text-white '
-								/>
+						<TabsContent value='fixed'>
+							<div className='dark:bg-dark_primary_color bg-zinc-200 p-3 w-full  rounded-xl border border-gray-600/50'>
+								<div className='flex gap-3 flex-col  items-start'>
+									<h5 className='text-2xl'> {t('dashboard.allExpenses')} </h5>
+
+									<div className='w-9/12'>
+										<Input
+											disabled
+											placeholder='Buscar'
+											className='border dark:border-zinc-400 dark:bg-zinc-800/30 text-white '
+										/>
+									</div>
+								</div>
+
+								<div className='w-full'>
+									<section className='w-full '>
+										<article className=' flex text-base font-semibold py-4 dark:text-zinc-300 text-slate-500 border-b border-gray-600/50 mb-3'>
+											<p className='w-full text-start'>{t('dashboard.date')}</p>
+											<p className='w-full text-start'>{t('dashboard.name')}</p>
+											<p className='w-full text-start'>{t('dashboard.value')}</p>
+										</article>
+									</section>
+
+									<div className='w-full  h-[360px]   scrollbar-custom overflow-auto'>
+										<Table className='w-full'>
+											<TableBody >
+												{expenses?.map((e) =>
+													e.is_paid ? (
+														<TableRow key={e?.expense_id}>
+															<TableCell className='font-medium  w-full'>
+																<p>{format(new Date(e?.created_in), 'PP')}</p>
+															</TableCell>
+															<TableCell className='font-medium w-full hidden md:block'>
+																{e?.name.length >= 20 ? (
+																	<TooltipComponent
+																		message={`${e?.name.slice(0, 20)}...`}
+																		content={e?.name}
+																	/>
+																) : (
+																	<p>{e?.name}</p>
+																)}
+															</TableCell>
+															<TableCell className='font-medium w-full block md:hidden'>
+																{e?.name.length >= 8 ? (
+																	<TooltipComponent
+																		message={`${e?.name.slice(0, 8)}...`}
+																		content={e?.name}
+																	/>
+																) : (
+																	<p>{e?.name}</p>
+																)}
+															</TableCell>
+															<TableCell className='font-medium w-full'>
+																<p>$ {e?.value.toLocaleString()}</p>
+															</TableCell>
+														</TableRow>
+													) : (
+														''
+													)
+												)}
+											</TableBody>
+										</Table>
+									</div>
+								</div>
 							</div>
-						</div>
+						</TabsContent>
+						<TabsContent value='variable'>
+							<div className='dark:bg-dark_primary_color bg-zinc-200 p-3 w-full  rounded-xl border border-gray-600/50'>
+								<div className='flex gap-3 flex-col items-start '>
+									<h5 className='text-2xl'> {t('dashboard.allFixedExpenses')} </h5>
 
-						<div className='w-full '>
-							<section className='w-full '>
-								<article className=' flex text-base justify-center items-center font-semibold py-4 dark:text-zinc-300 text-slate-500 border-b border-gray-600/50 mb-3  gap-5 pl-3  '>
-									<p className='w-full text-start   '>{t('dashboard.name')}</p>
-									<p className='w-full text-start'>{t('dashboard.value')}</p>
-									<p className='w-full text-start hidden md:block'>{t('dashboard.payEach')}</p>
-									<p className='w-full text-start  text-nowrap '> {t('dashboard.nextPayment')} </p>
-									<p className='w-full text-start ' />
-									<p className='w-full text-start ' />
-								</article>
-							</section>
+									<div className='w-9/12'>
+										<Input
+											disabled
+											placeholder='Buscar'
+											className='border dark:border-zinc-400 dark:bg-zinc-800/30 text-white '
+										/>
+									</div>
+								</div>
 
-							<div className='w-full  min-h-96   scrollbar-custom'>
-								<Table className='w-full'>
-									<TableBody>
-										{fixedExpenses?.map((f) => (
-											<TableRow key={f.expense_id}>
-												<TableCell className='font-medium w-full '>{f.name}</TableCell>
-												<TableCell className='font-medium w-full '>$ {f.value.toLocaleString()}</TableCell>
-												<TableCell className='font-medium w-full hidden md:block '>
-													<span className='font-bold'>{f.pay_each} </span> {t('dashboard.ofEachMonth')}
-												</TableCell>
-												<TableCell className='font-medium w-full flex flex-col  '>
-													<span
-														className={`font-bold hidden md:block ${
-															difrenceBeetwenDate(new Date(f?.dead_line)) <= 5 ? 'text-red-500' : 'text-black dark:text-white'
-														} `}>
-														{format(f?.dead_line, 'PP')}
-													</span>
-													<span
-														className={`font-bold  ${
-															difrenceBeetwenDate(new Date(f?.dead_line)) <= 5 ? 'text-red-500' : 'text-black dark:text-white'
-														} `}>
-														<span className='opacity-70'>
-															({difrenceBeetwenDate(new Date(f?.dead_line))} {t('dashboard.day')}s)
-														</span>
-													</span>
-												</TableCell>
-												<TableCell className='font-medium w-full  '>
-													<Dialog>
-														<DialogTrigger
-															className={`${f.is_paid ? 'bg-transparent text-blue-500' : '  bg-green-600'} rounded-md p-1 w-full`}>
-															{f.is_paid ? `${t('dashboard.alreadyPaid')}` : `${t('dashboard.pay')}`}
-														</DialogTrigger>
-														{!f.is_paid && (
-															<DialogContent aria-describedby='modal' className=' w-[95%] md:w-[500px] rounded-md '>
-																<DialogHeader>
-																	<DialogTitle className='text-start'>
-																		{t('dashboard.confirm')}
-																		<span className='underline'> {t('dashboard.payment')} </span>
-																		{t('dashboard.monthlyExpense')}
-																		<span className='text-blue-500 font-semibold'> {f.name}</span>?
-																	</DialogTitle>
-																	<DialogDescription className='flex justify-end items-end gap-5 h-full '>
-																		<Button className='bg-red-500'>{t('dashboard.cancel')}</Button>
+								<div className='w-full '>
+									<section className='w-full '>
+										<article className=' flex text-base justify-center items-center font-semibold py-4 dark:text-zinc-300 text-slate-500 border-b border-gray-600/50 mb-3  gap-5 pl-3  '>
+											<p className='w-full text-start   '>{t('dashboard.name')}</p>
+											<p className='w-full text-start'>{t('dashboard.value')}</p>
+											<p className='w-full text-start hidden md:block'>{t('dashboard.payEach')}</p>
+											<p className='w-full text-start  text-nowrap '> {t('dashboard.nextPayment')} </p>
+											<p className='w-full text-start ' />
+											<p className='w-full text-start ' />
+										</article>
+									</section>
+
+									<div className='w-full  h-[360px]   scrollbar-custom overflow-auto'>
+										<Table className='w-full'>
+											<TableBody>
+												{fixedExpenses?.map((f) => (
+													<TableRow key={f.expense_id}>
+														<TableCell className='font-medium w-full '>{f.name}</TableCell>
+														<TableCell className='font-medium w-full '>$ {f.value.toLocaleString()}</TableCell>
+														<TableCell className='font-medium w-full hidden md:block '>
+															<span className='font-bold'>{f.pay_each} </span> {t('dashboard.ofEachMonth')}
+														</TableCell>
+														<TableCell className='font-medium w-full flex flex-col  '>
+															<span
+																className={`font-bold hidden md:block ${
+																	difrenceBeetwenDate(new Date(f?.dead_line)) <= 5 ? 'text-red-500' : 'text-black dark:text-white'
+																} `}>
+																{format(f?.dead_line, 'PP')}
+															</span>
+															<span
+																className={`font-bold  ${
+																	difrenceBeetwenDate(new Date(f?.dead_line)) <= 5 ? 'text-red-500' : 'text-black dark:text-white'
+																} `}>
+																<span className='opacity-70'>
+																	({difrenceBeetwenDate(new Date(f?.dead_line))} {t('dashboard.day')}s)
+																</span>
+															</span>
+														</TableCell>
+														<TableCell className='font-medium w-full  '>
+															<Dialog>
+																<DialogTrigger
+																	className={`${
+																		f.is_paid ? 'bg-transparent text-blue-500' : '  bg-green-600'
+																	} rounded-md p-1 w-full`}>
+																	{f.is_paid ? `${t('dashboard.alreadyPaid')}` : `${t('dashboard.pay')}`}
+																</DialogTrigger>
+																{!f.is_paid && (
+																	<DialogContent
+																		aria-describedby='modal'
+																		className=' w-[95%] md:w-[500px] rounded-md '>
+																		<DialogHeader>
+																			<DialogTitle className='text-start'>
+																				{t('dashboard.confirm')}
+																				<span className='underline'> {t('dashboard.payment')} </span>
+																				{t('dashboard.monthlyExpense')}
+																				<span className='text-blue-500 font-semibold'> {f.name}</span>?
+																			</DialogTitle>
+																			<DialogDescription className='flex justify-end items-end gap-5 h-full '>
+																				<Button className='bg-red-500'>{t('dashboard.cancel')}</Button>
+																				<Button
+																					className='bg-green-500'
+																					onClick={() => payExpense(f)}>
+																					{t('dashboard.confirm')}
+																				</Button>
+																			</DialogDescription>
+																		</DialogHeader>
+																	</DialogContent>
+																)}
+															</Dialog>
+														</TableCell>
+
+														<TableCell className='font-medium   w-auto md:w-full text-end md:text-center   '>
+															<DropdownMenu>
+																<DropdownMenuTrigger>
+																	<EllipsisVertical />
+																</DropdownMenuTrigger>
+																<DropdownMenuContent className='dark:bg-zinc-800'>
+																	<DropdownMenuSeparator />
+																	<DropdownMenuItem
+																		onClick={() => {
+																			setOpenModalEditFixedExpenses(true);
+																			setFixedExpenseToEdit(f);
+																		}}
+																		className='dark:hover:bg-zinc-700 cursor-pointer'>
+																		<p>{t('dashboard.edit')}</p>
 																		<Button
-																			className='bg-green-500'
-																			onClick={() => payExpense(f)}>
-																			{t('dashboard.confirm')}
+																			variant='ghost'
+																			className='w-full flex justify-end'>
+																			<Edit className={'w-6 '} />
 																		</Button>
-																	</DialogDescription>
-																</DialogHeader>
-															</DialogContent>
-														)}
-													</Dialog>
-												</TableCell>
-
-												<TableCell className='font-medium   w-auto md:w-full text-end md:text-center   '>
-													<DropdownMenu>
-														<DropdownMenuTrigger>
-															<EllipsisVertical />
-														</DropdownMenuTrigger>
-														<DropdownMenuContent className='dark:bg-zinc-800'>
-															<DropdownMenuSeparator />
-															<DropdownMenuItem
-																onClick={() => {
-																	setOpenModalEditFixedExpenses(true);
-																	setFixedExpenseToEdit(f);
-																}}
-																className='dark:hover:bg-zinc-700 cursor-pointer'>
-																<p>{t('dashboard.edit')}</p>
-																<Button
-																	variant='ghost'
-																	className='w-full flex justify-end'>
-																	<Edit className={'w-6 '} />
-																</Button>
-															</DropdownMenuItem>
-															<DropdownMenuItem
-																onClick={() => {
-																	setOpenDeleteDialog(true);
-																	setExpenseToDelete(f);
-																}}
-																className='dark:hover:bg-zinc-700 cursor-pointer'>
-																<p>{t('dashboard.delete')}</p>
-																<Button
-																	variant='ghost'
-																	className='w-full flex justify-end'>
-																	<Trash className={'w-6'} />
-																</Button>
-															</DropdownMenuItem>
-														</DropdownMenuContent>
-													</DropdownMenu>
-												</TableCell>
-											</TableRow>
-										))}
-									</TableBody>
-								</Table>
+																	</DropdownMenuItem>
+																	<DropdownMenuItem
+																		onClick={() => {
+																			setOpenDeleteDialog(true);
+																			setExpenseToDelete(f);
+																		}}
+																		className='dark:hover:bg-zinc-700 cursor-pointer'>
+																		<p>{t('dashboard.delete')}</p>
+																		<Button
+																			variant='ghost'
+																			className='w-full flex justify-end'>
+																			<Trash className={'w-6'} />
+																		</Button>
+																	</DropdownMenuItem>
+																</DropdownMenuContent>
+															</DropdownMenu>
+														</TableCell>
+													</TableRow>
+												))}
+											</TableBody>
+										</Table>
+									</div>
+								</div>
 							</div>
-						</div>
-					</div>
-					<div className='dark:bg-dark_primary_color bg-zinc-200 p-3 w-full  rounded-xl border border-gray-600/50'>
-						<div className='flex gap-3 flex-col  items-start'>
-							<h5 className='text-2xl'> {t('dashboard.allExpenses')} </h5>
-
-							<div className='w-9/12'>
-								<Input
-									disabled
-									placeholder='Buscar'
-									className='border dark:border-zinc-400 dark:bg-zinc-800/30 text-white '
-								/>
-							</div>
-						</div>
-
-						<div className='w-full'>
-							<section className='w-full '>
-								<article className=' flex text-base font-semibold py-4 dark:text-zinc-300 text-slate-500 border-b border-gray-600/50 mb-3'>
-									<p className='w-full text-start'>{t('dashboard.date')}</p>
-									<p className='w-full text-start'>{t('dashboard.name')}</p>
-									<p className='w-full text-start'>{t('dashboard.value')}</p>
-								</article>
-							</section>
-
-							<div className='w-full  min-h-96   scrollbar-custom'>
-								<Table className='w-full'>
-									<TableBody className=' scrollbar-custom'>
-										{expenses?.map((e) =>
-											e.is_paid ? (
-												<TableRow key={e?.expense_id}>
-													<TableCell className='font-medium  w-full'>
-														<p>{format(new Date(e?.created_in), 'PP')}</p>
-													</TableCell>
-													<TableCell className='font-medium w-full hidden md:block'>
-														{e?.name.length >= 20 ? (
-															<TooltipComponent
-																message={`${e?.name.slice(0, 20)}...`}
-																content={e?.name}
-															/>
-														) : (
-															<p>{e?.name}</p>
-														)}
-													</TableCell>
-													<TableCell className='font-medium w-full block md:hidden'>
-														{e?.name.length >= 8 ? (
-															<TooltipComponent
-																message={`${e?.name.slice(0, 8)}...`}
-																content={e?.name}
-															/>
-														) : (
-															<p>{e?.name}</p>
-														)}
-													</TableCell>
-													<TableCell className='font-medium w-full'>
-														<p>$ {e?.value.toLocaleString()}</p>
-													</TableCell>
-												</TableRow>
-											) : (
-												''
-											)
-										)}
-									</TableBody>
-								</Table>
-							</div>
-						</div>
-					</div>
+						</TabsContent>
+					</Tabs>
 				</div>
 			</section>
 			{visibilityToast && (
