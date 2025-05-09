@@ -2,7 +2,7 @@ import { Expenses, ResponseWallet } from '@/interfaces/Wallet';
 
 import { TooltipComponent } from '@/components/others/Tooltip';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from '@/components/ui/dialog';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
 import { format } from 'date-fns';
@@ -189,8 +189,8 @@ export const SeeExpenses = () => {
 		return <LoaderComponent />;
 	}
 	return (
-		<main className='pt-20 p-3  dark:bg-black bg-white '>
-			<nav className='flex w-full justify-between items-center mb-3'>
+		<main className='pt-20 px-3   '>
+			<nav className='flex w-full justify-between items-center mb-5 dark:text-white '>
 				<Breadcrumb>
 					<BreadcrumbList>
 						<BreadcrumbItem>
@@ -230,15 +230,14 @@ export const SeeExpenses = () => {
 						</TabsList>
 
 						<TabsContent value='fixed'>
-							<div className='dark:bg-dark_primary_color bg-zinc-200 p-3 w-full  rounded-xl border border-gray-600/50'>
+							<div className='dark:bg-dark_primary_color bg-light_primary_color p-3 w-full  rounded-xl '>
 								<div className='flex gap-3 flex-col  items-start'>
-									<h5 className='text-2xl'> {t('dashboard.allExpenses')} </h5>
+									<h5 className='text-2xl dark:text-white'> {t('dashboard.allExpenses')} </h5>
 
 									<div className='w-9/12'>
 										<Input
-											disabled
 											placeholder='Buscar'
-											className='border dark:border-zinc-400 dark:bg-zinc-800/30 text-white '
+											className='border dark:border-zinc-400 dark:bg-zinc-800/30 dark:text-white '
 										/>
 									</div>
 								</div>
@@ -253,11 +252,13 @@ export const SeeExpenses = () => {
 									</section>
 
 									<div className='w-full  h-[360px]   scrollbar-custom overflow-auto'>
-										<Table className='w-full'>
-											<TableBody >
+										<Table className='w-full dark:text-white'>
+											<TableBody>
 												{expenses?.map((e) =>
 													e.is_paid ? (
-														<TableRow key={e?.expense_id}>
+														<TableRow
+															className='border-b pb-2 border-gray-600/20'
+															key={e?.expense_id}>
 															<TableCell className='font-medium  w-full'>
 																<p>{format(new Date(e?.created_in), 'PP')}</p>
 															</TableCell>
@@ -296,15 +297,14 @@ export const SeeExpenses = () => {
 							</div>
 						</TabsContent>
 						<TabsContent value='variable'>
-							<div className='dark:bg-dark_primary_color bg-zinc-200 p-3 w-full  rounded-xl border border-gray-600/50'>
+							<div className='dark:bg-dark_primary_color bg-light_primary_color p-3 w-full  rounded-xl'>
 								<div className='flex gap-3 flex-col items-start '>
-									<h5 className='text-2xl'> {t('dashboard.allFixedExpenses')} </h5>
+									<h5 className='text-2xl dark:text-white'> {t('dashboard.allFixedExpenses')} </h5>
 
 									<div className='w-9/12'>
 										<Input
-											disabled
 											placeholder='Buscar'
-											className='border dark:border-zinc-400 dark:bg-zinc-800/30 text-white '
+											className='border dark:border-zinc-400 dark:bg-zinc-800/30 dark:text-white '
 										/>
 									</div>
 								</div>
@@ -321,11 +321,13 @@ export const SeeExpenses = () => {
 										</article>
 									</section>
 
-									<div className='w-full  h-[360px]   scrollbar-custom overflow-auto'>
+									<div className='w-full  h-[360px]   scrollbar-custom overflow-auto '>
 										<Table className='w-full'>
 											<TableBody>
 												{fixedExpenses?.map((f) => (
-													<TableRow key={f.expense_id}>
+													<TableRow
+														key={f.expense_id}
+														className='border-b pb-2 border-gray-600/20 dark:text-white'>
 														<TableCell className='font-medium w-full '>{f.name}</TableCell>
 														<TableCell className='font-medium w-full '>$ {f.value.toLocaleString()}</TableCell>
 														<TableCell className='font-medium w-full hidden md:block '>
@@ -333,13 +335,13 @@ export const SeeExpenses = () => {
 														</TableCell>
 														<TableCell className='font-medium w-full flex flex-col  '>
 															<span
-																className={`font-bold hidden md:block ${
+																className={`font-semibold hidden md:block ${
 																	difrenceBeetwenDate(new Date(f?.dead_line)) <= 5 ? 'text-red-500' : 'text-black dark:text-white'
 																} `}>
 																{format(f?.dead_line, 'PP')}
 															</span>
 															<span
-																className={`font-bold  ${
+																className={`font-semibold  ${
 																	difrenceBeetwenDate(new Date(f?.dead_line)) <= 5 ? 'text-red-500' : 'text-black dark:text-white'
 																} `}>
 																<span className='opacity-70'>
@@ -351,25 +353,25 @@ export const SeeExpenses = () => {
 															<Dialog>
 																<DialogTrigger
 																	className={`${
-																		f.is_paid ? 'bg-transparent text-blue-500' : '  bg-green-600'
+																		f.is_paid ? 'bg-transparent text-blue-500' : '  bg-main_color cursor-pointer text-white'
 																	} rounded-md p-1 w-full`}>
 																	{f.is_paid ? `${t('dashboard.alreadyPaid')}` : `${t('dashboard.pay')}`}
 																</DialogTrigger>
 																{!f.is_paid && (
 																	<DialogContent
 																		aria-describedby='modal'
-																		className=' w-[95%] md:w-[500px] rounded-md '>
+																		className=' w-[95%] md:w-[500px] flex justify-center rounded-md dark:bg-dark_secondary_color bg-light_secondary_color dark:text-white'>
 																		<DialogHeader>
 																			<DialogTitle className='text-start'>
-																				{t('dashboard.confirm')}
-																				<span className='underline'> {t('dashboard.payment')} </span>
-																				{t('dashboard.monthlyExpense')}
-																				<span className='text-blue-500 font-semibold'> {f.name}</span>?
+																				{t('dashboard.confirm')} {t('dashboard.payment')} {t('dashboard.monthlyExpense')}
+																				<span className='text-main_color font-semibold'> {f.name}</span>?
 																			</DialogTitle>
-																			<DialogDescription className='flex justify-end items-end gap-5 h-full '>
-																				<Button className='bg-red-500'>{t('dashboard.cancel')}</Button>
+																			<DialogDescription className='flex justify-center gap-5 h-full mt-5 '>
+																				<DialogClose  className='bg-red-500 text-white cursor-pointer rounded-md px-5'>
+																					{t('dashboard.cancel')}
+																				</DialogClose>
 																				<Button
-																					className='bg-green-500'
+																					className='bg-alternative_color text-white cursor-pointer '
 																					onClick={() => payExpense(f)}>
 																					{t('dashboard.confirm')}
 																				</Button>
@@ -382,12 +384,12 @@ export const SeeExpenses = () => {
 
 														<TableCell className='font-medium   w-auto md:w-full text-end md:text-center   '>
 															<DropdownMenu>
-																<DropdownMenuTrigger>
+																<DropdownMenuTrigger className='cursor-pointer'>
 																	<EllipsisVertical />
 																</DropdownMenuTrigger>
-																<DropdownMenuContent className='dark:bg-zinc-800'>
+																<DropdownMenuContent className='dark:bg-dark_secondary_color bg-light_secondary_color dark:text-white'>
 																	<DropdownMenuSeparator />
-																	<DropdownMenuItem
+																	<DropdownMenuItem  
 																		onClick={() => {
 																			setOpenModalEditFixedExpenses(true);
 																			setFixedExpenseToEdit(f);
@@ -396,7 +398,7 @@ export const SeeExpenses = () => {
 																		<p>{t('dashboard.edit')}</p>
 																		<Button
 																			variant='ghost'
-																			className='w-full flex justify-end'>
+																			className='w-full flex justify-end cursor-pointer'>
 																			<Edit className={'w-6 '} />
 																		</Button>
 																	</DropdownMenuItem>
@@ -409,7 +411,7 @@ export const SeeExpenses = () => {
 																		<p>{t('dashboard.delete')}</p>
 																		<Button
 																			variant='ghost'
-																			className='w-full flex justify-end'>
+																			className='w-full flex justify-end cursor-pointer'>
 																			<Trash className={'w-6'} />
 																		</Button>
 																	</DropdownMenuItem>
@@ -439,18 +441,18 @@ export const SeeExpenses = () => {
 				onOpenChange={setOpenDeleteDialog}>
 				<DialogContent
 					aria-describedby={null}
-					className=' w-full md:w-[500px] rounded-md '>
+					className=' w-full md:w-[500px] rounded-md dark:bg-dark_secondary_color bg-light_primary_color dark:text-white'>
 					<DialogHeader>
 						<DialogTitle className='my-3'>
 							<p className='my-3 font-bold text-2xl'> {t('dashboard.confirmDelete')} </p>
 
 							<p className='text-pretty text-lg'>
-								{t('dashboard.removeExpense')} <span className='font-semibold text-blue-500'>{expenseToDelete?.name}</span> ?
+								{t('dashboard.removeExpense')} <span className='font-semibold text-main_color'>{expenseToDelete?.name}</span> ?
 							</p>
 						</DialogTitle>
 						<DialogDescription className='flex justify-end items-end gap-5 h-full'>
 							<Button
-								className='w-full bg-red-500 text-white'
+								className='w-full bg-red-500 text-white cursor-pointer'
 								onClick={() => setOpenDeleteDialog(false)}>
 								{t('dashboard.cancel')}
 							</Button>
@@ -458,7 +460,7 @@ export const SeeExpenses = () => {
 							<Button
 								onClick={() => deleteExpense(expenseToDelete)}
 								variant='ghost'
-								className='w-full bg-green-500 text-white'>
+								className='w-full bg-alternative_color text-white cursor-pointer'>
 								{loader ? <LoaderApi color='white' /> : `${t('dashboard.delete')}`}
 							</Button>
 						</DialogDescription>
@@ -471,11 +473,11 @@ export const SeeExpenses = () => {
 				onOpenChange={setOpenModalEditFixedExpenses}>
 				<DialogContent
 					aria-describedby={null}
-					className=' w-full md:w-[500px] rounded-md '>
+					className=' w-full md:w-[500px] rounded-md  dark:bg-dark_secondary_color bg-light_primary_color dark:text-white'>
 					<DialogHeader>
 						<DialogTitle className='my-3'>
 							<p className='my-3 font-bold text-2xl text-center  py-3 dark:border-white border-black'>
-								Modificar gasto fijo <span className='text-orange-500'>{fixedExpenseToEdit?.name}</span>
+								Modificar gasto fijo <span className='text-main_color'>{fixedExpenseToEdit?.name}</span>
 							</p>
 						</DialogTitle>
 						<div className='flex flex-col justify-center gap-5 h-full '>
@@ -484,7 +486,7 @@ export const SeeExpenses = () => {
 									Valor a pagar <span className='text-red-500'>*</span>
 								</label>
 								<Input
-									className='border dark:border-zinc-400 dark:bg-zinc-800/30 text-white'
+									className=' dark:text-white'
 									value={amount}
 									onChange={handleValues}
 								/>
@@ -492,7 +494,7 @@ export const SeeExpenses = () => {
 							<div className=' flex flex-wrap gap-x-3 items-center'>
 								<p className=''>{t('addExpense.paymentDayP')} </p>
 								<Select onValueChange={handlePayEach}>
-									<SelectTrigger className=' w-32 bg-zinc-200 dark:bg-zinc-800 dark:text-white text-black border border-green-500/50'>
+									<SelectTrigger className=' w-32 bg-zinc-200 dark:bg-zinc-800 dark:text-white text-black border border-alternative_color'>
 										<SelectValue placeholder={fixedExpenseToEdit?.pay_each} />
 									</SelectTrigger>
 									<SelectContent className='dark:bg-zinc-700'>
@@ -512,7 +514,7 @@ export const SeeExpenses = () => {
 								<p> {t('dashboard.ofEachMonth')} </p>
 							</div>
 
-							<Button onClick={submitEditFixedExpenses}>Confirmar</Button>
+							<Button onClick={submitEditFixedExpenses} className='bg-alternative_color text-white cursor-pointer'>Confirmar</Button>
 						</div>
 					</DialogHeader>
 				</DialogContent>

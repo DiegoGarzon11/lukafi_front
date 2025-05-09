@@ -125,8 +125,8 @@ export const SeeDebts = () => {
 		return <LoaderComponent />;
 	}
 	return (
-		<main className='pt-20 p-3  dark:bg-black bg-white'>
-			<nav className='flex w-full justify-between items-center pb-3'>
+		<main className='pt-20 px-3 '>
+			<nav className='flex w-full justify-between items-center pb-3 dark:text-white'>
 				<Breadcrumb>
 					<BreadcrumbList>
 						<BreadcrumbItem>
@@ -147,9 +147,9 @@ export const SeeDebts = () => {
 			</nav>
 			<section className=' shadow-xs md:col-span-3 row-span-9 '>
 				<div className='  w-full  flex  justify-between gap-5 order-3'>
-					<div className='dark:bg-dark_primary_color bg-zinc-200 p-2.5 w-full rounded-xl border border-gray-600/50'>
+					<div className='dark:bg-dark_primary_color bg-light_primary_color p-2.5 w-full rounded-xl '>
 						<div className='flex gap-3 flex-col items-start '>
-							<h5 className='text-2xl'> {t('dashboard.allDebts')} </h5>
+							<h5 className='text-2xl dark:text-white'> {t('dashboard.allDebts')} </h5>
 							<div className='w-9/12'>
 								<Input
 									disabled
@@ -157,7 +157,7 @@ export const SeeDebts = () => {
 									className='border dark:border-zinc-400 dark:bg-zinc-800/30 text-white '
 								/>
 							</div>
-							<div className='flex gap-3 items-center'>
+							<div className='flex gap-3 items-center dark:text-white'>
 								<p className='h-2 w-2 rounded-full bg-red-500'></p> <span>Debes</span>
 								<p className='h-2 w-2 rounded-full bg-green-500 '></p>
 								<span className=''>Te deben</span>
@@ -166,7 +166,7 @@ export const SeeDebts = () => {
 
 						<div className='w-full'>
 							<section className='w-full  '>
-								<article className=' flex text-base font-semibold py-4 dark:text-zinc-300 text-slate-500 border-b border-slate-500 mb-3'>
+								<article className=' flex text-base font-semibold py-4 dark:text-zinc-300 text-slate-500 border-b border-slate-500/50 mb-3'>
 									<p className='w-full  hidden md:block pl-2'>{t('dashboard.date')}</p>
 									<p className='w-full '>{t('dashboard.person')}</p>
 									<p className='w-full  '>{t('dashboard.reason')}</p>
@@ -177,14 +177,16 @@ export const SeeDebts = () => {
 								</article>
 							</section>
 
-							<div className='w-full  min-h-96   scrollbar-custom'>
+							<div className='w-full  h-[383px]   scrollbar-custom overflow-auto '>
 								{debts.length == 0 ? (
-									<p className='text-center text-lg mt-5 text-blue-500'>Actualmente no tienes ningún deuda</p>
+									<p className='text-center text-lg mt-5 text-main_color'>Actualmente no tienes ningún deuda</p>
 								) : (
 									<Table className='w-full'>
-										<TableBody className=' w-full      scrollbar-custom'>
+										<TableBody className=' w-full scrollbar-custom'>
 											{debts?.map((d) => (
-												<TableRow key={d?.debt_id}>
+												<TableRow
+													key={d?.debt_id}
+													className='border-b  border-gray-600/20 dark:text-white textsta'>
 													<TableCell className='font-medium  w-full  hidden md:block'>
 														<p>{new Date(d?.created_in).toLocaleDateString()}</p>
 													</TableCell>
@@ -213,7 +215,7 @@ export const SeeDebts = () => {
 													<TableCell className='font-medium w-full   align-middle'>
 														{d?.reason.length >= 10 ? (
 															<TooltipComponent
-																className={` rounded-md px-2 py-1 text-start  ${
+																className={` rounded-md  py-1 text-start  ${
 																	d?.debt_type == 0
 																		? 'text-red-500  underline decoration-blue-500 decoration-2'
 																		: 'text-green-500 underline decoration-blue-500 decoration-2'
@@ -222,10 +224,7 @@ export const SeeDebts = () => {
 																content={d?.reason}
 															/>
 														) : (
-															<p
-																className={` rounded-md px-2 py-1 text-start  ${
-																	d?.debt_type == 0 ? 'text-red-500 ' : 'text-green-500 '
-																}`}>
+															<p className={` rounded-md py-1 text-start  ${d?.debt_type == 0 ? 'text-red-500 ' : 'text-green-500 '}`}>
 																{d?.reason}
 															</p>
 														)}
@@ -238,10 +237,7 @@ export const SeeDebts = () => {
 														{d?.missing_payment === 0 ? (
 															<p className='text-blue-500'>Pagado</p>
 														) : (
-															<p
-																className={` rounded-md px-2 py-1 text-start  ${
-																	d?.debt_type == 0 ? 'text-red-500' : 'text-green-500'
-																}`}>
+															<p className={` rounded-md py-1 text-start  ${d?.debt_type == 0 ? 'text-red-500' : 'text-green-500'}`}>
 																{d?.debt_type == 0 ? 'Debes' : 'Te deben'}
 															</p>
 														)}
@@ -251,10 +247,10 @@ export const SeeDebts = () => {
 													</TableCell>
 													<TableCell className='font-medium   w-auto md:w-full text-end md:text-center  '>
 														<DropdownMenu>
-															<DropdownMenuTrigger>
+															<DropdownMenuTrigger className='cursor-pointer'>
 																<EllipsisVertical />
 															</DropdownMenuTrigger>
-															<DropdownMenuContent className='dark:bg-zinc-800 w-44 '>
+															<DropdownMenuContent className='dark:text-white dark:bg-dark_secondary_color bg-light_secondary_color w-44 '>
 																<DropdownMenuItem
 																	disabled={d?.missing_payment === 0}
 																	onClick={() => {
@@ -313,24 +309,24 @@ export const SeeDebts = () => {
 				onOpenChange={setOpenDeleteDialog}>
 				<DialogContent
 					aria-describedby={null}
-					className=' w-[95%] md:w-[500px] rounded-md '>
+					className=' w-[95%] md:w-[500px] rounded-md bg-light_secondary_color dark:bg-dark_secondary_color dark:text-white '>
 					<DialogHeader>
 						<DialogTitle className='my-3'>
 							<p className='my-3 font-bold text-2xl'> {t('dashboard.confirmDelete')} </p>
 
 							<>
 								<p className='mb-3 opacity-80'>
-									{' '}
+									
 									Al eliminar la deuda se eliminará también el historial de montos correspondientes a la misma.
 								</p>
 								<p className='text-balance   '>
-									{t('dashboard.removeDebt')} <span className='font-semibold text-blue-500'>{debtToDelete?.reason}</span> ?
+									{t('dashboard.removeDebt')} <span className='font-semibold text-main_color'>{debtToDelete?.reason}</span> ?
 								</p>
 							</>
 						</DialogTitle>
 						<DialogDescription className='flex justify-end items-end gap-5 h-full'>
 							<Button
-								className='w-full bg-red-500 text-white'
+								className='w-full bg-red-500 text-white cursor-pointer'
 								onClick={() => setOpenDeleteDialog(false)}>
 								{t('dashboard.cancel')}
 							</Button>
@@ -338,7 +334,7 @@ export const SeeDebts = () => {
 							<Button
 								onClick={() => deleteDebt(debtToDelete)}
 								variant='ghost'
-								className='w-full bg-green-500 text-white'>
+								className='w-full bg-alternative_color text-white cursor-pointer'>
 								{loader ? <LoaderApi color='white' /> : `${t('dashboard.delete')}`}
 							</Button>
 						</DialogDescription>
@@ -350,7 +346,7 @@ export const SeeDebts = () => {
 				onOpenChange={setOpenAmountDialog}>
 				<DialogContent
 					aria-describedby={null}
-					className=' w-[95%] md:w-[500px] rounded-md '>
+					className=' w-[95%] md:w-[500px] rounded-md dark:bg-dark_secondary_color bg-light_secondary_color dark:text-white '>
 					<DialogHeader>
 						<DialogTitle className='my-3'>
 							<p className='my-3 font-bold text-2xl text-center border-y-4 border-dashed py-3 dark:border-white border-black'>
@@ -359,9 +355,8 @@ export const SeeDebts = () => {
 							{amountToSee?.length > 0 ? (
 								<Table className='flex flex-col gap-3'>
 									<TableHeader>
-										<TableRow className='flex justify-between items-center px-5 pt-5 '>
+										<TableRow className='flex justify-between items-center  pt-5 '>
 											<TableHead className='dark:text-white text-black'>N°</TableHead>
-
 											<TableHead className='dark:text-white text-black'>Fecha/hora</TableHead>
 											<TableHead className='dark:text-white text-black'>Monto</TableHead>
 										</TableRow>
@@ -390,7 +385,7 @@ export const SeeDebts = () => {
 								</Table>
 							) : (
 								<div className='flex justify-center items-center'>
-									<p className='text-center text-lg mt-5 text-blue-500'>Actualmente no tienes historial de ningun monto realizado</p>
+									<p className='text-center text-lg mt-5 text-main_color'>Actualmente no tienes historial de ningun monto realizado</p>
 								</div>
 							)}
 						</DialogTitle>

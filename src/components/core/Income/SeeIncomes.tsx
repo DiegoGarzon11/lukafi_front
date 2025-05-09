@@ -80,8 +80,8 @@ export const SeeIncomes = () => {
 		return <LoaderComponent />;
 	}
 	return (
-		<main className='pt-20 p-3 '>
-			<nav className='flex w-full justify-between items-center pb-5'>
+		<main className='pt-20 px-3 '>
+			<nav className='flex w-full justify-between items-center pb-5 dark:text-white'>
 				<Breadcrumb>
 					<BreadcrumbList>
 						<BreadcrumbItem>
@@ -103,21 +103,20 @@ export const SeeIncomes = () => {
 
 			<section className=' shadow-xs md:col-span-3 row-span-9   '>
 				<div className='  w-full  flex  justify-between gap-5 order-3  '>
-					<div className='dark:bg-dark_primary_color bg-zinc-200 p-3 w-full rounded-xl border border-gray-600/50   '>
+					<div className='dark:bg-dark_primary_color bg-light_primary_color p-3 w-full rounded-xl '>
 						<div className='flex gap-3 flex-col items-start  '>
-							<h5 className='text-2xl'> Todos tus ingresos </h5>
+							<h5 className='text-2xl dark:text-white'> Todos tus ingresos </h5>
 							<div className='w-9/12'>
 								<Input
-									disabled
 									placeholder='Buscar'
-									className='border dark:border-zinc-400 dark:bg-zinc-800/30 text-white '
+									className='dark:text-white'
 								/>
 							</div>
 						</div>
 
 						<div className='w-full h-3/4 '>
 							<section className='w-full    '>
-								<article className=' flex text-base font-semibold py-4 dark:text-zinc-300 text-slate-500 border-b border-slate-500 mb-3'>
+								<article className=' flex text-base font-semibold py-4 dark:text-zinc-300 text-slate-500 border-b border-slate-500/50 mb-3'>
 									<p className='w-full   p'>{t('dashboard.date')}</p>
 									<p className='w-full '>{t('dashboard.name')}</p>
 									<p className='w-full '>{t('dashboard.value')}</p>
@@ -125,16 +124,16 @@ export const SeeIncomes = () => {
 								</article>
 							</section>
 
-							<div className='w-full  min-h-96    scrollbar-custom'>
+							<div className='w-full  h-[407px]   scrollbar-custom overflow-auto '>
 								{incomes.length == 0 ? (
 									<p className='text-center text-lg mt-5 text-blue-500'>Actualmente no tienes ningún ingreso registrado</p>
 								) : (
 									<Table className='w-full'>
-										<TableBody className=' w-full scrollbar-custom'>
+										<TableBody className=' w-full scrollbar-custom '>
 											{incomes?.map((i) => (
 												<TableRow
 													key={i?.income_id}
-													className='h-16'>
+													className='border-b pb-2 border-gray-600/20 dark:text-white'>
 													<TableCell className='font-medium  w-full '>
 														<p>{new Date(i?.date).toLocaleDateString()}</p>
 													</TableCell>
@@ -154,19 +153,19 @@ export const SeeIncomes = () => {
 													</TableCell>
 													<TableCell className='font-medium  md:w-full w-auto text-end md:text-center cursor-pointer'>
 														<DropdownMenu>
-															<DropdownMenuTrigger>
+															<DropdownMenuTrigger className='cursor-pointer'>
 																<EllipsisVertical />
 															</DropdownMenuTrigger>
-															<DropdownMenuContent className='dark:bg-zinc-800 w-44 '>
+															<DropdownMenuContent className='dark:bg-dark_secondary_color bg-light_secondary_color w-44 dark:text-white dark:hover:bg-dark_foreground hover:bg-light_foreground  cursor-pointer '>
 																<DropdownMenuItem
 																	onClick={() => {
 																		setIncomeToDelete(i);
 																		setOpenDeleteDialog(true);
 																	}}
-																	className='dark:hover:bg-zinc-700 cursor-pointer flex justify-between'>
-																	<p className='dark:text-slate-300text-slate-700 font-semibold'>{t('dashboard.delete')}</p>
+																	className=' flex justify-between'>
+																	<p className='dark:text-white font-semibold'>{t('dashboard.delete')}</p>
 
-																	<Trash2 className='dark:text-slate-300text-slate-700 cursor-pointer' />
+																	<Trash2 className='dark:text-white' />
 																</DropdownMenuItem>
 															</DropdownMenuContent>
 														</DropdownMenu>
@@ -193,13 +192,13 @@ export const SeeIncomes = () => {
 				onOpenChange={setOpenDeleteDialog}>
 				<DialogContent
 					aria-describedby={null}
-					className=' w-full md:w-[500px] rounded-md '>
+					className=' w-full md:w-[500px] rounded-md dark:bg-dark_primary_color bg-light_primary_color dark:text-white'>
 					<DialogHeader>
 						<DialogTitle className='my-3'>
 							<p className='my-3 font-bold text-2xl'> {t('dashboard.confirmDelete')} </p>
 
 							<p className='text-balance   '>
-								¿Estas seguro que deseas eliminar el ingreso <span className='font-semibold text-blue-500'>{incomeToDelete?.name}</span> ?
+								¿Estas seguro que deseas eliminar el ingreso <span className='font-semibold text-main_color '>{incomeToDelete?.name}</span> ?
 							</p>
 						</DialogTitle>
 						<DialogDescription className='flex justify-end items-end gap-5 h-full'>
@@ -211,7 +210,7 @@ export const SeeIncomes = () => {
 
 							<Button
 								onClick={() => deleteIncome(incomeToDelete)}
-								className='w-full bg-green-500 text-white'>
+								className='w-full bg-alternative_color text-white'>
 								{loader ? <LoaderApi color='white' /> : `${t('dashboard.delete')}`}
 							</Button>
 						</DialogDescription>
