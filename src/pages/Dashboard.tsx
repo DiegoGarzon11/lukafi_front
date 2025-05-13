@@ -1,20 +1,20 @@
-import {GetExpenses} from '@/apis/ExpenseService';
-import {GetWalletUser} from '@/apis/WalletService';
-import {Chart, ChartDonut, ChartExampleTwo} from '@/components/core/Charts';
-import {AddDebt} from '@/components/core/Debts/AddDebt';
-import {AddExpense} from '@/components/core/Expenses/AddExpense';
-import {AddIncome} from '@/components/core/Income/AddIncome';
-import {LoaderComponent} from '@/components/others/Loader';
-import {Button} from '@/components/ui/button';
-import {Expenses, Incomes, ResponseWallet} from '@/interfaces/Wallet';
-import {format} from 'date-fns';
-import {AlertTriangle} from 'lucide-react';
-import {useEffect, useState} from 'react';
-import {useTranslation} from 'react-i18next';
-import {Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle} from '@/components/ui/dialog';
-import {GetAllIncomes} from '@/apis/Income.service';
-import {LoaderApi} from '@/assets/icons/Svg';
-import {Link} from 'react-router-dom';
+import { GetExpenses } from '@/apis/ExpenseService';
+import { GetWalletUser } from '@/apis/WalletService';
+import { Chart, ChartDonut, ChartExampleTwo } from '@/components/core/Charts';
+import { AddDebt } from '@/components/core/Debts/AddDebt';
+import { AddExpense } from '@/components/core/Expenses/AddExpense';
+import { AddIncome } from '@/components/core/Income/AddIncome';
+import { LoaderComponent } from '@/components/others/Loader';
+import { Button } from '@/components/ui/button';
+import { Expenses, Incomes, ResponseWallet } from '@/interfaces/Wallet';
+import { format } from 'date-fns';
+import { AlertTriangle } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { GetAllIncomes } from '@/apis/Income.service';
+import { LoaderApi } from '@/assets/icons/Svg';
+import { Link } from 'react-router-dom';
 export const Dashboard = () => {
 	const [userData, setDataUser] = useState<ResponseWallet | undefined>(undefined);
 	const [expenses, setExpenses] = useState<Array<Expenses> | undefined>([]);
@@ -26,7 +26,7 @@ export const Dashboard = () => {
 	localStorage.setItem('filterChartBalance', filter);
 	const user = JSON.parse(localStorage.getItem('userMain'));
 
-	const {t, i18n} = useTranslation();
+	const { t, i18n } = useTranslation();
 	i18n.changeLanguage();
 
 	const getExpenses = async (walletId) => {
@@ -99,9 +99,21 @@ export const Dashboard = () => {
 				)}
 
 				<section className='flex gap-3 flex-wrap md:flex-nowrap md:col-span-3'>
-					<AddIncome sendData={(e) => recibeResponseChild(e)} className='w-full cursor-pointer' apiData={userData?.wallet} />
-					<AddExpense className='w-full cursor-pointer' sendData={(e) => recibeResponseChild(e)} apiData={userData?.wallet} />
-					<AddDebt sendData={(e) => recibeResponseChild(e)} className='w-full cursor-pointer' apiData={userData?.wallet} />
+					<AddIncome
+						sendData={(e) => recibeResponseChild(e)}
+						className='w-full cursor-pointer'
+						apiData={userData?.wallet}
+					/>
+					<AddExpense
+						className='w-full cursor-pointer'
+						sendData={(e) => recibeResponseChild(e)}
+						apiData={userData?.wallet}
+					/>
+					<AddDebt
+						sendData={(e) => recibeResponseChild(e)}
+						className='w-full cursor-pointer'
+						apiData={userData?.wallet}
+					/>
 				</section>
 				<section className='flex md:col-span-3 md:row-span-3 flex-wrap md:flex-nowrap  gap-3 md:h-full'>
 					<div className='flex flex-col dark:bg-dark_primary_color rounded-md bg-light_primary_color w-full'>
@@ -164,7 +176,10 @@ export const Dashboard = () => {
 								</div>
 
 								<div className={changeFilter ? 'invisible' : ''}>
-									<Chart trigger={trigger} filter={filter} />
+									<Chart
+										trigger={trigger}
+										filter={filter}
+									/>
 								</div>
 							</>
 						) : (
@@ -177,19 +192,23 @@ export const Dashboard = () => {
 
 					<article className=' dark:text-white text-black flex flex-col justify-between dark:bg-dark_primary_color bg-light_primary_color w-full md:w-2/5 rounded-md p-5 '>
 						<div className='flex flex-col items-center justify-center'>
-							<p className='text-3xl font-bold text-main_color'>
-								+
-								{(
-									(Number(userData?.wallet?.available) /
-										(Number(userData?.wallet?.incomes) +
-											Number(userData?.wallet?.variable_expenses) +
-											Number(userData?.wallet?.fixed_expenses) +
-											Number(userData?.wallet?.debts))) *
-									100
-								).toFixed(2)}
-								%
-							</p>
-							<p>de tu dinero esta libre</p>
+							{userData.wallet?.available <= 0 ? (
+								<p className='text-3xl font-bold text-main_color'>0%</p>
+							) : (
+								<p className='text-3xl font-bold text-main_color'>
+									+
+									{(
+										(Number(userData?.wallet?.available) /
+											(Number(userData?.wallet?.incomes) +
+												Number(userData?.wallet?.variable_expenses) +
+												Number(userData?.wallet?.fixed_expenses) +
+												Number(userData?.wallet?.debts))) *
+										100
+									).toFixed(2)}
+									%
+								</p>
+							)}
+							<p>De tu dinero esta libre</p>
 							<div className='mt-20 w-full'>
 								<div className='flex justify-between items-center gap-3 border-b py-3 border-gray-500/50'>
 									<p className='opacity-70'>Dinero libre</p>
@@ -215,16 +234,14 @@ export const Dashboard = () => {
 						</div>
 						<p className='text-center mt-5 opacity-50'>
 							Ultima actualizacion:
-							<span className='font-bold'>{userData.wallet.modify_in && format(userData?.wallet?.modify_in, 'PP - HH:mm')}</span>
+							<span className='font-bold'> {userData.wallet.modify_in && format(userData?.wallet?.modify_in, 'PP - HH:mm')}</span>
 						</p>
 					</article>
 				</section>
 
 				<section className='md:col-span-3 flex flex-col-reverse md:flex-row justify-end items-end gap-3 w-full '>
 					<div className=' flex flex-col dark:bg-dark_primary_color bg-light_primary_color w-full md:w-3/6 pt-3 pb-10 rounded-md  text-center md:text-start md:px-5 h-full'>
-						<p className='pb-5 dark:text-white text-black text-center md:text-start text-2xl font-semibold '>
-							Oberva tus metas mensuales
-						</p>
+						<p className='pb-5 dark:text-white text-black text-center md:text-start text-2xl font-semibold '>Oberva tus metas mensuales</p>
 						{userData?.wallet?.saving ? (
 							<>
 								<h2 className='dark:text-white text-black text-lg '>
@@ -254,10 +271,16 @@ export const Dashboard = () => {
 									className='shadow-inner border border-alternative_color dark:text-white text-black  text-lg'>
 									{t('dashboard.day')}
 								</Button>
-								<Button disabled variant='ghost' className=' dark:text-white text-black opacity-50 text-lg'>
+								<Button
+									disabled
+									variant='ghost'
+									className=' dark:text-white text-black opacity-50 text-lg'>
 									{t('dashboard.month')}
 								</Button>
-								<Button variant='ghost' disabled className=' dark:text-white text-black opacity-50  text-lg'>
+								<Button
+									variant='ghost'
+									disabled
+									className=' dark:text-white text-black opacity-50  text-lg'>
 									{t('dashboard.year')}
 								</Button>
 							</div>

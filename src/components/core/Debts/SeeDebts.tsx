@@ -18,6 +18,16 @@ import { useTranslation } from 'react-i18next';
 import { AddDebt } from './AddDebt';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
 import { LoaderComponent } from '@/components/others/Loader';
+import {
+	Pagination,
+	PaginationContent,
+	PaginationEllipsis,
+	PaginationItem,
+	PaginationLink,
+	PaginationNext,
+	PaginationPrevious,
+} from '@/components/ui/pagination';
+
 export const SeeDebts = () => {
 	const [debts, setDebts] = useState<Array<Debt> | undefined>([]);
 	const [debtToAddAmount, setDebtToAddAmount] = useState<Debt | undefined>(undefined);
@@ -150,11 +160,11 @@ export const SeeDebts = () => {
 					<div className='dark:bg-dark_primary_color bg-light_primary_color p-2.5 w-full rounded-xl '>
 						<div className='flex gap-3 flex-col items-start '>
 							<h5 className='text-2xl dark:text-white'> {t('dashboard.allDebts')} </h5>
-							<div className='w-9/12'>
+							<div className='w-9/12 my-3'>
 								<Input
-									disabled
+									
 									placeholder='Buscar'
-									className='border dark:border-zinc-400 dark:bg-zinc-800/30 text-white '
+									className='dark:text-white '
 								/>
 							</div>
 							<div className='flex gap-3 items-center dark:text-white'>
@@ -177,7 +187,7 @@ export const SeeDebts = () => {
 								</article>
 							</section>
 
-							<div className='w-full  h-[383px]   scrollbar-custom overflow-auto '>
+							<div className='w-full  h-[280px]   scrollbar-custom overflow-auto '>
 								{debts.length == 0 ? (
 									<p className='text-center text-lg mt-5 text-main_color'>Actualmente no tienes ningún deuda</p>
 								) : (
@@ -293,6 +303,22 @@ export const SeeDebts = () => {
 									</Table>
 								)}
 							</div>
+							<Pagination className='mt-10 dark:bg-dark_primary_color bg-light_primary_color text-white'>
+								<PaginationContent>
+									<PaginationItem>
+										<PaginationPrevious href='#' />
+									</PaginationItem>
+									<PaginationItem>
+										<PaginationLink href='#'>1</PaginationLink>
+									</PaginationItem>
+									<PaginationItem>
+										<PaginationEllipsis />
+									</PaginationItem>
+									<PaginationItem>
+										<PaginationNext href='#' />
+									</PaginationItem>
+								</PaginationContent>
+							</Pagination>
 						</div>
 					</div>
 				</div>

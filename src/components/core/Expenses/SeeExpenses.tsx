@@ -20,6 +20,15 @@ import { AddExpense } from './AddExpense';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
 import { LoaderComponent } from '@/components/others/Loader';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import {
+	Pagination,
+	PaginationContent,
+	PaginationEllipsis,
+	PaginationItem,
+	PaginationLink,
+	PaginationNext,
+	PaginationPrevious,
+} from '@/components/ui/pagination';
 
 export const SeeExpenses = () => {
 	const [fixedExpenses, setFixedExpenses] = useState<Array<Expenses> | undefined>(undefined);
@@ -234,7 +243,7 @@ export const SeeExpenses = () => {
 								<div className='flex gap-3 flex-col  items-start'>
 									<h5 className='text-2xl dark:text-white'> {t('dashboard.allExpenses')} </h5>
 
-									<div className='w-9/12'>
+									<div className='w-9/12 my-3'>
 										<Input
 											placeholder='Buscar'
 											className='border dark:border-zinc-400 dark:bg-zinc-800/30 dark:text-white '
@@ -251,7 +260,7 @@ export const SeeExpenses = () => {
 										</article>
 									</section>
 
-									<div className='w-full  h-[360px]   scrollbar-custom overflow-auto'>
+									<div className='w-full   h-[258px]     scrollbar-custom overflow-auto'>
 										<Table className='w-full dark:text-white'>
 											<TableBody>
 												{expenses?.map((e) =>
@@ -293,6 +302,22 @@ export const SeeExpenses = () => {
 											</TableBody>
 										</Table>
 									</div>
+									<Pagination className='mt-10 dark:bg-dark_primary_color bg-light_primary_color text-white'>
+										<PaginationContent>
+											<PaginationItem>
+												<PaginationPrevious href='#' />
+											</PaginationItem>
+											<PaginationItem>
+												<PaginationLink href='#'>1</PaginationLink>
+											</PaginationItem>
+											<PaginationItem>
+												<PaginationEllipsis />
+											</PaginationItem>
+											<PaginationItem>
+												<PaginationNext href='#' />
+											</PaginationItem>
+										</PaginationContent>
+									</Pagination>
 								</div>
 							</div>
 						</TabsContent>
@@ -301,10 +326,10 @@ export const SeeExpenses = () => {
 								<div className='flex gap-3 flex-col items-start '>
 									<h5 className='text-2xl dark:text-white'> {t('dashboard.allFixedExpenses')} </h5>
 
-									<div className='w-9/12'>
+									<div className='w-9/12 my-3'>
 										<Input
 											placeholder='Buscar'
-											className='border dark:border-zinc-400 dark:bg-zinc-800/30 dark:text-white '
+											className=' dark:text-white '
 										/>
 									</div>
 								</div>
@@ -321,7 +346,7 @@ export const SeeExpenses = () => {
 										</article>
 									</section>
 
-									<div className='w-full  h-[360px]   scrollbar-custom overflow-auto '>
+									<div className='w-full  h-[258px]   scrollbar-custom overflow-auto '>
 										<Table className='w-full'>
 											<TableBody>
 												{fixedExpenses?.map((f) => (
@@ -367,7 +392,7 @@ export const SeeExpenses = () => {
 																				<span className='text-main_color font-semibold'> {f.name}</span>?
 																			</DialogTitle>
 																			<DialogDescription className='flex justify-center gap-5 h-full mt-5 '>
-																				<DialogClose  className='bg-red-500 text-white cursor-pointer rounded-md px-5'>
+																				<DialogClose className='bg-red-500 text-white cursor-pointer rounded-md px-5'>
 																					{t('dashboard.cancel')}
 																				</DialogClose>
 																				<Button
@@ -389,7 +414,7 @@ export const SeeExpenses = () => {
 																</DropdownMenuTrigger>
 																<DropdownMenuContent className='dark:bg-dark_secondary_color bg-light_secondary_color dark:text-white'>
 																	<DropdownMenuSeparator />
-																	<DropdownMenuItem  
+																	<DropdownMenuItem
 																		onClick={() => {
 																			setOpenModalEditFixedExpenses(true);
 																			setFixedExpenseToEdit(f);
@@ -423,6 +448,22 @@ export const SeeExpenses = () => {
 											</TableBody>
 										</Table>
 									</div>
+									<Pagination className='mt-10 dark:bg-dark_primary_color bg-light_primary_color text-white'>
+										<PaginationContent>
+											<PaginationItem>
+												<PaginationPrevious href='#' />
+											</PaginationItem>
+											<PaginationItem>
+												<PaginationLink href='#'>1</PaginationLink>
+											</PaginationItem>
+											<PaginationItem>
+												<PaginationEllipsis />
+											</PaginationItem>
+											<PaginationItem>
+												<PaginationNext href='#' />
+											</PaginationItem>
+										</PaginationContent>
+									</Pagination>
 								</div>
 							</div>
 						</TabsContent>
@@ -514,7 +555,11 @@ export const SeeExpenses = () => {
 								<p> {t('dashboard.ofEachMonth')} </p>
 							</div>
 
-							<Button onClick={submitEditFixedExpenses} className='bg-alternative_color text-white cursor-pointer'>Confirmar</Button>
+							<Button
+								onClick={submitEditFixedExpenses}
+								className='bg-alternative_color text-white cursor-pointer'>
+								Confirmar
+							</Button>
 						</div>
 					</DialogHeader>
 				</DialogContent>

@@ -132,7 +132,7 @@ export function SheetSide() {
 					<div className=' flex flex-col items-center mb-5 border-b pb-3 border-lime-500 w-full'>
 						<div className=' rounded-full flex justify-center items-center'>
 							<img
-								src={infoUser.icon}
+								src={infoUser.icon ?? 'https://api.dicebear.com/9.x/thumbs/svg?radius=0&seed=custom-seed'}
 								alt='avatar'
 								className='w-28 h-28 rounded-full'
 							/>

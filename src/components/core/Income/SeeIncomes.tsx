@@ -16,6 +16,15 @@ import { LoaderApi } from '@/assets/icons/Svg';
 import { ApiResponse } from '@/interfaces/Api';
 import { Toast } from '@/hooks/Toast';
 import { LoaderComponent } from '@/components/others/Loader';
+import {
+	Pagination,
+	PaginationContent,
+	PaginationEllipsis,
+	PaginationItem,
+	PaginationLink,
+	PaginationNext,
+	PaginationPrevious,
+} from '@/components/ui/pagination';
 
 export const SeeIncomes = () => {
 	const { t, i18n } = useTranslation();
@@ -106,10 +115,10 @@ export const SeeIncomes = () => {
 					<div className='dark:bg-dark_primary_color bg-light_primary_color p-3 w-full rounded-xl '>
 						<div className='flex gap-3 flex-col items-start  '>
 							<h5 className='text-2xl dark:text-white'> Todos tus ingresos </h5>
-							<div className='w-9/12'>
+							<div className='w-9/12 my-3'> 
 								<Input
 									placeholder='Buscar'
-									className='dark:text-white'
+									className='dark:text-white borderno'
 								/>
 							</div>
 						</div>
@@ -124,7 +133,7 @@ export const SeeIncomes = () => {
 								</article>
 							</section>
 
-							<div className='w-full  h-[407px]   scrollbar-custom overflow-auto '>
+							<div className='w-full  h-[304px]   scrollbar-custom overflow-auto '>
 								{incomes.length == 0 ? (
 									<p className='text-center text-lg mt-5 text-blue-500'>Actualmente no tienes ningún ingreso registrado</p>
 								) : (
@@ -176,6 +185,22 @@ export const SeeIncomes = () => {
 									</Table>
 								)}
 							</div>
+							<Pagination className='mt-10 dark:bg-dark_primary_color bg-light_primary_color text-white'>
+								<PaginationContent>
+									<PaginationItem>
+										<PaginationPrevious href='#' />
+									</PaginationItem>
+									<PaginationItem>
+										<PaginationLink href='#'>1</PaginationLink>
+									</PaginationItem>
+									<PaginationItem>
+										<PaginationEllipsis />
+									</PaginationItem>
+									<PaginationItem>
+										<PaginationNext href='#' />
+									</PaginationItem>
+								</PaginationContent>
+							</Pagination>
 						</div>
 					</div>
 				</div>
