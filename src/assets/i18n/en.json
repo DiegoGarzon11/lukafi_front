@@ -135,6 +135,7 @@
 	"sheetside.wallet.expenses": "Expenses",
 	"sheetside.wallet.debts": "Debts",
 	"sheetside.wallet.incomes": "Incomes",
+	"sheetside.wallet.available": "Available",
 	"sheetside.suport": "Suport",
 	"sheetside.suport.help": "Help"
 }

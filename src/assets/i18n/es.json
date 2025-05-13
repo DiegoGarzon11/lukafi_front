@@ -92,6 +92,7 @@
 	"dashboard.chart": "El dia",
 	"dashboard.chartSpent": "moviste",
 	"dashboard.availableBalance": "Saldo disponible",
+	
 	"dashboard.goalSaving": "Sobrepasaste tú meta de ahorros",
 	"dashboard.viewExpensesCategory": "Observar gastos por categoria",
 	"dashboard.day": "Dia",
@@ -133,6 +134,7 @@
 	"sheetside.wallet.expenses": "Gastos",
 	"sheetside.wallet.debts": "Deudas",
 	"sheetside.wallet.incomes": "Ingresos",
+	"sheetside.wallet.available": "Disponible",
 	"sheetside.suport": "Soporte",
 	"sheetside.suport.help": "Ayuda"
 }

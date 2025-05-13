@@ -122,12 +122,10 @@ const Profile = () => {
 		});
 		try {
 			if (response) {
-				
-				
 				setVisibilityToast(true);
 				setresponseApi(response);
 
-				 await GetWalletUser(user.user_id);
+				await GetWalletUser(user.user_id);
 				setDialogAvatar(false);
 
 				navigate('/profile');
@@ -147,7 +145,7 @@ const Profile = () => {
 					<div className='flex justify-center items-center gap-2 relative'>
 						<div className='flex flex-col items-center justify-center h-autos w-auto '>
 							<img
-								src={user.icon}
+								src={user.icon ?? 'https://api.dicebear.com/9.x/thumbs/svg?radius=0&seed=custom-seed'}
 								alt='avatar'
 								className='w-28 md:w-32 dark:bg-dark_secondary_color  bg-light_secondary_color  rounded-full mb-1'
 							/>
@@ -169,8 +167,10 @@ const Profile = () => {
 					</div>
 					{tab === 'wallet' ? (
 						<div className='flex flex-col flex-wrap items-center dark:text-white text-black mt-5'>
-							<p >Ultima actualizacion:</p>
-							<p className=' text-lg font-semibold text-main_color'>{dataWallet?.wallet?.modify_in && format(dataWallet?.wallet?.modify_in, 'PP - HH:mm')}</p>
+							<p>Ultima actualizacion:</p>
+							<p className=' text-lg font-semibold text-main_color'>
+								{dataWallet?.wallet?.modify_in && format(dataWallet?.wallet?.modify_in, 'PP - HH:mm')}
+							</p>
 						</div>
 					) : (
 						''
@@ -236,13 +236,16 @@ const Profile = () => {
 							className=' w-full font-semibold  text-white text-lg flex justify-center items-center py-5 cursor-pointer bg-alternative_color mt-8 '>
 							Guardar cambios
 						</Button>
-						<div className='flex mt-5 justify-around dark:text-white text-black '> 
-							<Link to='/auth/change-password' className='hover:underline'>Cambiar contraseña</Link>
+						<div className='flex mt-5 justify-around dark:text-white text-black '>
+							<Link
+								to='/auth/change-password'
+								className='hover:underline'>
+								Cambiar contraseña
+							</Link>
 
 							<Link
 								to='/auth/delete-account'
-								className='hover:underline'
-								>
+								className='hover:underline'>
 								Eliminar Cuenta
 							</Link>
 						</div>
@@ -312,7 +315,9 @@ const Profile = () => {
 			<Dialog
 				open={dialogAvatar}
 				onOpenChange={setDialogAvatar}>
-				<DialogContent aria-describedby='modal' className=' w-full md:w-[500px] rounded-md dark:bg-dark_primary_color dark:text-white text-black '>
+				<DialogContent
+					aria-describedby='modal'
+					className=' w-full md:w-[500px] rounded-md dark:bg-dark_primary_color dark:text-white text-black '>
 					<div className='flex flex-col items-center space-y-4'>
 						<DialogTitle className='text-xl font-semibold'>Selecciona tu avatar</DialogTitle>
 						<DialogHeader>

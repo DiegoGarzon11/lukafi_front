@@ -1,12 +1,12 @@
-import {useTranslation} from 'react-i18next';
-import {Card} from '@/components/others/Card';
+import { useTranslation } from 'react-i18next';
+import { Card } from '@/components/others/Card';
 // import {Click} from '@/assets/icons/Svg';
-import {ArrowDown, CornerDownRight, Mail, MousePointerClick, Phone, Star} from 'lucide-react';
-import {ChartExample, ChartExampleTwo} from '@/components/core/Charts';
-import {Button} from '@/components/ui/button';
+import { ArrowDown, CornerDownRight, Mail, MousePointerClick, Phone, Star } from 'lucide-react';
+import { ChartExample, ChartExampleTwo } from '@/components/core/Charts';
+import { Button } from '@/components/ui/button';
 
 export const Home = () => {
-	const {t, i18n} = useTranslation();
+	const { t, i18n } = useTranslation();
 	i18n.changeLanguage();
 	return (
 		<div className='dark:bg-dark_background bg-light_background h-full '>
@@ -33,12 +33,32 @@ export const Home = () => {
 						<div className='flex justify-between items-center'>
 							<p className='ml-5 text-3xl font-extrabold dark:text-white text-black'>1M.</p>
 							<div className='flex gap-3 items-center'>
-								<button className='dark:bg-dark_foreground rounded-4xl px-3 dark:text-white text-black py-1'>Expenses</button>
-								<button className='dark:bg-dark_foreground rounded-4xl px-3 dark:text-white text-black py-1'>Incomes</button>
+								<button className='dark:bg-dark_foreground rounded-4xl px-3 dark:text-white text-black py-1'>
+									{t('sheetside.wallet.expenses')}
+								</button>
+								<button className='dark:bg-dark_foreground rounded-4xl px-3 dark:text-white text-black py-1'>
+									{t('sheetside.wallet.incomes')}
+								</button>
 							</div>
 						</div>
-						<div className='mt-10 md:flex md:justify-center '>
+						<div className='mt-10 md:flex md:justify-center flex-col items-center'>
 							<ChartExample />
+							<div className='flex gap-3 items-center'>
+								<span className='flex items-center text-main_color'>
+									<Star
+										size={16}
+										strokeWidth={3}
+									/>
+									{t('sheetside.wallet.incomes')}
+								</span>
+								<span className='flex items-center text-alternative_color'>
+									<Star
+										size={16}
+										strokeWidth={3}
+									/>
+									{t('sheetside.wallet.debts')}
+								</span>
+							</div>
 						</div>
 					</div>
 				</section>
@@ -50,9 +70,7 @@ export const Home = () => {
 							<ArrowDown className='text-main_color w-20 h-20  my-3 block md:hidden' />
 						</div>
 						<div className='dark:bg-dark_primary_color bg-light_primary_color dark:text-white text-black rounded-2xl p-3 mt-10 w-full flex flex-col gap-3 items-center   '>
-							<p className='dark:text-white text-black font-semibold text-4xl text-balance text-center '>
-								{t('home.section2.title')} lukafi
-							</p>
+							<p className='dark:text-white text-black font-semibold text-4xl text-balance text-center '>{t('home.section2.title')} lukafi</p>
 							<p className='text-center opacity-50'>{t('home.section2.p')} lukafi?</p>
 							<div className='dark:bg-dark_secondary_color bg-light_secondary_color flex justify-center items-center flex-col py-8  md:px-20 rounded-4xl m-8 w-full '>
 								<div className='flex justify-between items-center mx-10 mb-5  w-full px-10  '>
@@ -62,14 +80,46 @@ export const Home = () => {
 									</button>
 								</div>
 								<ChartExampleTwo />
+								<div className='flex gap-3 items-center'>
+									<span className='flex items-center text-main_color'>
+										<Star
+											size={16}
+											strokeWidth={3}
+										/>
+										{t('home.section2.chartSubtitle')}
+									</span>
+									<span className='flex items-center text-alternative_color'>
+										<Star
+											size={16}
+											strokeWidth={3}
+										/>
+										{t('sheetside.wallet.debts')}
+									</span>
+								</div>
 							</div>
 						</div>
 					</div>
 					<div className='md:flex justify-between md:flex-col md:items-end  md:w-2/4'>
-						<Card img={'images/growUp.svg'} title={t('home.card1.title')} info={t('home.card1.text')} />
-						<Card img={'images/saving.svg'} title={t('home.card2.title')} info={t('home.card2.text')} />
-						<Card img={'images/loans.svg'} title={t('home.card3.title')} info={t('home.card3.text')} />
-						<Card img={'images/loans.svg'} title={t('home.card3.title')} info={t('home.card3.text')} />
+						<Card
+							img={'images/growUp.svg'}
+							title={t('home.card1.title')}
+							info={t('home.card1.text')}
+						/>
+						<Card
+							img={'images/saving.svg'}
+							title={t('home.card2.title')}
+							info={t('home.card2.text')}
+						/>
+						<Card
+							img={'images/loans.svg'}
+							title={t('home.card3.title')}
+							info={t('home.card3.text')}
+						/>
+						<Card
+							img={'images/loans.svg'}
+							title={t('home.card3.title')}
+							info={t('home.card3.text')}
+						/>
 					</div>
 				</section>
 				<section className='flex md:flex-row flex-col justify-between w-full gap-5'>

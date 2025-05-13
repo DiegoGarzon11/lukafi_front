@@ -8,7 +8,7 @@ import { LoaderComponent } from '@/components/others/Loader';
 import { Button } from '@/components/ui/button';
 import { Expenses, Incomes, ResponseWallet } from '@/interfaces/Wallet';
 import { format } from 'date-fns';
-import { AlertTriangle } from 'lucide-react';
+import { AlertTriangle, Star } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
@@ -84,7 +84,7 @@ export const Dashboard = () => {
 					<Dialog defaultOpen>
 						<DialogContent
 							aria-describedby='modal'
-							className='w-[380px] md:w-[600px] rounded-md dark:bg-dark_primary_color dark:text-white text-black '>
+							className='w-[380px] md:w-[600px] rounded-md dark:bg-dark_primary_color bg-light_primary_color dark:text-white text-black '>
 							<DialogHeader>
 								<DialogTitle className='text-xl   text-main_color'>¡Importante!</DialogTitle>
 								<DialogDescription className='text-lg  dark:text-white text-black text-start  '>
@@ -169,7 +169,7 @@ export const Dashboard = () => {
 						{expenses?.length > 0 || incomes?.length > 0 ? (
 							<>
 								<div
-									className={` md:absolute bottom-52 left-0 right-0 flex justify-center items-center mt-10    ${
+									className={` md:absolute bottom-52 left-0 right-20 flex justify-center items-center     ${
 										changeFilter ? '' : 'hidden'
 									}`}>
 									<LoaderApi color='white' />
@@ -180,6 +180,22 @@ export const Dashboard = () => {
 										trigger={trigger}
 										filter={filter}
 									/>
+									<div className='flex gap-3 items-center justify-center'>
+										<span className='flex items-center text-main_color'>
+											<Star
+												size={16}
+												strokeWidth={3}
+											/>
+											{t('sheetside.wallet.incomes')}
+										</span>
+										<span className='flex items-center text-alternative_color'>
+											<Star
+												size={16}
+												strokeWidth={3}
+											/>
+											{t('sheetside.wallet.expenses')}
+										</span>
+									</div>
 								</div>
 							</>
 						) : (
@@ -241,7 +257,7 @@ export const Dashboard = () => {
 
 				<section className='md:col-span-3 flex flex-col-reverse md:flex-row justify-end items-end gap-3 w-full '>
 					<div className=' flex flex-col dark:bg-dark_primary_color bg-light_primary_color w-full md:w-3/6 pt-3 pb-10 rounded-md  text-center md:text-start md:px-5 h-full'>
-						<p className='pb-5 dark:text-white text-black text-center md:text-start text-2xl font-semibold '>Oberva tus metas mensuales</p>
+						<p className='pb-5 dark:text-white text-black text-center md:text-start text-2xl font-semibold '>Observa tus metas mensuales</p>
 						{userData?.wallet?.saving ? (
 							<>
 								<h2 className='dark:text-white text-black text-lg '>
@@ -251,8 +267,27 @@ export const Dashboard = () => {
 									</span>
 									de alcanzar tu meta! animo🫡
 								</h2>
-								<div className='flex justify-center items-center mt-8'>
+								<div className='flex justify-center items-center mt-8 flex-col'>
 									<ChartExampleTwo />
+									<div className='flex gap-3 items-center justify-center'>
+										<span className='flex items-center text-alternative_color'>
+											<Star
+												size={16}
+												strokeWidth={3}
+											/>
+												{t('home.section2.chartSaving')}
+
+										</span>
+										<span className='flex items-center text-main_color'>
+											<Star
+												size={16}
+												strokeWidth={3}
+											/>
+											{t('sheetside.wallet.available')}
+										
+
+										</span>
+									</div>
 								</div>
 							</>
 						) : (
