@@ -260,7 +260,7 @@ export const SeeExpenses = () => {
 										</article>
 									</section>
 
-									<div className='w-full   h-[258px]     scrollbar-custom overflow-auto'>
+								<div className="w-full h-[calc(100vh-458px)] max-h-screen overflow-auto scrollbar-custom">
 										<Table className='w-full dark:text-white'>
 											<TableBody>
 												{expenses?.map((e) =>
@@ -302,7 +302,7 @@ export const SeeExpenses = () => {
 											</TableBody>
 										</Table>
 									</div>
-									<Pagination className='mt-10 dark:bg-dark_primary_color bg-light_primary_color text-white'>
+									<Pagination className='mt-5 dark:bg-dark_primary_color bg-light_primary_color dark:text-white'>
 										<PaginationContent>
 											<PaginationItem>
 												<PaginationPrevious href='#' />
@@ -346,7 +346,7 @@ export const SeeExpenses = () => {
 										</article>
 									</section>
 
-									<div className='w-full  h-[258px]   scrollbar-custom overflow-auto '>
+								<div className="w-full h-[calc(100vh-458px)] max-h-screen overflow-auto scrollbar-custom">
 										<Table className='w-full'>
 											<TableBody>
 												{fixedExpenses?.map((f) => (
@@ -448,7 +448,7 @@ export const SeeExpenses = () => {
 											</TableBody>
 										</Table>
 									</div>
-									<Pagination className='mt-10 dark:bg-dark_primary_color bg-light_primary_color text-white'>
+									<Pagination className='mt-5 dark:bg-dark_primary_color bg-light_primary_color dark:text-white'>
 										<PaginationContent>
 											<PaginationItem>
 												<PaginationPrevious href='#' />

@@ -133,7 +133,7 @@ export const SeeIncomes = () => {
 								</article>
 							</section>
 
-							<div className='w-full  h-[304px]   scrollbar-custom overflow-auto '>
+						<div className="w-full h-[calc(100vh-410px)] max-h-screen overflow-auto scrollbar-custom">
 								{incomes.length == 0 ? (
 									<p className='text-center text-lg mt-5 text-blue-500'>Actualmente no tienes ningún ingreso registrado</p>
 								) : (
@@ -185,7 +185,7 @@ export const SeeIncomes = () => {
 									</Table>
 								)}
 							</div>
-							<Pagination className='mt-10 dark:bg-dark_primary_color bg-light_primary_color text-white'>
+							<Pagination className='mt-5 dark:bg-dark_primary_color bg-light_primary_color dark:text-white'>
 								<PaginationContent>
 									<PaginationItem>
 										<PaginationPrevious href='#' />

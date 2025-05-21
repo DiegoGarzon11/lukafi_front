@@ -187,7 +187,7 @@ export const SeeDebts = () => {
 								</article>
 							</section>
 
-							<div className='w-full  h-[280px]   scrollbar-custom overflow-auto '>
+							<div className="w-full h-[calc(100vh-434px)] max-h-screen overflow-auto scrollbar-custom">
 								{debts.length == 0 ? (
 									<p className='text-center text-lg mt-5 text-main_color'>Actualmente no tienes ningún deuda</p>
 								) : (
@@ -303,7 +303,7 @@ export const SeeDebts = () => {
 									</Table>
 								)}
 							</div>
-							<Pagination className='mt-10 dark:bg-dark_primary_color bg-light_primary_color text-white'>
+							<Pagination className='mt-5 dark:bg-dark_primary_color bg-light_primary_color dark:text-white'>
 								<PaginationContent>
 									<PaginationItem>
 										<PaginationPrevious href='#' />

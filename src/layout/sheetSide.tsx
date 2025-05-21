@@ -94,7 +94,7 @@ export function SheetSide() {
 		<Sidebar
 			variant='floating'
 			className={`z-50    `}>
-			<SidebarContent className='dark:bg-dark_primary_color bg-light_primary_color  rounded-3xl bgr  '>
+			<SidebarContent className='dark:bg-dark_primary_color bg-light_primary_color  rounded-xl  '>
 				<div className=' w-full flex justify-end mt-3'>
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>

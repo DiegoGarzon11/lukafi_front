@@ -199,8 +199,8 @@ export default function Header({ valueSide }) {
 						</p>
 						<div
 							className={` transition-all duration-500 ease-in-out ${
-								localStorage.token && allowSidebar && isSideOpen ? 'md:ml-[262px]  md:w-[82%] w-full' : 'w-full'
-							} fixed flex justify-end rounded-b-3xl p-3 z-10 bg-linear-to-t dark:from-dark_primary_color dark:to-dark_secondary_color from-light_primary_color to-light_secondary_color `}>
+								localStorage.token && allowSidebar && isSideOpen ? 'md:ml-[256px]  md:w-[82.5%] w-full' : 'w-full'
+							} fixed flex justify-end rounded-b-xl p-3 z-10 bg-linear-to-t dark:from-dark_primary_color dark:to-dark_secondary_color from-light_primary_color to-light_secondary_color `}>
 							<div className='flex items-center gap-5 dark:text-white text-black'>
 								{!localStorage.token && location.pathname === '/' && (
 									<Button
