@@ -133,7 +133,7 @@ export const SeeIncomes = () => {
 								</article>
 							</section>
 
-						<div className="w-full h-[calc(100vh-456px)] max-h-screen overflow-auto scrollbar-custom">
+						<div className="w-full h-[calc(100dvh-490px)] max-h-screen overflow-auto scrollbar-custom">
 								{incomes.length == 0 ? (
 									<p className='text-center text-lg mt-5 text-blue-500'>Actualmente no tienes ningún ingreso registrado</p>
 								) : (
