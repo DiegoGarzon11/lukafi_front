@@ -14,7 +14,6 @@ import { useTranslation } from 'react-i18next';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { GetAllIncomes } from '@/apis/Income.service';
 import { LoaderApi } from '@/assets/icons/Svg';
-import { Link } from 'react-router-dom';
 export const Dashboard = () => {
 	const [userData, setDataUser] = useState<ResponseWallet | undefined>(undefined);
 	const [expenses, setExpenses] = useState<Array<Expenses> | undefined>([]);
@@ -79,7 +78,7 @@ export const Dashboard = () => {
 	}
 	return (
 		<main className='h-screen'>
-			<div className='flex flex-col md:grid md:grid-cols-3 h-full pt-20 p-3 gap-3 dark:bg-dark_background bg-light_background'>
+			<div className='flex flex-col md:grid md:grid-cols-3 h-full pt-20 pl-3 pr-1 gap-3 dark:bg-dark_background bg-light_background'>
 				{userData.wallet.available <= 0 && (
 					<Dialog defaultOpen>
 						<DialogContent

@@ -176,17 +176,17 @@ export default function Header({ valueSide }) {
 
 	return (
 		<>
-			<header className='z-50 absolute gap-5 '>
-				<div className={`flex justify-start gap-3 items-center  `}>
+			<header className='z-50  gap-5 h-0 '>
+				
 					<SidebarProvider
 						open={isSideOpen}
 						onOpenChange={handleSidebar}>
-						<section className={`${localStorage.token ? '' : 'hidden'}   transition-all duration-500 ease-in-out`}>
+						<section className={`${localStorage.token ? '' : 'hidden'}   transition-all duration-500 ease-in-out `}>
 							{allowSidebar && <SheetSide />}
 						</section>
 						{localStorage.token && allowSidebar && (
 							<SidebarTrigger
-								className={`z-50 mt-3 md:ml-6 ml-3 fixed  transition-all duration-500 ease-in-out block  ${
+								className={`z-50 mt-3 md:ml-6 ml-3 fixed  transition-all duration-500 ease-in-out block   ${
 									isSideOpen ? ' md:left-64' : 'md:left-0 '
 								}  top-1 cursor-pointer dark:text-white text-black`}
 							/>
@@ -199,9 +199,9 @@ export default function Header({ valueSide }) {
 						</p>
 						<div
 							className={` transition-all duration-500 ease-in-out ${
-								localStorage.token && allowSidebar && isSideOpen ? 'md:ml-[256px]  md:w-[82.5%] w-full' : 'w-full'
-							} fixed flex justify-end rounded-b-xl p-3 z-10 bg-linear-to-t dark:from-dark_primary_color dark:to-dark_secondary_color from-light_primary_color to-light_secondary_color `}>
-							<div className='flex items-center gap-5 dark:text-white text-black'>
+								localStorage.token && allowSidebar && isSideOpen ? 'md:ml-64 w-[calc(100vw-270px)] ' : 'w-full'
+							} fixed flex justify-end rounded-b-xl p-3 z-10 bg-linear-to-t dark:from-dark_primary_color dark:to-dark_secondary_color from-light_primary_color to-light_secondary_color  `}>
+							<div className='flex items-center gap-5 dark:text-white text-black '>
 								{!localStorage.token && location.pathname === '/' && (
 									<Button
 										onClick={handleAuth}
@@ -259,7 +259,6 @@ export default function Header({ valueSide }) {
 							</div>
 						</div>
 					</SidebarProvider>
-				</div>
 			</header>
 			<Outlet />
 			<Dialog

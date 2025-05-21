@@ -187,7 +187,7 @@ export const SeeDebts = () => {
 								</article>
 							</section>
 
-							<div className="w-full h-[calc(100vh-434px)] max-h-screen overflow-auto scrollbar-custom">
+							<div className="w-full h-[calc(100vh-478px)] max-h-screen overflow-auto scrollbar-custom">
 								{debts.length == 0 ? (
 									<p className='text-center text-lg mt-5 text-main_color'>Actualmente no tienes ningún deuda</p>
 								) : (
