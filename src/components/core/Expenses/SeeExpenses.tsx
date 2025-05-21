@@ -260,7 +260,7 @@ export const SeeExpenses = () => {
 										</article>
 									</section>
 
-								<div className="w-full h-[calc(100dvh-536px)] max-h-screen overflow-auto scrollbar-custom">
+								<div className="w-full h-[calc(100dvh-460px)] max-h-screen overflow-auto scrollbar-custom">
 										<Table className='w-full dark:text-white'>
 											<TableBody>
 												{expenses?.map((e) =>
@@ -346,7 +346,7 @@ export const SeeExpenses = () => {
 										</article>
 									</section>
 
-											<div className="w-full h-[calc(100dvh-536px)] max-h-screen overflow-auto scrollbar-custom">
+											<div className="w-full h-[calc(100dvh-460px)] max-h-screen overflow-auto scrollbar-custom">
 										<Table className='w-full'>
 											<TableBody>
 												{fixedExpenses?.map((f) => (
