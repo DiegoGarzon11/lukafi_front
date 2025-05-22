@@ -199,7 +199,7 @@ export default function Header({ valueSide }) {
 						</p>
 						<div
 							className={` transition-all duration-500 ease-in-out ${
-								localStorage.token && allowSidebar && isSideOpen ? 'md:ml-64 w-[calc(100vw-270px)] ' : 'w-full'
+								localStorage.token && allowSidebar && isSideOpen ? 'md:ml-64 md:w-[calc(100vw-270px)] w-full ' : 'w-full'
 							} fixed flex justify-end rounded-b-xl p-3 z-10 bg-linear-to-t dark:from-dark_primary_color dark:to-dark_secondary_color from-light_primary_color to-light_secondary_color  `}>
 							<div className='flex items-center gap-5 dark:text-white text-black '>
 								{!localStorage.token && location.pathname === '/' && (
