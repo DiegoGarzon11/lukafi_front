@@ -328,7 +328,7 @@ export default function Header({ valueSide }) {
 											disabled={!data.email || !data.password || loader}
 											className='w-full font-semibold bg-alternative_color text-white text-lg flex justify-center items-center py-5 cursor-pointer'
 											type='submit'>
-											{loader || statusCode?.status === 200 ? <LoaderApi color='white' /> : 'Iniciar sesión'}
+											{loader || statusCode?.status === 200 ? <LoaderApi  /> : 'Iniciar sesión'}
 										</Button>
 									</form>
 								</DialogHeader>
@@ -405,7 +405,7 @@ export default function Header({ valueSide }) {
 											type='submit'
 											className='w-full font-semibold bg-alternative_color text-white text-lg flex justify-center items-center py-5 cursor-pointer'
 											disabled={data.newName == '' || data.newLastName == '' || data.newPassword == ''}>
-											{loader ? <LoaderApi color='white' /> : t('form.field.signUp')}
+											{loader ? <LoaderApi /> : t('form.field.signUp')}
 										</Button>
 									</form>
 								</DialogHeader>

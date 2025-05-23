@@ -29,7 +29,7 @@ export const AddNewIncome = async (data) => {
 export const GetAllIncomes = async (data) => {
 	if (data) {
 		try {
-			const response = await fetch(`${API_URL + MAIN_ROUTE}get-all-incomes/${data.wallet_id}`, {
+			const response = await fetch(`${API_URL + MAIN_ROUTE}get-all-incomes/${data.wallet_id}?name=${data.search}`, {
 				method: 'GET',
 			});
 

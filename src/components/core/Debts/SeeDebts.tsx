@@ -70,6 +70,7 @@ export const SeeDebts = () => {
 	}, [trigger]);
 
 	const handleSearch = async () => {
+		setLoader(true);
 		const params = {
 			wallet_id: walletId.wallet_id,
 			search: search,
@@ -78,6 +79,7 @@ export const SeeDebts = () => {
 		const debtsFound = await GetDebts(params);
 
 		setDebts(debtsFound?.debts);
+		setLoader(false);
 	};
 
 	const setDebtToHistory = async (debt) => {
@@ -195,7 +197,7 @@ export const SeeDebts = () => {
 									<Button
 										onClick={handleSearch}
 										className='text-white bg-alternative_color h-full w-1/4 md:sw-1/12 cursor-pointer '>
-										<Search  />
+										<Search />
 									</Button>
 								</div>
 
@@ -226,118 +228,129 @@ export const SeeDebts = () => {
 							</section>
 
 							<div className='w-full h-[calc(100dvh-434px)] max-h-screen overflow-auto scrollbar-custom'>
-								{debts.length == 0 ? (
+								{debts.length == 0 && search == '' ? (
 									<p className='text-center text-lg mt-5 text-main_color'>Actualmente no tienes ningún deuda</p>
 								) : (
 									<Table className='w-full'>
-										<TableBody className=' w-full scrollbar-custom'>
-											{debts?.map((d) => (
-												<TableRow
-													key={d?.debt_id}
-													className='border-b  border-gray-600/20 dark:text-white textsta'>
-													<TableCell className='font-medium  w-full  hidden md:block'>
-														<p>{new Date(d?.created_in).toLocaleDateString()}</p>
-													</TableCell>
-													<TableCell className='font-medium w-full  hidden md:block'>
-														{d?.person.length >= 10 ? (
-															<TooltipComponent
-																message={`${d?.person.slice(0, 10)}...`}
-																content={d?.person}
-															/>
-														) : (
-															<p>{d?.person}</p>
-														)}
-													</TableCell>
+										{loader ? (
+											<div className='flex justify-center items-center h-72'>
+												<LoaderApi />
+											</div>
+										) : (
+											<TableBody className=' w-full scrollbar-custom'>
+												{debts?.map((d) => (
+													<TableRow
+														key={d?.debt_id}
+														className='border-b  border-gray-600/20 dark:text-white textsta'>
+														<TableCell className='font-medium  w-full  hidden md:block'>
+															<p>{new Date(d?.created_in).toLocaleDateString()}</p>
+														</TableCell>
+														<TableCell className='font-medium w-full  hidden md:block'>
+															{d?.person.length >= 10 ? (
+																<TooltipComponent
+																	message={`${d?.person.slice(0, 10)}...`}
+																	content={d?.person}
+																/>
+															) : (
+																<p>{d?.person}</p>
+															)}
+														</TableCell>
 
-													<TableCell className='font-medium w-full  block md:hidden align-middle'>
-														{d?.person.length >= 10 ? (
-															<TooltipComponent
-																message={`${d?.person.slice(0, 10)}...`}
-																content={d?.person}
-															/>
-														) : (
-															<p>{d?.person}</p>
-														)}
-													</TableCell>
+														<TableCell className='font-medium w-full  block md:hidden align-middle'>
+															{d?.person.length >= 10 ? (
+																<TooltipComponent
+																	message={`${d?.person.slice(0, 10)}...`}
+																	content={d?.person}
+																/>
+															) : (
+																<p>{d?.person}</p>
+															)}
+														</TableCell>
 
-													<TableCell className='font-medium w-full   align-middle'>
-														{d?.reason.length >= 10 ? (
-															<TooltipComponent
-																className={` rounded-md  py-1 text-start  ${
-																	d?.debt_type == 0
-																		? 'text-red-500  underline decoration-blue-500 decoration-2'
-																		: 'text-green-500 underline decoration-blue-500 decoration-2'
-																}`}
-																message={`${d?.reason.slice(0, 8)}...`}
-																content={d?.reason}
-															/>
-														) : (
-															<p className={` rounded-md py-1 text-start  ${d?.debt_type == 0 ? 'text-red-500 ' : 'text-green-500 '}`}>
-																{d?.reason}
-															</p>
-														)}
-													</TableCell>
-													<TableCell className='font-medium w-full  align-middle'>
-														<p>$ {d?.missing_payment.toLocaleString()}</p>
-														<p className='opacity-55 text-nowrap'>$ {d?.value.toLocaleString()}</p>
-													</TableCell>
-													<TableCell className='font-medium w-full hidden md:block '>
-														{d?.missing_payment === 0 ? (
-															<p className='text-blue-500'>Pagado</p>
-														) : (
-															<p className={` rounded-md py-1 text-start  ${d?.debt_type == 0 ? 'text-red-500' : 'text-green-500'}`}>
-																{d?.debt_type == 0 ? 'Debes' : 'Te deben'}
-															</p>
-														)}
-													</TableCell>
-													<TableCell className='font-medium w-full hidden md:block '>
-														<p>{d?.dead_line ? format(new Date(d?.dead_line), 'PP') : 'Sin fecha limite'}</p>
-													</TableCell>
-													<TableCell className='font-medium   w-auto md:w-full text-end md:text-center  '>
-														<DropdownMenu>
-															<DropdownMenuTrigger className='cursor-pointer'>
-																<EllipsisVertical />
-															</DropdownMenuTrigger>
-															<DropdownMenuContent className='dark:text-white dark:bg-dark_secondary_color bg-light_secondary_color w-44 '>
-																<DropdownMenuItem
-																	disabled={d?.missing_payment === 0}
-																	onClick={() => {
-																		setDebtToAddAmount(d);
-																		setOpenAddAmountDialog(true);
-																	}}
-																	className='dark:hover:bg-zinc-700 cursor-pointer flex justify-between'>
-																	<p className='dark:text-slate-300text-slate-700 font-semibold'>{t('dashboard.debt.addAmount')}</p>
+														<TableCell className='font-medium w-full   align-middle'>
+															{d?.reason.length >= 10 ? (
+																<TooltipComponent
+																	className={` rounded-md  py-1 text-start  ${
+																		d?.debt_type == 0
+																			? 'text-red-500  underline decoration-blue-500 decoration-2'
+																			: 'text-green-500 underline decoration-blue-500 decoration-2'
+																	}`}
+																	message={`${d?.reason.slice(0, 8)}...`}
+																	content={d?.reason}
+																/>
+															) : (
+																<p className=' rounded-md py-1 text-start '>{d?.reason}</p>
+															)}
+														</TableCell>
+														<TableCell className='font-medium w-full  align-middle'>
+															<p>$ {d?.missing_payment.toLocaleString()}</p>
+															<p className='opacity-55 text-nowrap'>$ {d?.value.toLocaleString()}</p>
+														</TableCell>
+														<TableCell className='font-medium w-full hidden md:block '>
+															{d?.missing_payment === 0 ? (
+																<p className='text-blue-500'>Pagado</p>
+															) : (
+																<p
+																	className={` rounded-md py-1 text-start  ${
+																		d?.debt_type == 0 ? 'text-red-500' : 'text-green-500'
+																	}`}>
+																	{d?.debt_type == 0 ? 'Debes' : 'Te deben'}
+																</p>
+															)}
+														</TableCell>
+														<TableCell className='font-medium w-full hidden md:block '>
+															<p>{d?.dead_line ? format(new Date(d?.dead_line), 'PP') : 'Sin fecha limite'}</p>
+														</TableCell>
+														<TableCell className='font-medium   w-auto md:w-full text-end md:text-center  '>
+															<DropdownMenu>
+																<DropdownMenuTrigger className='cursor-pointer'>
+																	<EllipsisVertical />
+																</DropdownMenuTrigger>
+																<DropdownMenuContent className='dark:text-white dark:bg-dark_secondary_color bg-light_secondary_color w-44 '>
+																	<DropdownMenuItem
+																		disabled={d?.missing_payment === 0}
+																		onClick={() => {
+																			setDebtToAddAmount(d);
+																			setOpenAddAmountDialog(true);
+																		}}
+																		className='dark:hover:bg-zinc-700 cursor-pointer flex justify-between'>
+																		<p className='dark:text-slate-300text-slate-700 font-semibold'>
+																			{t('dashboard.debt.addAmount')}
+																		</p>
 
-																	<NotebookPen className='dark:text-slate-300text-slate-700' />
-																</DropdownMenuItem>
-																<DropdownMenuItem
-																	onClick={() => {
-																		setDebtToHistory(d);
+																		<NotebookPen className='dark:text-slate-300text-slate-700' />
+																	</DropdownMenuItem>
+																	<DropdownMenuItem
+																		onClick={() => {
+																			setDebtToHistory(d);
 
-																		setOpenAmountDialog(true);
-																	}}
-																	className='dark:hover:bg-zinc-700 cursor-pointer flex justify-between'>
-																	<p className='dark:text-slate-300text-slate-700 font-semibold'>{t('dashboard.debt.seeAmount')}</p>
+																			setOpenAmountDialog(true);
+																		}}
+																		className='dark:hover:bg-zinc-700 cursor-pointer flex justify-between'>
+																		<p className='dark:text-slate-300text-slate-700 font-semibold'>
+																			{t('dashboard.debt.seeAmount')}
+																		</p>
 
-																	<ScrollText className='dark:text-slate-300text-slate-700' />
-																</DropdownMenuItem>
+																		<ScrollText className='dark:text-slate-300text-slate-700' />
+																	</DropdownMenuItem>
 
-																<DropdownMenuItem
-																	onClick={() => {
-																		setDebtToDelete(d);
-																		setOpenDeleteDialog(true);
-																	}}
-																	className='dark:hover:bg-zinc-700 cursor-pointer flex justify-between'>
-																	<p className='dark:text-slate-300text-slate-700 font-semibold'>{t('dashboard.delete')}</p>
+																	<DropdownMenuItem
+																		onClick={() => {
+																			setDebtToDelete(d);
+																			setOpenDeleteDialog(true);
+																		}}
+																		className='dark:hover:bg-zinc-700 cursor-pointer flex justify-between'>
+																		<p className='dark:text-slate-300text-slate-700 font-semibold'>{t('dashboard.delete')}</p>
 
-																	<Trash2 className='dark:text-slate-300text-slate-700' />
-																</DropdownMenuItem>
-															</DropdownMenuContent>
-														</DropdownMenu>
-													</TableCell>
-												</TableRow>
-											))}
-										</TableBody>
+																		<Trash2 className='dark:text-slate-300text-slate-700' />
+																	</DropdownMenuItem>
+																</DropdownMenuContent>
+															</DropdownMenu>
+														</TableCell>
+													</TableRow>
+												))}
+											</TableBody>
+										)}
 									</Table>
 								)}
 							</div>
@@ -398,7 +411,7 @@ export const SeeDebts = () => {
 								onClick={() => deleteDebt(debtToDelete)}
 								variant='ghost'
 								className='w-full bg-alternative_color text-white cursor-pointer'>
-								{loader ? <LoaderApi color='white' /> : `${t('dashboard.delete')}`}
+								{loader ? <LoaderApi /> : `${t('dashboard.delete')}`}
 							</Button>
 						</DialogDescription>
 					</DialogHeader>

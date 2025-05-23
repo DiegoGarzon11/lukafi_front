@@ -168,10 +168,10 @@ export const Dashboard = () => {
 						{expenses?.length > 0 || incomes?.length > 0 ? (
 							<>
 								<div
-									className={` md:absolute bottom-52 left-0 right-20 flex justify-center items-center     ${
+									className={` md:absolute bottom-80 left-0 right-20 flex justify-center items-center     ${
 										changeFilter ? '' : 'hidden'
 									}`}>
-									<LoaderApi color='white' />
+									<LoaderApi  />
 								</div>
 
 								<div className={changeFilter ? 'invisible' : ''}>

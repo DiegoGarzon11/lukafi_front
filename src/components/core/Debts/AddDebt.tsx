@@ -168,7 +168,7 @@ export const AddDebt = ({ apiData, sendData, className }) => {
 					disabled={debtType === null || person === '' || reason === '' || value === '' || value === '0'}
 					onClick={submitDebt}
 					className=' w-full font-semibold  text-white text-lg flex justify-center items-center py-5 cursor-pointer bg-alternative_color '>
-					{loader ? <LoaderApi color='black' /> : `${t('dashboard.confirm')}`}
+					{loader ? <LoaderApi  /> : `${t('dashboard.confirm')}`}
 				</Button>
 			</DialogContent>
 			{visibilytToast && (

@@ -160,7 +160,7 @@ export const ForgetPassword = () => {
 									disabled={!email || loader || password.length <= 5 || password !== confirmPassword}
 									type='submit'
 									className='w-full font-semibold bg-alternative_color text-white text-lg flex justify-center items-center py-5 cursor-pointer'>
-									{loader ? <LoaderApi color='white' /> : 'Enviar'}
+									{loader ? <LoaderApi  /> : 'Enviar'}
 								</Button>
 							)}
 						</form>
@@ -195,7 +195,7 @@ export const ForgetPassword = () => {
 								disabled={!email || loader}
 								type='submit'
 								className='w-full font-semibold bg-alternative_color text-white text-lg flex justify-center items-center py-5 cursor-pointer'>
-								{loader ? <LoaderApi color='white' /> : 'Enviar'}
+								{loader ? <LoaderApi  /> : 'Enviar'}
 							</Button>
 						</form>
 						<p className='font-semibold dark:text-white text-black text-lg'>

@@ -35,7 +35,7 @@ export const NewExpense = async (data) => {
 export const GetExpenses = async (data) => {
 	if (data) {
 		try {
-			const response = await fetch(`${API_URL + MAIN_ROUTE}get-expenses/${data.wallet_id}`, {
+			const response = await fetch(`${API_URL + MAIN_ROUTE}get-expenses/${data.wallet_id}?name=${data.search}`, {
 				method: 'GET',
 			});
 
@@ -50,7 +50,7 @@ export const GetExpenses = async (data) => {
 export const GetFixedExpenses = async (data) => {
 	if (data) {
 		try {
-			const response = await fetch(`${API_URL + MAIN_ROUTE}get-fixed-expenses/${data.wallet_id}`, {
+			const response = await fetch(`${API_URL + MAIN_ROUTE}get-fixed-expenses/${data.wallet_id}?name=${data.search}`, {
 				method: 'GET',
 			});
 
