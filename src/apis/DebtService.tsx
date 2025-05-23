@@ -30,7 +30,7 @@ export const NewDebt = async (data) => {
 export const GetDebts = async (data) => {
 	if (data) {
 		try {
-			const response = await fetch(`${API_URL + MAIN_ROUTE}get-debts/${data.wallet_id}`, {
+			const response = await fetch(`${API_URL + MAIN_ROUTE}get-debts/${data.wallet_id}/?search=${data.search}`, {
 				method: 'GET',
 			});
 

@@ -12,7 +12,7 @@ import { Debt, DebtsHistory, ResponseWallet } from '@/interfaces/Wallet';
 
 import { Toast } from '@/hooks/Toast';
 import { format } from 'date-fns';
-import { EllipsisVertical, NotebookPen, ScrollText, Trash2 } from 'lucide-react';
+import { EllipsisVertical, NotebookPen, ScrollText, Search, Trash2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AddDebt } from './AddDebt';
@@ -43,13 +43,19 @@ export const SeeDebts = () => {
 	const [trigger, setTrigger] = useState(0);
 	const [userData, setDataUser] = useState<ResponseWallet | undefined>(undefined);
 	const [fetching, setFetching] = useState(true);
+	const [search, setSearch] = useState('');
 
 	const { t, i18n } = useTranslation();
 	i18n.changeLanguage();
 	const user = JSON.parse(localStorage.getItem('userMain'));
-
+	let walletId = userData?.wallet;
 	const getDebts = async (walletId) => {
-		const debts = await GetDebts(walletId);
+		const params = {
+			wallet_id: walletId.wallet_id,
+			search: '',
+		};
+
+		const debts = await GetDebts(params);
 		setDebts(debts?.debts);
 	};
 	useEffect(() => {
@@ -62,6 +68,17 @@ export const SeeDebts = () => {
 
 		fetchData();
 	}, [trigger]);
+
+	const handleSearch = async () => {
+		const params = {
+			wallet_id: walletId.wallet_id,
+			search: search,
+		};
+
+		const debtsFound = await GetDebts(params);
+
+		setDebts(debtsFound?.debts);
+	};
 
 	const setDebtToHistory = async (debt) => {
 		const getDebt = await GetDebtToHistory(debt);
@@ -131,6 +148,11 @@ export const SeeDebts = () => {
 			setApiResponse(null);
 		}, 1000);
 	};
+	const keyEnter = (e) => {
+		if (e.key === 'Enter') {
+			handleSearch();
+		}
+	};
 	if (fetching) {
 		return <LoaderComponent />;
 	}
@@ -160,12 +182,28 @@ export const SeeDebts = () => {
 					<div className='dark:bg-dark_primary_color bg-light_primary_color p-2.5 w-full rounded-xl '>
 						<div className='flex gap-3 flex-col items-start '>
 							<h5 className='text-2xl dark:text-white'> {t('dashboard.allDebts')} </h5>
-							<div className='w-9/12 my-3'>
-								<Input
-									
-									placeholder='Buscar'
-									className='dark:text-white '
-								/>
+							<div className=' w-full my-3 flex flex-col md:flex-row items-end md:items-center gap-3 '>
+								<div className='flex justify-between   rounded-md w-full  dark:bg-dark_foreground bg-light_foreground'>
+									<Input
+										onChange={(e) => {
+											setSearch(e.target.value);
+										}}
+										onKeyDown={keyEnter}
+										placeholder='Buscar por razón'
+										className=' dark:text-white   '
+									/>
+									<Button
+										onClick={handleSearch}
+										className='text-white bg-alternative_color h-full w-1/4 md:sw-1/12 cursor-pointer '>
+										<Search  />
+									</Button>
+								</div>
+
+								<Button
+									disabled
+									className='text-white bg-alternative_color h-full w-1/2 md:w-1/5 '>
+									Filtros
+								</Button>
 							</div>
 							<div className='flex gap-3 items-center dark:text-white'>
 								<p className='h-2 w-2 rounded-full bg-red-500'></p> <span>Debes</span>
@@ -187,7 +225,7 @@ export const SeeDebts = () => {
 								</article>
 							</section>
 
-							<div className="w-full h-[calc(100dvh-434px)] max-h-screen overflow-auto scrollbar-custom">
+							<div className='w-full h-[calc(100dvh-434px)] max-h-screen overflow-auto scrollbar-custom'>
 								{debts.length == 0 ? (
 									<p className='text-center text-lg mt-5 text-main_color'>Actualmente no tienes ningún deuda</p>
 								) : (
@@ -342,7 +380,6 @@ export const SeeDebts = () => {
 
 							<>
 								<p className='mb-3 opacity-80'>
-									
 									Al eliminar la deuda se eliminará también el historial de montos correspondientes a la misma.
 								</p>
 								<p className='text-balance   '>
